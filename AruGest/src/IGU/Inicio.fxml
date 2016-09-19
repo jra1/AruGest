@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IGU.InicioController">
+   <children>
+      <Button layoutX="120.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#incrementarPulsado" text="Botón" />
+      <Label fx:id="etiqueta" layoutX="186.0" layoutY="256.0" text="0" />
+      <TextField fx:id="texto" layoutX="186.0" layoutY="215.0" />
+   </children>
+</AnchorPane>
