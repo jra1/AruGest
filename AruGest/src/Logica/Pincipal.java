@@ -19,10 +19,13 @@ public void start(Stage primaryStage) {
      escenario= primaryStage;
      FXMLLoader loader = new FXMLLoader(Principal.class.getResource("/IGU/Inicio.fxml"));
      try {
+    	 //1.- Crear la escena desde el AnchorPane
           AnchorPane panel = (AnchorPane) loader.load();
           Scene escena = new Scene(panel);
+          //2.- Ponerla y mostrarla
           escenario.setScene(escena);
           escenario.show();
+          //3.- Poner el controlador de la escena 
           InicioController controlador = loader.getController();
           controlador.setmainAPP(this);
      } catch (IOException e) {
