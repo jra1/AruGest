@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="850.0" prefWidth="1300.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
+         <children>
+            <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Presupuestos" />
+            <CheckBox layoutX="117.0" layoutY="14.0" mnemonicParsing="false" text="Facturas" />
+            <TextField layoutX="675.0" layoutY="37.0" prefHeight="25.0" prefWidth="308.0" />
+            <Label layoutX="572.0" layoutY="41.0" text="Nombre cliente" />
+            <Label layoutX="14.0" layoutY="104.0" text="Modelo vehículo" />
+            <TextField layoutX="117.0" layoutY="100.0" prefHeight="25.0" prefWidth="438.0" />
+            <Label layoutX="14.0" layoutY="136.0" text="Matrícula vehículo" />
+            <TextField layoutX="117.0" layoutY="132.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="572.0" layoutY="104.0" text="D.N.I. cliente" />
+            <TextField layoutX="675.0" layoutY="100.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="572.0" layoutY="72.0" text="Tlf. fijo" />
+            <TextField layoutX="675.0" layoutY="68.0" prefHeight="25.0" prefWidth="139.0" />
+            <TextField layoutX="873.0" layoutY="68.0" prefHeight="25.0" prefWidth="114.0" />
+            <Label layoutX="817.0" layoutY="72.0" text="Tlf. móvil" />
+            <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" text="Buscar" />
+            <CheckBox layoutX="194.0" layoutY="14.0" mnemonicParsing="false" text="Ordenes de reparación" />
+            <CheckBox layoutX="350.0" layoutY="14.0" mnemonicParsing="false" text="Resguardos de depósito" />
+            <TextField layoutX="117.0" layoutY="40.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="14.0" layoutY="44.0" text="Nº Presupuesto" />
+            <TextField layoutX="117.0" layoutY="71.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="14.0" layoutY="75.0" text="Nº Factura" />
+            <TextField layoutX="416.0" layoutY="40.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="265.0" layoutY="44.0" text="Nº Orden de reparación" />
+            <TextField layoutX="416.0" layoutY="71.0" prefHeight="25.0" prefWidth="139.0" />
+            <Label layoutX="265.0" layoutY="75.0" text="Nº Resguardo de depósito" />
+         </children>
+      </Pane>
+      <Label layoutX="14.0" text="Buscar" />
+      <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
+      <Pane layoutX="14.0" layoutY="240.0" prefHeight="468.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
+         <children>
+            <TableView layoutX="14.0" layoutY="14.0" prefHeight="439.0" prefWidth="869.0">
+              <columns>
+                <TableColumn prefWidth="362.0" text="Nombre cliente" />
+                <TableColumn prefWidth="505.0" text="Vehículo" />
+                  <TableColumn prefWidth="233.0" text="Matrícula" />
+                  <TableColumn prefWidth="114.0" text="Fecha" />
+                  <TableColumn prefWidth="505.0" text="Importe" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
