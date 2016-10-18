@@ -4,6 +4,7 @@ import java.io.IOException;
 //import java.security.Principal;
 
 import GUI.RootController;
+import Logica.BD.Conexion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,12 @@ public class Inicio extends Application {
 
 private Stage escenario; //Donde se cargan las escenas (interfaces)
 private BorderPane root;
+
+private Conexion con = new Conexion();
+
+public void init() throws Exception {
+	con.getConexion();
+}
 
 @Override
 public void start(Stage primaryStage) {

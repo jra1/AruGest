@@ -1,0 +1,218 @@
+package Modelo;
+
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
+public class Vehiculo {
+	private final IntegerProperty idvehiculo;
+	private final IntegerProperty clienteID;
+	private final StringProperty marca;
+	private final StringProperty modelo;
+	private final StringProperty version;
+	private final StringProperty matricula;
+	private final IntegerProperty anio;
+	private final StringProperty bastidor;
+	private final StringProperty letrasmotor;
+	private final StringProperty color;
+	private final StringProperty codradio;
+	private final IntegerProperty tipoID;
+	
+	public Vehiculo(IntegerProperty idvehiculo, IntegerProperty clienteID, StringProperty marca, StringProperty modelo,
+			StringProperty version, StringProperty matricula, IntegerProperty anio, StringProperty bastidor,
+			StringProperty letrasmotor, StringProperty color, StringProperty codradio, IntegerProperty tipoID) {
+		super();
+		this.idvehiculo = idvehiculo;
+		this.clienteID = clienteID;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.version = version;
+		this.matricula = matricula;
+		this.anio = anio;
+		this.bastidor = bastidor;
+		this.letrasmotor = letrasmotor;
+		this.color = color;
+		this.codradio = codradio;
+		this.tipoID = tipoID;
+	}
+
+	public IntegerProperty idvehiculoProperty() {
+		return this.idvehiculo;
+	}
+	
+
+	public int getIdvehiculo() {
+		return this.idvehiculoProperty().get();
+	}
+	
+
+	public void setIdvehiculo(final int idvehiculo) {
+		this.idvehiculoProperty().set(idvehiculo);
+	}
+	
+
+	public IntegerProperty clienteIDProperty() {
+		return this.clienteID;
+	}
+	
+
+	public int getClienteID() {
+		return this.clienteIDProperty().get();
+	}
+	
+
+	public void setClienteID(final int clienteID) {
+		this.clienteIDProperty().set(clienteID);
+	}
+	
+
+	public StringProperty marcaProperty() {
+		return this.marca;
+	}
+	
+
+	public String getMarca() {
+		return this.marcaProperty().get();
+	}
+	
+
+	public void setMarca(final String marca) {
+		this.marcaProperty().set(marca);
+	}
+	
+
+	public StringProperty modeloProperty() {
+		return this.modelo;
+	}
+	
+
+	public String getModelo() {
+		return this.modeloProperty().get();
+	}
+	
+
+	public void setModelo(final String modelo) {
+		this.modeloProperty().set(modelo);
+	}
+	
+
+	public StringProperty versionProperty() {
+		return this.version;
+	}
+	
+
+	public String getVersion() {
+		return this.versionProperty().get();
+	}
+	
+
+	public void setVersion(final String version) {
+		this.versionProperty().set(version);
+	}
+	
+
+	public StringProperty matriculaProperty() {
+		return this.matricula;
+	}
+	
+
+	public String getMatricula() {
+		return this.matriculaProperty().get();
+	}
+	
+
+	public void setMatricula(final String matricula) {
+		this.matriculaProperty().set(matricula);
+	}
+	
+
+	public IntegerProperty anioProperty() {
+		return this.anio;
+	}
+	
+
+	public int getAnio() {
+		return this.anioProperty().get();
+	}
+	
+
+	public void setAnio(final int anio) {
+		this.anioProperty().set(anio);
+	}
+	
+
+	public StringProperty bastidorProperty() {
+		return this.bastidor;
+	}
+	
+
+	public String getBastidor() {
+		return this.bastidorProperty().get();
+	}
+	
+
+	public void setBastidor(final String bastidor) {
+		this.bastidorProperty().set(bastidor);
+	}
+	
+
+	public StringProperty letrasmotorProperty() {
+		return this.letrasmotor;
+	}
+	
+
+	public String getLetrasmotor() {
+		return this.letrasmotorProperty().get();
+	}
+	
+
+	public void setLetrasmotor(final String letrasmotor) {
+		this.letrasmotorProperty().set(letrasmotor);
+	}
+	
+
+	public StringProperty colorProperty() {
+		return this.color;
+	}
+	
+
+	public String getColor() {
+		return this.colorProperty().get();
+	}
+	
+
+	public void setColor(final String color) {
+		this.colorProperty().set(color);
+	}
+	
+
+	public StringProperty codradioProperty() {
+		return this.codradio;
+	}
+	
+
+	public String getCodradio() {
+		return this.codradioProperty().get();
+	}
+	
+
+	public void setCodradio(final String codradio) {
+		this.codradioProperty().set(codradio);
+	}
+	
+
+	public IntegerProperty tipoIDProperty() {
+		return this.tipoID;
+	}
+	
+
+	public int getTipoID() {
+		return this.tipoIDProperty().get();
+	}
+	
+
+	public void setTipoID(final int tipoID) {
+		this.tipoIDProperty().set(tipoID);
+	}
+	
+}

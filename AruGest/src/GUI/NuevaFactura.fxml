@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="14.0" text="Datos factura">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="11.0" layoutY="20.0" prefHeight="58.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="20.0">
+      <Pane layoutX="11.0" layoutY="20.0" prefHeight="58.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
             <CheckBox layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="FACTURA Nº." />
             <CheckBox layoutX="14.0" layoutY="33.0" mnemonicParsing="false" text="PRESUPUESTO Nº." />
@@ -58,7 +58,7 @@
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="13.0" layoutY="99.0" prefHeight="85.0" prefWidth="523.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="99.0">
+      <Pane layoutX="13.0" layoutY="99.0" prefHeight="85.0" prefWidth="523.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="99.0">
          <children>
             <TextField layoutX="78.0" layoutY="4.0" prefHeight="23.0" prefWidth="249.0" promptText="Nombre cliente">
                <font>
@@ -98,12 +98,12 @@
             <Label layoutX="331.0" layoutY="34.0" text="Telf. Fijo" />
          </children>
       </Pane>
-      <Label layoutX="543.0" layoutY="79.0" text="Datos vehículo">
+      <Label layoutX="538.0" layoutY="79.0" text="Datos vehículo">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="543.0" layoutY="99.0" prefHeight="85.0" prefWidth="496.0" styleClass="background" AnchorPane.leftAnchor="543.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="99.0">
+      <Pane layoutX="543.0" layoutY="99.0" prefHeight="85.0" prefWidth="496.0" styleClass="background" AnchorPane.leftAnchor="537.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="99.0">
          <children>
             <TextField layoutX="78.0" layoutY="4.0" prefHeight="23.0" prefWidth="186.0" promptText="Tipo vehículo">
                <font>
@@ -131,7 +131,7 @@
             <Label layoutX="14.0" layoutY="60.0" text="Kms" />
          </children>
       </Pane>
-      <Pane layoutX="14.0" layoutY="204.0" prefHeight="468.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="204.0">
+      <Pane layoutX="14.0" layoutY="204.0" prefHeight="393.0" prefWidth="1119.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="204.0">
          <children>
             <ComboBox layoutX="14.0" layoutY="27.0" prefWidth="150.0" />
             <TextField layoutX="183.0" layoutY="28.0" prefHeight="23.0" prefWidth="445.0" promptText="Concepto">
@@ -154,25 +154,93 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TableView layoutX="14.0" layoutY="61.0" prefHeight="335.0" prefWidth="489.0">
+            <TableView layoutX="14.0" layoutY="61.0" prefHeight="291.0" prefWidth="408.0">
               <columns>
-                <TableColumn prefWidth="390.0" text="SERVICIOS A REALIZAR" />
-                <TableColumn prefWidth="98.0" text="H" />
+                <TableColumn prefWidth="356.0" text="SERVICIOS A REALIZAR" />
+                <TableColumn prefWidth="50.0" text="H" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TableView layoutX="525.0" layoutY="61.0" prefHeight="335.0" prefWidth="489.0">
+            <TableView layoutX="434.0" layoutY="62.0" prefHeight="291.0" prefWidth="408.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn minWidth="290.0" prefWidth="220.0" text="MATERIALES" />
-                  <TableColumn prefWidth="105.0" text="CANTIDAD" />
-                  <TableColumn prefWidth="69.0" text="€" />
+                  <TableColumn minWidth="255.0" prefWidth="282.0" text="MATERIALES" />
+                  <TableColumn prefWidth="70.0" text="CANTIDAD" />
+                  <TableColumn prefWidth="155.0" text="€" />
                </columns>
             </TableView>
+            <Label layoutX="858.0" layoutY="61.0" text="Mano de obra:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="969.0" layoutY="61.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="969.0" layoutY="91.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label layoutX="858.0" layoutY="91.0" text="Materiales:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="969.0" layoutY="121.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label layoutX="858.0" layoutY="121.0" text="Otros / Grúa:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="969.0" layoutY="151.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label layoutX="858.0" layoutY="151.0" text="Subtotal:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="969.0" layoutY="181.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label layoutX="858.0" layoutY="181.0" text="I.V.A.">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField layoutX="969.0" layoutY="211.0" prefHeight="23.0" prefWidth="118.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label layoutX="858.0" layoutY="211.0" text="TOTAL: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="917.0" layoutY="181.0" text="21 %">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Button layoutX="858.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Actualizar precio" />
+            <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Eliminar servicio" />
+            <Button layoutX="434.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Eliminar material" />
          </children>
       </Pane>
       <Label layoutX="14.0" layoutY="184.0" text="Servicios y materiales">
