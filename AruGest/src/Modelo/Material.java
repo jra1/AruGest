@@ -2,6 +2,9 @@ package Modelo;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Material {
@@ -12,15 +15,15 @@ public class Material {
 	private final IntegerProperty cantidad;
 	private final FloatProperty preciototal;
 	
-	public Material(IntegerProperty idmaterial, StringProperty nombre, FloatProperty preciounit,
-			IntegerProperty facturaID, IntegerProperty cantidad, FloatProperty preciototal) {
+	public Material(Integer idmaterial, String nombre, Float preciounit,
+			Integer facturaID, Integer cantidad, Float preciototal) {
 		super();
-		this.idmaterial = idmaterial;
-		this.nombre = nombre;
-		this.preciounit = preciounit;
-		this.facturaID = facturaID;
-		this.cantidad = cantidad;
-		this.preciototal = preciototal;
+		this.idmaterial = new SimpleIntegerProperty(idmaterial);
+		this.nombre = new SimpleStringProperty(nombre);
+		this.preciounit = new SimpleFloatProperty(preciounit);
+		this.facturaID = new SimpleIntegerProperty(facturaID);
+		this.cantidad = new SimpleIntegerProperty(cantidad);
+		this.preciototal = new SimpleFloatProperty(preciototal);
 	}
 
 	public IntegerProperty idmaterialProperty() {

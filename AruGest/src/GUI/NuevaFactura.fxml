@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NuevaFacturaController">
    <children>
       <Label layoutX="14.0" text="Datos factura">
          <font>
@@ -22,21 +22,21 @@
       </Label>
       <Pane layoutX="11.0" layoutY="20.0" prefHeight="58.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
-            <CheckBox layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="FACTURA Nº." />
-            <CheckBox layoutX="14.0" layoutY="33.0" mnemonicParsing="false" text="PRESUPUESTO Nº." />
+            <CheckBox fx:id="chckbxFactura" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="FACTURA Nº." />
+            <CheckBox fx:id="chckbxPresupuesto" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" text="PRESUPUESTO Nº." />
             <CheckBox layoutX="355.0" layoutY="8.0" mnemonicParsing="false" text="ORDEN DE REPARACIÓN Nº.">
                <font>
                   <Font name="Caladea" size="12.0" />
                </font>
             </CheckBox>
             <CheckBox layoutX="355.0" layoutY="33.0" mnemonicParsing="false" text="RESGUARDO DE DEPÓSITO Nº." />
-            <DatePicker layoutX="840.0" layoutY="2.0" promptText="FECHA" />
-            <TextField layoutX="146.0" layoutY="4.0" prefHeight="23.0" prefWidth="118.0" promptText="Nº FACTURA">
+            <DatePicker layoutX="841.0" layoutY="14.0" promptText="FECHA" />
+            <TextField fx:id="txtNumfactura" layoutX="146.0" layoutY="4.0" prefHeight="23.0" prefWidth="118.0" promptText="Nº FACTURA">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField layoutX="146.0" layoutY="30.0" prefHeight="23.0" prefWidth="118.0" promptText="Nº PRESUPUESTO">
+            <TextField fx:id="txtNumPresupuesto" layoutX="146.0" layoutY="30.0" prefHeight="23.0" prefWidth="118.0" promptText="Nº PRESUPUESTO">
                <font>
                   <Font size="10.0" />
                </font>
@@ -131,116 +131,121 @@
             <Label layoutX="14.0" layoutY="60.0" text="Kms" />
          </children>
       </Pane>
-      <Pane layoutX="14.0" layoutY="204.0" prefHeight="393.0" prefWidth="1119.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="204.0">
+      <Pane layoutX="14.0" layoutY="204.0" prefHeight="417.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="204.0">
          <children>
-            <ComboBox layoutX="14.0" layoutY="27.0" prefWidth="150.0" />
-            <TextField layoutX="183.0" layoutY="28.0" prefHeight="23.0" prefWidth="445.0" promptText="Concepto">
+            <ComboBox fx:id="comboTipo" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
+            <Label layoutX="14.0" layoutY="2.0" text="Tipo" />
+            <Label layoutX="183.0" layoutY="2.0" text="Concepto" />
+            <Label fx:id="lblCantidad" layoutX="669.0" layoutY="2.0" text="Cantidad" />
+            <Label fx:id="lblValor" layoutX="769.0" layoutY="2.0" text="€ / ud." />
+            <TextField fx:id="txtCantidad" layoutX="666.0" layoutY="21.0" prefHeight="23.0" prefWidth="54.0" promptText="Cantidad">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="14.0" layoutY="6.0" text="Tipo" />
-            <Label layoutX="183.0" layoutY="6.0" text="Concepto" />
-            <Label layoutX="645.0" layoutY="6.0" text="Horas" />
-            <Label layoutX="756.0" layoutY="6.0" text="Cantidad" />
-            <Button layoutX="858.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Añadir" />
-            <TextField layoutX="645.0" layoutY="28.0" prefHeight="23.0" prefWidth="54.0" promptText="Horas">
+            <TextField fx:id="txtValor" layoutX="750.0" layoutY="22.0" prefHeight="23.0" prefWidth="72.0" promptText="Valor">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField layoutX="756.0" layoutY="28.0" prefHeight="23.0" prefWidth="72.0" promptText="Cantidad">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TableView layoutX="14.0" layoutY="61.0" prefHeight="291.0" prefWidth="408.0">
+            <Button layoutX="861.0" layoutY="20.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="92.0" text="Añadir" />
+            <TableView fx:id="tableServicio" editable="true" layoutX="14.0" layoutY="61.0" prefHeight="317.0" prefWidth="436.0">
               <columns>
-                <TableColumn prefWidth="356.0" text="SERVICIOS A REALIZAR" />
-                <TableColumn prefWidth="50.0" text="H" />
+                <TableColumn fx:id="columnaConceptoServ" prefWidth="384.0" text="SERVICIOS A REALIZAR" />
+                <TableColumn fx:id="columnaHorasServ" prefWidth="50.0" text="H" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </TableView>
-            <TableView layoutX="434.0" layoutY="62.0" prefHeight="291.0" prefWidth="408.0">
+            <TableView fx:id="tableMaterial" layoutX="455.0" layoutY="62.0" prefHeight="317.0" prefWidth="419.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn minWidth="255.0" prefWidth="282.0" text="MATERIALES" />
-                  <TableColumn prefWidth="70.0" text="CANTIDAD" />
-                  <TableColumn prefWidth="155.0" text="€" />
+                  <TableColumn fx:id="columnaConceptoMat" minWidth="255.0" prefWidth="282.0" text="MATERIALES" />
+                  <TableColumn fx:id="columnaCantidadMat" prefWidth="70.0" text="CANTIDAD" />
+                  <TableColumn fx:id="columnaPrecioMat" prefWidth="155.0" text="€/ud" />
                </columns>
             </TableView>
-            <Label layoutX="858.0" layoutY="61.0" text="Mano de obra:">
+            <Label layoutX="879.0" layoutY="87.0" text="Mano de obra:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="969.0" layoutY="61.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtManoObra" layoutX="990.0" layoutY="87.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField layoutX="969.0" layoutY="91.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtMateriales" layoutX="990.0" layoutY="117.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="858.0" layoutY="91.0" text="Materiales:">
+            <Label layoutX="879.0" layoutY="117.0" text="Materiales:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="969.0" layoutY="121.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtOtros" layoutX="990.0" layoutY="147.0" prefHeight="23.0" prefWidth="92.0" text="0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="858.0" layoutY="121.0" text="Otros / Grúa:">
+            <Label layoutX="879.0" layoutY="147.0" text="Otros / Grúa:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="969.0" layoutY="151.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtSubtotal" layoutX="990.0" layoutY="177.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="858.0" layoutY="151.0" text="Subtotal:">
+            <Label layoutX="879.0" layoutY="177.0" text="Subtotal:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="969.0" layoutY="181.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtIva" layoutX="990.0" layoutY="207.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="858.0" layoutY="181.0" text="I.V.A.">
+            <Label layoutX="879.0" layoutY="207.0" text="I.V.A.">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField layoutX="969.0" layoutY="211.0" prefHeight="23.0" prefWidth="118.0">
+            <TextField fx:id="txtTotal" layoutX="990.0" layoutY="237.0" prefHeight="23.0" prefWidth="92.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Label layoutX="858.0" layoutY="211.0" text="TOTAL: ">
+            <Label layoutX="879.0" layoutY="237.0" text="TOTAL: ">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="917.0" layoutY="181.0" text="21 %">
+            <Label layoutX="938.0" layoutY="207.0" text="21 %">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button layoutX="858.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Actualizar precio" />
-            <Button layoutX="14.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Eliminar servicio" />
-            <Button layoutX="434.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Eliminar material" />
+            <Button layoutX="879.0" layoutY="267.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="25.0" prefWidth="118.0" text="Actualizar precio" />
+            <Button layoutX="14.0" layoutY="385.0" mnemonicParsing="false" onAction="#eliminarServicio" prefHeight="25.0" prefWidth="118.0" text="Eliminar servicio" />
+            <Button layoutX="455.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Eliminar material" />
+            <Button layoutX="879.0" layoutY="337.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Generar factura">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="879.0" layoutY="299.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Guardar" />
+            <TextArea fx:id="txtConcepto" layoutX="183.0" layoutY="22.0" prefHeight="23.0" prefWidth="454.0" promptText="Escribir aquí la descripción..." />
          </children>
       </Pane>
       <Label layoutX="14.0" layoutY="184.0" text="Servicios y materiales">
@@ -248,5 +253,15 @@
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
+      <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="14.0" layoutY="628.0" mnemonicParsing="false" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
+      <CheckBox fx:id="chckbxPermisoPruebas" layoutX="14.0" layoutY="654.0" mnemonicParsing="false" text="Permiso para realizar pruebas para diagnóstico y reparación" />
+      <CheckBox fx:id="chckbxNoPiezas" layoutX="441.0" layoutY="628.0" mnemonicParsing="false" text="No deseo recoger las piezas sustituidas a mi vehículo" />
+      <Label layoutX="445.0" layoutY="655.0" text="Fecha de entrega en caso de aprobación de presupuesto:" />
+      <DatePicker layoutX="762.0" layoutY="650.0" prefHeight="25.0" prefWidth="150.0" promptText="FECHA" />
+      <TextField layoutX="222.0" layoutY="625.0" prefHeight="23.0" prefWidth="38.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

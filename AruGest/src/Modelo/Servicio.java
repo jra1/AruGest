@@ -2,6 +2,9 @@ package Modelo;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Servicio {
@@ -11,14 +14,21 @@ public class Servicio {
 	private final IntegerProperty facturaID;
 	private final StringProperty tiposervicio;
 	
-	public Servicio(IntegerProperty idservicio, StringProperty servicio, FloatProperty horas, IntegerProperty facturaID,
-			StringProperty tiposervicio) {
+	/**
+     * Default constructor.
+     */
+    public Servicio() {
+        this(null, null, null, null, null);
+    }
+    
+	public Servicio(Integer idservicio, String servicio, Float horas, Integer facturaID,
+			String tiposervicio) {
 		super();
-		this.idservicio = idservicio;
-		this.servicio = servicio;
-		this.horas = horas;
-		this.facturaID = facturaID;
-		this.tiposervicio = tiposervicio;
+		this.idservicio = new SimpleIntegerProperty(idservicio);
+		this.servicio = new SimpleStringProperty(servicio);
+		this.horas = new SimpleFloatProperty(horas);
+		this.facturaID = new SimpleIntegerProperty(facturaID);
+		this.tiposervicio = new SimpleStringProperty(tiposervicio);
 	}
 
 	public IntegerProperty idservicioProperty() {

@@ -39,7 +39,7 @@ public class Conexion {
 			Class.forName("org.h2.Driver");
 		    con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
 		    		
-		    JOptionPane.showMessageDialog(null, "Servidor: "+ con.getSchema());
+		    //JOptionPane.showMessageDialog(null, "Servidor: "+ con.getSchema().toString());
 		    //DriverManager.getConnection("jdbc:h2:C:/H2DB/BD_Ruara", "sa", "");
 		    
 		} catch (Exception e) {
