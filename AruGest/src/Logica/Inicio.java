@@ -17,10 +17,15 @@ public class Inicio extends Application {
 private Stage escenario; //Donde se cargan las escenas (interfaces)
 private BorderPane root;
 
-private Conexion con = new Conexion();
+//Variables globales para todo el proyecto
+public static Conexion CONEXION = new Conexion();
+public static String OPCION_NUEVA = ""; //Para saber si se ha pulsado en Nueva Factura o Nuevo Presupuesto
+public static int CLIENTE_ID;
+public static int VEHICULO_ID;
+
 
 public void init() throws Exception {
-	con.getConexion();
+	CONEXION.crearConexion();
 }
 
 @Override
@@ -58,6 +63,14 @@ public static void main(String[] args) {
 
 public BorderPane getRoot() {
 	return root;
+}
+
+public static String getOpcionNueva() {
+	return OPCION_NUEVA;
+}
+
+public static void setOpcionNueva(String opcionNueva) {
+	Inicio.OPCION_NUEVA = opcionNueva;
 }
 
 }

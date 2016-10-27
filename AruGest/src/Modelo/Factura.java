@@ -1,11 +1,16 @@
 package Modelo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Factura {
@@ -16,8 +21,8 @@ public class Factura {
 	private final IntegerProperty numpresupuesto;
 	private final IntegerProperty numordenrep;
 	private final IntegerProperty numresguardo;
-	private final ObjectProperty<LocalDate> fecha;
-	private final ObjectProperty<LocalDate> fechaentrega;
+	private final ObjectProperty<Date> fecha;
+	private final ObjectProperty<Date> fechaentrega;
 	private final FloatProperty manoobra;
 	private final FloatProperty materiales;
 	private final FloatProperty grua;
@@ -29,9 +34,35 @@ public class Factura {
     private final BooleanProperty modificable;
     private final ObjectProperty documento;
     
+    public Factura(int clienteID, int vehiculoID, int numfactura, int numpresupuesto, int numordenrep,
+    		int numresguardo, Date fecha, Date fechaentrega,
+			float manoobra, float materiales, float grua, String estado,
+			boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
+			boolean nopiezas, boolean modificable){
+    	this.idfactura = null;
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
+		this.numfactura = new SimpleIntegerProperty(numfactura);
+		this.numpresupuesto = new SimpleIntegerProperty(numpresupuesto);
+		this.numordenrep = new SimpleIntegerProperty(numordenrep); 
+		this.numresguardo = new SimpleIntegerProperty(numresguardo);
+		this.fecha = new SimpleObjectProperty<Date>(fecha);
+		this.fechaentrega = new SimpleObjectProperty<Date>(fechaentrega);
+		this.manoobra = new SimpleFloatProperty(manoobra); 
+		this.materiales = new SimpleFloatProperty(materiales);
+		this.grua = new SimpleFloatProperty(grua);
+		this.estado = new SimpleStringProperty(estado);
+		this.porcentajedefocul = new SimpleFloatProperty(porcentajedefocul);
+		this.rdefocultos = new SimpleBooleanProperty(rdefocultos);
+		this.permisopruebas = new SimpleBooleanProperty(permisopruebas);
+		this.nopiezas = new SimpleBooleanProperty(nopiezas);
+		this.modificable = new SimpleBooleanProperty(modificable);
+		this.documento = null;
+    }
+    
 	public Factura(IntegerProperty idfactura, IntegerProperty clienteID, IntegerProperty vehiculoID,
 			IntegerProperty numfactura, IntegerProperty numpresupuesto, IntegerProperty numordenrep,
-			IntegerProperty numresguardo, ObjectProperty<LocalDate> fecha, ObjectProperty<LocalDate> fechaentrega,
+			IntegerProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, StringProperty estado,
 			FloatProperty porcentajedefocul, BooleanProperty rdefocultos, BooleanProperty permisopruebas,
 			BooleanProperty nopiezas, BooleanProperty modificable, ObjectProperty documento) {
@@ -162,32 +193,32 @@ public class Factura {
 	}
 	
 
-	public ObjectProperty<LocalDate> fechaProperty() {
+	public ObjectProperty<Date> fechaProperty() {
 		return this.fecha;
 	}
 	
 
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return this.fechaProperty().get();
 	}
 	
 
-	public void setFecha(final LocalDate fecha) {
+	public void setFecha(final Date fecha) {
 		this.fechaProperty().set(fecha);
 	}
 	
 
-	public ObjectProperty<LocalDate> fechaentregaProperty() {
+	public ObjectProperty<Date> fechaentregaProperty() {
 		return this.fechaentrega;
 	}
 	
 
-	public LocalDate getFechaentrega() {
+	public Date getFechaentrega() {
 		return this.fechaentregaProperty().get();
 	}
 	
 
-	public void setFechaentrega(final LocalDate fechaentrega) {
+	public void setFechaentrega(final Date fechaentrega) {
 		this.fechaentregaProperty().set(fechaentrega);
 	}
 	

@@ -28,12 +28,12 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo presupuesto">
+                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo presupuesto">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nueva factura" />
+                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nueva factura" />
                                  </children>
                               </VBox>
                            </children>

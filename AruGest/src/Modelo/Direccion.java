@@ -1,6 +1,8 @@
 package Modelo;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Direccion {
@@ -13,7 +15,19 @@ public class Direccion {
     private final StringProperty localidad;
     private final StringProperty provincia;
     
-    public Direccion(IntegerProperty iddireccion, StringProperty calle, IntegerProperty numero, StringProperty piso,
+    public Direccion(String calle, Integer numero, String piso, String letra,
+			String localidad) {
+		this.calle = new SimpleStringProperty(calle);
+		this.numero = new SimpleIntegerProperty(numero);
+		this.piso = new SimpleStringProperty(piso);
+		this.letra = new SimpleStringProperty(letra);
+		this.localidad = new SimpleStringProperty(localidad);
+		this.iddireccion = new SimpleIntegerProperty(0);;
+		this.provincia = null;
+		this.cpostal = null;
+	}
+
+	public Direccion(IntegerProperty iddireccion, StringProperty calle, IntegerProperty numero, StringProperty piso,
 			StringProperty letra, IntegerProperty cpostal, StringProperty localidad, StringProperty provincia) {
 		super();
 		this.iddireccion = iddireccion;

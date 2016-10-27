@@ -2,6 +2,8 @@ package Modelo;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Vehiculo {
@@ -17,6 +19,21 @@ public class Vehiculo {
 	private final StringProperty color;
 	private final StringProperty codradio;
 	private final IntegerProperty tipoID;
+	
+	public Vehiculo(Integer clienteID, String marca, String modelo, String version, String matricula, Integer tipoID){
+		this.idvehiculo = null;
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.marca = new SimpleStringProperty(marca);
+		this.modelo = new SimpleStringProperty(modelo);
+		this.version = new SimpleStringProperty(version);
+		this.matricula = new SimpleStringProperty(matricula);;
+		this.anio = null;
+		this.bastidor = null;
+		this.letrasmotor = null;
+		this.color = null;
+		this.codradio = null;
+		this.tipoID = new SimpleIntegerProperty(tipoID);
+	}
 	
 	public Vehiculo(IntegerProperty idvehiculo, IntegerProperty clienteID, StringProperty marca, StringProperty modelo,
 			StringProperty version, StringProperty matricula, IntegerProperty anio, StringProperty bastidor,

@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 public class Servicio {
 	private final IntegerProperty idservicio;
 	private final StringProperty servicio;
-	private final FloatProperty horas;
+	private final StringProperty horas;
 	private final IntegerProperty facturaID;
 	private final StringProperty tiposervicio;
 	
@@ -21,12 +21,12 @@ public class Servicio {
         this(null, null, null, null, null);
     }
     
-	public Servicio(Integer idservicio, String servicio, Float horas, Integer facturaID,
+	public Servicio(Integer idservicio, String servicio, String horas, Integer facturaID,
 			String tiposervicio) {
 		super();
 		this.idservicio = new SimpleIntegerProperty(idservicio);
 		this.servicio = new SimpleStringProperty(servicio);
-		this.horas = new SimpleFloatProperty(horas);
+		this.horas = new SimpleStringProperty(horas);
 		this.facturaID = new SimpleIntegerProperty(facturaID);
 		this.tiposervicio = new SimpleStringProperty(tiposervicio);
 	}
@@ -61,17 +61,17 @@ public class Servicio {
 	}
 	
 
-	public FloatProperty horasProperty() {
+	public StringProperty horasProperty() {
 		return this.horas;
 	}
 	
 
-	public float getHoras() {
+	public String getHoras() {
 		return this.horasProperty().get();
 	}
 	
 
-	public void setHoras(final float horas) {
+	public void setHoras(final String horas) {
 		this.horasProperty().set(horas);
 	}
 	

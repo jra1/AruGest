@@ -2,6 +2,7 @@ package Modelo;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Particular {
@@ -19,6 +20,14 @@ public class Particular {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.nif = nif;
+	}
+	
+	public Particular(String nombre, String apellidos, String nif){
+		this.idparticular = null;
+		this.clienteID = null;
+		this.nombre = new SimpleStringProperty(nombre);;
+		this.apellidos = new SimpleStringProperty(apellidos);
+		this.nif = new SimpleStringProperty(nif);
 	}
 
 	public IntegerProperty idparticularProperty() {

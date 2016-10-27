@@ -10,17 +10,17 @@ import javafx.beans.property.StringProperty;
 public class Material {
 	private final IntegerProperty idmaterial;
 	private final StringProperty nombre;
-	private final FloatProperty preciounit;
+	private final StringProperty preciounit;
 	private final IntegerProperty facturaID;
 	private final IntegerProperty cantidad;
 	private final FloatProperty preciototal;
 	
-	public Material(Integer idmaterial, String nombre, Float preciounit,
+	public Material(Integer idmaterial, String nombre, String preciounit,
 			Integer facturaID, Integer cantidad, Float preciototal) {
 		super();
 		this.idmaterial = new SimpleIntegerProperty(idmaterial);
 		this.nombre = new SimpleStringProperty(nombre);
-		this.preciounit = new SimpleFloatProperty(preciounit);
+		this.preciounit = new SimpleStringProperty(preciounit);
 		this.facturaID = new SimpleIntegerProperty(facturaID);
 		this.cantidad = new SimpleIntegerProperty(cantidad);
 		this.preciototal = new SimpleFloatProperty(preciototal);
@@ -56,17 +56,17 @@ public class Material {
 	}
 	
 
-	public FloatProperty preciounitProperty() {
+	public StringProperty preciounitProperty() {
 		return this.preciounit;
 	}
 	
 
-	public float getPreciounit() {
+	public String getPreciounit() {
 		return this.preciounitProperty().get();
 	}
 	
 
-	public void setPreciounit(final float preciounit) {
+	public void setPreciounit(final String preciounit) {
 		this.preciounitProperty().set(preciounit);
 	}
 	

@@ -2,20 +2,29 @@ package GUI;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import Logica.Inicio;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
 public class RootController {
 	
+	//Variables de la vista
 	@FXML
 	private Accordion acor;
-
 	@FXML
 	private TitledPane tPane;
+	@FXML
+	private Button btnNuevaFactura;
+	@FXML
+	private Button btnNuevoPresupuesto;
 	
 	private Inicio main;
 	
@@ -25,6 +34,32 @@ public class RootController {
 	     //acor.setExpandedPane(tPane); //Para que al iniciar se expanda el panel de contabilidad (Se puede poner el que quiera)
 	}
 	
+	/**
+	 * Initializes the controller class. This method is automatically called
+	 * after the fxml file has been loaded.
+	 */
+	@FXML
+	private void initialize() {
+		// Añadir un listener a los botones de Nuevo Presupuesto y Nueva Factura
+		btnNuevaFactura.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	Inicio.setOpcionNueva("F");
+            	nuevoPresupuesto();
+            }
+        });
+		btnNuevoPresupuesto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	Inicio.setOpcionNueva("P");
+            	nuevoPresupuesto();
+            }
+        });
+	}
+	
+	/**
+	 * Abre la ventana de nuevo Presupuesto / Factura
+	 */
 	@FXML
 	private void nuevoPresupuesto(){
 		try {

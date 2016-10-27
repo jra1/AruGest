@@ -1,6 +1,7 @@
 package Modelo;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Cliente {
@@ -11,7 +12,11 @@ public class Cliente {
     private final StringProperty telf3;
     private final IntegerProperty direccionID;
 	
-    public Cliente(IntegerProperty idcliente, StringProperty nombre, StringProperty telf1, StringProperty telf2,
+    public Cliente() {
+    	this(null, null, null, null, null, null);
+	}
+
+	public Cliente(IntegerProperty idcliente, StringProperty nombre, StringProperty telf1, StringProperty telf2,
 			StringProperty telf3, IntegerProperty direccionID) {
 		super();
 		this.idcliente = idcliente;
@@ -20,6 +25,15 @@ public class Cliente {
 		this.telf2 = telf2;
 		this.telf3 = telf3;
 		this.direccionID = direccionID;
+	}
+	
+	public Cliente(String nombre, String telf1, String telf2){
+		this.nombre = new SimpleStringProperty(nombre);
+		this.telf1 = new SimpleStringProperty(telf1);
+		this.telf2 = new SimpleStringProperty(telf2);
+		this.idcliente = null;
+		this.telf3 = null;
+		this.direccionID = null;
 	}
     
     public IntegerProperty idclienteProperty() {

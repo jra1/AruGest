@@ -2,6 +2,7 @@ package Modelo;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Empresa {
@@ -20,6 +21,14 @@ public class Empresa {
 		this.cif = cif;
 		this.esProveedor = esProveedor;
 	}
+    
+    public Empresa(String nombre, String cif){
+    	this.idempresa = null;
+		this.clienteID = null;
+		this.nombre = new SimpleStringProperty(nombre);
+		this.cif = new SimpleStringProperty(cif);
+		this.esProveedor = null;
+    }
 	
     public IntegerProperty idempresaProperty() {
 		return this.idempresa;
