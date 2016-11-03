@@ -1,6 +1,7 @@
 package Modelo;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -27,11 +28,29 @@ public class Cliente {
 		this.direccionID = direccionID;
 	}
 	
-	public Cliente(String nombre, String telf1, String telf2){
+	public Cliente(Integer idcliente, String nombre, String telf1, String telf2){
+		this.idcliente = new SimpleIntegerProperty(idcliente);
 		this.nombre = new SimpleStringProperty(nombre);
 		this.telf1 = new SimpleStringProperty(telf1);
 		this.telf2 = new SimpleStringProperty(telf2);
+		this.telf3 = null;
+		this.direccionID = null;
+	}
+	
+	public Cliente(String nombre, String telf1, String telf2){
 		this.idcliente = null;
+		this.nombre = new SimpleStringProperty(nombre);
+		this.telf1 = new SimpleStringProperty(telf1);
+		this.telf2 = new SimpleStringProperty(telf2);
+		this.telf3 = null;
+		this.direccionID = null;
+	}
+	
+	public Cliente(String nombre){
+		this.idcliente = null;
+		this.nombre = new SimpleStringProperty(nombre);
+		this.telf1 = null;
+		this.telf2 = null;
 		this.telf3 = null;
 		this.direccionID = null;
 	}

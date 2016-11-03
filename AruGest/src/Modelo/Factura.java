@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javafx.beans.property.BooleanProperty;
@@ -26,6 +28,7 @@ public class Factura {
 	private final FloatProperty manoobra;
 	private final FloatProperty materiales;
 	private final FloatProperty grua;
+	private final FloatProperty importeTotal;
 	private final StringProperty estado;
 	private final FloatProperty porcentajedefocul;
     private final BooleanProperty rdefocultos;
@@ -34,11 +37,33 @@ public class Factura {
     private final BooleanProperty modificable;
     private final ObjectProperty documento;
     
+    public Factura(Date fecha, Float importeTotal){
+    	this.idfactura = null;
+		this.clienteID = null;
+		this.vehiculoID = null;
+		this.numfactura = null;
+		this.numpresupuesto = null;
+		this.numordenrep = null;
+		this.numresguardo = null;
+		this.fecha = new SimpleObjectProperty<Date>(fecha);
+		this.fechaentrega = null;
+		this.manoobra = null;
+		this.materiales = null;
+		this.grua = null;
+		this.estado = null;
+		this.porcentajedefocul = null;
+		this.rdefocultos = null;
+		this.permisopruebas = null;
+		this.nopiezas = null;
+		this.modificable = null;
+		this.documento = null;
+		this.importeTotal = new SimpleFloatProperty(importeTotal);
+    }
     public Factura(int clienteID, int vehiculoID, int numfactura, int numpresupuesto, int numordenrep,
     		int numresguardo, Date fecha, Date fechaentrega,
 			float manoobra, float materiales, float grua, String estado,
 			boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
-			boolean nopiezas, boolean modificable){
+			boolean nopiezas, boolean modificable, float importeTotal){
     	this.idfactura = null;
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
@@ -58,6 +83,7 @@ public class Factura {
 		this.nopiezas = new SimpleBooleanProperty(nopiezas);
 		this.modificable = new SimpleBooleanProperty(modificable);
 		this.documento = null;
+		this.importeTotal = new SimpleFloatProperty(importeTotal);
     }
     
 	public Factura(IntegerProperty idfactura, IntegerProperty clienteID, IntegerProperty vehiculoID,
@@ -65,7 +91,7 @@ public class Factura {
 			IntegerProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, StringProperty estado,
 			FloatProperty porcentajedefocul, BooleanProperty rdefocultos, BooleanProperty permisopruebas,
-			BooleanProperty nopiezas, BooleanProperty modificable, ObjectProperty documento) {
+			BooleanProperty nopiezas, BooleanProperty modificable, ObjectProperty documento, FloatProperty importeTotal) {
 		super();
 		this.idfactura = idfactura;
 		this.clienteID = clienteID;
@@ -86,6 +112,7 @@ public class Factura {
 		this.nopiezas = nopiezas;
 		this.modificable = modificable;
 		this.documento = documento;
+		this.importeTotal = importeTotal;
 	}
 
 	public IntegerProperty idfacturaProperty() {
@@ -195,6 +222,17 @@ public class Factura {
 
 	public ObjectProperty<Date> fechaProperty() {
 		return this.fecha;
+	}
+	
+	public ObjectProperty<Date> fechaPropertyFormat() {
+		try{
+			SimpleDateFormat mdyFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String mdy = mdyFormat.format(getFecha());
+			ObjectProperty<Date> o = new SimpleObjectProperty<Date>(mdyFormat.parse(mdy));
+			return o;
+		}catch(ParseException pe){
+			return null;
+		}
 	}
 	
 
@@ -371,5 +409,17 @@ public class Factura {
 	public void setDocumento(final Object documento) {
 		this.documentoProperty().set(documento);
 	}
+	public FloatProperty importeTotalProperty() {
+		return this.importeTotal;
+	}
+	
+	public float getImporteTotal() {
+		return this.importeTotalProperty().get();
+	}
+	
+	public void setImporteTotal(final float importeTotal) {
+		this.importeTotalProperty().set(importeTotal);
+	}
+	
 	
 }

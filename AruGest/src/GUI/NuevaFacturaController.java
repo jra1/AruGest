@@ -1,7 +1,10 @@
 package GUI;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+
+import javax.swing.JOptionPane;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -179,6 +182,8 @@ public class NuevaFacturaController {
 
 	private boolean esServicio = false; // Variable para controlar si es un
 										// servicio o un material
+	private int tipoCliente = 1; // 1-Particular, 2-Empresa
+
 	private Servicio servicio;
 	private Material material;
 
@@ -200,6 +205,7 @@ public class NuevaFacturaController {
 		// Inicializar los valores de los combos, la fecha y marcar el checkbox
 		// de presupuesto o factura
 		txtFecha.setValue(LocalDate.now());
+		txtFechaEntrega.setValue(txtFecha.getValue().plusDays(7));
 		comboTipoCliente.getItems().addAll("Particular", "Empresa");
 		comboTipoCliente.setValue("Particular");
 		comboTipoVehiculo.getItems().addAll("Turismo", "Furgoneta", "Camión", "Autobús", "Autocaravana", "Moto",
@@ -301,10 +307,12 @@ public class NuevaFacturaController {
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
 			txtNombre.setPrefWidth(300);
+			tipoCliente = 2;
 		} else {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
 			txtNombre.setPrefWidth(100);
+			tipoCliente = 1;
 		}
 	}
 
@@ -406,7 +414,9 @@ public class NuevaFacturaController {
 		float valorIva = 0; // LEER EL VALOR DEL IVA !!!!!!!!!!!!!!!!
 		float valorTotal = 0;
 
-		DecimalFormat dt = new DecimalFormat("##.##");
+		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+		simbolos.setDecimalSeparator('.');
+		DecimalFormat dt = new DecimalFormat("##.##",simbolos);
 
 		if (listaServicios.size() > 0) {
 			for (Servicio serv : listaServicios) {
@@ -418,8 +428,9 @@ public class NuevaFacturaController {
 																	// CAMBIARLO
 																	// POR EL
 																	// 46!!!!!!!!!!!!!!!!!!!!!
-				txtManoObra.setText("" + dt.format(valorServicio));
 			}
+			txtManoObra.setText("" + dt.format(valorServicio));
+			JOptionPane.showMessageDialog(null, "" + dt.format(valorServicio));
 		} else {
 			txtManoObra.setText("" + dt.format(0));
 		}
@@ -428,8 +439,8 @@ public class NuevaFacturaController {
 			for (Material mat : listaMaterial) {
 				float precioTotal = Float.parseFloat(mat.getPreciounit()) * mat.getCantidad();
 				valorMaterial += precioTotal;
-				txtMateriales.setText("" + dt.format(valorMaterial));
 			}
+			txtMateriales.setText("" + dt.format(valorMaterial));
 		} else {
 			txtMateriales.setText("" + dt.format(0));
 		}
@@ -515,7 +526,7 @@ public class NuevaFacturaController {
 			// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo si
 			// no lo está
 			Cliente c = null;
-			c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText());
+			c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
 			if (c == null) {
 				Direccion d = null;
 				c = new Cliente(txtNombre.getText() + " " + txtApellidos.getText(), txtFijo.getText(),
@@ -532,7 +543,7 @@ public class NuevaFacturaController {
 					e = new Empresa(txtNombre.getText(), txtDni.getText());
 				}
 				Inicio.CONEXION.guardarCliente(d, c, p, e);
-				c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText());
+				c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
 			}
 			Inicio.CLIENTE_ID = c.getIdcliente();
 
@@ -541,22 +552,43 @@ public class NuevaFacturaController {
 			Vehiculo v = null;
 			v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
 			if (v == null) {
-				int clienteID = Inicio.CONEXION.buscarClientePorDni(txtDni.getText()).getIdcliente();
-				v = new Vehiculo(clienteID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
+				// int clienteID =
+				// Inicio.CONEXION.buscarClientePorDni(txtDni.getText(),
+				// tipoCliente).getIdcliente();
+				v = new Vehiculo(Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
 						txtMatricula.getText(), tipoVehiculo);
 				Inicio.CONEXION.guardarVehiculo(v);
 				v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
 			}
 			Inicio.VEHICULO_ID = v.getIdvehiculo();
-			// 4º Guardar la factura -> 1º Factura 2º Servicios 3º Materiales
-			Factura f = new Factura(Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, Integer.parseInt(txtNumfactura.getText()),
-					Integer.parseInt(txtNumPresupuesto.getText()), Integer.parseInt(txtNumOrden.getText()), Integer.parseInt(txtNumResguardo.getText()),
-					Utilidades.LocalDateADate(txtFecha.getValue()),
+			// 4º Guardar la factura
+			int numFactura = 0;
+			int numPresupuesto = 0;
+			int numOrden = 0;
+			int numResguardo = 0;
+			Float porcentajeOcultos = 0f;
+			if (!txtNumfactura.getText().isEmpty()) {
+				numFactura = Integer.parseInt(txtNumfactura.getText());
+			}
+			if (!txtNumPresupuesto.getText().isEmpty()) {
+				numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
+			}
+			if (!txtNumOrden.getText().isEmpty()) {
+				numOrden = Integer.parseInt(txtNumOrden.getText());
+			}
+			if (!txtNumResguardo.getText().isEmpty()) {
+				numResguardo = Integer.parseInt(txtNumResguardo.getText());
+			}
+			if(!txtPorcentajeDefOcultos.getText().isEmpty()){
+				porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText());
+			}
+			Factura f = new Factura(Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, numFactura, numPresupuesto, numOrden,
+					numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
 					Utilidades.LocalDateADate(txtFechaEntrega.getValue()), Float.parseFloat(txtManoObra.getText()),
 					Float.parseFloat(txtMateriales.getText()), Float.parseFloat(txtOtros.getText()), "ESTADO",
-					chckbxRepararDefOcultos.isSelected(), Float.parseFloat(txtPorcentajeDefOcultos.getText()),
-					chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected());
-			Inicio.CONEXION.guardarFactura(f);
+					chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
+					chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), Float.parseFloat(txtTotal.getText()));
+			Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Atención");

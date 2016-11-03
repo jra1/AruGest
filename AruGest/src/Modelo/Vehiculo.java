@@ -20,6 +20,23 @@ public class Vehiculo {
 	private final StringProperty codradio;
 	private final IntegerProperty tipoID;
 	
+	//Constructor para la funcion buscarVehiculoPorMatricula
+	public Vehiculo(Integer idvehiculo, Integer clienteID, String matricula){
+		this.idvehiculo = new SimpleIntegerProperty(idvehiculo);;
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.marca = null;
+		this.modelo = null;
+		this.version = null;
+		this.matricula = new SimpleStringProperty(matricula);;
+		this.anio = null;
+		this.bastidor = null;
+		this.letrasmotor = null;
+		this.color = null;
+		this.codradio = null;
+		this.tipoID = null;
+	}
+	
+	//Constructor para factura
 	public Vehiculo(Integer clienteID, String marca, String modelo, String version, String matricula, Integer tipoID){
 		this.idvehiculo = null;
 		this.clienteID = new SimpleIntegerProperty(clienteID);
@@ -33,6 +50,21 @@ public class Vehiculo {
 		this.color = null;
 		this.codradio = null;
 		this.tipoID = new SimpleIntegerProperty(tipoID);
+	}
+	
+	public Vehiculo(String marca, String modelo, String version, String matricula){
+		this.idvehiculo = null;
+		this.clienteID = null;
+		this.marca = new SimpleStringProperty(marca);
+		this.modelo = new SimpleStringProperty(modelo);
+		this.version = new SimpleStringProperty(version);
+		this.matricula = new SimpleStringProperty(matricula);;
+		this.anio = null;
+		this.bastidor = null;
+		this.letrasmotor = null;
+		this.color = null;
+		this.codradio = null;
+		this.tipoID = null;
 	}
 	
 	public Vehiculo(IntegerProperty idvehiculo, IntegerProperty clienteID, StringProperty marca, StringProperty modelo,
