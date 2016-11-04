@@ -224,16 +224,10 @@ public class Factura {
 		return this.fecha;
 	}
 	
-	public ObjectProperty<Date> fechaPropertyFormat() {
-		try{
-			SimpleDateFormat mdyFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String mdy = mdyFormat.format(getFecha());
-			ObjectProperty<Date> o = new SimpleObjectProperty<Date>(mdyFormat.parse(mdy));
-			return o;
-		}catch(ParseException pe){
-			return null;
+	public StringProperty fechaPropertyFormat() {
+		SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+		return new SimpleStringProperty(formateador.format(getFecha()));
 		}
-	}
 	
 
 	public Date getFecha() {

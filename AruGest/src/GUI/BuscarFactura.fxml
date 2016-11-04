@@ -46,16 +46,17 @@
          <children>
             <TableView fx:id="tableFacturas" layoutX="14.0" layoutY="14.0" prefHeight="439.0" prefWidth="869.0">
               <columns>
-                <TableColumn fx:id="columnaNombre" prefWidth="362.0" text="Nombre cliente" />
-                <TableColumn fx:id="columnaVehiculo" prefWidth="505.0" text="Vehículo" />
-                  <TableColumn fx:id="columnaMatricula" prefWidth="233.0" text="Matrícula" />
-                  <TableColumn fx:id="columnaFecha" prefWidth="114.0" text="Fecha" />
+                <TableColumn fx:id="columnaNombre" prefWidth="250.0" text="Nombre cliente" />
+                <TableColumn fx:id="columnaVehiculo" prefWidth="114.0" text="Vehículo" />
+                  <TableColumn fx:id="columnaMatricula" prefWidth="244.0" text="Matrícula" />
+                  <TableColumn fx:id="columnaFecha" prefWidth="103.0" text="Fecha" />
                   <TableColumn fx:id="columnaImporte" prefWidth="505.0" text="Importe" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Button layoutX="903.0" layoutY="14.0" mnemonicParsing="false" onAction="#cargarFactura" text="Cargar factura" />
          </children>
       </Pane>
    </children>

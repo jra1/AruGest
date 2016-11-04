@@ -28,8 +28,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Pair;
+
 /**
- * Esta clase se utilizará para todas las funciones que tengan que hacer accesos a la base de datos, así como para crear y cerrar las conexiones.
+ * Esta clase se utilizará para todas las funciones que tengan que hacer accesos
+ * a la base de datos, así como para crear y cerrar las conexiones.
+ * 
  * @author Joseba
  *
  */
@@ -123,7 +126,7 @@ public class Conexion {
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
 							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, ESTADO, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
-							+ "NOPIEZAS, MODIFICABLE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							+ "NOPIEZAS, MODIFICABLE, IMPORTETOTAL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -144,6 +147,7 @@ public class Conexion {
 			st.setBoolean(15, f.isPermisopruebas());
 			st.setBoolean(16, f.isNopiezas());
 			st.setBoolean(17, f.isModificable());
+			st.setFloat(18, f.getImporteTotal());
 
 			// Ejecutamos la sentencia
 			int i = st.executeUpdate();
@@ -347,17 +351,14 @@ public class Conexion {
 						rs.getString("TELF2"));
 			}
 
-			String s = "";
-			if (c == null) {
-				s = "Cliente no encontrado";
-			} else {
-				s = "Cliente encontrado";
-			}
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText(s);
-
-			alert.showAndWait();
+			/*
+			 * String s = ""; if (c == null) { s = "Cliente no encontrado"; }
+			 * else { s = "Cliente encontrado"; } Alert alert = new
+			 * Alert(AlertType.INFORMATION); alert.setTitle("Atención");
+			 * alert.setHeaderText(s);
+			 * 
+			 * alert.showAndWait();
+			 */
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
@@ -410,8 +411,9 @@ public class Conexion {
 	 * @param fechaHasta
 	 * @return
 	 */
-	public ArrayList<FacturaClienteVehiculo> buscarFacturas(int numFactura, int numPresu, int numOrden, int numResgu, String nombre,
-			String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde, LocalDate fechaHasta) {
+	public ArrayList<FacturaClienteVehiculo> buscarFacturas(int numFactura, int numPresu, int numOrden, int numResgu,
+			String nombre, String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde,
+			LocalDate fechaHasta) {
 
 		String sql = "";
 		Factura f;
@@ -504,15 +506,22 @@ public class Conexion {
 					sql += "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
 				}
 			}
-			
-			//Para comparar fechas, hay que ponerlas en el formato aaaa-mm-dd
+
+			// Para comparar fechas, hay que ponerlas en el formato aaaa-mm-dd
 			sql += "AND FACTURA.FECHA BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'";
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				f = new Factura(rs.getDate("FECHA"), rs.getFloat("IMPORTETOTAL"));
-				c = new Cliente(rs.getString("NOMBRE"));
-				v = new Vehiculo(rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"));
+				f = new Factura(rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getInt("NUMFACTURA"),
+						rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"),
+						rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"),
+						rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"),
+						rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"),
+						rs.getFloat("IMPORTETOTAL"));
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"));
+				v = new Vehiculo(rs.getInt("CLIENTEID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("VERSION"),
+						rs.getString("MATRICULA"), rs.getInt("TIPOID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);
 				listaFacturas.add(fcv);
 			}

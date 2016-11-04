@@ -12,6 +12,7 @@ import Modelo.Cliente;
 import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Factura;
+import Modelo.FacturaClienteVehiculo;
 import Modelo.Material;
 import Modelo.Particular;
 import Modelo.Servicio;
@@ -191,6 +192,48 @@ public class NuevaFacturaController {
 
 	public void setMainAPP(Inicio p) {
 		main = p;
+	}
+	
+	/**
+	 * 
+	 */
+	public void cargaFactura(FacturaClienteVehiculo fce){
+		//Cargar datos factura
+		if(fce.getFactura().getNumfactura() != 0){
+			chckbxFactura.setSelected(true);
+			txtNumfactura.setText(""+fce.getFactura().getNumfactura());
+		}else{
+			chckbxFactura.setSelected(false);
+		}
+		if(fce.getFactura().getNumpresupuesto() != 0){
+			chckbxPresupuesto.setSelected(true);
+			txtNumPresupuesto.setText(""+fce.getFactura().getNumpresupuesto());
+		}else{
+			chckbxPresupuesto.setSelected(false);
+		}
+		if(fce.getFactura().getNumordenrep() != 0){
+			chckbxOrdenDeReparacion.setSelected(true);
+			txtNumOrden.setText(""+fce.getFactura().getNumordenrep());
+		}else{
+			chckbxOrdenDeReparacion.setSelected(false);
+		}
+		if(fce.getFactura().getNumresguardo() != 0){
+			chckbxResguardoDeposito.setSelected(true);
+			txtNumResguardo.setText(""+fce.getFactura().getNumresguardo());
+		}else{
+			chckbxResguardoDeposito.setSelected(false);
+		}
+		txtFecha.setValue(Utilidades.DateALocalDate(fce.getFactura().getFecha()));
+		//Cargar datos cliente (Direccion, Particular/Empresa leer de la BD desde aquí)
+		txtFijo.setText(fce.getCliente().getTelf1()); ///FALTA CARGAR LOS DATOS DE DIRECCION Y PARTICULAR/EMPRESA
+		txtMovil.setText(fce.getCliente().getTelf2());
+		//Cargar datos vehiculo
+		txtMatricula.setText(fce.getVehiculo().getMatricula());
+		txtMarca.setText(fce.getVehiculo().getMarca());
+		txtModelo.setText(fce.getVehiculo().getModelo());
+		txtVersion.setText(fce.getVehiculo().getVersion());
+		//Cargar servicios
+		//Cargar materiales
 	}
 
 	/**
@@ -430,7 +473,7 @@ public class NuevaFacturaController {
 																	// 46!!!!!!!!!!!!!!!!!!!!!
 			}
 			txtManoObra.setText("" + dt.format(valorServicio));
-			JOptionPane.showMessageDialog(null, "" + dt.format(valorServicio));
+			//JOptionPane.showMessageDialog(null, "" + dt.format(valorServicio));
 		} else {
 			txtManoObra.setText("" + dt.format(0));
 		}

@@ -1,5 +1,6 @@
 package GUI;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import Logica.Inicio;
 import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
 import Modelo.Servicio;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -19,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Clase controlador de la ventana BuscarFactura, que se utiliza para buscar en
@@ -73,7 +77,7 @@ public class BuscarFacturaController {
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, String> columnaMatricula;
 	@FXML
-	private TableColumn<FacturaClienteVehiculo, Date> columnaFecha;
+	private TableColumn<FacturaClienteVehiculo, String> columnaFecha;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporte;
 
@@ -145,13 +149,47 @@ public class BuscarFacturaController {
 			for(FacturaClienteVehiculo fce : lista){
 				listaFacturas.add(fce);
 				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaVehiculo.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().modeloProperty());
+				columnaVehiculo.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
-				columnaFecha.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaProperty());
+				columnaFecha.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
 				columnaImporte.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 				tableFacturas.setItems(listaFacturas);
-				
 			}
+		}
+	}
+	
+	/**
+	 * Función para cargar la factura seleccionada
+	 */
+	@FXML
+	private void cargarFactura(){
+		int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			try {
+	            // Cargar la vista de nueva factura
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
+	            AnchorPane nuevaFactura = (AnchorPane) loader.load();
+	        	
+	            // Poner la nueva vista en el centro del root
+	            main.getRoot().setCenter(nuevaFactura);
+	            
+	            // Poner el controlador de la nueva vista.
+	            NuevaFacturaController controller = loader.getController();
+	            controller.setMainAPP(main);
+	            controller.cargaFactura(listaFacturas.get(selectedIndex));
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		} else {
+			// Nada seleccionado.
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Atención");
+			alert.setHeaderText("Ninguna factura seleccionada");
+			alert.setContentText("Selecciona la factura que quieras cargar.");
+
+			alert.showAndWait();
 		}
 	}
 }

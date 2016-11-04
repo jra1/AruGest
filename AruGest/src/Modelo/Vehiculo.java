@@ -264,4 +264,8 @@ public class Vehiculo {
 		this.tipoIDProperty().set(tipoID);
 	}
 	
+	public StringProperty marcaModeloProperty() {
+		return new SimpleStringProperty(getMarca() + " " + getModelo() + " " + getVersion());
+	}
+	
 }
