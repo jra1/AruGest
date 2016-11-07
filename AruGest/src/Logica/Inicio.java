@@ -22,6 +22,9 @@ public static Conexion CONEXION = new Conexion();
 public static String OPCION_NUEVA = ""; //Para saber si se ha pulsado en Nueva Factura o Nuevo Presupuesto
 public static int CLIENTE_ID;
 public static int VEHICULO_ID;
+public static int FACTURA_ID;
+public static float PRECIO_HORA;
+public static float PRECIO_IVA;
 
 
 public void init() throws Exception {

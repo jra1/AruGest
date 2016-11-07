@@ -5,45 +5,49 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuscarClienteController">
    <children>
       <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
          <children>
-            <TextField layoutX="117.0" layoutY="9.0" prefHeight="25.0" prefWidth="308.0" />
-            <Label layoutX="14.0" layoutY="13.0" text="Nombre " />
-            <Label layoutX="14.0" layoutY="134.0" text="Población" />
-            <TextField layoutX="117.0" layoutY="130.0" prefHeight="25.0" prefWidth="139.0" />
-            <Label layoutX="433.0" layoutY="43.0" text="Matrícula vehículo" />
-            <TextField layoutX="536.0" layoutY="39.0" prefHeight="25.0" prefWidth="139.0" />
-            <Label layoutX="14.0" layoutY="43.0" text="Modelo vehículo" />
-            <TextField layoutX="117.0" layoutY="39.0" prefHeight="25.0" prefWidth="308.0" />
-            <Label layoutX="271.0" layoutY="72.0" text="Tlf. fijo" />
-            <TextField layoutX="327.0" layoutY="70.0" prefHeight="25.0" prefWidth="114.0" />
-            <TextField layoutX="327.0" layoutY="101.0" prefHeight="25.0" prefWidth="114.0" />
-            <Label layoutX="271.0" layoutY="105.0" text="Tlf. móvil" />
-            <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" text="Buscar" />
-            <TextField layoutX="117.0" layoutY="70.0" prefHeight="25.0" prefWidth="139.0" />
-            <Label layoutX="14.0" layoutY="74.0" text="D.N.I." />
-            <TextField layoutX="117.0" layoutY="101.0" prefHeight="25.0" prefWidth="139.0" />
-            <Label layoutX="14.0" layoutY="105.0" text="Domicilio" />
+            <TextField fx:id="txtNombre" layoutX="117.0" layoutY="44.0" prefHeight="25.0" prefWidth="308.0" promptText="Nombre cliente" />
+            <Label layoutX="14.0" layoutY="48.0" text="Nombre " />
+            <Label layoutX="14.0" layoutY="169.0" text="Población" />
+            <TextField fx:id="txtPoblacion" layoutX="117.0" layoutY="165.0" prefHeight="25.0" prefWidth="139.0" promptText="Población cliente" />
+            <Label layoutX="433.0" layoutY="78.0" text="Matrícula vehículo" />
+            <TextField fx:id="txtMatricula" layoutX="536.0" layoutY="74.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
+            <Label layoutX="14.0" layoutY="78.0" text="Modelo vehículo" />
+            <TextField fx:id="txtModelo" layoutX="117.0" layoutY="74.0" prefHeight="25.0" prefWidth="308.0" promptText="Modelo vehiculo" />
+            <Label layoutX="271.0" layoutY="107.0" text="Tlf. fijo" />
+            <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. fijo" />
+            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. Móvil" />
+            <Label layoutX="271.0" layoutY="140.0" text="Tlf. móvil" />
+            <Button fx:id="btnBuscar" layoutX="481.0" layoutY="136.0" mnemonicParsing="false" onAction="#buscarCliente" text="Buscar" />
+            <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
+            <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
+            <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />
+            <Label layoutX="14.0" layoutY="140.0" text="Domicilio" />
+            <Label layoutX="14.0" layoutY="14.0" text="Tipo cliente" />
+            <ComboBox fx:id="comboTipoCliente" layoutX="117.0" layoutY="10.0" prefWidth="150.0" />
          </children>
       </Pane>
       <Label layoutX="14.0" text="Buscar cliente" />
       <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
-      <Pane layoutX="14.0" layoutY="240.0" prefHeight="468.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
+      <Pane layoutX="11.0" layoutY="243.0" prefHeight="427.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView layoutX="14.0" layoutY="14.0" prefHeight="439.0" prefWidth="869.0">
+            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="14.0" prefHeight="368.0" prefWidth="869.0">
               <columns>
-                <TableColumn prefWidth="362.0" text="Nombre cliente" />
-                <TableColumn prefWidth="505.0" text="D.N.I." />
-                  <TableColumn prefWidth="233.0" text="Domicilio" />
-                  <TableColumn prefWidth="114.0" text="Población" />
-                  <TableColumn prefWidth="233.0" text="Teléfono" />
+                <TableColumn fx:id="columnaNombre" prefWidth="362.0" text="Nombre cliente" />
+                <TableColumn fx:id="columnaDni" prefWidth="505.0" text="D.N.I." />
+                  <TableColumn fx:id="columnaDomicilio" prefWidth="233.0" text="Domicilio" />
+                  <TableColumn fx:id="columnaPoblacion" prefWidth="114.0" text="Población" />
+                  <TableColumn fx:id="columnaTelf" prefWidth="233.0" text="Teléfono" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Button fx:id="btnVerCliente" layoutX="895.0" layoutY="14.0" mnemonicParsing="false" text="Ver cliente" />
+            <Button fx:id="btnHacerFactura" layoutX="895.0" layoutY="50.0" mnemonicParsing="false" text="Hacer factura" />
          </children>
       </Pane>
    </children>

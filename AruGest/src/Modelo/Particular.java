@@ -2,6 +2,7 @@ package Modelo;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,14 +13,14 @@ public class Particular {
 	private final StringProperty apellidos;
 	private final StringProperty nif;
 	
-	public Particular(IntegerProperty idparticular, IntegerProperty clienteID, StringProperty nombre,
-			StringProperty apellidos, StringProperty nif) {
+	public Particular(Integer idparticular, Integer clienteID, String nombre,
+			String apellidos, String nif) {
 		super();
-		this.idparticular = idparticular;
-		this.clienteID = clienteID;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.nif = nif;
+		this.idparticular = new SimpleIntegerProperty(idparticular);
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.nombre = new SimpleStringProperty(nombre);
+		this.apellidos = new SimpleStringProperty(apellidos);
+		this.nif = new SimpleStringProperty(nif);
 	}
 	
 	public Particular(String nombre, String apellidos, String nif){

@@ -82,8 +82,7 @@ public class BuscarFacturaController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporte;
 
 	private ObservableList<FacturaClienteVehiculo> listaFacturas = FXCollections.observableArrayList();
-	private Factura factura;
-
+	
 	private Inicio main;
 
 	public void setMainAPP(Inicio p) {

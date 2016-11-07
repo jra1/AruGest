@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1300.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuscarFacturaController">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuscarFacturaController">
    <children>
       <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
          <children>
@@ -42,9 +42,9 @@
       </Pane>
       <Label layoutX="14.0" text="Buscar" />
       <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
-      <Pane layoutX="14.0" layoutY="240.0" prefHeight="468.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
+      <Pane layoutX="11.0" layoutY="242.0" prefHeight="418.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tableFacturas" layoutX="14.0" layoutY="14.0" prefHeight="439.0" prefWidth="869.0">
+            <TableView fx:id="tableFacturas" layoutX="14.0" layoutY="14.0" prefHeight="391.0" prefWidth="869.0">
               <columns>
                 <TableColumn fx:id="columnaNombre" prefWidth="250.0" text="Nombre cliente" />
                 <TableColumn fx:id="columnaVehiculo" prefWidth="114.0" text="Vehículo" />

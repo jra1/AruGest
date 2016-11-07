@@ -61,7 +61,7 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo cliente">
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo cliente">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>

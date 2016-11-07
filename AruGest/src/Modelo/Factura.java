@@ -59,12 +59,12 @@ public class Factura {
 		this.documento = null;
 		this.importeTotal = new SimpleFloatProperty(importeTotal);
     }
-    public Factura(int clienteID, int vehiculoID, int numfactura, int numpresupuesto, int numordenrep,
+    public Factura(int idfactura, int clienteID, int vehiculoID, int numfactura, int numpresupuesto, int numordenrep,
     		int numresguardo, Date fecha, Date fechaentrega,
 			float manoobra, float materiales, float grua, String estado,
 			boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
 			boolean nopiezas, boolean modificable, float importeTotal){
-    	this.idfactura = null;
+    	this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
 		this.numfactura = new SimpleIntegerProperty(numfactura);

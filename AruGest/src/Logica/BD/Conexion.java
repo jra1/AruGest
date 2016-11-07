@@ -16,6 +16,7 @@ import org.h2.tools.Server;
 
 import Logica.Inicio;
 import Modelo.Cliente;
+import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Factura;
@@ -24,6 +25,7 @@ import Modelo.Material;
 import Modelo.Particular;
 import Modelo.Servicio;
 import Modelo.Vehiculo;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -394,7 +396,143 @@ public class Conexion {
 		}
 		return v;
 	}
+	
+	/**
+	 * Busca un Particular en la BD con el clienteID que se pasa como parámetro
+	 * 
+	 * @param clienteID
+	 * @return el Particular encontrado o null si no existe
+	 */
+	public Particular buscarParticularPorClienteID(int clienteID) {
+		String sql = "";
+		Particular p = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM PARTICULAR WHERE CLIENTEID = " + clienteID + "";
 
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+	
+	/**
+	 * Busca una Empresa en la BD con el clienteID que se pasa como parámetro
+	 * 
+	 * @param clienteID
+	 * @return la Empresa encontrada o null si no existe
+	 */
+	public Empresa buscarEmpresaPorClienteID(int clienteID) {
+		String sql = "";
+		Empresa e = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM EMPRESA WHERE CLIENTEID = " + clienteID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return e;
+	}
+
+	/**
+	 * Busca una Direccion en la BD por su ID
+	 * @param ID a buscar
+	 * @return Direccion encontrada o null si no existe
+	 */
+	public Direccion buscarDireccionPorID(int iddireccion){
+		String sql = "";
+		Direccion d = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM DIRECCION WHERE IDDIRECCION = " + iddireccion + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"), rs.getString("LETRA"), rs.getString("LOCALIDAD"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return d;
+	}
+	
+	/**
+	 * Busca en la BD los servicios de una factura
+	 * @param ID de la factura
+	 * @return ObservableList<Servicio> con los servicios
+	 */
+	public ObservableList<Servicio> buscarServiciosPorFacturaID(int facturaID){
+		String sql = "";
+		Servicio s = null;
+		ObservableList<Servicio> l =  FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM SERVICIO WHERE FACTURAID = " + facturaID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				s = new Servicio(rs.getInt("IDSERVICIO"), rs.getString("SERVICIO"), String.valueOf(rs.getFloat("HORAS")), rs.getInt("FACTURAID"), rs.getString("TIPOSERVICIO"));
+				l.add(s);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+	
+	/**
+	 * Busca en la BD los materiales de una factura
+	 * @param ID de la factura
+	 * @return ObservableList<Material> con los materiales
+	 */
+	public ObservableList<Material> buscarMaterialesPorFacturaID(int facturaID){
+		String sql = "";
+		Material m = null;
+		ObservableList<Material> l =  FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM MATERIAL WHERE FACTURAID = " + facturaID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				m = new Material(rs.getInt("IDMATERIAL"), rs.getString("NOMBRE"), String.valueOf(rs.getFloat("PRECIOUNIT")), rs.getInt("FACTURAID"), rs.getInt("CANTIDAD"), rs.getFloat("PRECIOTOTAL"));
+				l.add(m);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+	
 	/**
 	 * 
 	 * @param numFactura
@@ -512,15 +650,15 @@ public class Conexion {
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				f = new Factura(rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getInt("NUMFACTURA"),
+				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getInt("NUMFACTURA"),
 						rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"),
 						rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"),
 						rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"),
 						rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"),
 						rs.getFloat("IMPORTETOTAL"));
-				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"));
-				v = new Vehiculo(rs.getInt("CLIENTEID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("VERSION"),
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getInt("DIRECCIONID"));
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("VERSION"),
 						rs.getString("MATRICULA"), rs.getInt("TIPOID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);
 				listaFacturas.add(fcv);
@@ -531,6 +669,143 @@ public class Conexion {
 			e.printStackTrace();
 		}
 		return listaFacturas;
+	}
+	
+	public ArrayList<ClienteParticularEmpresaDireccion> buscarClientes(int tipo, String nombre, String modelo, String matricula, String dni, 
+			String fijo, String movil, String domicilio, String poblacion) {
+
+		String sql = "";
+		Cliente c;
+		Particular p = null;
+		Empresa e = null;
+		Direccion d = null;
+		ClienteParticularEmpresaDireccion cped;
+		ArrayList<ClienteParticularEmpresaDireccion> listaClientes = new ArrayList<ClienteParticularEmpresaDireccion>();
+		boolean esPrimero = true;
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			if(tipo == 1){
+				sql = "SELECT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
+				if (!dni.equalsIgnoreCase("")) {
+					if (esPrimero) {
+						sql += "WHERE PARTICULAR.NIF LIKE '%" + dni + "%' ";
+						esPrimero = false;
+					} else {
+						sql += "AND PARTICULAR.NIF LIKE '%" + dni + "%' ";
+					}
+				}
+				
+			}else if(tipo == 2){
+				sql = "SELECT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
+				if (!dni.equalsIgnoreCase("")) {
+					if (esPrimero) {
+						sql += "WHERE EMPRESA.CIF LIKE '%" + dni + "%' ";
+						esPrimero = false;
+					} else {
+						sql += "AND EMPRESA.CIF LIKE '%" + dni + "%' ";
+					}
+				}
+			}
+			
+			if (!nombre.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+				}
+			}
+			/*if (!modelo.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND VEHICULO.MODELO LIKE '%" + modelo + "%' ";
+				}
+			}
+			if (!matricula.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+				}
+			}*/
+			if (!fijo.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE CLIENTE.TELF1 = '" + fijo + "' ";
+					esPrimero = false;
+				} else {
+					sql += "AND CLIENTE.TELF1 = '" + fijo + "' ";
+				}
+			}
+			if (!movil.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE CLIENTE.TELF2 = '" + movil + "' ";
+					esPrimero = false;
+				} else {
+					sql += "AND CLIENTE.TELF2 = '" + movil + "' ";
+				}
+			}
+			if (!domicilio.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE DIRECCION.CALLE LIKE '%" + domicilio + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND DIRECCION.CALLE LIKE '%" + domicilio + "%' ";
+				}
+			}
+			if (!poblacion.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE DIRECCION.LOCALIDAD LIKE '%" + poblacion + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND DIRECCION.LOCALIDAD LIKE '%" + poblacion + "%' ";
+				}
+			}
+			
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getInt("DIRECCIONID"));
+				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"), rs.getString("LETRA"), rs.getString("LOCALIDAD"));
+				if(tipo == 1){
+					p = new Particular(rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
+				}else if(tipo == 2){
+					e = new Empresa(rs.getString("NOMBRE"), rs.getString("CIF"));
+				}
+				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
+				listaClientes.add(cped);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return listaClientes;
+	}
+	
+	/**
+	 * Guarda en las variables globales los precios de Hora y de IVA
+	 */
+	public void getPrecioHoraIva(){
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM AUXILIAR";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				Inicio.PRECIO_HORA = rs.getFloat("PRECIOHORA");
+				Inicio.PRECIO_IVA = rs.getFloat("IVA");
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public Connection getCon() {

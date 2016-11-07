@@ -182,7 +182,7 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button layoutX="861.0" layoutY="20.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="92.0" text="Añadir" />
+            <Button fx:id="btnAdd" layoutX="861.0" layoutY="20.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="92.0" text="Añadir" />
             <TableView fx:id="tableServicio" editable="true" layoutX="14.0" layoutY="62.0" prefHeight="317.0" prefWidth="436.0">
               <columns>
                 <TableColumn fx:id="columnaConceptoServ" prefWidth="384.0" text="SERVICIOS A REALIZAR" />
@@ -270,10 +270,10 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button layoutX="879.0" layoutY="267.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="25.0" prefWidth="118.0" text="Actualizar precio" />
+            <Button fx:id="btnActualizarPrecio" layoutX="879.0" layoutY="267.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="25.0" prefWidth="118.0" text="Actualizar precio" />
             <Button fx:id="btnQuitarServ" layoutX="14.0" layoutY="385.0" mnemonicParsing="false" onAction="#eliminarServicio" prefHeight="25.0" prefWidth="118.0" text="Eliminar servicio" />
             <Button fx:id="btnQuitarMat" layoutX="455.0" layoutY="386.0" mnemonicParsing="false" onAction="#eliminarMaterial" prefHeight="25.0" prefWidth="118.0" text="Eliminar material" />
-            <Button layoutX="879.0" layoutY="348.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Generar factura">
+            <Button fx:id="btnGenerarFactura" layoutX="879.0" layoutY="348.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Generar factura">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

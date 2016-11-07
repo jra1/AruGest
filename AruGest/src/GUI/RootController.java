@@ -104,6 +104,29 @@ public class RootController {
 	}
 	
 	/**
+	 * Abre la ventana de nuevo Cliente
+	 */
+	@FXML
+	private void nuevoCliente(){
+		try {
+            // Cargar la vista de nueva factura
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
+            AnchorPane nuevoCliente = (AnchorPane) loader.load();
+        	
+            // Poner la nueva vista en el centro del root
+            main.getRoot().setCenter(nuevoCliente);
+            
+            // Poner el controlador de la nueva vista.
+            ClienteController controller = loader.getController();
+            controller.setMainAPP(main);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	/**
 	 * Coloca la ventana de buscar cliente
 	 */
 	@FXML

@@ -37,8 +37,8 @@ public class Vehiculo {
 	}
 	
 	//Constructor para factura
-	public Vehiculo(Integer clienteID, String marca, String modelo, String version, String matricula, Integer tipoID){
-		this.idvehiculo = null;
+	public Vehiculo(Integer idvehiculo, Integer clienteID, String marca, String modelo, String version, String matricula, Integer tipoID){
+		this.idvehiculo = new SimpleIntegerProperty(idvehiculo);;
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.marca = new SimpleStringProperty(marca);
 		this.modelo = new SimpleStringProperty(modelo);

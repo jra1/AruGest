@@ -2,6 +2,8 @@ package Modelo;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -12,14 +14,14 @@ public class Empresa {
     private final StringProperty cif;
     private final BooleanProperty esProveedor;
 	
-    public Empresa(IntegerProperty idempresa, IntegerProperty clienteID, StringProperty nombre, StringProperty cif,
-			BooleanProperty esProveedor) {
+    public Empresa(Integer idempresa, Integer clienteID, String nombre, String cif,
+			Boolean esProveedor) {
 		super();
-		this.idempresa = idempresa;
-		this.clienteID = clienteID;
-		this.nombre = nombre;
-		this.cif = cif;
-		this.esProveedor = esProveedor;
+		this.idempresa = new SimpleIntegerProperty(idempresa);
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.nombre = new SimpleStringProperty(nombre);
+		this.cif = new SimpleStringProperty(cif);
+		this.esProveedor = new SimpleBooleanProperty(esProveedor);
 	}
     
     public Empresa(String nombre, String cif){

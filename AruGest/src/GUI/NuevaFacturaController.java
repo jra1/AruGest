@@ -3,6 +3,7 @@ package GUI;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -193,47 +194,100 @@ public class NuevaFacturaController {
 	public void setMainAPP(Inicio p) {
 		main = p;
 	}
-	
+
 	/**
 	 * 
 	 */
-	public void cargaFactura(FacturaClienteVehiculo fce){
-		//Cargar datos factura
-		if(fce.getFactura().getNumfactura() != 0){
+	public void cargaFactura(FacturaClienteVehiculo fce) {
+		Inicio.CLIENTE_ID = fce.getCliente().getIdcliente();
+		Inicio.VEHICULO_ID = fce.getVehiculo().getIdvehiculo();
+		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
+		// Cargar datos factura
+		if (fce.getFactura().getNumfactura() != 0) {
 			chckbxFactura.setSelected(true);
-			txtNumfactura.setText(""+fce.getFactura().getNumfactura());
-		}else{
+			txtNumfactura.setText("" + fce.getFactura().getNumfactura());
+		} else {
 			chckbxFactura.setSelected(false);
 		}
-		if(fce.getFactura().getNumpresupuesto() != 0){
+		if (fce.getFactura().getNumpresupuesto() != 0) {
 			chckbxPresupuesto.setSelected(true);
-			txtNumPresupuesto.setText(""+fce.getFactura().getNumpresupuesto());
-		}else{
+			txtNumPresupuesto.setText("" + fce.getFactura().getNumpresupuesto());
+		} else {
 			chckbxPresupuesto.setSelected(false);
 		}
-		if(fce.getFactura().getNumordenrep() != 0){
+		if (fce.getFactura().getNumordenrep() != 0) {
 			chckbxOrdenDeReparacion.setSelected(true);
-			txtNumOrden.setText(""+fce.getFactura().getNumordenrep());
-		}else{
+			txtNumOrden.setText("" + fce.getFactura().getNumordenrep());
+		} else {
 			chckbxOrdenDeReparacion.setSelected(false);
 		}
-		if(fce.getFactura().getNumresguardo() != 0){
+		if (fce.getFactura().getNumresguardo() != 0) {
 			chckbxResguardoDeposito.setSelected(true);
-			txtNumResguardo.setText(""+fce.getFactura().getNumresguardo());
-		}else{
+			txtNumResguardo.setText("" + fce.getFactura().getNumresguardo());
+		} else {
 			chckbxResguardoDeposito.setSelected(false);
 		}
 		txtFecha.setValue(Utilidades.DateALocalDate(fce.getFactura().getFecha()));
-		//Cargar datos cliente (Direccion, Particular/Empresa leer de la BD desde aquí)
-		txtFijo.setText(fce.getCliente().getTelf1()); ///FALTA CARGAR LOS DATOS DE DIRECCION Y PARTICULAR/EMPRESA
+
+		// Cargar datos cliente (Direccion, Particular/Empresa leer de la BD
+		// desde aquí)
+		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
+		if (p != null) {
+			comboTipoCliente.setValue("Particular");
+			txtNombre.setText(p.getNombre());
+			txtApellidos.setText(p.getApellidos());
+			txtDni.setText(p.getNif());
+		} else {
+			Empresa e = Inicio.CONEXION.buscarEmpresaPorClienteID(Inicio.CLIENTE_ID);
+			if (e != null) {
+				comboTipoCliente.setValue("Empresa");
+				txtNombre.setText(e.getNombre());
+				txtDni.setText(e.getCif());
+			}
+		}
+		if (fce.getCliente().getDireccionID() != 0) {
+			Direccion d = Inicio.CONEXION.buscarDireccionPorID(fce.getCliente().getDireccionID());
+			txtCalle.setText(d.getCalle());
+			txtNumero.setText("" + d.getNumero());
+			txtPiso.setText(d.getPiso());
+			txtLetra.setText(d.getLetra());
+			txtPoblacion.setText(d.getLocalidad());
+		}
+		txtFijo.setText(fce.getCliente().getTelf1()); 
 		txtMovil.setText(fce.getCliente().getTelf2());
-		//Cargar datos vehiculo
+
+		// Cargar datos vehiculo
 		txtMatricula.setText(fce.getVehiculo().getMatricula());
 		txtMarca.setText(fce.getVehiculo().getMarca());
 		txtModelo.setText(fce.getVehiculo().getModelo());
 		txtVersion.setText(fce.getVehiculo().getVersion());
-		//Cargar servicios
-		//Cargar materiales
+		comboTipoVehiculo.setValue(convertirTipoVehiculo(fce.getVehiculo().getTipoID()));
+		
+		// Cargar servicios
+		listaServicios = Inicio.CONEXION.buscarServiciosPorFacturaID(Inicio.FACTURA_ID);
+		columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+		columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
+		tableServicio.setItems(listaServicios);
+		
+		// Cargar materiales
+		listaMaterial = Inicio.CONEXION.buscarMaterialesPorFacturaID(Inicio.FACTURA_ID);
+		columnaConceptoMat.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+		columnaCantidadMat.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
+		columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
+		tableMaterial.setItems(listaMaterial);
+		
+		//Recoger piezas, modificable, fechaentrega...
+		chckbxModificable.setSelected(fce.getFactura().isModificable());
+		if(!fce.getFactura().isModificable()){
+			facturaNoModificable();
+		}
+		chckbxNoPiezas.setSelected(fce.getFactura().isNopiezas());
+		chckbxPermisoPruebas.setSelected(fce.getFactura().isPermisopruebas());
+		chckbxRepararDefOcultos.setSelected(fce.getFactura().isRdefocultos());
+		txtPorcentajeDefOcultos.setText(""+fce.getFactura().getPorcentajedefocul());
+		txtFechaEntrega.setValue(Utilidades.DateALocalDate(fce.getFactura().getFechaentrega()));
+		
+		actualizarPrecio();
 	}
 
 	/**
@@ -242,6 +296,10 @@ public class NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
+		//Obtener los precios de Hora e IVA
+		Inicio.CONEXION.getPrecioHoraIva();
+		lblIva.setText(Inicio.PRECIO_IVA + "%");
+		
 		tableServicio.setEditable(true);
 		tableMaterial.setEditable(true);
 
@@ -319,6 +377,54 @@ public class NuevaFacturaController {
 	}
 
 	/**
+	 * Función que pone los campos de la factura deshabilitados para que no se pueda modificar
+	 */
+	private void facturaNoModificable(){
+		chckbxFactura.setDisable(true);
+		chckbxModificable.setDisable(true);
+		chckbxNoPiezas.setDisable(true);
+		chckbxOrdenDeReparacion.setDisable(true);
+		chckbxPermisoPruebas.setDisable(true);
+		chckbxPresupuesto.setDisable(true);
+		chckbxRepararDefOcultos.setDisable(true);
+		chckbxResguardoDeposito.setDisable(true);
+		btnAdd.setDisable(true);
+		btnQuitarMat.setDisable(true);
+		btnQuitarServ.setDisable(true);
+		txtNumfactura.setDisable(true);
+		txtNumPresupuesto.setDisable(true);
+		txtNumOrden.setDisable(true);
+		txtNumResguardo.setDisable(true);
+		txtFecha.setDisable(true);
+		txtNombre.setDisable(true);
+		txtApellidos.setDisable(true);
+		txtCalle.setDisable(true);
+		txtNumero.setDisable(true);
+		txtPiso.setDisable(true);
+		txtLetra.setDisable(true);
+		txtPoblacion.setDisable(true);
+		txtDni.setDisable(true);
+		txtFijo.setDisable(true);
+		txtMovil.setDisable(true);
+		txtMarca.setDisable(true);
+		txtModelo.setDisable(true);
+		txtVersion.setDisable(true);
+		txtMatricula.setDisable(true);
+		txtKms.setDisable(true);
+		txtConcepto.setDisable(true);
+		txtCantidad.setDisable(true);
+		txtValor.setDisable(true);
+		txtManoObra.setDisable(true);
+		txtMateriales.setDisable(true);
+		txtOtros.setDisable(true);
+		txtSubtotal.setDisable(true);
+		txtIva.setDisable(true);
+		txtTotal.setDisable(true);
+		txtPorcentajeDefOcultos.setDisable(true);
+		txtFechaEntrega.setDisable(true);
+	}
+	
+	/**
 	 * Se comprueba el valor elegido en el combo para ocultar o no el TextField
 	 * de "Cantidad"
 	 * 
@@ -391,6 +497,34 @@ public class NuevaFacturaController {
 		}
 	}
 
+	private String convertirTipoVehiculo(int tipoID) {
+		String respuesta = "";
+		switch (tipoID) {
+		case 1:
+			respuesta =  "Turismo";
+			break;
+		case 2:
+			respuesta =  "Furgoneta";
+			break;
+		case 3:
+			respuesta =  "Camión";
+			break;
+		case 4:
+			respuesta =  "Autobús";
+			break;
+		case 5:
+			respuesta =  "Autocaravana";
+			break;
+		case 6:
+			respuesta =  "Moto";
+			break;
+		case 7:
+			respuesta =  "Remolque";
+			break;
+		}
+		return respuesta;
+	}
+
 	/**
 	 * Se añade el servicio o material a la tabla correspondiente
 	 */
@@ -454,26 +588,22 @@ public class NuevaFacturaController {
 		float valorServicio = 0;
 		float valorOtros = Float.parseFloat(txtOtros.getText());
 		float valorSubtotal = 0;
-		float valorIva = 0; // LEER EL VALOR DEL IVA !!!!!!!!!!!!!!!!
+		float valorIva = 0;
 		float valorTotal = 0;
 
 		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
 		simbolos.setDecimalSeparator('.');
-		DecimalFormat dt = new DecimalFormat("##.##",simbolos);
+		DecimalFormat dt = new DecimalFormat("##.##", simbolos);
 
 		if (listaServicios.size() > 0) {
 			for (Servicio serv : listaServicios) {
 				String horasComa = serv.getHoras();
 				String horasPunto = horasComa.replace(",", ".");
-				valorServicio += Float.parseFloat(horasPunto) * 46; // LEER EL
-																	// PRECIO DE
-																	// HORA Y
-																	// CAMBIARLO
-																	// POR EL
-																	// 46!!!!!!!!!!!!!!!!!!!!!
+				valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA; 
 			}
 			txtManoObra.setText("" + dt.format(valorServicio));
-			//JOptionPane.showMessageDialog(null, "" + dt.format(valorServicio));
+			// JOptionPane.showMessageDialog(null, "" +
+			// dt.format(valorServicio));
 		} else {
 			txtManoObra.setText("" + dt.format(0));
 		}
@@ -491,8 +621,7 @@ public class NuevaFacturaController {
 		valorSubtotal = valorMaterial + valorServicio + valorOtros;
 		txtSubtotal.setText("" + dt.format(valorSubtotal));
 
-		valorIva = (valorSubtotal * 16) / 100; // CAMBIAR EL 21 POR EL VALOR DEL
-												// IVA!!!!!!!!!!!!!!!!!!!
+		valorIva = (valorSubtotal * Inicio.PRECIO_IVA) / 100; 
 		txtIva.setText("" + dt.format(valorIva));
 
 		valorTotal = valorSubtotal + valorIva;
@@ -598,7 +727,7 @@ public class NuevaFacturaController {
 				// int clienteID =
 				// Inicio.CONEXION.buscarClientePorDni(txtDni.getText(),
 				// tipoCliente).getIdcliente();
-				v = new Vehiculo(Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
+				v = new Vehiculo(1, Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
 						txtMatricula.getText(), tipoVehiculo);
 				Inicio.CONEXION.guardarVehiculo(v);
 				v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
@@ -622,15 +751,15 @@ public class NuevaFacturaController {
 			if (!txtNumResguardo.getText().isEmpty()) {
 				numResguardo = Integer.parseInt(txtNumResguardo.getText());
 			}
-			if(!txtPorcentajeDefOcultos.getText().isEmpty()){
+			if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
 				porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText());
 			}
-			Factura f = new Factura(Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, numFactura, numPresupuesto, numOrden,
+			Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, numFactura, numPresupuesto, numOrden,
 					numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
 					Utilidades.LocalDateADate(txtFechaEntrega.getValue()), Float.parseFloat(txtManoObra.getText()),
 					Float.parseFloat(txtMateriales.getText()), Float.parseFloat(txtOtros.getText()), "ESTADO",
-					chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
-					chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), Float.parseFloat(txtTotal.getText()));
+					chckbxRepararDefOcultos.isSelected(), porcentajeOcultos, chckbxPermisoPruebas.isSelected(),
+					chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), Float.parseFloat(txtTotal.getText()));
 			Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
