@@ -331,6 +331,30 @@ public class Conexion {
 		}
 		return res;
 	}
+	
+	/**
+	 * Elimina de la base de datos el vehículo cuyo id se le pasa como parámetro
+	 * 
+	 * @param id del vehiculo a eliminar
+	 * @return true si se eliminó correctamente, false si no
+	 */
+	public boolean eliminarVehiculo(int id) {
+		boolean res = true;
+		try {
+			// Se prepara la sentencia
+			java.sql.PreparedStatement st = getCon().prepareStatement(
+					"DELETE FROM VEHICULO WHERE IDVEHICULO = " + id);
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
 
 	/**
 	 * Busca un cliente en la BD por su DNI

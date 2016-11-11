@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.Optional;
+
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
@@ -9,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -252,8 +255,27 @@ public class ClienteController {
     private void eliminarVehiculo() {
         int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            tableVehiculo.getItems().remove(selectedIndex);
             //BORRAR DE LA BASE DE DATOS
+        	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("Eliminar vehículo");
+        	alert.setHeaderText("¿Estás seguro que quieres eliminar este vehículo?");
+        	//alert.setContentText("Are you ok with this?");
+
+        	Optional<ButtonType> result = alert.showAndWait();
+        	if (result.get() == ButtonType.OK){
+        		if(Inicio.CONEXION.eliminarVehiculo(tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo())){
+        			tableVehiculo.getItems().remove(selectedIndex);
+        		}else{
+        			alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error");
+        			alert.setHeaderText("Error al eliminar el vehículo");
+        			alert.setContentText("Ocurrió un error al eliminar el vehículo de la base de datos.");
+        			
+        			alert.showAndWait();
+        		}
+        	} else {
+        	    // ... user chose CANCEL or closed the dialog
+        	}
         } else {
             // Nothing selected.
         	Alert alert = new Alert(AlertType.WARNING);
