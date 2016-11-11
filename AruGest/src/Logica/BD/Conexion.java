@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -29,7 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.util.Pair;
 
 /**
  * Esta clase se utilizará para todas las funciones que tengan que hacer accesos
@@ -301,13 +298,15 @@ public class Conexion {
 	 * @param vehiculo
 	 *            a guardar en la BD, el ID del cliente dueño y el tipo de
 	 *            vehiculo que es
+	 * @return true si se guardo correctamente, false si no
 	 */
-	public void guardarVehiculo(Vehiculo v) {
+	public boolean guardarVehiculo(Vehiculo v) {
+		boolean res = true;
 		try {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
-					"INSERT INTO VEHICULO (CLIENTEID, MARCA, MODELO, VERSION, MATRICULA, TIPOID) VALUES (?,?,?,?,?,?)",
+					"INSERT INTO VEHICULO (CLIENTEID, MARCA, MODELO, VERSION, MATRICULA, ANIO, BASTIDOR, LETRASMOTOR, COLOR, CODRADIO, TIPOID) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -316,13 +315,21 @@ public class Conexion {
 			st.setString(3, v.getModelo());
 			st.setString(4, v.getVersion());
 			st.setString(5, v.getMatricula());
-			st.setInt(6, v.getTipoID());
+			st.setInt(6, v.getAnio());
+			st.setString(7, v.getBastidor());
+			st.setString(8, v.getLetrasmotor());
+			st.setString(9, v.getColor());
+			st.setString(10, v.getCodradio());
+			st.setInt(11, v.getTipoID());
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
+			res = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			res = false;
 		}
+		return res;
 	}
 
 	/**
@@ -396,7 +403,7 @@ public class Conexion {
 		}
 		return v;
 	}
-	
+
 	/**
 	 * Busca un Particular en la BD con el clienteID que se pasa como parámetro
 	 * 
@@ -414,7 +421,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
+				p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"),
+						rs.getString("APELLIDOS"), rs.getString("NIF"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -423,7 +431,7 @@ public class Conexion {
 		}
 		return p;
 	}
-	
+
 	/**
 	 * Busca una Empresa en la BD con el clienteID que se pasa como parámetro
 	 * 
@@ -441,7 +449,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
+				e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("CLIENTEID"), rs.getString("NOMBRE"),
+						rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -453,10 +462,12 @@ public class Conexion {
 
 	/**
 	 * Busca una Direccion en la BD por su ID
-	 * @param ID a buscar
+	 * 
+	 * @param ID
+	 *            a buscar
 	 * @return Direccion encontrada o null si no existe
 	 */
-	public Direccion buscarDireccionPorID(int iddireccion){
+	public Direccion buscarDireccionPorID(int iddireccion) {
 		String sql = "";
 		Direccion d = null;
 		try {
@@ -467,7 +478,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"), rs.getString("LETRA"), rs.getString("LOCALIDAD"));
+				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
+						rs.getString("LETRA"), rs.getString("LOCALIDAD"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -476,16 +488,18 @@ public class Conexion {
 		}
 		return d;
 	}
-	
+
 	/**
 	 * Busca en la BD los servicios de una factura
-	 * @param ID de la factura
+	 * 
+	 * @param ID
+	 *            de la factura
 	 * @return ObservableList<Servicio> con los servicios
 	 */
-	public ObservableList<Servicio> buscarServiciosPorFacturaID(int facturaID){
+	public ObservableList<Servicio> buscarServiciosPorFacturaID(int facturaID) {
 		String sql = "";
 		Servicio s = null;
-		ObservableList<Servicio> l =  FXCollections.observableArrayList();
+		ObservableList<Servicio> l = FXCollections.observableArrayList();
 		try {
 			// Se prepara la sentencia para buscar los datos del cliente
 			Statement st = getCon().createStatement();
@@ -494,7 +508,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				s = new Servicio(rs.getInt("IDSERVICIO"), rs.getString("SERVICIO"), String.valueOf(rs.getFloat("HORAS")), rs.getInt("FACTURAID"), rs.getString("TIPOSERVICIO"));
+				s = new Servicio(rs.getInt("IDSERVICIO"), rs.getString("SERVICIO"),
+						String.valueOf(rs.getFloat("HORAS")), rs.getInt("FACTURAID"), rs.getString("TIPOSERVICIO"));
 				l.add(s);
 			}
 			// Se cierra la conexion
@@ -504,16 +519,18 @@ public class Conexion {
 		}
 		return l;
 	}
-	
+
 	/**
 	 * Busca en la BD los materiales de una factura
-	 * @param ID de la factura
+	 * 
+	 * @param ID
+	 *            de la factura
 	 * @return ObservableList<Material> con los materiales
 	 */
-	public ObservableList<Material> buscarMaterialesPorFacturaID(int facturaID){
+	public ObservableList<Material> buscarMaterialesPorFacturaID(int facturaID) {
 		String sql = "";
 		Material m = null;
-		ObservableList<Material> l =  FXCollections.observableArrayList();
+		ObservableList<Material> l = FXCollections.observableArrayList();
 		try {
 			// Se prepara la sentencia para buscar los datos del cliente
 			Statement st = getCon().createStatement();
@@ -522,7 +539,9 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				m = new Material(rs.getInt("IDMATERIAL"), rs.getString("NOMBRE"), String.valueOf(rs.getFloat("PRECIOUNIT")), rs.getInt("FACTURAID"), rs.getInt("CANTIDAD"), rs.getFloat("PRECIOTOTAL"));
+				m = new Material(rs.getInt("IDMATERIAL"), rs.getString("NOMBRE"),
+						String.valueOf(rs.getFloat("PRECIOUNIT")), rs.getInt("FACTURAID"), rs.getInt("CANTIDAD"),
+						rs.getFloat("PRECIOTOTAL"));
 				l.add(m);
 			}
 			// Se cierra la conexion
@@ -532,7 +551,7 @@ public class Conexion {
 		}
 		return l;
 	}
-	
+
 	/**
 	 * 
 	 * @param numFactura
@@ -650,16 +669,17 @@ public class Conexion {
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getInt("NUMFACTURA"),
-						rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"),
-						rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"),
-						rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
-						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"),
-						rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"),
-						rs.getFloat("IMPORTETOTAL"));
-				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getInt("DIRECCIONID"));
-				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"), rs.getString("MODELO"), rs.getString("VERSION"),
-						rs.getString("MATRICULA"), rs.getInt("TIPOID"));
+				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
+						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
+						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"),
+						rs.getInt("TIPOID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);
 				listaFacturas.add(fcv);
 			}
@@ -670,9 +690,9 @@ public class Conexion {
 		}
 		return listaFacturas;
 	}
-	
-	public ArrayList<ClienteParticularEmpresaDireccion> buscarClientes(int tipo, String nombre, String modelo, String matricula, String dni, 
-			String fijo, String movil, String domicilio, String poblacion) {
+
+	public ArrayList<ClienteParticularEmpresaDireccion> buscarClientes(int tipo, String nombre, String modelo,
+			String matricula, String dni, String fijo, String movil, String domicilio, String poblacion) {
 
 		String sql = "";
 		Cliente c;
@@ -685,7 +705,7 @@ public class Conexion {
 		try {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();
-			if(tipo == 1){
+			if (tipo == 1) {
 				sql = "SELECT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
@@ -695,8 +715,8 @@ public class Conexion {
 						sql += "AND PARTICULAR.NIF LIKE '%" + dni + "%' ";
 					}
 				}
-				
-			}else if(tipo == 2){
+
+			} else if (tipo == 2) {
 				sql = "SELECT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
@@ -707,7 +727,7 @@ public class Conexion {
 					}
 				}
 			}
-			
+
 			if (!nombre.equalsIgnoreCase("")) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
@@ -716,22 +736,15 @@ public class Conexion {
 					sql += "AND CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
 				}
 			}
-			/*if (!modelo.equalsIgnoreCase("")) {
-				if (esPrimero) {
-					sql += "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' ";
-					esPrimero = false;
-				} else {
-					sql += "AND VEHICULO.MODELO LIKE '%" + modelo + "%' ";
-				}
-			}
-			if (!matricula.equalsIgnoreCase("")) {
-				if (esPrimero) {
-					sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
-					esPrimero = false;
-				} else {
-					sql += "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
-				}
-			}*/
+			/*
+			 * if (!modelo.equalsIgnoreCase("")) { if (esPrimero) { sql +=
+			 * "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' "; esPrimero =
+			 * false; } else { sql += "AND VEHICULO.MODELO LIKE '%" + modelo +
+			 * "%' "; } } if (!matricula.equalsIgnoreCase("")) { if (esPrimero)
+			 * { sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+			 * esPrimero = false; } else { sql +=
+			 * "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' "; } }
+			 */
 			if (!fijo.equalsIgnoreCase("")) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.TELF1 = '" + fijo + "' ";
@@ -764,14 +777,17 @@ public class Conexion {
 					sql += "AND DIRECCION.LOCALIDAD LIKE '%" + poblacion + "%' ";
 				}
 			}
-			
+
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getInt("DIRECCIONID"));
-				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"), rs.getString("LETRA"), rs.getString("LOCALIDAD"));
-				if(tipo == 1){
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
+						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+						rs.getString("PROVINCIA"));
+				if (tipo == 1) {
 					p = new Particular(rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
-				}else if(tipo == 2){
+				} else if (tipo == 2) {
 					e = new Empresa(rs.getString("NOMBRE"), rs.getString("CIF"));
 				}
 				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
@@ -784,11 +800,44 @@ public class Conexion {
 		}
 		return listaClientes;
 	}
-	
+
+	/**
+	 * Busca en la BD los vehículos de un cliente
+	 * 
+	 * @param ID
+	 *            del cliente
+	 * @return ObservableList<Vehiculo> con los vehículos
+	 */
+	public ObservableList<Vehiculo> buscarVehiculosPorClienteID(int clienteID) {
+		String sql = "";
+		Vehiculo v = null;
+		ObservableList<Vehiculo> l = FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULO WHERE CLIENTEID = " + clienteID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"));
+				l.add(v);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+
 	/**
 	 * Guarda en las variables globales los precios de Hora y de IVA
 	 */
-	public void getPrecioHoraIva(){
+	public void getPrecioHoraIva() {
 		String sql = "";
 		try {
 			// Se prepara la sentencia

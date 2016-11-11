@@ -1,22 +1,22 @@
 package GUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Logica.Inicio;
 import Modelo.ClienteParticularEmpresaDireccion;
-import Modelo.FacturaClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 
 public class BuscarClienteController {
 
@@ -125,6 +125,42 @@ public class BuscarClienteController {
 				columnaTelf.setCellValueFactory(cellData -> cellData.getValue().getCliente().telf1Property());
 				tableClientes.setItems(listaClientes);
 			}
+		}
+	}
+	
+	/**
+	 * Función para cargar el cliente seleccionado
+	 */
+	@FXML
+	private void cargarCliente(){
+		int selectedIndex = tableClientes.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			try {
+	            // Cargar la vista de Cliente
+	            FXMLLoader loader = new FXMLLoader();
+	            loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
+	            AnchorPane cliente = (AnchorPane) loader.load();
+	        	
+	            // Poner la nueva vista en el centro del root
+	            main.getRoot().setCenter(cliente);
+	            
+	            // Poner el controlador de la nueva vista.
+	            ClienteController controller = loader.getController();
+	            controller.setMainAPP(main);
+	            Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
+	            controller.cargaCliente(listaClientes.get(selectedIndex));
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		} else {
+			// Nada seleccionado.
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Atención");
+			alert.setHeaderText("Ningún cliente seleccionado");
+			alert.setContentText("Selecciona el cliente que quieras cargar.");
+
+			alert.showAndWait();
 		}
 	}
 }

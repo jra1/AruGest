@@ -196,7 +196,7 @@ public class NuevaFacturaController {
 	}
 
 	/**
-	 * 
+	 * Carga una factura
 	 */
 	public void cargaFactura(FacturaClienteVehiculo fce) {
 		Inicio.CLIENTE_ID = fce.getCliente().getIdcliente();
@@ -253,7 +253,7 @@ public class NuevaFacturaController {
 			txtLetra.setText(d.getLetra());
 			txtPoblacion.setText(d.getLocalidad());
 		}
-		txtFijo.setText(fce.getCliente().getTelf1()); 
+		txtFijo.setText(fce.getCliente().getTelf1());
 		txtMovil.setText(fce.getCliente().getTelf2());
 
 		// Cargar datos vehiculo
@@ -261,32 +261,32 @@ public class NuevaFacturaController {
 		txtMarca.setText(fce.getVehiculo().getMarca());
 		txtModelo.setText(fce.getVehiculo().getModelo());
 		txtVersion.setText(fce.getVehiculo().getVersion());
-		comboTipoVehiculo.setValue(convertirTipoVehiculo(fce.getVehiculo().getTipoID()));
-		
+		comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(fce.getVehiculo().getTipoID()));
+
 		// Cargar servicios
 		listaServicios = Inicio.CONEXION.buscarServiciosPorFacturaID(Inicio.FACTURA_ID);
 		columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
 		columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 		tableServicio.setItems(listaServicios);
-		
+
 		// Cargar materiales
 		listaMaterial = Inicio.CONEXION.buscarMaterialesPorFacturaID(Inicio.FACTURA_ID);
 		columnaConceptoMat.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
 		columnaCantidadMat.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
 		columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
 		tableMaterial.setItems(listaMaterial);
-		
-		//Recoger piezas, modificable, fechaentrega...
+
+		// Recoger piezas, modificable, fechaentrega...
 		chckbxModificable.setSelected(fce.getFactura().isModificable());
-		if(!fce.getFactura().isModificable()){
+		if (!fce.getFactura().isModificable()) {
 			facturaNoModificable();
 		}
 		chckbxNoPiezas.setSelected(fce.getFactura().isNopiezas());
 		chckbxPermisoPruebas.setSelected(fce.getFactura().isPermisopruebas());
 		chckbxRepararDefOcultos.setSelected(fce.getFactura().isRdefocultos());
-		txtPorcentajeDefOcultos.setText(""+fce.getFactura().getPorcentajedefocul());
+		txtPorcentajeDefOcultos.setText("" + fce.getFactura().getPorcentajedefocul());
 		txtFechaEntrega.setValue(Utilidades.DateALocalDate(fce.getFactura().getFechaentrega()));
-		
+
 		actualizarPrecio();
 	}
 
@@ -296,10 +296,10 @@ public class NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
-		//Obtener los precios de Hora e IVA
+		// Obtener los precios de Hora e IVA
 		Inicio.CONEXION.getPrecioHoraIva();
 		lblIva.setText(Inicio.PRECIO_IVA + "%");
-		
+
 		tableServicio.setEditable(true);
 		tableMaterial.setEditable(true);
 
@@ -377,9 +377,10 @@ public class NuevaFacturaController {
 	}
 
 	/**
-	 * Función que pone los campos de la factura deshabilitados para que no se pueda modificar
+	 * Función que pone los campos de la factura deshabilitados para que no se
+	 * pueda modificar
 	 */
-	private void facturaNoModificable(){
+	private void facturaNoModificable() {
 		chckbxFactura.setDisable(true);
 		chckbxModificable.setDisable(true);
 		chckbxNoPiezas.setDisable(true);
@@ -423,7 +424,7 @@ public class NuevaFacturaController {
 		txtPorcentajeDefOcultos.setDisable(true);
 		txtFechaEntrega.setDisable(true);
 	}
-	
+
 	/**
 	 * Se comprueba el valor elegido en el combo para ocultar o no el TextField
 	 * de "Cantidad"
@@ -465,66 +466,10 @@ public class NuevaFacturaController {
 		}
 	}
 
-	/**
-	 * Se comprueba el valor elegido en el combo de tipo vehiculo para definir
-	 * el valor de la variable tipoVehiculo
-	 * 
-	 * @param valor
-	 */
-	private void comprobarComboTipoVehiculo(String valor) {
-		switch (valor) {
-		case "Turismo":
-			tipoVehiculo = 1;
-			break;
-		case "Furgoneta":
-			tipoVehiculo = 2;
-			break;
-		case "Camión":
-			tipoVehiculo = 3;
-			break;
-		case "Autobús":
-			tipoVehiculo = 4;
-			break;
-		case "Autocaravana":
-			tipoVehiculo = 5;
-			break;
-		case "Moto":
-			tipoVehiculo = 6;
-			break;
-		case "Remolque":
-			tipoVehiculo = 7;
-			break;
-		}
+	
+	private void comprobarComboTipoVehiculo(String valor){
+		tipoVehiculo = Utilidades.StringToTipoID(valor);
 	}
-
-	private String convertirTipoVehiculo(int tipoID) {
-		String respuesta = "";
-		switch (tipoID) {
-		case 1:
-			respuesta =  "Turismo";
-			break;
-		case 2:
-			respuesta =  "Furgoneta";
-			break;
-		case 3:
-			respuesta =  "Camión";
-			break;
-		case 4:
-			respuesta =  "Autobús";
-			break;
-		case 5:
-			respuesta =  "Autocaravana";
-			break;
-		case 6:
-			respuesta =  "Moto";
-			break;
-		case 7:
-			respuesta =  "Remolque";
-			break;
-		}
-		return respuesta;
-	}
-
 	/**
 	 * Se añade el servicio o material a la tabla correspondiente
 	 */
@@ -599,7 +544,7 @@ public class NuevaFacturaController {
 			for (Servicio serv : listaServicios) {
 				String horasComa = serv.getHoras();
 				String horasPunto = horasComa.replace(",", ".");
-				valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA; 
+				valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA;
 			}
 			txtManoObra.setText("" + dt.format(valorServicio));
 			// JOptionPane.showMessageDialog(null, "" +
@@ -621,7 +566,7 @@ public class NuevaFacturaController {
 		valorSubtotal = valorMaterial + valorServicio + valorOtros;
 		txtSubtotal.setText("" + dt.format(valorSubtotal));
 
-		valorIva = (valorSubtotal * Inicio.PRECIO_IVA) / 100; 
+		valorIva = (valorSubtotal * Inicio.PRECIO_IVA) / 100;
 		txtIva.setText("" + dt.format(valorIva));
 
 		valorTotal = valorSubtotal + valorIva;
@@ -729,8 +674,16 @@ public class NuevaFacturaController {
 				// tipoCliente).getIdcliente();
 				v = new Vehiculo(1, Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
 						txtMatricula.getText(), tipoVehiculo);
-				Inicio.CONEXION.guardarVehiculo(v);
-				v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
+				if(Inicio.CONEXION.guardarVehiculo(v)){
+					v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());					
+				}else{
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Error al guardar el vehículo");
+					alert.setContentText("Ocurrió un error al guardar el vehículo en la base de datos.");
+
+					alert.showAndWait();
+				}
 			}
 			Inicio.VEHICULO_ID = v.getIdvehiculo();
 			// 4º Guardar la factura

@@ -14,7 +14,12 @@ public class Cliente {
     private final IntegerProperty direccionID;
 	
     public Cliente() {
-    	this(null, null, null, null, null, null);
+    	this.idcliente = null;
+		this.nombre = null;
+		this.telf1 = null;
+		this.telf2 = null;
+		this.telf3 = null;
+		this.direccionID = null;
 	}
 
 	public Cliente(IntegerProperty idcliente, StringProperty nombre, StringProperty telf1, StringProperty telf2,
@@ -37,12 +42,12 @@ public class Cliente {
 		this.direccionID = null;
 	}
 	
-	public Cliente(Integer idcliente, String nombre, String telf1, String telf2, Integer direccionID){
+	public Cliente(Integer idcliente, String nombre, String telf1, String telf2, String telf3, Integer direccionID){
 		this.idcliente = new SimpleIntegerProperty(idcliente);
 		this.nombre = new SimpleStringProperty(nombre);
 		this.telf1 = new SimpleStringProperty(telf1);
 		this.telf2 = new SimpleStringProperty(telf2);
-		this.telf3 = null;
+		this.telf3 = new SimpleStringProperty(telf3);
 		this.direccionID = new SimpleIntegerProperty(direccionID);
 	}
 	

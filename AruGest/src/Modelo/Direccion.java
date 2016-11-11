@@ -22,9 +22,21 @@ public class Direccion {
 		this.piso = new SimpleStringProperty(piso);
 		this.letra = new SimpleStringProperty(letra);
 		this.localidad = new SimpleStringProperty(localidad);
-		this.iddireccion = new SimpleIntegerProperty(0);;
+		this.iddireccion = new SimpleIntegerProperty(0);
 		this.provincia = null;
 		this.cpostal = null;
+	}
+    
+    public Direccion(String calle, Integer numero, String piso, String letra, Integer cpostal,
+			String localidad, String provincia) {
+    	this.iddireccion = new SimpleIntegerProperty(0);
+		this.calle = new SimpleStringProperty(calle);
+		this.numero = new SimpleIntegerProperty(numero);
+		this.piso = new SimpleStringProperty(piso);
+		this.letra = new SimpleStringProperty(letra);
+		this.cpostal = new SimpleIntegerProperty(cpostal);
+		this.localidad = new SimpleStringProperty(localidad);
+		this.provincia = new SimpleStringProperty(provincia);
 	}
 
 	public Direccion(IntegerProperty iddireccion, StringProperty calle, IntegerProperty numero, StringProperty piso,

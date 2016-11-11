@@ -28,6 +28,8 @@ public class RootController {
 	
 	private Inicio main;
 	
+	private AnchorPane ap;
+	
 	public void setMainAPP(Inicio p){
 	     main=p;
 	     
@@ -67,7 +69,7 @@ public class RootController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
             AnchorPane nuevaFactura = (AnchorPane) loader.load();
-        	
+        	ap = nuevaFactura;
             // Poner la nueva vista en el centro del root
             main.getRoot().setCenter(nuevaFactura);
             
@@ -90,7 +92,7 @@ public class RootController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Inicio.class.getResource("/GUI/BuscarFactura.fxml"));
             AnchorPane nuevaFactura = (AnchorPane) loader.load();
-        	
+        	ap=nuevaFactura;
             // Poner la nueva vista en el centro del root
             main.getRoot().setCenter(nuevaFactura);
             
@@ -113,7 +115,7 @@ public class RootController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
             AnchorPane nuevoCliente = (AnchorPane) loader.load();
-        	
+        	ap=nuevoCliente;
             // Poner la nueva vista en el centro del root
             main.getRoot().setCenter(nuevoCliente);
             
@@ -135,16 +137,39 @@ public class RootController {
             // Cargar la vista de nueva factura
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
-            AnchorPane nuevaFactura = (AnchorPane) loader.load();
-        	
+            AnchorPane buscarCliente = (AnchorPane) loader.load();
+        	ap=buscarCliente;
             // Poner la nueva vista en el centro del root
-            main.getRoot().setCenter(nuevaFactura);
+            main.getRoot().setCenter(buscarCliente);
             
             // Poner el controlador de la nueva vista.
             BuscarClienteController controller = loader.getController();
             controller.setMainAPP(main);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	/**
+	 * Va a la página anterior
+	 */
+	@FXML
+	private void atras(){
+		try {
+            // Cargar la vista de nueva factura
+            //FXMLLoader loader = new FXMLLoader();
+            //loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
+            //AnchorPane nuevaFactura = (AnchorPane) loader.load();
+        	
+            // Poner la nueva vista en el centro del root
+            main.getRoot().setCenter(ap);
+            
+            // Poner el controlador de la nueva vista.
+           // BuscarClienteController controller = loader.getController();
+            //controller.setMainAPP(main);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 	}

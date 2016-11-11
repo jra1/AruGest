@@ -46,7 +46,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnVerCliente" layoutX="895.0" layoutY="14.0" mnemonicParsing="false" text="Ver cliente" />
+            <Button fx:id="btnVerCliente" layoutX="895.0" layoutY="14.0" mnemonicParsing="false" onAction="#cargarCliente" text="Ver cliente" />
             <Button fx:id="btnHacerFactura" layoutX="895.0" layoutY="50.0" mnemonicParsing="false" text="Hacer factura" />
          </children>
       </Pane>
