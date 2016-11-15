@@ -6,6 +6,13 @@ public class ClienteParticularEmpresaDireccion {
 	private Empresa empresa;
 	private Direccion direccion;
 
+	public ClienteParticularEmpresaDireccion() {
+		this.cliente = null;
+		this.particular = null;
+		this.empresa = null;
+		this.direccion = null;
+	}
+	
 	public ClienteParticularEmpresaDireccion(Cliente cliente, Particular particular, Empresa empresa,
 			Direccion direccion) {
 		super();

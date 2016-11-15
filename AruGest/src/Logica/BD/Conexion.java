@@ -3,6 +3,7 @@ package Logica.BD;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -331,23 +332,210 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina de la base de datos el vehículo cuyo id se le pasa como parámetro
 	 * 
-	 * @param id del vehiculo a eliminar
+	 * @param id
+	 *            del vehiculo a eliminar
 	 * @return true si se eliminó correctamente, false si no
 	 */
 	public boolean eliminarVehiculo(int id) {
+		/*
+		 * 1º comprobar si tiene facturas: - si: coger id factura, eliminar
+		 * servicios, eliminar materiales, eliminar factura. 2º comprobar si
+		 * tiene documentos - si: eliminar documento 3º comprobar si es vehiculo
+		 * sustitucion - si: eliminar vehiculo sustitucion
+		 */
+		String sql = "";
 		boolean res = true;
+		PreparedStatement pt;
+		try {
+			Statement st = getCon().createStatement();
+			sql = "SELECT IDFACTURA FROM FACTURA WHERE VEHICULOID = " + id;
+
+			ResultSet rs = st.executeQuery(sql);
+
+			if (rs.isBeforeFirst()) {
+				while (rs.next()) {
+					eliminarServiciosPorFacturaID(rs.getInt("IDFACTURA"));
+					eliminarMaterialesPorFacturaID(rs.getInt("IDFACTURA"));
+				}
+				sql = "DELETE FROM FACTURA WHERE VEHICULOID = " + id;
+				// Se prepara la sentencia
+				pt = getCon().prepareStatement(sql);
+				// Ejecutamos la sentencia
+				pt.executeUpdate();
+			}
+
+			// 2º comprobar si tiene documentos
+			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " + id;
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eliminarDocumentosPorVehiculoID(id);
+			}
+
+			// 3º comprobar si es vehiculo de sustitucion
+			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE VEHICULOID = " + id;
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eliminarVehiculoSustiPorVehiculoID(id);
+			}
+
+			// 4º eliminar vehiculo
+			sql = "DELETE FROM VEHICULO WHERE IDVEHICULO = " + id;
+			pt = getCon().prepareStatement(sql);
+			pt.executeUpdate();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Edita en la BD el vehículo pasado como parámetro
+	 * 
+	 * @param v
+	 * @return true si fue bien, false si no
+	 */
+	public boolean editarVehiculo(Vehiculo v) {
+		boolean res = true;
+		String sql = "";
+		try {
+			sql = "UPDATE VEHICULO SET MARCA = ?, MODELO = ?, VERSION = ?, ANIO = ?,"
+					+ "BASTIDOR = ?, LETRASMOTOR = ?, COLOR = ?, CODRADIO = ?, TIPOID = ?"
+					+ "WHERE IDVEHICULO = " + v.getIdvehiculo();
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.setString(1, v.getMarca());
+			st.setString(2, v.getModelo());
+			st.setString(3, v.getVersion());
+			st.setInt(4, v.getAnio());
+			st.setString(5, v.getBastidor());
+			st.setString(6, v.getLetrasmotor());
+			st.setString(7, v.getColor());
+			st.setString(8, v.getCodradio());
+			st.setInt(9, v.getTipoID());
+			//Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina los servicios asociados a la factura con id facturaID
+	 * 
+	 * @param facturaID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarServiciosPorFacturaID(int facturaID) {
+		boolean res = true;
+		String sql = "";
 		try {
 			// Se prepara la sentencia
-			java.sql.PreparedStatement st = getCon().prepareStatement(
-					"DELETE FROM VEHICULO WHERE IDVEHICULO = " + id);
+			sql = "DELETE FROM SERVICIO WHERE FACTURAID = " + facturaID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
-			
+
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina los materiales asociados a la factura con id facturaID
+	 * 
+	 * @param facturaID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarMaterialesPorFacturaID(int facturaID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM MATERIAL WHERE FACTURAID = " + facturaID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina los documentos asociados al vehiculo con id vehiculoID
+	 * 
+	 * @param vehiculoID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarDocumentosPorVehiculoID(int vehiculoID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM DOCUMENTO WHERE VEHICULOID = " + vehiculoID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina los vehiculos de sustitucion asociados al vehiculo con id
+	 * vehiculoID
+	 * 
+	 * @param vehiculoID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarVehiculoSustiPorVehiculoID(int vehiculoID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM VEHICULOSUSTITUCION WHERE VEHICULOID = " + vehiculoID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+
 			res = true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -383,15 +571,6 @@ public class Conexion {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"));
 			}
-
-			/*
-			 * String s = ""; if (c == null) { s = "Cliente no encontrado"; }
-			 * else { s = "Cliente encontrado"; } Alert alert = new
-			 * Alert(AlertType.INFORMATION); alert.setTitle("Atención");
-			 * alert.setHeaderText(s);
-			 * 
-			 * alert.showAndWait();
-			 */
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {

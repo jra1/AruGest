@@ -3,9 +3,11 @@ package Logica;
 import java.io.IOException;
 //import java.security.Principal;
 
+import GUI.EditClienteController;
 import GUI.EditVehiculoController;
 import GUI.RootController;
 import Logica.BD.Conexion;
+import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Vehiculo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -80,42 +82,81 @@ public static void setOpcionNueva(String opcionNueva) {
 	Inicio.OPCION_NUEVA = opcionNueva;
 }
 
-/**
- * Abre un diálogo para añadir un nuevo vehículo o editar uno
- * 
- * @param vehiculo a ser editado
- * @return true si el usuario a pulsado OK, false en los demás casos.
- */
-public static boolean mostrarEditorVehiculo(Vehiculo v) {
-    try {
-        // Load the fxml file and create a new stage for the popup dialog.
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Inicio.class.getResource("/GUI/EditVehiculo.fxml"));
-        AnchorPane page = (AnchorPane) loader.load();
+	/**
+	 * Abre un diálogo para añadir un nuevo vehículo o editar uno
+	 * 
+	 * @param vehiculo
+	 *            a ser editado
+	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 */
+	public static boolean mostrarEditorVehiculo(Vehiculo v) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/EditVehiculo.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
 
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Vehículo");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(escenario);
-        Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Vehículo");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
-        // Set the person into the controller.
-        EditVehiculoController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        //if(v != null){
-        	controller.setVehiculo(v);        	
-        //}
+			// Set the person into the controller.
+			EditVehiculoController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			// if(v != null){
+			controller.setVehiculo(v);
+			// }
 
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
 
-        return controller.isOkClicked();
-    } catch (IOException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Abre un diálogo para añadir un nuevo cliente o editar uno
+	 * 
+	 * @param cliente a ser editado
+	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 */
+	public static boolean mostrarEditorCliente(ClienteParticularEmpresaDireccion cped) {
+	    try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(Inicio.class.getResource("/GUI/EditCliente.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Cliente");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(escenario);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        // Set the person into the controller.
+	        EditClienteController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        //if(v != null){
+	        	//controller.setCliente(cped);        	
+	        //}
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+
+	        return controller.isOkClicked();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 }

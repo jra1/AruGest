@@ -1,0 +1,204 @@
+package GUI;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+import Logica.Utilidades;
+import Modelo.Cliente;
+import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.Vehiculo;
+
+/**
+ * Dialog to edit details of a person.
+ * 
+ * @author Marco Jakob
+ */
+public class EditClienteController {
+
+	@FXML
+	private ComboBox<String> comboTipo;
+	@FXML
+	private TextField txtNif;
+	@FXML
+	private TextField txtNombre;
+	@FXML
+	private Label lblApellidos;
+	@FXML
+	private TextField txtApellidos;
+	@FXML
+	private TextField txtTel1;
+	@FXML
+	private TextField txtTel2;
+	@FXML
+	private TextField txtTel3;
+	@FXML
+	private TextField txtCalle;
+	@FXML
+	private TextField txtNumero;
+	@FXML
+	private TextField txtPiso;
+	@FXML
+	private TextField txtLetra;
+	@FXML
+	private TextField txtCodPostal;
+	@FXML
+	private TextField txtLocalidad;
+	@FXML
+	private TextField txtProvincia;
+
+	private Stage dialogStage;
+	private ClienteParticularEmpresaDireccion cped;
+	private boolean okClicked = false;
+
+	/**
+	 * Initializes the controller class. This method is automatically called
+	 * after the fxml file has been loaded.
+	 */
+	@FXML
+	private void initialize() {
+		comboTipo.getItems().addAll("Particular", "Empresa");
+		comboTipo.setValue("Particular");
+		
+		comboTipo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
+	}
+
+	/**
+	 * Sets the stage of this dialog.
+	 * 
+	 * @param dialogStage
+	 */
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
+
+	/**
+	 * Coloca el cliente a ser editado
+	 * 
+	 * @param cliente
+	 *            a ser editado
+	 */
+	public void setCliente(ClienteParticularEmpresaDireccion cped) {
+		this.cped = cped;
+
+		if(cped.getParticular() != null){
+			lblApellidos.setVisible(true);
+			txtApellidos.setVisible(true);
+			comboTipo.setValue("Particular");
+			txtNif.setText(cped.getParticular().getNif());
+			txtNombre.setText(cped.getParticular().getNombre());
+			txtApellidos.setText(cped.getParticular().getApellidos());
+		} else if(cped.getEmpresa() != null){
+			lblApellidos.setVisible(false);
+			txtApellidos.setVisible(false);
+			comboTipo.setValue("Empresa");
+			txtNif.setText(cped.getEmpresa().getCif());
+			txtNombre.setText(cped.getEmpresa().getNombre());
+		}
+		txtTel1.setText(cped.getCliente().getTelf1());
+		txtTel2.setText(cped.getCliente().getTelf2());
+		txtTel3.setText(cped.getCliente().getTelf3());
+		txtCalle.setText(cped.getDireccion().getCalle());
+		txtNumero.setText(""+cped.getDireccion().getNumero());
+		txtPiso.setText(cped.getDireccion().getPiso());
+		txtLetra.setText(cped.getDireccion().getLetra());
+		txtCodPostal.setText(""+cped.getDireccion().getCpostal());
+		txtLocalidad.setText(cped.getDireccion().getLocalidad());
+		txtProvincia.setText(cped.getDireccion().getProvincia());
+	}
+
+	/**
+	 * Returns true if the user clicked OK, false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isOkClicked() {
+		return okClicked;
+	}
+
+	/**
+	 * Called when the user clicks ok.
+	 */
+	@FXML
+	private void handleOk() {
+		if (isInputValid()) {
+//			cped.setTipoID(Utilidades.StringToTipoID(comboTipoVehiculo.getValue()));
+//			cped.setMatricula(txtMatricula.getText());
+//			cped.setMarca(txtMarca.getText());
+//			cped.setModelo(txtModelo.getText());
+//			cped.setVersion(txtVersion.getText());
+//			cped.setAnio(Integer.parseInt(txtAnio.getText()));
+//			cped.setBastidor(txtBastidor.getText());
+//			cped.setLetrasmotor(txtLetrasMotor.getText());
+//			cped.setColor(txtColor.getText());
+//			cped.setCodradio(txtCodRadio.getText());
+
+			okClicked = true;
+			dialogStage.close();
+		}
+	}
+
+	/**
+	 * Called when the user clicks cancel.
+	 */
+	@FXML
+	private void handleCancel() {
+		dialogStage.close();
+	}
+
+	/**
+	 * Validaciones de los campos introducidos por el cliente
+	 * 
+	 * @return true si los campos son correctos
+	 */
+	private boolean isInputValid() {
+		String errorMessage = "";
+
+		if (txtNif.getText().length() == 0) {
+			errorMessage += "Introduce el NIF/CIF del cliente\n";
+		}
+		if (txtNombre.getText().length() == 0 ) {
+			errorMessage += "Introduce el nombre del cliente";
+		}
+		if(txtNumero.getText().length() > 0){
+			try {
+				Integer.parseInt(txtNumero.getText());
+			} catch (NumberFormatException e) {
+				errorMessage = "Número no válido.\n Introduce únicamente números";
+			}			
+		}
+		if(txtCodPostal.getText().length() > 0){
+			try {
+				Integer.parseInt(txtCodPostal.getText());
+			} catch (NumberFormatException e) {
+				errorMessage = "Código postal no válido.\n Introduce únicamente números";
+			}			
+		}
+		
+		if (errorMessage.length() == 0) {
+			return true;
+		} else {
+			// Show the error message.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Campos inváidos");
+			alert.setHeaderText("Por favor corrige los campos");
+			alert.setContentText(errorMessage);
+			alert.showAndWait();
+			return false;
+		}
+	}
+	
+	private void comprobarComboTipo(String newValue){
+		if(newValue.equalsIgnoreCase("Particular")){
+			lblApellidos.setVisible(true);
+			txtApellidos.setVisible(true);
+		}else{
+			lblApellidos.setVisible(false);
+			txtApellidos.setVisible(false);
+		}
+		
+	}
+}

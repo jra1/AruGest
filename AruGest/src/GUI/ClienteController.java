@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,7 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 public class ClienteController {
 	// Datos cliente
 	@FXML
-	private ComboBox<String> comboTipoCliente;
+	private Label lblTipoCliente;
 	@FXML
 	private TextField txtNombre;
 	@FXML
@@ -51,8 +50,8 @@ public class ClienteController {
 	private TextField txtPoblacion;
 	@FXML
 	private TextField txtProvincia;
-	@FXML
-	private Button btnGuardar;
+	//@FXML
+	//private Button btnGuardar;
 	@FXML
 	private Button btnEliminarCliente;
 
@@ -105,12 +104,12 @@ public class ClienteController {
 	 * Carga una factura
 	 */
 	public void cargaCliente(ClienteParticularEmpresaDireccion cped) {
-		btnGuardar.setVisible(false);
+		//btnGuardar.setVisible(false);
 		Inicio.CLIENTE_ID = cped.getCliente().getIdcliente();
 
 		// Cargar datos cliente
 		if (cped.getParticular() != null) {
-			comboTipoCliente.setValue("Particular");
+			lblTipoCliente.setText("Particular");
 			txtDni.setText(cped.getParticular().getNif());
 			txtNombre.setText(cped.getParticular().getNombre());
 			lblApellidos.setVisible(true);
@@ -118,7 +117,7 @@ public class ClienteController {
 			txtApellidos.setText(cped.getParticular().getApellidos());
 		} else {
 			if (cped.getEmpresa() != null) {
-				comboTipoCliente.setValue("Empresa");
+				lblTipoCliente.setText("Empresa");
 				txtDni.setText(cped.getEmpresa().getCif());
 				txtNombre.setText(cped.getEmpresa().getNombre());
 				lblApellidos.setVisible(false);
@@ -151,10 +150,7 @@ public class ClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		btnGuardar.setVisible(true);
-		comboTipoCliente.getItems().addAll("Particular", "Empresa");
-		comboTipoCliente.setValue("Particular");
-
+		//btnGuardar.setVisible(true);
 		tableVehiculo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
 
@@ -201,7 +197,7 @@ public class ClienteController {
 			lblCodRadio.setText("");
 		}
 	}
-
+	
 	/**
 	 * Se llama cuando el usuario pulsa en Añadir vehículo
 	 */
@@ -234,6 +230,22 @@ public class ClienteController {
             boolean okClicked = Inicio.mostrarEditorVehiculo(v);
             if (okClicked) {
             	//EDITAR EN LA BD
+            	if(Inicio.CONEXION.editarVehiculo(v)){
+    				Alert alert = new Alert(AlertType.CONFIRMATION);
+    				alert.setTitle("Atención");
+    				alert.setHeaderText("Vehículo modificado con éxito");
+
+    				alert.showAndWait();
+    			}else{
+    				Alert alert = new Alert(AlertType.ERROR);
+    				alert.setTitle("Error");
+    				alert.setHeaderText("Error al guardar el vehículo");
+    				alert.setContentText("Ocurrió un error al guardar el vehículo en la base de datos.");
+
+    				alert.showAndWait();
+    			}
+            	
+            	
                 mostrarDetallesVehiculo(v);
             }
 
@@ -258,8 +270,7 @@ public class ClienteController {
             //BORRAR DE LA BASE DE DATOS
         	Alert alert = new Alert(AlertType.CONFIRMATION);
         	alert.setTitle("Eliminar vehículo");
-        	alert.setHeaderText("¿Estás seguro que quieres eliminar este vehículo?");
-        	//alert.setContentText("Are you ok with this?");
+        	alert.setHeaderText("Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?");
 
         	Optional<ButtonType> result = alert.showAndWait();
         	if (result.get() == ButtonType.OK){
@@ -273,8 +284,6 @@ public class ClienteController {
         			
         			alert.showAndWait();
         		}
-        	} else {
-        	    // ... user chose CANCEL or closed the dialog
         	}
         } else {
             // Nothing selected.

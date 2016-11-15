@@ -89,7 +89,6 @@
                </font>
             </TextField>
             <Label layoutX="5.0" layoutY="8.0" text="Tipo" />
-            <ComboBox fx:id="comboTipoCliente" layoutX="62.0" layoutY="3.0" prefHeight="25.0" prefWidth="124.0" />
             <Label layoutX="559.0" layoutY="62.0" text="Cod. Postal" />
             <TextField fx:id="txtCPostal" layoutX="627.0" layoutY="58.0" prefHeight="23.0" prefWidth="112.0" promptText="Código postal">
                <font>
@@ -102,8 +101,8 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button fx:id="btnGuardar" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Guardar" />
-            <Button fx:id="btnEliminarCliente" layoutX="98.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
+            <Button fx:id="btnEliminarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
+            <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
          </children>
       </Pane>
       <Pane layoutX="4.0" layoutY="174.0" prefHeight="498.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="174.0">
@@ -155,20 +154,20 @@
                   <Label text="Color" GridPane.rowIndex="8" />
                   <Label text="Código radio" GridPane.rowIndex="9" />
                   <Label text="Tipo" />
-                  <Label fx:id="lblTipoVehiculo" text="Tipo" GridPane.columnIndex="1" />
-                  <Label fx:id="lblMatricula" text="Matrícula" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="lblTipoVehiculo" text="-" GridPane.columnIndex="1" />
+                  <Label fx:id="lblMatricula" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblMarca" layoutX="10.0" layoutY="77.0" text="Marca" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="lblModelo" layoutX="10.0" layoutY="107.0" text="Modelo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label fx:id="lblVersion" layoutX="10.0" layoutY="137.0" text="Versión" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label fx:id="lblAnio" layoutX="10.0" layoutY="167.0" text="Año" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="lblBastidor" layoutX="10.0" layoutY="197.0" text="Nº Bastidor" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label fx:id="lblLetrasMotor" layoutX="10.0" layoutY="227.0" text="Letras motor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label fx:id="lblColor" layoutX="10.0" layoutY="257.0" text="Color" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label fx:id="lblCodRadio" layoutX="10.0" layoutY="287.0" text="Código radio" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label fx:id="lblMarca" layoutX="10.0" layoutY="77.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="lblModelo" layoutX="10.0" layoutY="107.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="lblVersion" layoutX="10.0" layoutY="137.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="lblAnio" layoutX="10.0" layoutY="167.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="lblBastidor" layoutX="10.0" layoutY="197.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="lblLetrasMotor" layoutX="10.0" layoutY="227.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label fx:id="lblColor" layoutX="10.0" layoutY="257.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label fx:id="lblCodRadio" layoutX="10.0" layoutY="287.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                </children>
             </GridPane>
          </children>

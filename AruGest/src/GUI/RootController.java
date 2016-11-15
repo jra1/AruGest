@@ -2,9 +2,8 @@ package GUI;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 import Logica.Inicio;
+import Modelo.ClienteParticularEmpresaDireccion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -106,26 +105,28 @@ public class RootController {
 	}
 	
 	/**
-	 * Abre la ventana de nuevo Cliente
+	 * Abre el ventanuco de nuevo Cliente
 	 */
 	@FXML
 	private void nuevoCliente(){
-		try {
-            // Cargar la vista de nueva factura
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
-            AnchorPane nuevoCliente = (AnchorPane) loader.load();
-        	ap=nuevoCliente;
-            // Poner la nueva vista en el centro del root
-            main.getRoot().setCenter(nuevoCliente);
-            
-            // Poner el controlador de la nueva vista.
-            ClienteController controller = loader.getController();
-            controller.setMainAPP(main);
+		ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion();
+		boolean okClicked = Inicio.mostrarEditorCliente(cped);
+		if (okClicked) {
+			//Cuando llega aqui son correctos los datos introducidos
+			
+			/*
+			if(Inicio.CONEXION.guardarVehiculo(v)){
+				listaVehiculos.add(v);
+			}else{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error al guardar el cliente");
+				alert.setContentText("Ocurrió un error al guardar el cliente en la base de datos.");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+				alert.showAndWait();
+			}
+			*/
+		}
 	}
 	
 	/**
