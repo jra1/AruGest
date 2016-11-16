@@ -204,32 +204,30 @@ public class Conexion {
 	 *            Cliente, Particular o Empresa (El que no sea, será null) a
 	 *            guardar en la BD
 	 */
-	public void guardarCliente(Direccion d, Cliente c, Particular p, Empresa e) {
-		// 1º Guardar Direccion
+	public boolean guardarCliente(ClienteParticularEmpresaDireccion cped) {
+		boolean res = true;
+		//1º Guardar Direccion
 		try {
-			java.sql.PreparedStatement st;
+			PreparedStatement st;
 			ResultSet rs;
 			long idGenerado = 0;
 			String sql = "";
 			// Se prepara la sentencia para introducir los datos de la direccion
 			// SI NO ES NULL
-			if (d != null) {
-				st = getCon().prepareStatement(
-						"INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, LOCALIDAD) VALUES (?,?,?,?,?)",
-						Statement.RETURN_GENERATED_KEYS);
-
+			if (cped.getDireccion() != null) {
+				sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
+				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				// Añadimos los parametros
-				st.setString(1, d.getCalle());
-				st.setInt(2, d.getNumero());
-				st.setString(3, d.getPiso());
-				st.setString(4, d.getLetra());
-				st.setString(5, d.getLocalidad());
-
+				st.setString(1, cped.getDireccion().getCalle());
+				st.setInt(2, cped.getDireccion().getNumero());
+				st.setString(3, cped.getDireccion().getPiso());
+				st.setString(4, cped.getDireccion().getLetra());
+				st.setInt(5, cped.getDireccion().getCpostal());
+				st.setString(6, cped.getDireccion().getLocalidad());
+				st.setString(7, cped.getDireccion().getProvincia());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
-
 				rs = st.getGeneratedKeys();
-
 				if (rs.next()) {
 					idGenerado = rs.getLong(1);
 				}
@@ -237,21 +235,22 @@ public class Conexion {
 
 			// 2º Guardar Cliente
 			if (idGenerado != 0) {
-				st = getCon().prepareStatement(
-						"INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, DIRECCIONID) VALUES (?,?,?,?)",
-						Statement.RETURN_GENERATED_KEYS);
+				sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID) VALUES (?,?,?,?,?)";
+				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				// Añadimos los parametros
-				st.setString(1, c.getNombre());
-				st.setString(2, c.getTelf1());
-				st.setString(3, c.getTelf2());
-				st.setInt(4, (int) idGenerado);
+				st.setString(1, cped.getCliente().getNombre());
+				st.setString(2, cped.getCliente().getTelf1());
+				st.setString(3, cped.getCliente().getTelf2());
+				st.setString(4, cped.getCliente().getTelf3());
+				st.setInt(5, (int) idGenerado);
 			} else {
-				st = getCon().prepareStatement("INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2) VALUES (?,?,?)",
-						Statement.RETURN_GENERATED_KEYS);
+				sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3) VALUES (?,?,?,?)";
+				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				// Añadimos los parametros
-				st.setString(1, c.getNombre());
-				st.setString(2, c.getTelf1());
-				st.setString(3, c.getTelf2());
+				st.setString(1, cped.getCliente().getNombre());
+				st.setString(2, cped.getCliente().getTelf1());
+				st.setString(3, cped.getCliente().getTelf2());
+				st.setString(4, cped.getCliente().getTelf3());
 			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -259,38 +258,38 @@ public class Conexion {
 			if (rs.next()) {
 				idGenerado = rs.getLong(1);
 				// 3º Guardar Particular / Empresa
-				if (p != null) {
+				if (cped.getParticular() != null) {
 					// Guardar Particular
-					st = getCon().prepareStatement(
-							"INSERT INTO PARTICULAR (CLIENTEID, NOMBRE, APELLIDOS, NIF) VALUES (?,?,?,?)",
-							Statement.RETURN_GENERATED_KEYS);
+					sql = "INSERT INTO PARTICULAR (CLIENTEID, NOMBRE, APELLIDOS, NIF) VALUES (?,?,?,?)";
+					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					// Añadimos los parametros
 					st.setInt(1, (int) idGenerado);
-					st.setString(2, p.getNombre());
-					st.setString(3, p.getApellidos());
-					st.setString(4, p.getNif());
+					st.setString(2, cped.getParticular().getNombre());
+					st.setString(3, cped.getParticular().getApellidos());
+					st.setString(4, cped.getParticular().getNif());
 					// Ejecutamos la sentencia
 					st.executeUpdate();
-				} else if (e != null) {
+				} else if (cped.getEmpresa() != null) {
 					// Guardar Empresa
-					st = getCon().prepareStatement(
-							"INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)",
-							Statement.RETURN_GENERATED_KEYS);
+					sql = "INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)";
+					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					// Añadimos los parametros
 					st.setInt(1, (int) idGenerado);
-					st.setString(2, e.getNombre());
-					st.setString(3, e.getCif());
-					st.setBoolean(4, false);
+					st.setString(2, cped.getEmpresa().getNombre());
+					st.setString(3, cped.getEmpresa().getCif());
+					st.setBoolean(4, cped.getEmpresa().isEsProveedor());
 					// Ejecutamos la sentencia
 					st.executeUpdate();
 				}
 			}
-
+			res = true;
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			res = false;
 		}
+		return res;
 	}
 
 	/**
@@ -406,8 +405,8 @@ public class Conexion {
 		String sql = "";
 		try {
 			sql = "UPDATE VEHICULO SET MARCA = ?, MODELO = ?, VERSION = ?, ANIO = ?,"
-					+ "BASTIDOR = ?, LETRASMOTOR = ?, COLOR = ?, CODRADIO = ?, TIPOID = ?"
-					+ "WHERE IDVEHICULO = " + v.getIdvehiculo();
+					+ "BASTIDOR = ?, LETRASMOTOR = ?, COLOR = ?, CODRADIO = ?, TIPOID = ?" + "WHERE IDVEHICULO = "
+					+ v.getIdvehiculo();
 			PreparedStatement st = getCon().prepareStatement(sql);
 			st.setString(1, v.getMarca());
 			st.setString(2, v.getModelo());
@@ -418,7 +417,7 @@ public class Conexion {
 			st.setString(7, v.getColor());
 			st.setString(8, v.getCodradio());
 			st.setInt(9, v.getTipoID());
-			//Ejecutamos la sentencia
+			// Ejecutamos la sentencia
 			st.executeUpdate();
 
 			// Se cierra la conexion
@@ -569,7 +568,7 @@ public class Conexion {
 
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -991,7 +990,7 @@ public class Conexion {
 				if (tipo == 1) {
 					p = new Particular(rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
 				} else if (tipo == 2) {
-					e = new Empresa(rs.getString("NOMBRE"), rs.getString("CIF"));
+					e = new Empresa(rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
 				}
 				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
 				listaClientes.add(cped);

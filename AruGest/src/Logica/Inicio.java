@@ -146,7 +146,7 @@ public static void setOpcionNueva(String opcionNueva) {
 	        EditClienteController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        //if(v != null){
-	        	//controller.setCliente(cped);        	
+	        	controller.setCliente(cped);        	
 	        //}
 
 	        // Show the dialog and wait until the user closes it

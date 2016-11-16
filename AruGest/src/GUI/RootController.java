@@ -3,12 +3,15 @@ package GUI;
 import java.io.IOException;
 
 import Logica.Inicio;
+import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -113,19 +116,39 @@ public class RootController {
 		boolean okClicked = Inicio.mostrarEditorCliente(cped);
 		if (okClicked) {
 			//Cuando llega aqui son correctos los datos introducidos
-			
-			/*
-			if(Inicio.CONEXION.guardarVehiculo(v)){
-				listaVehiculos.add(v);
+			if(Inicio.CONEXION.guardarCliente(cped)){
+				try {
+		            // Cargar la vista de Cliente
+		            FXMLLoader loader = new FXMLLoader();
+		            loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
+		            AnchorPane cliente = (AnchorPane) loader.load();
+		        	
+		            // Poner la nueva vista en el centro del root
+		            main.getRoot().setCenter(cliente);
+		            
+		            // Poner el controlador de la nueva vista.
+		            ClienteController controller = loader.getController();
+		            controller.setMainAPP(main);
+		            Cliente c = null; 
+		            if(cped.getParticular()!=null){
+		            	c = Inicio.CONEXION.buscarClientePorDni(cped.getParticular().getNif(), 1);
+		            }else if(cped.getEmpresa() != null){
+		            	c = Inicio.CONEXION.buscarClientePorDni(cped.getEmpresa().getCif(), 2);
+		            }
+		            Inicio.CLIENTE_ID = c.getIdcliente();
+		            cped.setCliente(c);
+		            controller.cargaCliente(cped);
+
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
 			}else{
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("Error al guardar el cliente");
 				alert.setContentText("Ocurrió un error al guardar el cliente en la base de datos.");
-
 				alert.showAndWait();
 			}
-			*/
 		}
 	}
 	

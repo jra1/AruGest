@@ -101,8 +101,9 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button fx:id="btnEliminarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
+            <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
             <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
+            <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
          </children>
       </Pane>
       <Pane layoutX="4.0" layoutY="174.0" prefHeight="498.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="174.0">

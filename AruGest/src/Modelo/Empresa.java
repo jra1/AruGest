@@ -24,12 +24,12 @@ public class Empresa {
 		this.esProveedor = new SimpleBooleanProperty(esProveedor);
 	}
     
-    public Empresa(String nombre, String cif){
+    public Empresa(String nombre, String cif, boolean esProveedor){
     	this.idempresa = null;
 		this.clienteID = null;
 		this.nombre = new SimpleStringProperty(nombre);
 		this.cif = new SimpleStringProperty(cif);
-		this.esProveedor = null;
+		this.esProveedor = new SimpleBooleanProperty(esProveedor);
     }
 	
     public IntegerProperty idempresaProperty() {

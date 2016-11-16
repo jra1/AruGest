@@ -3,13 +3,11 @@ package GUI;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Cliente;
+import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Factura;
@@ -191,8 +189,16 @@ public class NuevaFacturaController {
 
 	private int tipoVehiculo = 1;
 
+	public Inicio getMain() {
+		return main;
+	}
+
+	public void setMain(Inicio main) {
+		this.main = main;
+	}
+
 	public void setMainAPP(Inicio p) {
-		main = p;
+		setMain(p);
 	}
 
 	/**
@@ -657,9 +663,10 @@ public class NuevaFacturaController {
 				if (comboTipoCliente.getValue().equalsIgnoreCase("Particular")) {
 					p = new Particular(txtNombre.getText(), txtApellidos.getText(), txtDni.getText());
 				} else {
-					e = new Empresa(txtNombre.getText(), txtDni.getText());
+					e = new Empresa(txtNombre.getText(), txtDni.getText(), false);
 				}
-				Inicio.CONEXION.guardarCliente(d, c, p, e);
+				ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
+				Inicio.CONEXION.guardarCliente(cped);
 				c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
 			}
 			Inicio.CLIENTE_ID = c.getIdcliente();

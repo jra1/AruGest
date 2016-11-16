@@ -35,6 +35,7 @@
                   <Font size="10.0" />
                </font>
             </TextField>
+            <CheckBox fx:id="chckboxEsProveedor" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
             <TextField fx:id="txtApellidos" layoutX="87.0" layoutY="98.0" prefHeight="23.0" prefWidth="161.0" promptText="Apellidos">
                <font>
                   <Font size="10.0" />
@@ -55,7 +56,7 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtCalle" layoutX="87.0" layoutY="218.0" prefHeight="23.0" prefWidth="103.0" promptText="Calle">
+            <TextField fx:id="txtCalle" layoutX="87.0" layoutY="218.0" prefHeight="23.0" prefWidth="175.0" promptText="Calle">
                <font>
                   <Font size="10.0" />
                </font>

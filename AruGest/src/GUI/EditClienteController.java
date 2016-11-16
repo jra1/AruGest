@@ -5,12 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-import Logica.Utilidades;
-import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
-import Modelo.Vehiculo;
+import Modelo.Empresa;
+import Modelo.Particular;
 
 /**
  * Dialog to edit details of a person.
@@ -25,6 +25,8 @@ public class EditClienteController {
 	private TextField txtNif;
 	@FXML
 	private TextField txtNombre;
+	@FXML
+	private CheckBox chckboxEsProveedor;
 	@FXML
 	private Label lblApellidos;
 	@FXML
@@ -52,6 +54,7 @@ public class EditClienteController {
 
 	private Stage dialogStage;
 	private ClienteParticularEmpresaDireccion cped;
+	private boolean esEmpresa = false;
 	private boolean okClicked = false;
 
 	/**
@@ -125,16 +128,32 @@ public class EditClienteController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-//			cped.setTipoID(Utilidades.StringToTipoID(comboTipoVehiculo.getValue()));
-//			cped.setMatricula(txtMatricula.getText());
-//			cped.setMarca(txtMarca.getText());
-//			cped.setModelo(txtModelo.getText());
-//			cped.setVersion(txtVersion.getText());
-//			cped.setAnio(Integer.parseInt(txtAnio.getText()));
-//			cped.setBastidor(txtBastidor.getText());
-//			cped.setLetrasmotor(txtLetrasMotor.getText());
-//			cped.setColor(txtColor.getText());
-//			cped.setCodradio(txtCodRadio.getText());
+			if(!esEmpresa){
+				Particular p = new Particular(txtNombre.getText(), txtApellidos.getText(), txtNif.getText());
+				cped.setParticular(p);
+//				cped.getParticular().setNif(txtNif.getText());
+//				cped.getParticular().setNombre(txtNombre.getText());
+//				cped.getParticular().setApellidos(txtApellidos.getText());
+			}else{
+				Empresa e = new Empresa(txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
+				cped.setEmpresa(e);
+//				cped.getEmpresa().setCif(txtNif.getText());
+//				cped.getEmpresa().setNombre(txtNombre.getText());
+//				cped.getEmpresa().setEsProveedor(chckboxEsProveedor.isSelected());
+			}
+			if(!txtCalle.getText().isEmpty()){
+				cped.getDireccion().setCalle(txtCalle.getText());
+				cped.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
+				cped.getDireccion().setPiso(txtPiso.getText());
+				cped.getDireccion().setLetra(txtLetra.getText());
+				cped.getDireccion().setCpostal(Integer.parseInt(txtCodPostal.getText()));
+				cped.getDireccion().setLocalidad(txtLocalidad.getText());
+				cped.getDireccion().setProvincia(txtProvincia.getText());
+			}
+			cped.getCliente().setNombre(txtNombre.getText() + txtApellidos.getText());
+			cped.getCliente().setTelf1(txtTel1.getText());
+			cped.getCliente().setTelf2(txtTel2.getText());
+			cped.getCliente().setTelf3(txtTel3.getText());
 
 			okClicked = true;
 			dialogStage.close();
@@ -195,9 +214,13 @@ public class EditClienteController {
 		if(newValue.equalsIgnoreCase("Particular")){
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
+			chckboxEsProveedor.setVisible(false);
+			esEmpresa = false;
 		}else{
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
+			chckboxEsProveedor.setVisible(true);
+			esEmpresa = true;
 		}
 		
 	}

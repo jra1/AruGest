@@ -50,8 +50,8 @@ public class ClienteController {
 	private TextField txtPoblacion;
 	@FXML
 	private TextField txtProvincia;
-	//@FXML
-	//private Button btnGuardar;
+	@FXML
+	private Button btnModificarCliente;
 	@FXML
 	private Button btnEliminarCliente;
 
