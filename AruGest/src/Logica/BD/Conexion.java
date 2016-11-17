@@ -206,7 +206,7 @@ public class Conexion {
 	 */
 	public boolean guardarCliente(ClienteParticularEmpresaDireccion cped) {
 		boolean res = true;
-		//1º Guardar Direccion
+		// 1º Guardar Direccion
 		try {
 			PreparedStatement st;
 			ResultSet rs;
@@ -417,6 +417,75 @@ public class Conexion {
 			st.setString(7, v.getColor());
 			st.setString(8, v.getCodradio());
 			st.setInt(9, v.getTipoID());
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Edita en la BD el cliente pasado como parámetro
+	 * 
+	 * @param cped
+	 * @return true si fue bien, false si no
+	 */
+	public boolean editarCliente(ClienteParticularEmpresaDireccion cped) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// 1º Direccion
+			sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
+					+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
+					+ cped.getCliente().getDireccionID();
+			PreparedStatement st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setString(1, cped.getDireccion().getCalle());
+			st.setInt(2, cped.getDireccion().getNumero());
+			st.setString(3, cped.getDireccion().getPiso());
+			st.setString(4, cped.getDireccion().getLetra());
+			st.setInt(5, cped.getDireccion().getCpostal());
+			st.setString(6, cped.getDireccion().getLocalidad());
+			st.setString(7, cped.getDireccion().getProvincia());
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			// 2º Cliente
+			sql = "UPDATE CLIENTE SET NOMBRE = ?, TELF1 = ?, TELF2 = ?, " + "TELF3 = ? " + "WHERE IDCLIENTE = "
+					+ cped.getCliente().getIdcliente();
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setString(1, cped.getCliente().getNombre());
+			st.setString(2, cped.getCliente().getTelf1());
+			st.setString(3, cped.getCliente().getTelf2());
+			st.setString(4, cped.getCliente().getTelf3());
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			// 3º Particular / Empresa
+			if (cped.getParticular() != null) {
+				// Guardar Particular
+				sql = "UPDATE PARTICULAR SET NOMBRE = ?, APELLIDOS = ?, NIF = ? " + "WHERE IDPARTICULAR = "
+						+ cped.getParticular().getIdparticular();
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setString(1, cped.getParticular().getNombre());
+				st.setString(2, cped.getParticular().getApellidos());
+				st.setString(3, cped.getParticular().getNif());
+			} else if (cped.getEmpresa() != null) {
+				// Guardar Empresa
+				sql = "UPDATE EMPRESA SET NOMBRE = ?, CIF = ?, ESPROVEEDOR = ? " + "WHERE IDEMPRESA = "
+						+ cped.getEmpresa().getIdempresa();
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setString(1, cped.getEmpresa().getNombre());
+				st.setString(2, cped.getEmpresa().getCif());
+				st.setBoolean(3, cped.getEmpresa().isEsProveedor());
+			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
@@ -988,9 +1057,9 @@ public class Conexion {
 						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
-					p = new Particular(rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
+					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
 				} else if (tipo == 2) {
-					e = new Empresa(rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
+					e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
 				}
 				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
 				listaClientes.add(cped);

@@ -15,11 +15,11 @@ public class ClienteParticularEmpresaDireccion {
 	
 	public ClienteParticularEmpresaDireccion(Cliente cliente, Particular particular, Empresa empresa,
 			Direccion direccion) {
-		super();
-		this.cliente = cliente;
-		this.particular = particular;
-		this.empresa = empresa;
-		this.direccion = direccion;
+		//super();
+		setCliente(cliente);
+		setParticular(particular);
+		setEmpresa(empresa);
+		setDireccion(direccion);
 	}
 
 	public Cliente getCliente() {

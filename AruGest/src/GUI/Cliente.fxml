@@ -22,57 +22,58 @@
       </Label>
       <Pane layoutX="4.0" layoutY="24.0" prefHeight="122.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="24.0">
          <children>
-            <TextField fx:id="txtNombre" layoutX="62.0" layoutY="31.0" prefHeight="23.0" prefWidth="328.0" promptText="Nombre cliente">
+            <TextField fx:id="txtNombre" editable="false" layoutX="62.0" layoutY="31.0" prefHeight="23.0" prefWidth="328.0" promptText="Nombre cliente">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtApellidos" layoutX="62.0" layoutY="58.0" prefHeight="23.0" prefWidth="328.0" promptText="Apellidos cliente">
+            <TextField fx:id="txtApellidos" editable="false" layoutX="62.0" layoutY="58.0" prefHeight="23.0" prefWidth="328.0" promptText="Apellidos cliente">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtCalle" layoutX="627.0" layoutY="4.0" prefHeight="23.0" prefWidth="238.0" promptText="Calle">
+            <TextField fx:id="txtCalle" editable="false" layoutX="627.0" layoutY="4.0" prefHeight="23.0" prefWidth="238.0" promptText="Calle">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtNumero" layoutX="627.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
+            <TextField fx:id="txtNumero" editable="false" layoutX="627.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPiso" layoutX="701.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
+            <TextField fx:id="txtPiso" editable="false" layoutX="701.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtLetra" layoutX="774.0" layoutY="31.0" prefHeight="23.0" prefWidth="44.0">
+            <TextField fx:id="txtLetra" editable="false" layoutX="774.0" layoutY="31.0" prefHeight="23.0" prefWidth="44.0">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPoblacion" layoutX="952.0" layoutY="14.0" prefHeight="23.0" prefWidth="95.0" promptText="Población">
+            <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" prefHeight="23.0" prefWidth="95.0" promptText="Población">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtDni" layoutX="261.0" layoutY="4.0" prefHeight="23.0" prefWidth="130.0" promptText="DNI o CIF">
+            <TextField fx:id="txtDni" editable="false" layoutX="261.0" layoutY="4.0" prefHeight="23.0" prefWidth="130.0" promptText="DNI o CIF">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtTelf1" layoutX="442.0" layoutY="4.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 1">
+            <TextField fx:id="txtTelf1" editable="false" layoutX="442.0" layoutY="4.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 1">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtTelf2" layoutX="442.0" layoutY="31.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 2">
+            <TextField fx:id="txtTelf2" editable="false" layoutX="442.0" layoutY="31.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 2">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
             <Label layoutX="5.0" layoutY="35.0" text="Nombre" />
+            <CheckBox fx:id="chkboxEsProveedor" layoutX="5.0" layoutY="62.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
             <Label layoutX="559.0" layoutY="8.0" text="Calle" />
             <Label layoutX="895.0" layoutY="18.0" text="Población" />
             <Label layoutX="198.0" layoutY="8.0" text="N.I.F/C.I.F." />
@@ -83,25 +84,25 @@
             <Label layoutX="745.0" layoutY="35.0" text="Letra" />
             <Label fx:id="lblApellidos" layoutX="5.0" layoutY="62.0" text="Apellidos" />
             <Label layoutX="401.0" layoutY="62.0" text="Telf. 3" />
-            <TextField fx:id="txtTelf3" layoutX="442.0" layoutY="58.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 3">
+            <TextField fx:id="txtTelf3" editable="false" layoutX="442.0" layoutY="58.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 3">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
             <Label layoutX="5.0" layoutY="8.0" text="Tipo" />
             <Label layoutX="559.0" layoutY="62.0" text="Cod. Postal" />
-            <TextField fx:id="txtCPostal" layoutX="627.0" layoutY="58.0" prefHeight="23.0" prefWidth="112.0" promptText="Código postal">
+            <TextField fx:id="txtCPostal" editable="false" layoutX="627.0" layoutY="58.0" prefHeight="23.0" prefWidth="112.0" promptText="Código postal">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
             <Label layoutX="895.0" layoutY="47.0" text="Provincia" />
-            <TextField fx:id="txtProvincia" layoutX="952.0" layoutY="43.0" prefHeight="23.0" prefWidth="95.0" promptText="Provincia">
+            <TextField fx:id="txtProvincia" editable="false" layoutX="952.0" layoutY="43.0" prefHeight="23.0" prefWidth="95.0" promptText="Provincia">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
+            <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
             <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
             <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
          </children>

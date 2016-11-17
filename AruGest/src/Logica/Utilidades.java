@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class Utilidades {
 
 	public static Date LocalDateADate(LocalDate localDate) {
@@ -85,6 +88,21 @@ public class Utilidades {
 		return a;
 	}
 
+	/**
+	 * Muestra una alerta con los parámetros que se le pasan
+	 * @param at: Tipo de alerta (Error, Information, ... )
+	 * @param titulo: Titulo de la alerta
+	 * @param header: Cabecera de la alerta
+	 * @param texto: Mensaje de la alerta
+	 */
+	public static void mostrarAlerta(AlertType at, String titulo, String header, String texto){
+		Alert alert = new Alert(at);
+		alert.setTitle(titulo);
+		alert.setHeaderText(header);
+		alert.setContentText(texto);
+		alert.showAndWait();
+	}
+	
 	public static Date asDate(LocalDateTime localDateTime) {
 		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}

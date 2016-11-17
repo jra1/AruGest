@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import Logica.Inicio;
+import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +41,7 @@ public class BuscarClienteController {
 	private TextField txtPoblacion;
 	@FXML
 	private Button btnBuscar;
-	
+
 	@FXML
 	private TableView<ClienteParticularEmpresaDireccion> tableClientes;
 	@FXML
@@ -53,34 +54,36 @@ public class BuscarClienteController {
 	private TableColumn<ClienteParticularEmpresaDireccion, String> columnaPoblacion;
 	@FXML
 	private TableColumn<ClienteParticularEmpresaDireccion, String> columnaTelf;
-	
+
 	@FXML
 	private Button btnVerCliente;
 	@FXML
 	private Button btnHacerFactura;
-	
+
 	private ObservableList<ClienteParticularEmpresaDireccion> listaClientes = FXCollections.observableArrayList();
-	private int tipoCliente = 1; //1=Particular, 2=Empresa
-	
+	private int tipoCliente = 1; // 1=Particular, 2=Empresa
+
 	private Inicio main;
-	
-	public void setMainAPP(Inicio p){
-	     main=p;
+
+	public void setMainAPP(Inicio p) {
+		main = p;
 	}
-	
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize(){
+	private void initialize() {
 		comboTipoCliente.getItems().addAll("Particular", "Empresa");
 		comboTipoCliente.setValue("Particular");
-		comboTipoCliente.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> comprobarComboTipoCliente(newValue));
+		comboTipoCliente.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> comprobarComboTipoCliente(newValue));
 	}
-	
+
 	/**
 	 * Se comprueba el valor elegido en el combo de tipo cliente
+	 * 
 	 * @param valor
 	 */
 	private void comprobarComboTipoCliente(String valor) {
@@ -90,69 +93,64 @@ public class BuscarClienteController {
 			tipoCliente = 1;
 		}
 	}
-	
+
 	/**
-	 * Busca los clientes que coincidan con
-	 * los parámetros de búsqueda y pone los encontrados en la tabla
+	 * Busca los clientes que coincidan con los parámetros de búsqueda y pone
+	 * los encontrados en la tabla
 	 */
 	@FXML
 	private void buscarCliente() {
 		listaClientes.clear();
 		tableClientes.getItems().clear();
-		ArrayList<ClienteParticularEmpresaDireccion> lista = Inicio.CONEXION.buscarClientes(tipoCliente, txtNombre.getText(), txtModelo.getText(), txtMatricula.getText(),
-				txtDni.getText(), txtFijo.getText(), txtMovil.getText(), txtDomicilio.getText(), txtPoblacion.getText());
+		ArrayList<ClienteParticularEmpresaDireccion> lista = Inicio.CONEXION.buscarClientes(tipoCliente,
+				txtNombre.getText(), txtModelo.getText(), txtMatricula.getText(), txtDni.getText(), txtFijo.getText(),
+				txtMovil.getText(), txtDomicilio.getText(), txtPoblacion.getText());
 		if (lista.isEmpty()) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("No encontrado");
-			alert.setContentText("No hay clientes con los parámetros de búsqueda introducidos.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
+					"No hay clientes con los parámetros de búsqueda introducidos.");
 		} else {
-			/*Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Encontrado!");
-			alert.setContentText("SE HA ENCONTRADO ALGO!");
-			alert.showAndWait();
-			*/
-			for(ClienteParticularEmpresaDireccion cpe : lista){
-				
+			for (ClienteParticularEmpresaDireccion cpe : lista) {
 				listaClientes.add(cpe);
 				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaDni.setCellValueFactory(cellData -> cellData.getValue().getParticular().nifProperty());
+				if(cpe.getParticular() != null){
+					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getParticular().nifProperty());					
+				}else if(cpe.getEmpresa() != null){
+					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getEmpresa().cifProperty());
+				}
 				columnaDomicilio.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());
-				columnaPoblacion.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
+				columnaPoblacion
+						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
 				columnaTelf.setCellValueFactory(cellData -> cellData.getValue().getCliente().telf1Property());
 				tableClientes.setItems(listaClientes);
 			}
 		}
 	}
-	
+
 	/**
 	 * Función para cargar el cliente seleccionado
 	 */
 	@FXML
-	private void cargarCliente(){
+	private void cargarCliente() {
 		int selectedIndex = tableClientes.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			try {
-	            // Cargar la vista de Cliente
-	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
-	            AnchorPane cliente = (AnchorPane) loader.load();
-	        	
-	            // Poner la nueva vista en el centro del root
-	            main.getRoot().setCenter(cliente);
-	            
-	            // Poner el controlador de la nueva vista.
-	            ClienteController controller = loader.getController();
-	            controller.setMainAPP(main);
-	            Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
-	            controller.cargaCliente(listaClientes.get(selectedIndex));
+				// Cargar la vista de Cliente
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
+				AnchorPane cliente = (AnchorPane) loader.load();
 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+				// Poner la nueva vista en el centro del root
+				main.getRoot().setCenter(cliente);
+
+				// Poner el controlador de la nueva vista.
+				ClienteController controller = loader.getController();
+				controller.setMainAPP(main);
+				Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
+				controller.cargaCliente(listaClientes.get(selectedIndex));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			// Nada seleccionado.
 			Alert alert = new Alert(AlertType.INFORMATION);

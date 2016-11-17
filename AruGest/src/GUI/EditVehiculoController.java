@@ -1,8 +1,6 @@
 package GUI;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
@@ -72,8 +70,10 @@ public class EditVehiculoController {
 	 */
 	public void setVehiculo(Vehiculo v) {
 		this.v = v;
-
-		comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(v.getTipoID()));
+		
+		if(v.getTipoID() > 0){
+			comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(v.getTipoID()));			
+		}
 		txtMatricula.setText(v.getMatricula());
 		if(v.getMatricula().isEmpty()){
 			txtMatricula.setEditable(true);			
@@ -154,14 +154,7 @@ public class EditVehiculoController {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			// Show the error message.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Campos inváidos");
-			alert.setHeaderText("Por favor corrige los campos");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
 			return false;
 		}
 	}

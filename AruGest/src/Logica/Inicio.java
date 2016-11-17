@@ -101,6 +101,7 @@ public static void setOpcionNueva(String opcionNueva) {
 			dialogStage.setTitle("Vehículo");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
@@ -139,6 +140,7 @@ public static void setOpcionNueva(String opcionNueva) {
 	        dialogStage.setTitle("Cliente");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(escenario);
+	        dialogStage.setResizable(false);
 	        Scene scene = new Scene(page);
 	        dialogStage.setScene(scene);
 

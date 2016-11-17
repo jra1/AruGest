@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -21,7 +22,14 @@
             <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. fijo" />
             <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. Móvil" />
             <Label layoutX="271.0" layoutY="140.0" text="Tlf. móvil" />
-            <Button fx:id="btnBuscar" layoutX="481.0" layoutY="136.0" mnemonicParsing="false" onAction="#buscarCliente" text="Buscar" />
+            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="25.0" prefWidth="24.0">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/buscar.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
             <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
             <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />
@@ -37,7 +45,7 @@
             <TableView fx:id="tableClientes" layoutX="14.0" layoutY="14.0" prefHeight="368.0" prefWidth="869.0">
               <columns>
                 <TableColumn fx:id="columnaNombre" prefWidth="362.0" text="Nombre cliente" />
-                <TableColumn fx:id="columnaDni" prefWidth="505.0" text="D.N.I." />
+                <TableColumn fx:id="columnaDni" prefWidth="505.0" text="NIF / CIF" />
                   <TableColumn fx:id="columnaDomicilio" prefWidth="233.0" text="Domicilio" />
                   <TableColumn fx:id="columnaPoblacion" prefWidth="114.0" text="Población" />
                   <TableColumn fx:id="columnaTelf" prefWidth="233.0" text="Teléfono" />

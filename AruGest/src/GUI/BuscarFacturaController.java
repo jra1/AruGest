@@ -1,16 +1,11 @@
 package GUI;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import Logica.Inicio;
-import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
-import Modelo.Servicio;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

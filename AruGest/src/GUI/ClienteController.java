@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +25,8 @@ public class ClienteController {
 	private Label lblTipoCliente;
 	@FXML
 	private TextField txtNombre;
+	@FXML
+	private CheckBox chkboxEsProveedor;
 	@FXML
 	private Label lblApellidos;
 	@FXML
@@ -87,6 +90,7 @@ public class ClienteController {
 	private Inicio main;
 
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
+	private ClienteParticularEmpresaDireccion cped;
 
 	public Inicio getMain() {
 		return main;
@@ -104,8 +108,9 @@ public class ClienteController {
 	 * Carga una factura
 	 */
 	public void cargaCliente(ClienteParticularEmpresaDireccion cped) {
-		//btnGuardar.setVisible(false);
+		// btnGuardar.setVisible(false);
 		Inicio.CLIENTE_ID = cped.getCliente().getIdcliente();
+		this.cped = cped;
 
 		// Cargar datos cliente
 		if (cped.getParticular() != null) {
@@ -113,16 +118,18 @@ public class ClienteController {
 			txtDni.setText(cped.getParticular().getNif());
 			txtNombre.setText(cped.getParticular().getNombre());
 			lblApellidos.setVisible(true);
+			chkboxEsProveedor.setVisible(false);
 			txtApellidos.setVisible(true);
 			txtApellidos.setText(cped.getParticular().getApellidos());
-		} else {
-			if (cped.getEmpresa() != null) {
-				lblTipoCliente.setText("Empresa");
-				txtDni.setText(cped.getEmpresa().getCif());
-				txtNombre.setText(cped.getEmpresa().getNombre());
-				lblApellidos.setVisible(false);
-				txtApellidos.setVisible(false);
-			}
+		} else if (cped.getEmpresa() != null) {
+			lblTipoCliente.setText("Empresa");
+			txtDni.setText(cped.getEmpresa().getCif());
+			txtNombre.setText(cped.getEmpresa().getNombre());
+			lblApellidos.setVisible(false);
+			chkboxEsProveedor.setVisible(true);
+			chkboxEsProveedor.setSelected(cped.getEmpresa().isEsProveedor());
+			;
+			txtApellidos.setVisible(false);
 		}
 		if (cped.getCliente().getDireccionID() != 0) {
 			txtCalle.setText(cped.getDireccion().getCalle());
@@ -150,7 +157,7 @@ public class ClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		//btnGuardar.setVisible(true);
+		// btnGuardar.setVisible(true);
 		tableVehiculo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
 
@@ -163,6 +170,33 @@ public class ClienteController {
 		 * .addListener((observable, oldValue, newValue) ->
 		 * comprobarComboTipoVehiculo(newValue));
 		 */
+	}
+
+	/**
+	 * Se llama cuando el usuario pulsa en Editar cliente
+	 */
+	@FXML
+	private void editarCliente() {
+		boolean okClicked = Inicio.mostrarEditorCliente(cped);
+		if (okClicked) {
+			// EDITAR EN LA BD
+			if (Inicio.CONEXION.editarCliente(cped)) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Atención");
+				alert.setHeaderText("Cliente modificado con éxito");
+
+				alert.showAndWait();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Error al modificar el cliente");
+				alert.setContentText("Ocurrió un error al modificar el cliente en la base de datos.");
+
+				alert.showAndWait();
+			}
+
+			cargaCliente(cped);
+		}
 	}
 
 	/**
@@ -197,7 +231,7 @@ public class ClienteController {
 			lblCodRadio.setText("");
 		}
 	}
-	
+
 	/**
 	 * Se llama cuando el usuario pulsa en Añadir vehículo
 	 */
@@ -206,93 +240,68 @@ public class ClienteController {
 		Vehiculo v = new Vehiculo(Inicio.CLIENTE_ID);
 		boolean okClicked = Inicio.mostrarEditorVehiculo(v);
 		if (okClicked) {
-			//Cuando llega aqui son correctos los datos introducidos
-			if(Inicio.CONEXION.guardarVehiculo(v)){
+			// Cuando llega aqui son correctos los datos introducidos
+			if (Inicio.CONEXION.guardarVehiculo(v)) {
 				listaVehiculos.add(v);
-			}else{
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error");
-				alert.setHeaderText("Error al guardar el vehículo");
-				alert.setContentText("Ocurrió un error al guardar el vehículo en la base de datos.");
-
-				alert.showAndWait();
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
+						"Ocurrió un error al guardar el vehículo en la base de datos.");
 			}
 		}
 	}
-	
+
 	/**
-     * Se llama cuando el usuario pulsa en Editar vehículo
-     */
-    @FXML
-    private void editarVehiculo() {
-        Vehiculo v = tableVehiculo.getSelectionModel().getSelectedItem();
-        if (v != null) {
-            boolean okClicked = Inicio.mostrarEditorVehiculo(v);
-            if (okClicked) {
-            	//EDITAR EN LA BD
-            	if(Inicio.CONEXION.editarVehiculo(v)){
-    				Alert alert = new Alert(AlertType.CONFIRMATION);
-    				alert.setTitle("Atención");
-    				alert.setHeaderText("Vehículo modificado con éxito");
+	 * Se llama cuando el usuario pulsa en Editar vehículo
+	 */
+	@FXML
+	private void editarVehiculo() {
+		Vehiculo v = tableVehiculo.getSelectionModel().getSelectedItem();
+		if (v != null) {
+			boolean okClicked = Inicio.mostrarEditorVehiculo(v);
+			if (okClicked) {
+				// EDITAR EN LA BD
+				if (Inicio.CONEXION.editarVehiculo(v)) {
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Error", "Vehículo modificado con éxito", "");
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
+							"Ocurrió un error al guardar el vehículo en la base de datos.");
+				}
+				mostrarDetallesVehiculo(v);
+			}
+		} else {
+			// Si no ha seleccionado un vehículo de la tabla
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo que quieras editar.");
+		}
+	}
 
-    				alert.showAndWait();
-    			}else{
-    				Alert alert = new Alert(AlertType.ERROR);
-    				alert.setTitle("Error");
-    				alert.setHeaderText("Error al guardar el vehículo");
-    				alert.setContentText("Ocurrió un error al guardar el vehículo en la base de datos.");
+	/**
+	 * Se llama cuando el usuario pulsa en Eliminar vehículo
+	 */
+	@FXML
+	private void eliminarVehiculo() {
+		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			// BORRAR DE LA BASE DE DATOS
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Eliminar vehículo");
+			alert.setHeaderText(
+					"Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?");
 
-    				alert.showAndWait();
-    			}
-            	
-            	
-                mostrarDetallesVehiculo(v);
-            }
-
-        } else {
-            // Si no ha seleccionado un vehículo de la tabla
-        	Alert alert = new Alert(AlertType.WARNING);
-        	alert.setTitle("Atención");
-			alert.setHeaderText("Ningún vehículo seleccionado");
-			alert.setContentText("Selecciona el vehículo que quieras editar.");
-
-        	alert.showAndWait();
-        }
-    }
-    
-    /**
-     * Se llama cuando el usuario pulsa en Eliminar vehículo
-     */
-    @FXML
-    private void eliminarVehiculo() {
-        int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            //BORRAR DE LA BASE DE DATOS
-        	Alert alert = new Alert(AlertType.CONFIRMATION);
-        	alert.setTitle("Eliminar vehículo");
-        	alert.setHeaderText("Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?");
-
-        	Optional<ButtonType> result = alert.showAndWait();
-        	if (result.get() == ButtonType.OK){
-        		if(Inicio.CONEXION.eliminarVehiculo(tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo())){
-        			tableVehiculo.getItems().remove(selectedIndex);
-        		}else{
-        			alert = new Alert(AlertType.ERROR);
-        			alert.setTitle("Error");
-        			alert.setHeaderText("Error al eliminar el vehículo");
-        			alert.setContentText("Ocurrió un error al eliminar el vehículo de la base de datos.");
-        			
-        			alert.showAndWait();
-        		}
-        	}
-        } else {
-            // Nothing selected.
-        	Alert alert = new Alert(AlertType.WARNING);
-        	alert.setTitle("Atención");
-			alert.setHeaderText("Ningún vehículo seleccionado");
-			alert.setContentText("Selecciona el vehículo que quieras eliminar.");
-
-        	alert.showAndWait();
-        }
-    }
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				if (Inicio.CONEXION
+						.eliminarVehiculo(tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo())) {
+					tableVehiculo.getItems().remove(selectedIndex);
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el vehículo",
+							"Ocurrió un error al eliminar el vehículo de la base de datos.");
+				}
+			}
+		} else {
+			// Nothing selected.
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo que quieras eliminar.");
+		}
+	}
 }

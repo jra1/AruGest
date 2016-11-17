@@ -53,7 +53,7 @@ public class EditClienteController {
 	private TextField txtProvincia;
 
 	private Stage dialogStage;
-	private ClienteParticularEmpresaDireccion cped;
+	private ClienteParticularEmpresaDireccion cped = null;
 	private boolean esEmpresa = false;
 	private boolean okClicked = false;
 
@@ -65,8 +65,9 @@ public class EditClienteController {
 	private void initialize() {
 		comboTipo.getItems().addAll("Particular", "Empresa");
 		comboTipo.setValue("Particular");
-		
-		comboTipo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
+
+		comboTipo.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
 	}
 
 	/**
@@ -87,14 +88,14 @@ public class EditClienteController {
 	public void setCliente(ClienteParticularEmpresaDireccion cped) {
 		this.cped = cped;
 
-		if(cped.getParticular() != null){
+		if (cped.getParticular() != null) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
 			comboTipo.setValue("Particular");
 			txtNif.setText(cped.getParticular().getNif());
 			txtNombre.setText(cped.getParticular().getNombre());
 			txtApellidos.setText(cped.getParticular().getApellidos());
-		} else if(cped.getEmpresa() != null){
+		} else if (cped.getEmpresa() != null) {
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
 			comboTipo.setValue("Empresa");
@@ -105,10 +106,10 @@ public class EditClienteController {
 		txtTel2.setText(cped.getCliente().getTelf2());
 		txtTel3.setText(cped.getCliente().getTelf3());
 		txtCalle.setText(cped.getDireccion().getCalle());
-		txtNumero.setText(""+cped.getDireccion().getNumero());
+		txtNumero.setText("" + cped.getDireccion().getNumero());
 		txtPiso.setText(cped.getDireccion().getPiso());
 		txtLetra.setText(cped.getDireccion().getLetra());
-		txtCodPostal.setText(""+cped.getDireccion().getCpostal());
+		txtCodPostal.setText("" + cped.getDireccion().getCpostal());
 		txtLocalidad.setText(cped.getDireccion().getLocalidad());
 		txtProvincia.setText(cped.getDireccion().getProvincia());
 	}
@@ -128,20 +129,25 @@ public class EditClienteController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			if(!esEmpresa){
-				Particular p = new Particular(txtNombre.getText(), txtApellidos.getText(), txtNif.getText());
+			if (!esEmpresa) {
+				Particular p;
+				if (cped.getParticular() != null) {
+					p = new Particular(cped.getParticular().getIdparticular(), cped.getParticular().getClienteID(),
+							txtNombre.getText(), txtApellidos.getText(), txtNif.getText());
+				} else {
+					p = new Particular(txtNombre.getText(), txtApellidos.getText(), txtNif.getText());
+				}
 				cped.setParticular(p);
-//				cped.getParticular().setNif(txtNif.getText());
-//				cped.getParticular().setNombre(txtNombre.getText());
-//				cped.getParticular().setApellidos(txtApellidos.getText());
-			}else{
-				Empresa e = new Empresa(txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
+			} else {
+				Empresa e;
+				if(cped.getEmpresa() != null){
+					e = new Empresa(cped.getEmpresa().getIdempresa(), cped.getEmpresa().getClienteID(), txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());					
+				}else{
+					e = new Empresa(txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
+				}
 				cped.setEmpresa(e);
-//				cped.getEmpresa().setCif(txtNif.getText());
-//				cped.getEmpresa().setNombre(txtNombre.getText());
-//				cped.getEmpresa().setEsProveedor(chckboxEsProveedor.isSelected());
 			}
-			if(!txtCalle.getText().isEmpty()){
+			if (!txtCalle.getText().isEmpty()) {
 				cped.getDireccion().setCalle(txtCalle.getText());
 				cped.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
 				cped.getDireccion().setPiso(txtPiso.getText());
@@ -150,7 +156,7 @@ public class EditClienteController {
 				cped.getDireccion().setLocalidad(txtLocalidad.getText());
 				cped.getDireccion().setProvincia(txtProvincia.getText());
 			}
-			cped.getCliente().setNombre(txtNombre.getText() + txtApellidos.getText());
+			cped.getCliente().setNombre(txtNombre.getText() + " " + txtApellidos.getText());
 			cped.getCliente().setTelf1(txtTel1.getText());
 			cped.getCliente().setTelf2(txtTel2.getText());
 			cped.getCliente().setTelf3(txtTel3.getText());
@@ -179,24 +185,24 @@ public class EditClienteController {
 		if (txtNif.getText().length() == 0) {
 			errorMessage += "Introduce el NIF/CIF del cliente\n";
 		}
-		if (txtNombre.getText().length() == 0 ) {
+		if (txtNombre.getText().length() == 0) {
 			errorMessage += "Introduce el nombre del cliente";
 		}
-		if(txtNumero.getText().length() > 0){
+		if (txtNumero.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtNumero.getText());
 			} catch (NumberFormatException e) {
 				errorMessage = "Número no válido.\n Introduce únicamente números";
-			}			
+			}
 		}
-		if(txtCodPostal.getText().length() > 0){
+		if (txtCodPostal.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtCodPostal.getText());
 			} catch (NumberFormatException e) {
 				errorMessage = "Código postal no válido.\n Introduce únicamente números";
-			}			
+			}
 		}
-		
+
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
@@ -209,19 +215,19 @@ public class EditClienteController {
 			return false;
 		}
 	}
-	
-	private void comprobarComboTipo(String newValue){
-		if(newValue.equalsIgnoreCase("Particular")){
+
+	private void comprobarComboTipo(String newValue) {
+		if (newValue.equalsIgnoreCase("Particular")) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
 			chckboxEsProveedor.setVisible(false);
 			esEmpresa = false;
-		}else{
+		} else {
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
 			chckboxEsProveedor.setVisible(true);
 			esEmpresa = true;
 		}
-		
+
 	}
 }
