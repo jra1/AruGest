@@ -156,7 +156,7 @@ public class RootController {
 	 * Coloca la ventana de buscar cliente
 	 */
 	@FXML
-	private void buscarCliente() {
+	public void buscarCliente() {
 		try {
 			// Cargar la vista de nueva factura
 			FXMLLoader loader = new FXMLLoader();

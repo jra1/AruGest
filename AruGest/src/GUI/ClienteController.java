@@ -1,5 +1,6 @@
 package GUI;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import Logica.Inicio;
@@ -9,6 +10,7 @@ import Modelo.Vehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -18,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 
 public class ClienteController {
 	// Datos cliente
@@ -198,6 +201,40 @@ public class ClienteController {
 			cargaCliente(cped);
 		}
 	}
+	
+	/**
+	 * Se llama cuando el usuario pulsa en Eliminar cliente
+	 */
+	@FXML
+	private void eliminarCliente() {
+		if (cped.getCliente().getIdcliente() > 0) {
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar cliente", "Se eliminará todo lo asociado a este cliente (facturas, vehículos, documentos... )\n¿Estás seguro que quieres eliminar este cliente?", "");
+			if (result.get() == ButtonType.OK) {
+				if (Inicio.CONEXION.eliminarCliente(cped)) {
+					try {
+						// Cargar la vista de nueva factura
+						FXMLLoader loader = new FXMLLoader();
+						loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
+						AnchorPane buscarCliente = (AnchorPane) loader.load();
+						// Poner la nueva vista en el centro del root
+						main.getRoot().setCenter(buscarCliente);
+
+						// Poner el controlador de la nueva vista.
+						BuscarClienteController controller = loader.getController();
+						controller.setMainAPP(main);
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Cliente eliminado",
+							"El cliente y todo sus datos asociados han sido eliminados con éxito de la base de datos.");
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el vehículo",
+							"Ocurrió un error al eliminar el vehículo de la base de datos.");
+				}
+			}
+		}
+	}
 
 	/**
 	 * Muestra los detalles del vehículo seleccionado Si el vehiculo es null, se
@@ -282,13 +319,7 @@ public class ClienteController {
 	private void eliminarVehiculo() {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			// BORRAR DE LA BASE DE DATOS
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Eliminar vehículo");
-			alert.setHeaderText(
-					"Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?");
-
-			Optional<ButtonType> result = alert.showAndWait();
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar vehículo", "Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?", "");
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION
 						.eliminarVehiculo(tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo())) {

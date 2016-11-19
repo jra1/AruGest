@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 
 public class Utilidades {
@@ -95,12 +97,12 @@ public class Utilidades {
 	 * @param header: Cabecera de la alerta
 	 * @param texto: Mensaje de la alerta
 	 */
-	public static void mostrarAlerta(AlertType at, String titulo, String header, String texto){
+	public static Optional<ButtonType> mostrarAlerta(AlertType at, String titulo, String header, String texto){
 		Alert alert = new Alert(at);
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
 		alert.setContentText(texto);
-		alert.showAndWait();
+		return alert.showAndWait();
 	}
 	
 	public static Date asDate(LocalDateTime localDateTime) {

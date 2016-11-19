@@ -104,7 +104,7 @@
             </TextField>
             <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
             <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
-            <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
+            <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="25.0" prefWidth="95.0" text="Eliminar" />
          </children>
       </Pane>
       <Pane layoutX="4.0" layoutY="174.0" prefHeight="498.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="174.0">
@@ -122,8 +122,8 @@
                </cursor>
             </TableView>
             <Button layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#nuevoVehiculo" prefHeight="25.0" prefWidth="63.0" text="Añadir" />
-            <Button layoutX="86.0" layoutY="6.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="25.0" prefWidth="63.0" text="Editar" />
-            <Button layoutX="158.0" layoutY="6.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="25.0" prefWidth="77.0" text="Eliminar" />
+            <Button layoutX="86.0" layoutY="6.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="25.0" prefWidth="70.0" text="Modificar" />
+            <Button layoutX="166.0" layoutY="6.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="25.0" prefWidth="77.0" text="Eliminar" />
             <GridPane layoutX="797.0" layoutY="36.0" prefHeight="416.0" prefWidth="286.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="76.0" />

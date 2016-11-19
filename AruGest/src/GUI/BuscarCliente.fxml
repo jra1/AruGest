@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -22,14 +23,17 @@
             <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. fijo" />
             <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. Móvil" />
             <Label layoutX="271.0" layoutY="140.0" text="Tlf. móvil" />
-            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="25.0" prefWidth="24.0">
+            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="48.0" prefWidth="114.0" text="BUSCAR">
                <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/buscar.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
             <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
             <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
             <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />

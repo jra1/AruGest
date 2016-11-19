@@ -342,8 +342,9 @@ public class Conexion {
 	public boolean eliminarVehiculo(int id) {
 		/*
 		 * 1º comprobar si tiene facturas: - si: coger id factura, eliminar
-		 * servicios, eliminar materiales, eliminar factura. 2º comprobar si
-		 * tiene documentos - si: eliminar documento 3º comprobar si es vehiculo
+		 * servicios, eliminar materiales, eliminar factura. 
+		 * 2º comprobar si tiene documentos - si: eliminar documento 
+		 * 3º comprobar si es vehiculo
 		 * sustitucion - si: eliminar vehiculo sustitucion
 		 */
 		String sql = "";
@@ -498,6 +499,94 @@ public class Conexion {
 		}
 		return res;
 	}
+	
+	public boolean eliminarCliente(ClienteParticularEmpresaDireccion cped) {
+		/*	Orden para eliminar un cliente:
+		 * 1º Facturas asociadas
+		 * 2º VehiculosSustitucion asociados
+		 * 3º Documentos asociados
+		 * 4º Vehiculos asociados
+		 * 5º Particular / Empresa asociada
+		 * 6º Cliente
+		 * 7º Direccion asociada
+		 */
+		String sql = "";
+		boolean res = true;
+		PreparedStatement pt;
+		int id = cped.getCliente().getIdcliente();
+		int iddireccion = cped.getCliente().getDireccionID();
+		try {
+			//1º Facturas
+			Statement st = getCon().createStatement();
+			sql = "SELECT IDFACTURA FROM FACTURA WHERE CLIENTEID = " + id;
+
+			ResultSet rs = st.executeQuery(sql);
+
+			if (rs.isBeforeFirst()) { //Si es false es que no hay filas
+				while (rs.next()) {
+					eliminarServiciosPorFacturaID(rs.getInt("IDFACTURA"));
+					eliminarMaterialesPorFacturaID(rs.getInt("IDFACTURA"));
+				}
+				sql = "DELETE FROM FACTURA WHERE CLIENTEID = " + id;
+				pt = getCon().prepareStatement(sql);
+				pt.executeUpdate();
+			}
+
+			//2º VehiculosSustitucion
+			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE CLIENTEID = " + id;
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				eliminarVehiculoSustiPorClienteID(id);
+			}
+
+			//3º Documentos
+			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE CLIENTEID = " + id;
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eliminarDocumentosPorClienteID(id);
+			}
+
+			//4º Vehiculos
+			sql = "SELECT IDVEHICULO FROM VEHICULO WHERE CLIENTEID = " + id;
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eliminarVehiculo(rs.getInt("IDVEHICULO"));
+			}
+			
+			
+			//5º Particular / Empresa
+			if(cped.getParticular() != null){
+				sql = "SELECT IDPARTICULAR FROM PARTICULAR WHERE CLIENTEID = " + id;
+				rs = st.executeQuery(sql);
+				while (rs.next()) {
+					eliminarParticularPorClienteID(id);
+				}				
+			}else if(cped.getEmpresa() != null){
+				sql = "SELECT IDEMPRESA FROM EMPRESA WHERE CLIENTEID = " + id;
+				rs = st.executeQuery(sql);
+				while (rs.next()) {
+					eliminarEmpresaPorClienteID(id);
+				}
+			}
+			
+			//6º Cliente
+			sql = "DELETE FROM CLIENTE WHERE IDCLIENTE = " + id;
+			pt = getCon().prepareStatement(sql);
+			pt.executeUpdate();
+
+			//7º Direccion
+			if(iddireccion > 0){
+				eliminarDireccionPorID(iddireccion);
+			}
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
 
 	/**
 	 * Elimina los servicios asociados a la factura con id facturaID
@@ -582,6 +671,106 @@ public class Conexion {
 		}
 		return res;
 	}
+	
+	/**
+	 * Elimina los documentos asociados al cliente con id clienteID
+	 * 
+	 * @param clienteID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarDocumentosPorClienteID(int clienteID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM DOCUMENTO WHERE CLIENTEID = " + clienteID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
+	/**
+	 * Elimina el Particular asociado al cliente con id clienteID
+	 * 
+	 * @param clienteID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarParticularPorClienteID(int clienteID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM PARTICULAR WHERE CLIENTEID = " + clienteID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
+	/**
+	 * Elimina la Empresa asociada al cliente con id clienteID
+	 * 
+	 * @param clienteID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarEmpresaPorClienteID(int clienteID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM EMPRESA WHERE CLIENTEID = " + clienteID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
+	/**
+	 * Elimina la dirección con id direccionID
+	 * 
+	 * @param direccionID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarDireccionPorID(int direccionID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM DIRECCION WHERE IDDIRECCION = " + direccionID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
 
 	/**
 	 * Elimina los vehiculos de sustitucion asociados al vehiculo con id
@@ -601,6 +790,32 @@ public class Conexion {
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
+	/**
+	 * Elimina los vehiculos de sustitucion asociados al cliente con id
+	 * clienteID
+	 * 
+	 * @param clienteID
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarVehiculoSustiPorClienteID(int clienteID) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM VEHICULOSUSTITUCION WHERE CLIENTEID = " + clienteID + "";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
 			// Se cierra la conexion
 			getCon().close();
 
