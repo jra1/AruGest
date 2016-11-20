@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Logica.Inicio;
+import Logica.Utilidades;
 import Modelo.FacturaClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -127,19 +128,8 @@ public class BuscarFacturaController {
 				numResguardo, txtNombreCliente.getText(), txtModelo.getText(), txtMatricula.getText(),
 				txtFijo.getText(), txtMovil.getText(), txtFechaDesde.getValue(), txtFechaHasta.getValue());
 		if (lista.isEmpty()) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("No encontrado");
-			alert.setContentText("No hay facturas con los parámetros de búsqueda introducidos.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado", "No hay facturas con los parámetros de búsqueda introducidos.");
 		} else {
-			/*Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Encontrado!");
-			alert.setContentText("SE HA ENCONTRADO ALGO!");
-			alert.showAndWait();
-			*/
 			for(FacturaClienteVehiculo fce : lista){
 				listaFacturas.add(fce);
 				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());

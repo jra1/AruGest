@@ -342,9 +342,8 @@ public class Conexion {
 	public boolean eliminarVehiculo(int id) {
 		/*
 		 * 1º comprobar si tiene facturas: - si: coger id factura, eliminar
-		 * servicios, eliminar materiales, eliminar factura. 
-		 * 2º comprobar si tiene documentos - si: eliminar documento 
-		 * 3º comprobar si es vehiculo
+		 * servicios, eliminar materiales, eliminar factura. 2º comprobar si
+		 * tiene documentos - si: eliminar documento 3º comprobar si es vehiculo
 		 * sustitucion - si: eliminar vehiculo sustitucion
 		 */
 		String sql = "";
@@ -499,16 +498,13 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	public boolean eliminarCliente(ClienteParticularEmpresaDireccion cped) {
-		/*	Orden para eliminar un cliente:
-		 * 1º Facturas asociadas
-		 * 2º VehiculosSustitucion asociados
-		 * 3º Documentos asociados
-		 * 4º Vehiculos asociados
-		 * 5º Particular / Empresa asociada
-		 * 6º Cliente
-		 * 7º Direccion asociada
+		/*
+		 * Orden para eliminar un cliente: 1º Facturas asociadas 2º
+		 * VehiculosSustitucion asociados 3º Documentos asociados 4º Vehiculos
+		 * asociados 5º Particular / Empresa asociada 6º Cliente 7º Direccion
+		 * asociada
 		 */
 		String sql = "";
 		boolean res = true;
@@ -516,13 +512,13 @@ public class Conexion {
 		int id = cped.getCliente().getIdcliente();
 		int iddireccion = cped.getCliente().getDireccionID();
 		try {
-			//1º Facturas
+			// 1º Facturas
 			Statement st = getCon().createStatement();
 			sql = "SELECT IDFACTURA FROM FACTURA WHERE CLIENTEID = " + id;
 
 			ResultSet rs = st.executeQuery(sql);
 
-			if (rs.isBeforeFirst()) { //Si es false es que no hay filas
+			if (rs.isBeforeFirst()) { // Si es false es que no hay filas
 				while (rs.next()) {
 					eliminarServiciosPorFacturaID(rs.getInt("IDFACTURA"));
 					eliminarMaterialesPorFacturaID(rs.getInt("IDFACTURA"));
@@ -532,50 +528,49 @@ public class Conexion {
 				pt.executeUpdate();
 			}
 
-			//2º VehiculosSustitucion
+			// 2º VehiculosSustitucion
 			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
-			if(rs.next()) {
+			if (rs.next()) {
 				eliminarVehiculoSustiPorClienteID(id);
 			}
 
-			//3º Documentos
+			// 3º Documentos
 			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				eliminarDocumentosPorClienteID(id);
 			}
 
-			//4º Vehiculos
+			// 4º Vehiculos
 			sql = "SELECT IDVEHICULO FROM VEHICULO WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				eliminarVehiculo(rs.getInt("IDVEHICULO"));
 			}
-			
-			
-			//5º Particular / Empresa
-			if(cped.getParticular() != null){
+
+			// 5º Particular / Empresa
+			if (cped.getParticular() != null) {
 				sql = "SELECT IDPARTICULAR FROM PARTICULAR WHERE CLIENTEID = " + id;
 				rs = st.executeQuery(sql);
 				while (rs.next()) {
 					eliminarParticularPorClienteID(id);
-				}				
-			}else if(cped.getEmpresa() != null){
+				}
+			} else if (cped.getEmpresa() != null) {
 				sql = "SELECT IDEMPRESA FROM EMPRESA WHERE CLIENTEID = " + id;
 				rs = st.executeQuery(sql);
 				while (rs.next()) {
 					eliminarEmpresaPorClienteID(id);
 				}
 			}
-			
-			//6º Cliente
+
+			// 6º Cliente
 			sql = "DELETE FROM CLIENTE WHERE IDCLIENTE = " + id;
 			pt = getCon().prepareStatement(sql);
 			pt.executeUpdate();
 
-			//7º Direccion
-			if(iddireccion > 0){
+			// 7º Direccion
+			if (iddireccion > 0) {
 				eliminarDireccionPorID(iddireccion);
 			}
 
@@ -586,7 +581,6 @@ public class Conexion {
 		}
 		return res;
 	}
-
 
 	/**
 	 * Elimina los servicios asociados a la factura con id facturaID
@@ -671,7 +665,7 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina los documentos asociados al cliente con id clienteID
 	 * 
@@ -696,7 +690,7 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina el Particular asociado al cliente con id clienteID
 	 * 
@@ -721,7 +715,7 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina la Empresa asociada al cliente con id clienteID
 	 * 
@@ -746,7 +740,7 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina la dirección con id direccionID
 	 * 
@@ -800,7 +794,7 @@ public class Conexion {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Elimina los vehiculos de sustitucion asociados al cliente con id
 	 * clienteID
@@ -828,6 +822,34 @@ public class Conexion {
 	}
 
 	/**
+	 * Busca un cliente en la BD por su ID
+	 * 
+	 * @param id
+	 *            a buscar en la BD tipo de documento a buscar: 1-Dni, 2-Cif
+	 * 
+	 * @return el cliente encontrado o null si no existe ese ID
+	 */
+	public Cliente leerClientePorID(int id) {
+		String sql = "";
+		Cliente c = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM CLIENTE WHERE CLIENTE.IDCLIENTE = " + id;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return c;
+	}
+
+	/**
 	 * Busca un cliente en la BD por su DNI
 	 * 
 	 * @param dni
@@ -843,7 +865,7 @@ public class Conexion {
 			Statement st = getCon().createStatement();
 			if (tipo == 1) {
 				sql = "SELECT * FROM PARTICULAR INNER JOIN CLIENTE ON PARTICULAR.CLIENTEID = CLIENTE.IDCLIENTE WHERE "
-						+ "NIF = '" + dni + "'";// + "NIF LIKE '%" + dni + "%'";
+						+ "NIF = '" + dni + "'";
 			} else if (tipo == 2) {
 				sql = "SELECT * FROM EMPRESA INNER JOIN CLIENTE ON EMPRESA.CLIENTEID = CLIENTE.IDCLIENTE WHERE "
 						+ "CIF LIKE '%" + dni + "%'";
@@ -875,7 +897,10 @@ public class Conexion {
 		try {
 			// Se prepara la sentencia para buscar los datos del cliente
 			Statement st = getCon().createStatement();
-			sql = "SELECT * FROM VEHICULO  WHERE MATRICULA = '" + matricula + "'";
+			sql = "SELECT * FROM VEHICULO  WHERE UPPER(MATRICULA) = UPPER('" + matricula + "')";// WHERE
+																								// UPPER(COLUMNNAME)
+																								// like
+																								// UPPER('%valuetocompare%')
 
 			ResultSet rs = st.executeQuery(sql);
 
@@ -1039,6 +1064,7 @@ public class Conexion {
 	}
 
 	/**
+	 * Busca las factura que coincidan con los parámetros introducidos
 	 * 
 	 * @param numFactura
 	 * @param numPresu
@@ -1052,7 +1078,7 @@ public class Conexion {
 	 * @param dni
 	 * @param fechaDesde
 	 * @param fechaHasta
-	 * @return
+	 * @return ArrayList con las facturas encontradas
 	 */
 	public ArrayList<FacturaClienteVehiculo> buscarFacturas(int numFactura, int numPresu, int numOrden, int numResgu,
 			String nombre, String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde,
@@ -1103,26 +1129,26 @@ public class Conexion {
 			}
 			if (!nombre.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 				}
 			}
 			if (!modelo.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' ";
+					sql += "WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND VEHICULO.MODELO LIKE '%" + modelo + "%' ";
+					sql += "AND UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
 				}
 			}
 			if (!matricula.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+					sql += "AND UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
 				}
 			}
 			if (!fijo.equalsIgnoreCase("")) {
@@ -1143,10 +1169,10 @@ public class Conexion {
 			}
 			if (!matricula.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
+					sql += "AND UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
 				}
 			}
 
@@ -1177,6 +1203,20 @@ public class Conexion {
 		return listaFacturas;
 	}
 
+	/**
+	 * Busca los clientes que coincidan con los parámetros introducidos
+	 * 
+	 * @param tipo
+	 * @param nombre
+	 * @param modelo
+	 * @param matricula
+	 * @param dni
+	 * @param fijo
+	 * @param movil
+	 * @param domicilio
+	 * @param poblacion
+	 * @return ArrayList con los clientes encontrados
+	 */
 	public ArrayList<ClienteParticularEmpresaDireccion> buscarClientes(int tipo, String nombre, String modelo,
 			String matricula, String dni, String fijo, String movil, String domicilio, String poblacion) {
 
@@ -1195,10 +1235,10 @@ public class Conexion {
 				sql = "SELECT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
-						sql += "WHERE PARTICULAR.NIF LIKE '%" + dni + "%' ";
+						sql += "WHERE UPPER(PARTICULAR.NIF) LIKE UPPER('%" + dni + "%') ";
 						esPrimero = false;
 					} else {
-						sql += "AND PARTICULAR.NIF LIKE '%" + dni + "%' ";
+						sql += "AND UPPER(PARTICULAR.NIF) LIKE UPPER('%" + dni + "%') ";
 					}
 				}
 
@@ -1206,20 +1246,20 @@ public class Conexion {
 				sql = "SELECT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
-						sql += "WHERE EMPRESA.CIF LIKE '%" + dni + "%' ";
+						sql += "WHERE UPPER(EMPRESA.CIF) LIKE UPPER('%" + dni + "%') ";
 						esPrimero = false;
 					} else {
-						sql += "AND EMPRESA.CIF LIKE '%" + dni + "%' ";
+						sql += "AND UPPER(EMPRESA.CIF) LIKE UPPER('%" + dni + "%') ";
 					}
 				}
 			}
 
 			if (!nombre.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND CLIENTE.NOMBRE LIKE '%" + nombre + "%' ";
+					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 				}
 			}
 			/*
@@ -1249,18 +1289,18 @@ public class Conexion {
 			}
 			if (!domicilio.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE DIRECCION.CALLE LIKE '%" + domicilio + "%' ";
+					sql += "WHERE UPPER(DIRECCION.CALLE) LIKE UPPER('%" + domicilio + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND DIRECCION.CALLE LIKE '%" + domicilio + "%' ";
+					sql += "AND UPPER(DIRECCION.CALLE) LIKE UPPER('%" + domicilio + "%') ";
 				}
 			}
 			if (!poblacion.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE DIRECCION.LOCALIDAD LIKE '%" + poblacion + "%' ";
+					sql += "WHERE UPPER(DIRECCION.LOCALIDAD) LIKE UPPER('%" + poblacion + "%') ";
 					esPrimero = false;
 				} else {
-					sql += "AND DIRECCION.LOCALIDAD LIKE '%" + poblacion + "%' ";
+					sql += "AND UPPER(DIRECCION.LOCALIDAD) LIKE UPPER('%" + poblacion + "%') ";
 				}
 			}
 
@@ -1272,9 +1312,11 @@ public class Conexion {
 						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
-					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("APELLIDOS"), rs.getString("NIF"));
+					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"),
+							rs.getString("APELLIDOS"), rs.getString("NIF"));
 				} else if (tipo == 2) {
-					e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
+					e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"),
+							rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
 				}
 				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
 				listaClientes.add(cped);
@@ -1285,6 +1327,74 @@ public class Conexion {
 			ex.printStackTrace();
 		}
 		return listaClientes;
+	}
+
+	public ArrayList<Vehiculo> buscarVehiculos(int tipo, String matricula, String marca, String modelo, String nombre) {
+		String sql = "";
+		Vehiculo v;
+		ArrayList<Vehiculo> listaVehiculos = new ArrayList<Vehiculo>();
+		boolean esPrimero = true;
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULO INNER JOIN CLIENTE ON VEHICULO.CLIENTEID = CLIENTE.IDCLIENTE ";
+			if (esPrimero) {
+				sql += "WHERE VEHICULO.TIPOID = " + tipo;
+				esPrimero = false;
+			} else {
+				sql += "AND VEHICULO.TIPOID = " + tipo;
+			}
+
+			if (!matricula.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+				}
+			}
+
+			if (!marca.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(VEHICULO.MARCA) LIKE UPPER('%" + marca + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(VEHICULO.MARCA) LIKE UPPER('%" + marca + "%') ";
+				}
+			}
+
+			if (!modelo.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
+				}
+			}
+
+			if (!nombre.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+				}
+			}
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"));
+				listaVehiculos.add(v);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return listaVehiculos;
 	}
 
 	/**

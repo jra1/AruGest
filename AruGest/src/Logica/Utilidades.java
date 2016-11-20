@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
@@ -51,6 +53,41 @@ public class Utilidades {
 			break;
 		case 7:
 			respuesta = "Remolque";
+			break;
+		}
+		return respuesta;
+	}
+	
+	/**
+	 * Se le pasa como parámetro el entero del tipo vehiculo y devuelve el
+	 * StringProperty correspondiente (Para las tablas)
+	 * 
+	 * @param tipoID
+	 * @return
+	 */
+	public static StringProperty tipoIDtoStringProperty(int tipoID) {
+		StringProperty respuesta = new SimpleStringProperty("");
+		switch (tipoID) {
+		case 1:
+			respuesta = new SimpleStringProperty("Turismo");
+			break;
+		case 2:
+			respuesta = new SimpleStringProperty("Furgoneta");
+			break;
+		case 3:
+			respuesta = new SimpleStringProperty("Camión");
+			break;
+		case 4:
+			respuesta = new SimpleStringProperty("Autobús");
+			break;
+		case 5:
+			respuesta = new SimpleStringProperty("Autocaravana");
+			break;
+		case 6:
+			respuesta = new SimpleStringProperty("Moto");
+			break;
+		case 7:
+			respuesta = new SimpleStringProperty("Remolque");
 			break;
 		}
 		return respuesta;

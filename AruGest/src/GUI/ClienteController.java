@@ -201,14 +201,16 @@ public class ClienteController {
 			cargaCliente(cped);
 		}
 	}
-	
+
 	/**
 	 * Se llama cuando el usuario pulsa en Eliminar cliente
 	 */
 	@FXML
 	private void eliminarCliente() {
 		if (cped.getCliente().getIdcliente() > 0) {
-			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar cliente", "Se eliminará todo lo asociado a este cliente (facturas, vehículos, documentos... )\n¿Estás seguro que quieres eliminar este cliente?", "");
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar cliente",
+					"Se eliminará todo lo asociado a este cliente (facturas, vehículos, documentos... )\n¿Estás seguro que quieres eliminar este cliente?",
+					"");
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION.eliminarCliente(cped)) {
 					try {
@@ -296,7 +298,6 @@ public class ClienteController {
 		if (v != null) {
 			boolean okClicked = Inicio.mostrarEditorVehiculo(v);
 			if (okClicked) {
-				// EDITAR EN LA BD
 				if (Inicio.CONEXION.editarVehiculo(v)) {
 					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Error", "Vehículo modificado con éxito", "");
 				} else {
@@ -319,7 +320,9 @@ public class ClienteController {
 	private void eliminarVehiculo() {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar vehículo", "Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?", "");
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar vehículo",
+					"Se eliminará todo lo asociado a este vehículo (facturas, presupuestos... )\n¿Estás seguro que quieres eliminar este vehículo?",
+					"");
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION
 						.eliminarVehiculo(tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo())) {
@@ -330,9 +333,39 @@ public class ClienteController {
 				}
 			}
 		} else {
-			// Nothing selected.
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
 					"Selecciona el vehículo que quieras eliminar.");
+		}
+	}
+
+	/**
+	 * Carga la ventana de nueva factura con los datos del cliente y vehiculo
+	 * seleccionado
+	 */
+	@FXML
+	private void hacerFactura() {
+		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			try {
+				// Cargar la vista de nueva factura
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
+				AnchorPane nuevaFactura = (AnchorPane) loader.load();
+
+				// Poner la nueva vista en el centro del root
+				main.getRoot().setCenter(nuevaFactura);
+
+				// Poner el controlador de la nueva vista.
+				NuevaFacturaController controller = loader.getController();
+				controller.setMainAPP(main);
+				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
+						tableVehiculo.getSelectionModel().getSelectedItem());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo al que quieras hacer una factura.");
 		}
 	}
 }

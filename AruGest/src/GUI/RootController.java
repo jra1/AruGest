@@ -61,6 +61,28 @@ public class RootController {
 			}
 		});
 	}
+	
+	/**
+	 * Coloca la ventana de buscar vehículo
+	 */
+	@FXML
+	public void buscarVehiculo(){
+		try {
+			// Cargar la vista de buscar vehiculo
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/BuscarVehiculo.fxml"));
+			AnchorPane buscarVehiculo = (AnchorPane) loader.load();
+			ap = buscarVehiculo;
+			// Poner la nueva vista en el centro del root
+			main.getRoot().setCenter(buscarVehiculo);
+			// Poner el controlador de la nueva vista.
+			BuscarVehiculoController controller = loader.getController();
+			controller.setMainAPP(main);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Abre la ventana de nuevo Presupuesto / Factura
@@ -133,10 +155,10 @@ public class RootController {
 					Cliente c = null;
 					if (cped.getParticular() != null) {
 						c = Inicio.CONEXION.buscarClientePorDni(cped.getParticular().getNif(), 1);
-						cped.setParticular(Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID));
+						cped.setParticular(Inicio.CONEXION.buscarParticularPorClienteID(c.getIdcliente()));
 					} else if (cped.getEmpresa() != null) {
 						c = Inicio.CONEXION.buscarClientePorDni(cped.getEmpresa().getCif(), 2);
-						cped.setEmpresa(Inicio.CONEXION.buscarEmpresaPorClienteID(Inicio.CLIENTE_ID));
+						cped.setEmpresa(Inicio.CONEXION.buscarEmpresaPorClienteID(c.getIdcliente()));
 					}
 					Inicio.CLIENTE_ID = c.getIdcliente();
 					cped.setCliente(c);
@@ -158,7 +180,7 @@ public class RootController {
 	@FXML
 	public void buscarCliente() {
 		try {
-			// Cargar la vista de nueva factura
+			// Cargar la vista de buscar vehiculo
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
 			AnchorPane buscarCliente = (AnchorPane) loader.load();

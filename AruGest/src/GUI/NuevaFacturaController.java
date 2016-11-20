@@ -235,39 +235,8 @@ public class NuevaFacturaController {
 		}
 		txtFecha.setValue(Utilidades.DateALocalDate(fce.getFactura().getFecha()));
 
-		// Cargar datos cliente (Direccion, Particular/Empresa leer de la BD
-		// desde aquí)
-		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
-		if (p != null) {
-			comboTipoCliente.setValue("Particular");
-			txtNombre.setText(p.getNombre());
-			txtApellidos.setText(p.getApellidos());
-			txtDni.setText(p.getNif());
-		} else {
-			Empresa e = Inicio.CONEXION.buscarEmpresaPorClienteID(Inicio.CLIENTE_ID);
-			if (e != null) {
-				comboTipoCliente.setValue("Empresa");
-				txtNombre.setText(e.getNombre());
-				txtDni.setText(e.getCif());
-			}
-		}
-		if (fce.getCliente().getDireccionID() != 0) {
-			Direccion d = Inicio.CONEXION.buscarDireccionPorID(fce.getCliente().getDireccionID());
-			txtCalle.setText(d.getCalle());
-			txtNumero.setText("" + d.getNumero());
-			txtPiso.setText(d.getPiso());
-			txtLetra.setText(d.getLetra());
-			txtPoblacion.setText(d.getLocalidad());
-		}
-		txtFijo.setText(fce.getCliente().getTelf1());
-		txtMovil.setText(fce.getCliente().getTelf2());
-
-		// Cargar datos vehiculo
-		txtMatricula.setText(fce.getVehiculo().getMatricula());
-		txtMarca.setText(fce.getVehiculo().getMarca());
-		txtModelo.setText(fce.getVehiculo().getModelo());
-		txtVersion.setText(fce.getVehiculo().getVersion());
-		comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(fce.getVehiculo().getTipoID()));
+		// Cargar datos cliente y vehiculo
+		cargarDatosClienteVehiculo(fce.getCliente(), fce.getVehiculo());
 
 		// Cargar servicios
 		listaServicios = Inicio.CONEXION.buscarServiciosPorFacturaID(Inicio.FACTURA_ID);
@@ -294,6 +263,45 @@ public class NuevaFacturaController {
 		txtFechaEntrega.setValue(Utilidades.DateALocalDate(fce.getFactura().getFechaentrega()));
 
 		actualizarPrecio();
+	}
+	
+	/**
+	 * Carga en la factura los datos del cliente y del vehículo
+	 * @param c: cliente a cargar los datos
+	 * @param v: vehiculo a cargar los datos
+	 */
+	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v){
+		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
+		if (p != null) {
+			comboTipoCliente.setValue("Particular");
+			txtNombre.setText(p.getNombre());
+			txtApellidos.setText(p.getApellidos());
+			txtDni.setText(p.getNif());
+		} else {
+			Empresa e = Inicio.CONEXION.buscarEmpresaPorClienteID(Inicio.CLIENTE_ID);
+			if (e != null) {
+				comboTipoCliente.setValue("Empresa");
+				txtNombre.setText(e.getNombre());
+				txtDni.setText(e.getCif());
+			}
+		}
+		if (c.getDireccionID() != 0) {
+			Direccion d = Inicio.CONEXION.buscarDireccionPorID(c.getDireccionID());
+			txtCalle.setText(d.getCalle());
+			txtNumero.setText("" + d.getNumero());
+			txtPiso.setText(d.getPiso());
+			txtLetra.setText(d.getLetra());
+			txtPoblacion.setText(d.getLocalidad());
+		}
+		txtFijo.setText(c.getTelf1());
+		txtMovil.setText(c.getTelf2());
+
+		// Cargar datos vehiculo
+		txtMatricula.setText(v.getMatricula());
+		txtMarca.setText(v.getMarca());
+		txtModelo.setText(v.getModelo());
+		txtVersion.setText(v.getVersion());
+		comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(v.getTipoID()));
 	}
 
 	/**

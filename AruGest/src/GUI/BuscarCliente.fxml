@@ -16,13 +16,13 @@
             <Label layoutX="14.0" layoutY="169.0" text="Población" />
             <TextField fx:id="txtPoblacion" layoutX="117.0" layoutY="165.0" prefHeight="25.0" prefWidth="139.0" promptText="Población cliente" />
             <Label layoutX="433.0" layoutY="78.0" text="Matrícula vehículo" />
-            <TextField fx:id="txtMatricula" layoutX="536.0" layoutY="74.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
+            <TextField fx:id="txtMatricula" disable="true" editable="false" layoutX="536.0" layoutY="74.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
             <Label layoutX="14.0" layoutY="78.0" text="Modelo vehículo" />
             <TextField fx:id="txtModelo" layoutX="117.0" layoutY="74.0" prefHeight="25.0" prefWidth="308.0" promptText="Modelo vehiculo" />
-            <Label layoutX="271.0" layoutY="107.0" text="Tlf. fijo" />
-            <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. fijo" />
-            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. Móvil" />
-            <Label layoutX="271.0" layoutY="140.0" text="Tlf. móvil" />
+            <Label layoutX="271.0" layoutY="107.0" text="Tlf. 1" />
+            <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 1" />
+            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 2" />
+            <Label layoutX="271.0" layoutY="140.0" text="Tlf. 2" />
             <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="48.0" prefWidth="114.0" text="BUSCAR">
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
@@ -46,20 +46,16 @@
       <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
       <Pane layoutX="11.0" layoutY="243.0" prefHeight="427.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="14.0" prefHeight="368.0" prefWidth="869.0">
+            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="32.0" prefHeight="350.0" prefWidth="1054.0">
               <columns>
-                <TableColumn fx:id="columnaNombre" prefWidth="362.0" text="Nombre cliente" />
-                <TableColumn fx:id="columnaDni" prefWidth="505.0" text="NIF / CIF" />
-                  <TableColumn fx:id="columnaDomicilio" prefWidth="233.0" text="Domicilio" />
-                  <TableColumn fx:id="columnaPoblacion" prefWidth="114.0" text="Población" />
-                  <TableColumn fx:id="columnaTelf" prefWidth="233.0" text="Teléfono" />
+                <TableColumn fx:id="columnaNombre" prefWidth="287.0" text="Nombre cliente" />
+                <TableColumn fx:id="columnaDni" prefWidth="133.0" text="NIF / CIF" />
+                  <TableColumn fx:id="columnaDomicilio" maxWidth="700.0" prefWidth="309.0" text="Domicilio" />
+                  <TableColumn fx:id="columnaPoblacion" minWidth="0.0" prefWidth="183.0" text="Población" />
+                  <TableColumn fx:id="columnaTelf" maxWidth="519.0" prefWidth="141.0" text="Teléfono" />
               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnVerCliente" layoutX="895.0" layoutY="14.0" mnemonicParsing="false" onAction="#cargarCliente" text="Ver cliente" />
-            <Button fx:id="btnHacerFactura" layoutX="895.0" layoutY="50.0" mnemonicParsing="false" text="Hacer factura" />
+            <Button fx:id="btnVerCliente" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#cargarCliente" text="Ver cliente" />
          </children>
       </Pane>
    </children>

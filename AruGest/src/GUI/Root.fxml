@@ -87,7 +87,7 @@
                            <children>
                               <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Buscar vehículo">
+                                    <Button mnemonicParsing="false" onAction="#buscarVehiculo" text="Buscar vehículo">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>

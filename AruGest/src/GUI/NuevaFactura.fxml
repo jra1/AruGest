@@ -60,17 +60,17 @@
       </Label>
       <Pane layoutX="13.0" layoutY="99.0" prefHeight="85.0" prefWidth="523.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="99.0">
          <children>
-            <TextField fx:id="txtNombre" layoutX="60.0" layoutY="4.0" prefHeight="23.0" prefWidth="100.0" promptText="Nombre cliente">
+            <TextField fx:id="txtNombre" layoutX="60.0" layoutY="4.0" prefHeight="23.0" prefWidth="100.0" promptText="Ej. Abelino">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtApellidos" layoutX="217.0" layoutY="4.0" prefHeight="23.0" prefWidth="145.0" promptText="Apellidos cliente">
+            <TextField fx:id="txtApellidos" layoutX="217.0" layoutY="4.0" prefHeight="23.0" prefWidth="145.0" promptText="Ej. Fernández López">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtCalle" layoutX="60.0" layoutY="30.0" prefHeight="23.0" prefWidth="249.0" promptText="Calle">
+            <TextField fx:id="txtCalle" layoutX="60.0" layoutY="30.0" prefHeight="23.0" prefWidth="249.0" promptText="Ej. Artapadura">
                <font>
                   <Font size="10.0" />
                </font>
@@ -90,22 +90,22 @@
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPoblacion" layoutX="421.0" layoutY="4.0" prefHeight="23.0" prefWidth="95.0" promptText="Población">
+            <TextField fx:id="txtPoblacion" layoutX="421.0" layoutY="4.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. Vitoria">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtDni" layoutX="60.0" layoutY="55.0" prefHeight="23.0" prefWidth="150.0" promptText="DNI o CIF">
+            <TextField fx:id="txtDni" layoutX="60.0" layoutY="55.0" prefHeight="23.0" prefWidth="150.0" promptText="Ej. 12345678D">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtFijo" layoutX="267.0" layoutY="55.0" prefHeight="23.0" prefWidth="95.0" promptText="Teléfono fijo">
+            <TextField fx:id="txtFijo" layoutX="267.0" layoutY="55.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. 648795148">
                <font>
                   <Font size="10.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtMovil" layoutX="430.0" layoutY="55.0" prefHeight="23.0" prefWidth="86.0" promptText="Teléfono móvil">
+            <TextField fx:id="txtMovil" layoutX="430.0" layoutY="55.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249">
                <font>
                   <Font size="10.0" />
                </font>
@@ -114,8 +114,8 @@
             <Label layoutX="5.0" layoutY="33.0" text="Calle" />
             <Label layoutX="364.0" layoutY="8.0" text="Población" />
             <Label layoutX="5.0" layoutY="58.0" text="N.I.F/C.I.F." />
-            <Label layoutX="367.0" layoutY="60.0" text="Telf. Móvil" />
-            <Label layoutX="214.0" layoutY="59.0" text="Telf. Fijo" />
+            <Label layoutX="389.0" layoutY="59.0" text="Telf. 2" />
+            <Label layoutX="214.0" layoutY="59.0" text="Telf. 1" />
             <Label layoutX="313.0" layoutY="33.0" text="Número" />
             <Label layoutX="394.0" layoutY="33.0" text="Piso" />
             <Label layoutX="453.0" layoutY="33.0" text="Letra" />

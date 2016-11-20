@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuscarVehiculoController">
+   <children>
+      <Pane layoutX="14.0" layoutY="17.0" prefHeight="160.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
+         <children>
+            <GridPane layoutX="7.0" layoutY="4.0" prefHeight="146.0" prefWidth="375.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="88.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="287.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Tipo vehículo" />
+                  <ComboBox fx:id="comboTipoVehiculo" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <Label text="Matrícula" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtMatricula" prefHeight="25.0" prefWidth="139.0" promptText="Ej. 1947FFY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Marca" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtMarca" prefHeight="25.0" prefWidth="308.0" promptText="Ej. Renault" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Modelo" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtModelo" prefHeight="25.0" prefWidth="308.0" promptText="Ej. Megane" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Nombre cliente" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="139.0" promptText="Ej. 12345678D" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               </children>
+            </GridPane>
+            <Button fx:id="btnBuscar" layoutX="393.0" layoutY="34.0" mnemonicParsing="false" onAction="#buscarVehiculo" prefHeight="116.0" prefWidth="111.0" text="BUSCAR">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/buscar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Label layoutX="14.0" text="Buscar vehículo" />
+      <Label layoutX="14.0" layoutY="183.0" text="Resultados de la búsqueda" />
+      <Pane layoutX="11.0" layoutY="206.0" prefHeight="464.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
+         <children>
+            <TableView fx:id="tableVehiculos" layoutX="14.0" layoutY="32.0" prefHeight="391.0" prefWidth="1054.0">
+              <columns>
+                  <TableColumn fx:id="columnaTipo" minWidth="0.0" prefWidth="108.0" text="Tipo" />
+                <TableColumn fx:id="columnaMatricula" prefWidth="143.0" text="Matrícula" />
+                <TableColumn fx:id="columnaMarca" prefWidth="183.0" text="Marca" />
+                  <TableColumn fx:id="columnaModelo" maxWidth="700.0" prefWidth="478.0" text="Modelo" />
+                  <TableColumn fx:id="columnaAnio" maxWidth="519.0" prefWidth="141.0" text="Año" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnVerVehiculo" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" text="Ver vehículo" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
