@@ -196,6 +196,29 @@ public class RootController {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Coloca la ventana de vehículos de sustitución
+	 */
+	@FXML
+	public void vehiculosSustitucion() {
+		try {
+			// Cargar la vista de buscar vehiculo
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/VehiculosSustitucion.fxml"));
+			AnchorPane vs = (AnchorPane) loader.load();
+			ap = vs;
+			// Poner la nueva vista en el centro del root
+			main.getRoot().setCenter(vs);
+
+			// Poner el controlador de la nueva vista.
+			VehiculosSustitucionController controller = loader.getController();
+			controller.setMainAPP(main);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Va a la página anterior

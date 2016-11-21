@@ -290,7 +290,7 @@ public class ClienteController {
 	}
 
 	/**
-	 * Se llama cuando el usuario pulsa en Editar vehículo
+	 * Edita el vehículo seleccionado
 	 */
 	@FXML
 	private void editarVehiculo() {
@@ -314,7 +314,7 @@ public class ClienteController {
 	}
 
 	/**
-	 * Se llama cuando el usuario pulsa en Eliminar vehículo
+	 * Elimina el vehículo seleccionado
 	 */
 	@FXML
 	private void eliminarVehiculo() {

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="755.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RootController">
+<BorderPane prefHeight="755.0" prefWidth="1050.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RootController">
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,17 +23,17 @@
                            <children>
                               <VBox layoutX="1.0" layoutY="1.0" prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#buscarPresupuesto" text="Buscar presupuesto / factura">
+                                    <Button mnemonicParsing="false" onAction="#buscarPresupuesto" styleClass="green" text="Buscar presupuesto / factura">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo presupuesto">
+                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo presupuesto">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nueva factura" />
+                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva factura" />
                                  </children>
                               </VBox>
                            </children>
@@ -56,12 +56,12 @@
                            <children>
                               <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#buscarCliente" text="Buscar cliente">
+                                    <Button mnemonicParsing="false" onAction="#buscarCliente" styleClass="green" text="Buscar cliente">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo cliente">
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoCliente" styleClass="green" text="Nuevo cliente">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
@@ -87,17 +87,12 @@
                            <children>
                               <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#buscarVehiculo" text="Buscar vehículo">
+                                    <Button mnemonicParsing="false" onAction="#buscarVehiculo" styleClass="green" text="Buscar vehículo">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo vehículo">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Button layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Vehículos de sustitución" />
+                                    <Button id="shiny-orange" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución" />
                                  </children>
                               </VBox>
                            </children></AnchorPane>
@@ -119,22 +114,22 @@
                            <children>
                               <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Buscar proveedor">
+                                    <Button mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Buscar proveedor">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Buscar compañía">
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Buscar compañía">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nuevo proveedor">
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo proveedor">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" text="Nueva compañía" />
+                                    <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva compañía" />
                                  </children>
                               </VBox>
                            </children></AnchorPane>
