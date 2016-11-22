@@ -1,5 +1,7 @@
 package Logica;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -135,7 +137,10 @@ public class Utilidades {
 	 * @param texto: Mensaje de la alerta
 	 */
 	public static Optional<ButtonType> mostrarAlerta(AlertType at, String titulo, String header, String texto){
+		Point p = MouseInfo.getPointerInfo().getLocation();
 		Alert alert = new Alert(at);
+		alert.setX(p.getX());
+		alert.setY(p.getY());
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
 		alert.setContentText(texto);

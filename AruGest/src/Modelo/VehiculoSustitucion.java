@@ -16,25 +16,28 @@ public class VehiculoSustitucion {
 	private final ObjectProperty<Date> fechadevuelve;
 	private final IntegerProperty clienteID;
 	private final IntegerProperty vehiculoID;
+	private final StringProperty observaciones;
 	
 	public VehiculoSustitucion(int idvehiculosusti, Date fechacoge,
-			Date fechadevuelve, int clienteID, int vehiculoID) {
+			Date fechadevuelve, int clienteID, int vehiculoID, String observaciones) {
 		super();
 		this.idvehiculosusti = new SimpleIntegerProperty(idvehiculosusti);
 		this.fechacoge = new SimpleObjectProperty<Date>(fechacoge);
 		this.fechadevuelve = new SimpleObjectProperty<Date>(fechadevuelve);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
+		this.observaciones = new SimpleStringProperty(observaciones);
 	}
 	
 	public VehiculoSustitucion(IntegerProperty idvehiculosusti, ObjectProperty<Date> fechacoge,
-			ObjectProperty<Date> fechadevuelve, IntegerProperty clienteID, IntegerProperty vehiculoID) {
+			ObjectProperty<Date> fechadevuelve, IntegerProperty clienteID, IntegerProperty vehiculoID, StringProperty observaciones) {
 		super();
 		this.idvehiculosusti = idvehiculosusti;
 		this.fechacoge = fechacoge;
 		this.fechadevuelve = fechadevuelve;
 		this.clienteID = clienteID;
 		this.vehiculoID = vehiculoID;
+		this.observaciones = observaciones;
 	}
 
 	public IntegerProperty idvehiculosustiProperty() {
@@ -120,5 +123,20 @@ public class VehiculoSustitucion {
 	public void setVehiculoID(final int vehiculoID) {
 		this.vehiculoIDProperty().set(vehiculoID);
 	}
+
+	public StringProperty observacionesProperty() {
+		return this.observaciones;
+	}
+	
+
+	public String getObservaciones() {
+		return this.observacionesProperty().get();
+	}
+	
+
+	public void setObservaciones(final String observaciones) {
+		this.observacionesProperty().set(observaciones);
+	}
+	
 	
 }

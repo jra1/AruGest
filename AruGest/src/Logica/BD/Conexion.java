@@ -1512,7 +1512,7 @@ public class Conexion {
 
 			while (rs.next()) {
 				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"), null,
-						rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"));
+						rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getString("OBSERVACIONES"));
 				listaPrestados.add(vs);
 			}
 			// Se cierra la conexion
@@ -1521,6 +1521,35 @@ public class Conexion {
 			ex.printStackTrace();
 		}
 		return listaPrestados;
+	}
+	
+	/**
+	 * Busca en la BD el histórico de los vehiculos de sustitucion
+	 * 
+	 * @return
+	 */
+	public ArrayList<VehiculoSustitucion> buscarHistorico() {
+		ArrayList<VehiculoSustitucion> lista = new ArrayList<VehiculoSustitucion>();
+		VehiculoSustitucion vs;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULOSUSTITUCION WHERE FECHADEVUELVE IS NOT NULL";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"), rs.getDate("FECHADEVUELVE"),
+						rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getString("OBSERVACIONES"));
+				lista.add(vs);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return lista;
 	}
 
 	/**

@@ -6,14 +6,24 @@ import Logica.Inicio;
 import Modelo.Cliente;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucion;
+import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 public class VehiculosSustitucionController {
 
@@ -25,17 +35,17 @@ public class VehiculosSustitucionController {
 	private TableColumn<Vehiculo, String> columnaMatriculaDisponibles;
 
 	@FXML
-	private TableView<VehiculoSustitucion> tablePrestados;
+	private TableView<VehiculoSustitucionClienteVehiculo> tablePrestados;
 	@FXML
-	private TableColumn<Vehiculo, String> columnaVehiculoPrestados;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaVehiculoPrestados;
 	@FXML
-	private TableColumn<Vehiculo, String> columnaMatriculaPrestados;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaMatriculaPrestados;
 	@FXML
-	private TableColumn<Cliente, String> columnaClientePrestados;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaClientePrestados;
 	@FXML
-	private TableColumn<VehiculoSustitucion, String> columnaFechaEntregaPrestados;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFechaEntregaPrestados;
 	@FXML
-	private TableColumn<VehiculoSustitucion, String> columnaObservacionesPrestados;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesPrestados;
 
 	@FXML
 	private TextField txtNombre;
@@ -51,23 +61,23 @@ public class VehiculosSustitucionController {
 	private Button btnFiltrar;
 
 	@FXML
-	private TableView<Vehiculo> tableHistorico;
+	private TableView<VehiculoSustitucionClienteVehiculo> tableHistorico;
 	@FXML
-	private TableColumn<Vehiculo, String> columnaVehiculoHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaVehiculoHistorico;
 	@FXML
-	private TableColumn<Vehiculo, String> columnaMatriculaHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaMatriculaHistorico;
 	@FXML
-	private TableColumn<Cliente, String> columnaClienteHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaClienteHistorico;
 	@FXML
-	private TableColumn<VehiculoSustitucion, String> columnaFechaEntregaHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFechaEntregaHistorico;
 	@FXML
-	private TableColumn<VehiculoSustitucion, String> columnaFechaDevolucionHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFechaDevolucionHistorico;
 	@FXML
-	private TableColumn<VehiculoSustitucion, String> columnaObservacionesHistorico;
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesHistorico;
 
 	private ObservableList<Vehiculo> listaDisponibles = FXCollections.observableArrayList();
-	private ObservableList<VehiculoSustitucion> listaPrestados = FXCollections.observableArrayList();
-	private ObservableList<VehiculoSustitucion> listaHistorico = FXCollections.observableArrayList();
+	private ObservableList<VehiculoSustitucionClienteVehiculo> listaPrestados = FXCollections.observableArrayList();
+	private ObservableList<VehiculoSustitucionClienteVehiculo> listaHistorico = FXCollections.observableArrayList();
 
 	private Inicio main;
 
@@ -81,12 +91,33 @@ public class VehiculosSustitucionController {
 	 */
 	@FXML
 	private void initialize() {
+		//Menú que aparece al pulsar con el botón derecho sobre la tabla de disponibles
+		ContextMenu context = new ContextMenu();
+		MenuItem item1 = new MenuItem("Prestar este vehículo");
+		context.getItems().addAll(item1);
+		tableDisponibles.setContextMenu(context);
+		tableDisponibles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+			@Override
+			public void handle(MouseEvent t){
+				if(t.getButton() == MouseButton.SECONDARY){
+					context.show(tableDisponibles, t.getScreenX(), t.getScreenY());
+				}
+			}
+		});
+		//ATAJO DE TECLADO
+		item1.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
+		//PONER TOOLTIP
+		tableDisponibles.setTooltip(new Tooltip("TABLAAAA"));
+		
+		
+		
 		// Cargar disponibles
 		cargarDisponibles();
 		// Cargar prestados
 		cargarPrestados();
 		// Cargar histórico ¿¿??
-
+		cargarHistorico();
+		
 		// tableVehiculos.getSelectionModel().selectedItemProperty()
 		// .addListener((observable, oldValue, newValue) ->
 		// mostrarDetallesVehiculo(newValue));
@@ -122,17 +153,47 @@ public class VehiculosSustitucionController {
 			Cliente c;
 			Vehiculo v;
 			for (VehiculoSustitucion vs : lista) {
-				listaPrestados.add(vs);
 				c = Inicio.CONEXION.leerClientePorID(vs.getClienteID());
 				v = Inicio.CONEXION.leerVehiculoPorID(vs.getVehiculoID());
-				//columnaVehiculoPrestados.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
-				//columnaMatriculaPrestados.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
-				// columnaClientePrestados.setCellValueFactory(cellData ->
-				// cellData.getValue().nombreProperty());
+				VehiculoSustitucionClienteVehiculo vscv = new VehiculoSustitucionClienteVehiculo(vs, c, v);
+				listaPrestados.add(vscv);
+				columnaVehiculoPrestados
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+				columnaMatriculaPrestados.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+				columnaClientePrestados.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
 				columnaFechaEntregaPrestados
-						.setCellValueFactory(cellData -> cellData.getValue().fechacogePropertyFormat());
-				// FALTA AÑADIR LA COLUMNA DE COMENTARIOS
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+				columnaObservacionesPrestados.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 				tablePrestados.setItems(listaPrestados);
+			}
+		}
+	}
+	
+	/**
+	 * Carga el histórico de los vehículos de sustitución 
+	 */
+	private void cargarHistorico() {
+		listaHistorico.clear();
+		tableHistorico.getItems().clear();
+		ArrayList<VehiculoSustitucion> lista = Inicio.CONEXION.buscarHistorico();
+		if (!lista.isEmpty()) {
+			Cliente c;
+			Vehiculo v;
+			for (VehiculoSustitucion vs : lista) {
+				c = Inicio.CONEXION.leerClientePorID(vs.getClienteID());
+				v = Inicio.CONEXION.leerVehiculoPorID(vs.getVehiculoID());
+				VehiculoSustitucionClienteVehiculo vscv = new VehiculoSustitucionClienteVehiculo(vs, c, v);
+				listaHistorico.add(vscv);
+				columnaVehiculoHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+				columnaMatriculaHistorico.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+				columnaClienteHistorico.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
+				columnaFechaEntregaHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+				columnaFechaDevolucionHistorico
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
+				columnaObservacionesHistorico.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+				tableHistorico.setItems(listaHistorico);
 			}
 		}
 	}

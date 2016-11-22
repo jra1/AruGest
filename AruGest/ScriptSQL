@@ -1,0 +1,44 @@
+CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int)
+ALTER TABLE cliente ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion) ;
+
+CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255))
+ALTER TABLE particular ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente ) ;
+
+CREATE TABLE empresa (idempresa int primary key auto_increment, clienteID int, nombre varchar(255), cif varchar(255), esProveedor boolean)
+ALTER TABLE empresa ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente ) ;
+
+CREATE TABLE direccion (iddireccion int primary key auto_increment, calle varchar(255), numero int, piso varchar(255), letra varchar(255), cpostal int, localidad varchar(255), provincia varchar(255))
+
+CREATE TABLE proveedorCompania(idproveCompa int primary key auto_increment, cif varchar(255), nombre varchar(255), direccionID int, telf1 varchar(255), telf2 varchar(255), logo blob, esDesguace boolean, esCompania boolean)
+ALTER TABLE proveedorCompania ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion) ;
+
+CREATE TABLE vehiculo(idvehiculo int primary key auto_increment, clienteID int, marca varchar(255), modelo varchar(255), version varchar(255), matricula varchar(255), anio int, bastidor varchar(255), letrasMotor varchar(255), color varchar(255), codradio varchar(255), tipoID int)
+ALTER TABLE vehiculo ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
+ALTER TABLE vehiculo ADD FOREIGN KEY (tipoID ) REFERENCES tipoVehiculo (idtipoVehiculo) ;
+ALTER TABLE vehiculo ADD COLUMN (ESVEHICULOSUSTITUCION boolean);
+
+CREATE TABLE tipoVehiculo(idtipoVehiculo int primary key auto_increment, tipo varchar(255))
+
+CREATE TABLE vehiculoSustitucion(idvehiculosusti int primary key auto_increment, fechaCoge datetime, fechaDevuelve datetime, clienteID int, vehiculoID int)
+ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
+ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
+ALTER TABLE vehiculoSustitucion ADD COLUMN (observaciones varchar(255));
+
+CREATE TABLE factura(idfactura int primary key auto_increment, clienteID int, vehiculoID int, numFactura int, numPresupuesto int, numOrdenRep int, numResguardo int, fecha datetime, fechaEntrega datetime, manoObra decimal, materiales decimal, grua decimal, estado varchar(255), rDefOcultos boolean, porcentajeDefOcul float, permisoPruebas boolean, noPiezas boolean, modificable boolean)
+ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL)
+ALTER TABLE factura ADD COLUMN (pdf blob)
+ALTER TABLE factura ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
+ALTER TABLE factura ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
+
+CREATE TABLE servicio(idservicio int primary key auto_increment, servicio varchar(255), horas decimal, facturaID int, tipoServicio varchar(255));
+ALTER TABLE servicio ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) ;
+
+CREATE TABLE material(idmaterial int primary key auto_increment, nombre varchar(255), precioUnit decimal, facturaID int, cantidad int, precioTotal decimal);
+ALTER TABLE material ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) ;
+
+CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int, vehiculoID int, titulo varchar(255), documento blob)
+ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
+ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
+
+CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal, iva decimal)
+
