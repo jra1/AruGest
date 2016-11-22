@@ -3,6 +3,7 @@ package GUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import Logica.Utilidades;
@@ -37,6 +38,8 @@ public class EditVehiculoController {
 	private TextField txtColor;
 	@FXML
 	private TextField txtCodRadio;
+	@FXML
+	private CheckBox chckboxVehiculoSusti;
 
 	private Stage dialogStage;
 	private Vehiculo v;
@@ -51,6 +54,7 @@ public class EditVehiculoController {
 		comboTipoVehiculo.getItems().addAll("Turismo", "Furgoneta", "Camión", "Autobús", "Autocaravana", "Moto",
 				"Remolque");
 		comboTipoVehiculo.setValue("Turismo");
+		chckboxVehiculoSusti.setSelected(false);
 	}
 
 	/**
@@ -88,6 +92,7 @@ public class EditVehiculoController {
 		txtLetrasMotor.setText(v.getLetrasmotor());
 		txtColor.setText(v.getColor());
 		txtCodRadio.setText(v.getCodradio());
+		chckboxVehiculoSusti.setSelected(v.isEsVehiculoSustitucion());
 	}
 
 	/**
@@ -115,7 +120,8 @@ public class EditVehiculoController {
 			v.setLetrasmotor(txtLetrasMotor.getText());
 			v.setColor(txtColor.getText());
 			v.setCodradio(txtCodRadio.getText());
-
+			v.setEsVehiculoSustitucion(chckboxVehiculoSusti.isSelected());
+			
 			okClicked = true;
 			dialogStage.close();
 		}

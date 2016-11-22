@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import Logica.Inicio;
 import Modelo.Cliente;
 import Modelo.Vehiculo;
@@ -23,7 +25,7 @@ public class VehiculosSustitucionController {
 	private TableColumn<Vehiculo, String> columnaMatriculaDisponibles;
 
 	@FXML
-	private TableView<Vehiculo> tablePrestados;
+	private TableView<VehiculoSustitucion> tablePrestados;
 	@FXML
 	private TableColumn<Vehiculo, String> columnaVehiculoPrestados;
 	@FXML
@@ -79,44 +81,98 @@ public class VehiculosSustitucionController {
 	 */
 	@FXML
 	private void initialize() {
-		//Cargar disponibles
-		//Cargar prestados
-		//Cargar histórico ¿¿??
-		
-//		tableVehiculos.getSelectionModel().selectedItemProperty()
-//				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
+		// Cargar disponibles
+		cargarDisponibles();
+		// Cargar prestados
+		cargarPrestados();
+		// Cargar histórico ¿¿??
+
+		// tableVehiculos.getSelectionModel().selectedItemProperty()
+		// .addListener((observable, oldValue, newValue) ->
+		// mostrarDetallesVehiculo(newValue));
 	}
 
 	/**
-	 * Filtra los vehiculos de sustitución que coincidan con los parámetros de búsqueda y pone
-	 * los encontrados en la tabla
+	 * Carga los vehículos de sustitución que hay disponibles actualmente en la
+	 * tabla correspondiente
+	 */
+	private void cargarDisponibles() {
+		listaDisponibles.clear();
+		tableDisponibles.getItems().clear();
+		ArrayList<Vehiculo> lista = Inicio.CONEXION.buscarDisponibles();
+		if (!lista.isEmpty()) {
+			for (Vehiculo v : lista) {
+				listaDisponibles.add(v);
+				columnaVehiculoDisponibles.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
+				columnaMatriculaDisponibles.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
+				tableDisponibles.setItems(listaDisponibles);
+			}
+		}
+	}
+
+	/**
+	 * Carga los vehículos de sustitución que hay prestados actualmente en la
+	 * tabla correspondiente
+	 */
+	private void cargarPrestados() {
+		listaPrestados.clear();
+		tablePrestados.getItems().clear();
+		ArrayList<VehiculoSustitucion> lista = Inicio.CONEXION.buscarPrestados();
+		if (!lista.isEmpty()) {
+			Cliente c;
+			Vehiculo v;
+			for (VehiculoSustitucion vs : lista) {
+				listaPrestados.add(vs);
+				c = Inicio.CONEXION.leerClientePorID(vs.getClienteID());
+				v = Inicio.CONEXION.leerVehiculoPorID(vs.getVehiculoID());
+				//columnaVehiculoPrestados.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
+				//columnaMatriculaPrestados.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
+				// columnaClientePrestados.setCellValueFactory(cellData ->
+				// cellData.getValue().nombreProperty());
+				columnaFechaEntregaPrestados
+						.setCellValueFactory(cellData -> cellData.getValue().fechacogePropertyFormat());
+				// FALTA AÑADIR LA COLUMNA DE COMENTARIOS
+				tablePrestados.setItems(listaPrestados);
+			}
+		}
+	}
+
+	/**
+	 * Filtra los vehiculos de sustitución que coincidan con los parámetros de
+	 * búsqueda y pone los encontrados en la tabla
 	 */
 	@FXML
 	private void filtrar() {
-//		listaVehiculos.clear();
-//		tableVehiculos.getItems().clear();
-//		ArrayList<Vehiculo> lista = Inicio.CONEXION.buscarVehiculos(
-//				Utilidades.StringToTipoID(comboTipoVehiculo.getValue()), txtMatricula.getText(), txtMarca.getText(),
-//				txtModelo.getText(), txtNombre.getText());
-//		if (lista.isEmpty()) {
-//			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
-//					"No hay vehículos con los parámetros de búsqueda introducidos.");
-//		} else {
-//			for (Vehiculo v : lista) {
-//				listaVehiculos.add(v);
-//				columnaTipo.setCellValueFactory(
-//						cellData -> Utilidades.tipoIDtoStringProperty(cellData.getValue().getTipoID()));
-//				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
-//				columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaProperty());
-//				columnaModelo.setCellValueFactory(cellData -> cellData.getValue().modeloProperty());
-//				columnaCliente.setCellValueFactory(cellData -> Inicio.CONEXION
-//						.leerClientePorID(cellData.getValue().getClienteID()).nombreProperty());
-//				tableVehiculos.setItems(listaVehiculos);
-//
-//			}
-//		}
+		// listaVehiculos.clear();
+		// tableVehiculos.getItems().clear();
+		// ArrayList<Vehiculo> lista = Inicio.CONEXION.buscarVehiculos(
+		// Utilidades.StringToTipoID(comboTipoVehiculo.getValue()),
+		// txtMatricula.getText(), txtMarca.getText(),
+		// txtModelo.getText(), txtNombre.getText());
+		// if (lista.isEmpty()) {
+		// Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No
+		// encontrado",
+		// "No hay vehículos con los parámetros de búsqueda introducidos.");
+		// } else {
+		// for (Vehiculo v : lista) {
+		// listaVehiculos.add(v);
+		// columnaTipo.setCellValueFactory(
+		// cellData ->
+		// Utilidades.tipoIDtoStringProperty(cellData.getValue().getTipoID()));
+		// columnaMatricula.setCellValueFactory(cellData ->
+		// cellData.getValue().matriculaProperty());
+		// columnaMarca.setCellValueFactory(cellData ->
+		// cellData.getValue().marcaProperty());
+		// columnaModelo.setCellValueFactory(cellData ->
+		// cellData.getValue().modeloProperty());
+		// columnaCliente.setCellValueFactory(cellData -> Inicio.CONEXION
+		// .leerClientePorID(cellData.getValue().getClienteID()).nombreProperty());
+		// tableVehiculos.setItems(listaVehiculos);
+		//
+		// }
+		// }
 	}
-	
+
 	public Inicio getMain() {
 		return main;
 	}

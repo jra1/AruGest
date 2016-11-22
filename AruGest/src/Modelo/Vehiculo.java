@@ -1,7 +1,8 @@
 package Modelo;
 
-import javafx.beans.property.FloatProperty;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -19,6 +20,7 @@ public class Vehiculo {
 	private final StringProperty color;
 	private final StringProperty codradio;
 	private final IntegerProperty tipoID;
+	private final BooleanProperty esVehiculoSustitucion;
 
 	public Vehiculo(Integer clienteID) {
 		//this(null,null,null,null,null,null,null);
@@ -34,6 +36,7 @@ public class Vehiculo {
 		this.color = new SimpleStringProperty("");
 		this.codradio = new SimpleStringProperty("");
 		this.tipoID = new SimpleIntegerProperty(0);
+		this.esVehiculoSustitucion = new SimpleBooleanProperty(false);
 	}
 
 	// Constructor para la funcion buscarVehiculoPorMatricula
@@ -50,6 +53,7 @@ public class Vehiculo {
 		this.color = null;
 		this.codradio = null;
 		this.tipoID = null;
+		this.esVehiculoSustitucion = null;
 	}
 
 	// Constructor para factura
@@ -67,6 +71,7 @@ public class Vehiculo {
 		this.color = null;
 		this.codradio = null;
 		this.tipoID = new SimpleIntegerProperty(tipoID);
+		this.esVehiculoSustitucion = null;
 	}
 
 	public Vehiculo(String marca, String modelo, String version, String matricula) {
@@ -82,11 +87,12 @@ public class Vehiculo {
 		this.color = null;
 		this.codradio = null;
 		this.tipoID = null;
+		this.esVehiculoSustitucion = null;
 	}
 
 	public Vehiculo(Integer idvehiculo, Integer clienteID, String marca, String modelo, String version,
 			String matricula, Integer anio, String bastidor, String letrasmotor, String color, String codradio,
-			Integer tipoID) {
+			Integer tipoID, boolean esVehiculoSustitucion) {
 		this.idvehiculo = new SimpleIntegerProperty(idvehiculo);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.marca = new SimpleStringProperty(marca);
@@ -99,11 +105,12 @@ public class Vehiculo {
 		this.color = new SimpleStringProperty(color);
 		this.codradio = new SimpleStringProperty(codradio);
 		this.tipoID = new SimpleIntegerProperty(tipoID);
+		this.esVehiculoSustitucion = new SimpleBooleanProperty(esVehiculoSustitucion);
 	}
 
 	public Vehiculo(IntegerProperty idvehiculo, IntegerProperty clienteID, StringProperty marca, StringProperty modelo,
 			StringProperty version, StringProperty matricula, IntegerProperty anio, StringProperty bastidor,
-			StringProperty letrasmotor, StringProperty color, StringProperty codradio, IntegerProperty tipoID) {
+			StringProperty letrasmotor, StringProperty color, StringProperty codradio, IntegerProperty tipoID, BooleanProperty esVehiculoSustitucion) {
 		super();
 		this.idvehiculo = idvehiculo;
 		this.clienteID = clienteID;
@@ -117,6 +124,7 @@ public class Vehiculo {
 		this.color = color;
 		this.codradio = codradio;
 		this.tipoID = tipoID;
+		this.esVehiculoSustitucion = esVehiculoSustitucion;
 	}
 
 	public IntegerProperty idvehiculoProperty() {
@@ -266,5 +274,20 @@ public class Vehiculo {
 	public StringProperty marcaModeloProperty() {
 		return new SimpleStringProperty(getMarca() + " " + getModelo() + " " + getVersion());
 	}
+
+	public BooleanProperty esVehiculoSustitucionProperty() {
+		return this.esVehiculoSustitucion;
+	}
+	
+
+	public boolean isEsVehiculoSustitucion() {
+		return this.esVehiculoSustitucionProperty().get();
+	}
+	
+
+	public void setEsVehiculoSustitucion(final boolean esVehiculoSustitucion) {
+		this.esVehiculoSustitucionProperty().set(esVehiculoSustitucion);
+	}
+	
 
 }

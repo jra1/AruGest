@@ -24,6 +24,7 @@ import Modelo.Material;
 import Modelo.Particular;
 import Modelo.Servicio;
 import Modelo.Vehiculo;
+import Modelo.VehiculoSustitucion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -850,6 +851,36 @@ public class Conexion {
 	}
 
 	/**
+	 * Busca un vehiculo en la BD por su ID
+	 * 
+	 * @param id
+	 *            a buscar en la BD
+	 * 
+	 * @return el vehiculo encontrado o null si no existe ese ID
+	 */
+	public Vehiculo leerVehiculoPorID(int id) {
+		String sql = "";
+		Vehiculo v = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULO WHERE VEHICULO.IDVEHICULO = " + id;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+
+	/**
 	 * Busca un cliente en la BD por su DNI
 	 * 
 	 * @param dni
@@ -1386,7 +1417,7 @@ public class Conexion {
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
-						rs.getString("CODRADIO"), rs.getInt("TIPOID"));
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
 				listaVehiculos.add(v);
 			}
 			// Se cierra la conexion
@@ -1419,7 +1450,7 @@ public class Conexion {
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
-						rs.getString("CODRADIO"), rs.getInt("TIPOID"));
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
 				l.add(v);
 			}
 			// Se cierra la conexion
@@ -1428,6 +1459,68 @@ public class Conexion {
 			ex.printStackTrace();
 		}
 		return l;
+	}
+
+	/**
+	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
+	 * disponibles
+	 * 
+	 * @return
+	 */
+	public ArrayList<Vehiculo> buscarDisponibles() {
+		ArrayList<Vehiculo> listaDisponibles = new ArrayList<Vehiculo>();
+		Vehiculo v;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULO WHERE ESVEHICULOSUSTITUCION = TRUE AND IDVEHICULO NOT IN (SELECT VEHICULOID FROM VEHICULOSUSTITUCION WHERE FECHADEVUELVE IS NULL)";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				listaDisponibles.add(v);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return listaDisponibles;
+	}
+
+	/**
+	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
+	 * prestados
+	 * 
+	 * @return
+	 */
+	public ArrayList<VehiculoSustitucion> buscarPrestados() {
+		ArrayList<VehiculoSustitucion> listaPrestados = new ArrayList<VehiculoSustitucion>();
+		VehiculoSustitucion vs;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULOSUSTITUCION WHERE FECHADEVUELVE IS NULL";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"), null,
+						rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"));
+				listaPrestados.add(vs);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return listaPrestados;
 	}
 
 	/**

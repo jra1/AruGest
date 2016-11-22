@@ -226,7 +226,7 @@ public class Factura {
 	public StringProperty fechaPropertyFormat() {
 		SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 		return new SimpleStringProperty(formateador.format(getFecha()));
-		}
+	}
 	
 
 	public Date getFecha() {
