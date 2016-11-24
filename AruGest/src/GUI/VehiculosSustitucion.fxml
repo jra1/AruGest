@@ -114,7 +114,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </TableView>
-            <Button fx:id="btnFiltrar1" layoutX="11.0" layoutY="6.0" mnemonicParsing="false" onAction="#filtrar" text="Marcar vehículo como devuelto" />
+            <Button layoutX="11.0" layoutY="6.0" mnemonicParsing="false" onAction="#marcarDevuelto" text="Marcar vehículo como devuelto" />
          </children>
       </Pane>
       <Label layoutX="259.0" layoutY="4.0" text="Prestados actualmente">

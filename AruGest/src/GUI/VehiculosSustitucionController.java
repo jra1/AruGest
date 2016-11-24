@@ -3,6 +3,7 @@ package GUI;
 import java.util.ArrayList;
 
 import Logica.Inicio;
+import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucion;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -91,33 +93,32 @@ public class VehiculosSustitucionController {
 	 */
 	@FXML
 	private void initialize() {
-		//Menú que aparece al pulsar con el botón derecho sobre la tabla de disponibles
+		// Menú que aparece al pulsar con el botón derecho sobre la tabla de
+		// disponibles
 		ContextMenu context = new ContextMenu();
 		MenuItem item1 = new MenuItem("Prestar este vehículo");
 		context.getItems().addAll(item1);
 		tableDisponibles.setContextMenu(context);
-		tableDisponibles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+		tableDisponibles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent t){
-				if(t.getButton() == MouseButton.SECONDARY){
+			public void handle(MouseEvent t) {
+				if (t.getButton() == MouseButton.SECONDARY) {
 					context.show(tableDisponibles, t.getScreenX(), t.getScreenY());
 				}
 			}
 		});
-		//ATAJO DE TECLADO
+		// ATAJO DE TECLADO
 		item1.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
-		//PONER TOOLTIP
+		// PONER TOOLTIP
 		tableDisponibles.setTooltip(new Tooltip("TABLAAAA"));
-		
-		
-		
+
 		// Cargar disponibles
 		cargarDisponibles();
 		// Cargar prestados
 		cargarPrestados();
 		// Cargar histórico ¿¿??
 		cargarHistorico();
-		
+
 		// tableVehiculos.getSelectionModel().selectedItemProperty()
 		// .addListener((observable, oldValue, newValue) ->
 		// mostrarDetallesVehiculo(newValue));
@@ -159,18 +160,21 @@ public class VehiculosSustitucionController {
 				listaPrestados.add(vscv);
 				columnaVehiculoPrestados
 						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
-				columnaMatriculaPrestados.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
-				columnaClientePrestados.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaFechaEntregaPrestados
-						.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-				columnaObservacionesPrestados.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+				columnaMatriculaPrestados
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+				columnaClientePrestados
+						.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
+				columnaFechaEntregaPrestados.setCellValueFactory(
+						cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+				columnaObservacionesPrestados.setCellValueFactory(
+						cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 				tablePrestados.setItems(listaPrestados);
 			}
 		}
 	}
-	
+
 	/**
-	 * Carga el histórico de los vehículos de sustitución 
+	 * Carga el histórico de los vehículos de sustitución
 	 */
 	private void cargarHistorico() {
 		listaHistorico.clear();
@@ -186,13 +190,16 @@ public class VehiculosSustitucionController {
 				listaHistorico.add(vscv);
 				columnaVehiculoHistorico
 						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
-				columnaMatriculaHistorico.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
-				columnaClienteHistorico.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaFechaEntregaHistorico
-						.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-				columnaFechaDevolucionHistorico
-				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
-				columnaObservacionesHistorico.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+				columnaMatriculaHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+				columnaClienteHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
+				columnaFechaEntregaHistorico.setCellValueFactory(
+						cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+				columnaFechaDevolucionHistorico.setCellValueFactory(
+						cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
+				columnaObservacionesHistorico.setCellValueFactory(
+						cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 				tableHistorico.setItems(listaHistorico);
 			}
 		}
@@ -232,6 +239,28 @@ public class VehiculosSustitucionController {
 		//
 		// }
 		// }
+	}
+
+	@FXML
+	private void marcarDevuelto() {
+		int selectedIndex = tablePrestados.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			if (Inicio.mostrarDialogoSustitucion("D", tablePrestados.getSelectionModel().getSelectedItem())) {
+				if (Inicio.CONEXION.actualizarVehiculoSustitucion("D",
+						tablePrestados.getSelectionModel().getSelectedItem())) {
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
+					cargarDisponibles();
+					cargarPrestados();
+					cargarHistorico();
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",
+							"Ocurrió un error al marcar el vehículo como devuelto en la base de datos.");
+				}
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo que quieras marcar como devuelto.");
+		}
 	}
 
 	public Inicio getMain() {

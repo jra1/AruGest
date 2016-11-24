@@ -25,6 +25,7 @@ import Modelo.Particular;
 import Modelo.Servicio;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucion;
+import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -1522,7 +1523,7 @@ public class Conexion {
 		}
 		return listaPrestados;
 	}
-	
+
 	/**
 	 * Busca en la BD el histórico de los vehiculos de sustitucion
 	 * 
@@ -1540,8 +1541,9 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"), rs.getDate("FECHADEVUELVE"),
-						rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"), rs.getString("OBSERVACIONES"));
+				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"),
+						rs.getDate("FECHADEVUELVE"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getString("OBSERVACIONES"));
 				lista.add(vs);
 			}
 			// Se cierra la conexion
@@ -1550,6 +1552,40 @@ public class Conexion {
 			ex.printStackTrace();
 		}
 		return lista;
+	}
+
+	/**
+	 * Actualiza / crea el registro en la BD del vehiculo de sustitucion. Pone
+	 * la fecha de devolución ó crea un nuevo registro
+	 * 
+	 * @param tipo:
+	 *            D = Devuelto ; E = Entregado
+	 * @param vscv
+	 *            datos del vehículo de sustitución
+	 * @return true si fue bien, false si no
+	 */
+	public boolean actualizarVehiculoSustitucion(String tipo, VehiculoSustitucionClienteVehiculo vscv) {
+		String sql = "";
+		boolean res = true;
+		try {
+			if(tipo.equalsIgnoreCase("D")){
+				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ? WHERE IDVEHICULOSUSTI = " + vscv.getVehiculoSustitucion().getIdvehiculosusti();
+				PreparedStatement st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechadevuelve().getTime()));
+				// Ejecutamos la sentencia
+				st.executeUpdate();				
+			}else if(tipo.equalsIgnoreCase("E")){
+				
+			}
+			res = true;
+		} catch (Exception e) {
+			res = false;
+		}
+		if (tipo.equalsIgnoreCase("D")) {
+
+		}
+		return res;
 	}
 
 	/**
