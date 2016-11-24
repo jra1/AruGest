@@ -3,7 +3,7 @@ package Logica;
 import java.io.IOException;
 //import java.security.Principal;
 
-import GUI.DialogoSustitucionController;
+import GUI.D_SustitucionDevolucionController;
 import GUI.EditClienteController;
 import GUI.EditVehiculoController;
 import GUI.RootController;
@@ -168,14 +168,14 @@ public class Inicio extends Application {
 	 * Muestra el diálogo para preguntar la fecha y las observaciones de un
 	 * vehículo de sustitución
 	 * 
-	 * @param tipo: D = Devuelto ; E = Entregado
+	 * @param 
 	 * @return
 	 */
-	public static boolean mostrarDialogoSustitucion(String tipo, VehiculoSustitucionClienteVehiculo vscv) {
+	public static boolean mostrarD_SustitucionDevolucion(VehiculoSustitucionClienteVehiculo vscv) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/DialogoSustitucion.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/D_SustitucionDevolucion.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			// Create the dialog Stage.
@@ -188,9 +188,8 @@ public class Inicio extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
-			DialogoSustitucionController controller = loader.getController();
+			D_SustitucionDevolucionController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setTipo(tipo);
 			controller.setVehiculoSustitucion(vscv);
 			
 			// Show the dialog and wait until the user closes it

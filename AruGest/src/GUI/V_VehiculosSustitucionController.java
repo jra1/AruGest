@@ -27,7 +27,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class VehiculosSustitucionController {
+public class V_VehiculosSustitucionController {
 
 	@FXML
 	private TableView<Vehiculo> tableDisponibles;
@@ -206,6 +206,38 @@ public class VehiculosSustitucionController {
 	}
 
 	/**
+	 * Marca el vehículo seleccionado como devuelto, añadiéndole la fecha de
+	 * devolución
+	 */
+	@FXML
+	private void marcarDevuelto() {
+		int selectedIndex = tablePrestados.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			VehiculoSustitucionClienteVehiculo vscv = tablePrestados.getSelectionModel().getSelectedItem();
+			if (Inicio.mostrarD_SustitucionDevolucion(vscv)) {
+				if (Inicio.CONEXION.actualizarVehiculoSustitucion("D", vscv)) {
+					listaHistorico.add(vscv);
+					tableHistorico.refresh();
+					listaDisponibles.add(vscv.getVehiculo());
+					tableDisponibles.refresh();
+					listaPrestados.remove(vscv);
+					// Si veo que añadiendolos a las listas no se actualizan,
+					// cargar las tablas de nuevo hasta que resuelva el error:
+					cargarDisponibles();
+					cargarHistorico();
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",
+							"Ocurrió un error al marcar el vehículo como devuelto en la base de datos.");
+				}
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo que quieras marcar como devuelto.");
+		}
+	}
+
+	/**
 	 * Filtra los vehiculos de sustitución que coincidan con los parámetros de
 	 * búsqueda y pone los encontrados en la tabla
 	 */
@@ -239,28 +271,6 @@ public class VehiculosSustitucionController {
 		//
 		// }
 		// }
-	}
-
-	@FXML
-	private void marcarDevuelto() {
-		int selectedIndex = tablePrestados.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			if (Inicio.mostrarDialogoSustitucion("D", tablePrestados.getSelectionModel().getSelectedItem())) {
-				if (Inicio.CONEXION.actualizarVehiculoSustitucion("D",
-						tablePrestados.getSelectionModel().getSelectedItem())) {
-					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
-					cargarDisponibles();
-					cargarPrestados();
-					cargarHistorico();
-				} else {
-					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",
-							"Ocurrió un error al marcar el vehículo como devuelto en la base de datos.");
-				}
-			}
-		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
-					"Selecciona el vehículo que quieras marcar como devuelto.");
-		}
 	}
 
 	public Inicio getMain() {

@@ -182,14 +182,14 @@ public class RootController {
 		try {
 			// Cargar la vista de buscar vehiculo
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/V_BuscarCliente.fxml"));
 			AnchorPane buscarCliente = (AnchorPane) loader.load();
 			ap = buscarCliente;
 			// Poner la nueva vista en el centro del root
 			main.getRoot().setCenter(buscarCliente);
 
 			// Poner el controlador de la nueva vista.
-			BuscarClienteController controller = loader.getController();
+			V_BuscarClienteController controller = loader.getController();
 			controller.setMainAPP(main);
 
 		} catch (IOException e) {
@@ -205,14 +205,14 @@ public class RootController {
 		try {
 			// Cargar la vista de buscar vehiculo
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/VehiculosSustitucion.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/V_VehiculosSustitucion.fxml"));
 			AnchorPane vs = (AnchorPane) loader.load();
 			ap = vs;
 			// Poner la nueva vista en el centro del root
 			main.getRoot().setCenter(vs);
 
 			// Poner el controlador de la nueva vista.
-			VehiculosSustitucionController controller = loader.getController();
+			V_VehiculosSustitucionController controller = loader.getController();
 			controller.setMainAPP(main);
 
 		} catch (IOException e) {
@@ -235,7 +235,7 @@ public class RootController {
 			main.getRoot().setCenter(ap);
 
 			// Poner el controlador de la nueva vista.
-			// BuscarClienteController controller = loader.getController();
+			// V_BuscarClienteController controller = loader.getController();
 			// controller.setMainAPP(main);
 
 		} catch (Exception e) {

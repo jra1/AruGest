@@ -308,7 +308,7 @@ public class Conexion {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
-					"INSERT INTO VEHICULO (CLIENTEID, MARCA, MODELO, VERSION, MATRICULA, ANIO, BASTIDOR, LETRASMOTOR, COLOR, CODRADIO, TIPOID) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+					"INSERT INTO VEHICULO (CLIENTEID, MARCA, MODELO, VERSION, MATRICULA, ANIO, BASTIDOR, LETRASMOTOR, COLOR, CODRADIO, TIPOID, ESVEHICULOSUSTITUCION) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -323,6 +323,7 @@ public class Conexion {
 			st.setString(9, v.getColor());
 			st.setString(10, v.getCodradio());
 			st.setInt(11, v.getTipoID());
+			st.setBoolean(12, v.isEsVehiculoSustitucion());
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -1569,14 +1570,15 @@ public class Conexion {
 		boolean res = true;
 		try {
 			if(tipo.equalsIgnoreCase("D")){
-				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ? WHERE IDVEHICULOSUSTI = " + vscv.getVehiculoSustitucion().getIdvehiculosusti();
+				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = " + vscv.getVehiculoSustitucion().getIdvehiculosusti();
 				PreparedStatement st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechadevuelve().getTime()));
+				st.setString(2, vscv.getVehiculoSustitucion().getObservaciones());
 				// Ejecutamos la sentencia
 				st.executeUpdate();				
 			}else if(tipo.equalsIgnoreCase("E")){
-				
+				//Crear el registro del vehiculo de sustitucion en la base de datos
 			}
 			res = true;
 		} catch (Exception e) {

@@ -222,7 +222,7 @@ public class ClienteController {
 						main.getRoot().setCenter(buscarCliente);
 
 						// Poner el controlador de la nueva vista.
-						BuscarClienteController controller = loader.getController();
+						V_BuscarClienteController controller = loader.getController();
 						controller.setMainAPP(main);
 
 					} catch (IOException e) {
@@ -367,5 +367,11 @@ public class ClienteController {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
 					"Selecciona el vehículo al que quieras hacer una factura.");
 		}
+	}
+	
+	@FXML
+	private void addVehiculoSustitucion(){
+		
+		
 	}
 }

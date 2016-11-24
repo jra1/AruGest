@@ -17,7 +17,7 @@ import Modelo.VehiculoSustitucionClienteVehiculo;
  * 
  * @author Marco Jakob
  */
-public class DialogoSustitucionController {
+public class D_SustitucionDevolucionController {
 
 	@FXML
 	private Label lblFecha;
@@ -27,7 +27,6 @@ public class DialogoSustitucionController {
 	private TextArea txtObservaciones;
 
 	private VehiculoSustitucionClienteVehiculo vscv;
-	private String tipo = ""; //D = Devolucion ; E = Entrega
 	private Stage dialogStage;
 	private boolean okClicked = false;
 
@@ -37,16 +36,7 @@ public class DialogoSustitucionController {
 	 */
 	@FXML
 	private void initialize() {
-		if(tipo.equalsIgnoreCase("D")){
-			lblFecha.setText("Fecha devolución");
-		}else if(tipo.equalsIgnoreCase("E")){
-			lblFecha.setText("Fecha entrega");
-		}
 		txtFecha.setValue(LocalDate.now());
-	}
-	
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	/**
