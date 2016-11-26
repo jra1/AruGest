@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Cliente;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,19 +133,19 @@ public class V_BuscarClienteController {
 	private void cargarCliente() {
 		int selectedIndex = tableClientes.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
+			Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
 			try {
 				// Cargar la vista de Cliente
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/Cliente.fxml"));
+				loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_Cliente.fxml"));
 				AnchorPane cliente = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
 				main.getRoot().setCenter(cliente);
 
 				// Poner el controlador de la nueva vista.
-				ClienteController controller = loader.getController();
+				V_ClienteController controller = loader.getController();
 				controller.setMainAPP(main);
-				Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
 				controller.cargaCliente(listaClientes.get(selectedIndex));
 
 			} catch (IOException e) {

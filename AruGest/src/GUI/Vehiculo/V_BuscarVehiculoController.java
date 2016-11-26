@@ -1,9 +1,10 @@
-package GUI;
+package GUI.Vehiculo;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Vehiculo;
@@ -21,7 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
-public class BuscarVehiculoController {
+public class V_BuscarVehiculoController {
 
 	@FXML
 	private ComboBox<String> comboTipoVehiculo;
@@ -220,14 +221,14 @@ public class BuscarVehiculoController {
 			try {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/NuevaFactura.fxml"));
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
 				main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.
-				NuevaFacturaController controller = loader.getController();
+				V_NuevaFacturaController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
 						tableVehiculos.getSelectionModel().getSelectedItem());

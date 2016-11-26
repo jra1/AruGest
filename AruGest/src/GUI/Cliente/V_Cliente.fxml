@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ClienteController">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_ClienteController">
    <children>
       <Label layoutX="4.0" layoutY="4.0" text="Datos cliente">
          <font>
@@ -105,7 +105,7 @@
             <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
             <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
             <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="25.0" prefWidth="112.0" text="Eliminar cliente" />
-            <Button layoutX="239.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="190.0" text="Añadir vehículo de sustitución" />
+            <Button layoutX="239.0" layoutY="89.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="25.0" prefWidth="190.0" text="Añadir vehículo de sustitución" />
          </children>
       </Pane>
       <Pane layoutX="4.0" layoutY="174.0" prefHeight="498.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="174.0">

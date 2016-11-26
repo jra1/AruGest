@@ -1,12 +1,14 @@
-package GUI;
+package GUI.Cliente;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Vehiculo;
+import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,7 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
-public class ClienteController {
+public class V_ClienteController {
 	// Datos cliente
 	@FXML
 	private Label lblTipoCliente;
@@ -216,7 +218,7 @@ public class ClienteController {
 					try {
 						// Cargar la vista de nueva factura
 						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(Inicio.class.getResource("/GUI/BuscarCliente.fxml"));
+						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/BuscarCliente.fxml"));
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
 						// Poner la nueva vista en el centro del root
 						main.getRoot().setCenter(buscarCliente);
@@ -349,14 +351,14 @@ public class ClienteController {
 			try {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
 				main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.
-				NuevaFacturaController controller = loader.getController();
+				V_NuevaFacturaController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
 						tableVehiculo.getSelectionModel().getSelectedItem());
@@ -371,7 +373,15 @@ public class ClienteController {
 	
 	@FXML
 	private void addVehiculoSustitucion(){
-		
+		VehiculoSustitucionClienteVehiculo vscv = new VehiculoSustitucionClienteVehiculo();
+		if (Inicio.mostrarD_SustitucionEntrega(vscv)) {
+			if (Inicio.CONEXION.actualizarVehiculoSustitucion("E", vscv)) {
+				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo entregado", "");
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al registrar el vehículo",
+						"Ocurrió un error al registrar la prestación del vehículo en la base de datos.");
+			}
+		}
 		
 	}
 }

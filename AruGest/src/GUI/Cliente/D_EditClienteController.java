@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Cliente;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,7 +17,7 @@ import Modelo.Particular;
  * 
  * @author Marco Jakob
  */
-public class EditClienteController {
+public class D_EditClienteController {
 
 	@FXML
 	private ComboBox<String> comboTipo;

@@ -1567,11 +1567,12 @@ public class Conexion {
 	 */
 	public boolean actualizarVehiculoSustitucion(String tipo, VehiculoSustitucionClienteVehiculo vscv) {
 		String sql = "";
+		PreparedStatement st;
 		boolean res = true;
 		try {
 			if(tipo.equalsIgnoreCase("D")){
 				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = " + vscv.getVehiculoSustitucion().getIdvehiculosusti();
-				PreparedStatement st = getCon().prepareStatement(sql);
+				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechadevuelve().getTime()));
 				st.setString(2, vscv.getVehiculoSustitucion().getObservaciones());
@@ -1579,13 +1580,20 @@ public class Conexion {
 				st.executeUpdate();				
 			}else if(tipo.equalsIgnoreCase("E")){
 				//Crear el registro del vehiculo de sustitucion en la base de datos
+				sql = "INSERT INTO VEHICULOSUSTITUCION (FECHACOGE, FECHADEVUELVE, CLIENTEID, VEHICULOID, OBSERVACIONES) VALUES (?,?,?,?,?)";
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechacoge().getTime()));
+				st.setDate(2, null);
+				st.setInt(3, vscv.getVehiculo().getIdvehiculo());
+				st.setInt(4, Inicio.CLIENTE_ID);
+				st.setString(5, vscv.getVehiculoSustitucion().getObservaciones());
+				// Ejecutamos la sentencia
+				st.executeUpdate();
 			}
 			res = true;
 		} catch (Exception e) {
 			res = false;
-		}
-		if (tipo.equalsIgnoreCase("D")) {
-
 		}
 		return res;
 	}

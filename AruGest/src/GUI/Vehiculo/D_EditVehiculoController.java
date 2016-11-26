@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Vehiculo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -14,7 +14,7 @@ import Modelo.Vehiculo;
  * 
  * @author Marco Jakob
  */
-public class EditVehiculoController {
+public class D_EditVehiculoController {
 
 	@FXML
 	private ComboBox<String> comboTipoVehiculo;

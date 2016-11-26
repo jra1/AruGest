@@ -137,10 +137,10 @@ public class Utilidades {
 	 * @param texto: Mensaje de la alerta
 	 */
 	public static Optional<ButtonType> mostrarAlerta(AlertType at, String titulo, String header, String texto){
-		Point p = MouseInfo.getPointerInfo().getLocation();
 		Alert alert = new Alert(at);
-		alert.setX(p.getX());
-		alert.setY(p.getY());
+		//Point p = MouseInfo.getPointerInfo().getLocation(); 
+		//alert.setX(p.getX()); 		/**CON ESTAS LINEAS EL MENSAJE APARECE EN LA POSICION DEL RATON**/
+		//alert.setY(p.getY());
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
 		alert.setContentText(texto);

@@ -1,15 +1,22 @@
-package GUI;
+package GUI.Vehiculo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
+import Logica.Inicio;
 import Logica.Utilidades;
+import Modelo.Vehiculo;
+import Modelo.VehiculoSustitucion;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 
 /**
@@ -17,16 +24,24 @@ import Modelo.VehiculoSustitucionClienteVehiculo;
  * 
  * @author Marco Jakob
  */
-public class D_SustitucionDevolucionController {
+public class D_SustitucionEntregaController {
 
 	@FXML
-	private Label lblFecha;
+	private TableView<Vehiculo> tableDisponibles;
+	@FXML
+	private TableColumn<Vehiculo, String> columnaVehiculoDisponibles;
+	@FXML
+	private TableColumn<Vehiculo, String> columnaMatriculaDisponibles;
 	@FXML
 	private DatePicker txtFecha;
 	@FXML
 	private TextArea txtObservaciones;
 
+	private ObservableList<Vehiculo> listaDisponibles = FXCollections.observableArrayList();
+	
 	private VehiculoSustitucionClienteVehiculo vscv;
+	private VehiculoSustitucion vs;
+	private Vehiculo v = new Vehiculo(0);
 	private Stage dialogStage;
 	private boolean okClicked = false;
 
@@ -37,8 +52,27 @@ public class D_SustitucionDevolucionController {
 	@FXML
 	private void initialize() {
 		txtFecha.setValue(LocalDate.now());
+		cargarDisponibles();
 	}
 
+	/**
+	 * Carga los vehículos de sustitución que hay disponibles actualmente en la
+	 * tabla correspondiente
+	 */
+	private void cargarDisponibles() {
+		listaDisponibles.clear();
+		tableDisponibles.getItems().clear();
+		ArrayList<Vehiculo> lista = Inicio.CONEXION.buscarDisponibles();
+		if (!lista.isEmpty()) {
+			for (Vehiculo v : lista) {
+				listaDisponibles.add(v);
+				columnaVehiculoDisponibles.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
+				columnaMatriculaDisponibles.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
+				tableDisponibles.setItems(listaDisponibles);
+			}
+		}
+	}
+	
 	/**
 	 * Sets the stage of this dialog.
 	 * 
@@ -67,8 +101,10 @@ public class D_SustitucionDevolucionController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			vscv.getVehiculoSustitucion().setFechadevuelve(Utilidades.LocalDateADate(txtFecha.getValue()));
-			vscv.getVehiculoSustitucion().setObservaciones(vscv.getVehiculoSustitucion().getObservaciones() + " " + txtObservaciones.getText());
+			v = tableDisponibles.getSelectionModel().getSelectedItem();
+			vs = new VehiculoSustitucion(0, Utilidades.LocalDateADate(txtFecha.getValue()), null, Inicio.CLIENTE_ID, v.getIdvehiculo(), txtObservaciones.getText());
+			vscv.setVehiculo(v);
+			vscv.setVehiculoSustitucion(vs);
 						
 			okClicked = true;
 			dialogStage.close();

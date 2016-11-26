@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Vehiculo;
 
 import java.util.ArrayList;
 

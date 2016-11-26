@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Contabilidad;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,7 +28,7 @@ import javafx.scene.layout.AnchorPane;
  * @author Joseba
  *
  */
-public class BuscarFacturaController {
+public class V_BuscarFacturaController {
 
 	@FXML
 	private CheckBox chckbxFacturas;
@@ -152,14 +152,14 @@ public class BuscarFacturaController {
 			try {
 	            // Cargar la vista de nueva factura
 	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(Inicio.class.getResource("/GUI/NuevaFactura.fxml"));
+	            loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/NuevaFactura.fxml"));
 	            AnchorPane nuevaFactura = (AnchorPane) loader.load();
 	        	
 	            // Poner la nueva vista en el centro del root
 	            main.getRoot().setCenter(nuevaFactura);
 	            
 	            // Poner el controlador de la nueva vista.
-	            NuevaFacturaController controller = loader.getController();
+	            V_NuevaFacturaController controller = loader.getController();
 	            controller.setMainAPP(main);
 	            controller.cargaFactura(listaFacturas.get(selectedIndex));
 

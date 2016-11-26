@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Contabilidad;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -38,7 +38,7 @@ import javafx.util.converter.NumberStringConverter;
  * @author Joseba
  *
  */
-public class NuevaFacturaController {
+public class V_NuevaFacturaController {
 
 	// Datos Factura
 	@FXML

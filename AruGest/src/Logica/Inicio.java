@@ -3,10 +3,11 @@ package Logica;
 import java.io.IOException;
 //import java.security.Principal;
 
-import GUI.D_SustitucionDevolucionController;
-import GUI.EditClienteController;
-import GUI.EditVehiculoController;
-import GUI.RootController;
+import GUI.V_RootController;
+import GUI.Cliente.D_EditClienteController;
+import GUI.Vehiculo.D_EditVehiculoController;
+import GUI.Vehiculo.D_SustitucionDevolucionController;
+import GUI.Vehiculo.D_SustitucionEntregaController;
 import Logica.BD.Conexion;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Vehiculo;
@@ -50,7 +51,7 @@ public class Inicio extends Application {
 		// Maximizado
 		escenario.setMaximized(true);
 
-		FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("/GUI/Root.fxml"));
+		FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("/GUI/V_Root.fxml"));
 		try {
 			// 1.- Crear la escena desde el AnchorPane
 			root = (BorderPane) loader.load();
@@ -59,7 +60,7 @@ public class Inicio extends Application {
 			escenario.setScene(escena);
 			escenario.show();
 			// 3.- Poner el controlador de la escena
-			RootController controlador = loader.getController();
+			V_RootController controlador = loader.getController();
 			controlador.setMainAPP(this);
 
 		} catch (IOException e) {
@@ -95,7 +96,7 @@ public class Inicio extends Application {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/EditVehiculo.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/D_EditVehiculo.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			// Create the dialog Stage.
@@ -108,7 +109,7 @@ public class Inicio extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
-			EditVehiculoController controller = loader.getController();
+			D_EditVehiculoController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			// if(v != null){
 			controller.setVehiculo(v);
@@ -135,7 +136,7 @@ public class Inicio extends Application {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/EditCliente.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/D_EditCliente.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			// Create the dialog Stage.
@@ -148,7 +149,7 @@ public class Inicio extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
-			EditClienteController controller = loader.getController();
+			D_EditClienteController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			// if(v != null){
 			controller.setCliente(cped);
@@ -175,7 +176,7 @@ public class Inicio extends Application {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/D_SustitucionDevolucion.fxml"));
+			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/D_SustitucionDevolucion.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			// Create the dialog Stage.
@@ -189,6 +190,41 @@ public class Inicio extends Application {
 
 			// Set the person into the controller.
 			D_SustitucionDevolucionController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setVehiculoSustitucion(vscv);
+			
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Muestra el diálogo para la entrega de un vehículo de sustitución
+	 * @param vscv
+	 * @return
+	 */
+	public static boolean mostrarD_SustitucionEntrega(VehiculoSustitucionClienteVehiculo vscv) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/D_SustitucionEntrega.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Vehículo sustitución");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			D_SustitucionEntregaController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setVehiculoSustitucion(vscv);
 			

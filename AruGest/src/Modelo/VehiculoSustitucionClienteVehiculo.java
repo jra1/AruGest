@@ -5,6 +5,10 @@ public class VehiculoSustitucionClienteVehiculo {
 	private Cliente cliente;
 	private Vehiculo vehiculo;
 	
+	public VehiculoSustitucionClienteVehiculo(){
+		
+	}
+	
 	public VehiculoSustitucionClienteVehiculo(VehiculoSustitucion vs, Cliente cliente, Vehiculo vehiculo) {
 		super();
 		this.vs = vs;
@@ -15,7 +19,7 @@ public class VehiculoSustitucionClienteVehiculo {
 	public VehiculoSustitucion getVehiculoSustitucion() {
 		return vs;
 	}
-	public void setFactura(VehiculoSustitucion vs) {
+	public void setVehiculoSustitucion(VehiculoSustitucion vs) {
 		this.vs = vs;
 	}
 	public Cliente getCliente() {

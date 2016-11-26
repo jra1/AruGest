@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="755.0" prefWidth="1050.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RootController">
+<BorderPane prefHeight="755.0" prefWidth="1050.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.V_RootController">
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <Accordion fx:id="acor" prefHeight="755.0" prefWidth="237.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Accordion fx:id="acor" layoutY="81.0" prefHeight="649.0" prefWidth="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="81.0">
               <panes>
                 <TitledPane fx:id="tPane" animated="false" text="Contabilidad">
                   <content>
@@ -68,7 +68,8 @@
                                     </Button>
                                  </children>
                               </VBox>
-                           </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -95,7 +96,8 @@
                                     <Button id="shiny-orange" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución" />
                                  </children>
                               </VBox>
-                           </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -132,7 +134,8 @@
                                     <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva compañía" />
                                  </children>
                               </VBox>
-                           </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
                      </content>
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -162,16 +165,10 @@
                   </TitledPane>
               </panes>
             </Accordion>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#atras" text="Atrás" />
          </children>
       </AnchorPane>
    </left>
-   <center>
-      <Label prefHeight="98.0" prefWidth="401.0" text="AruGest Software" textAlignment="CENTER" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Dekar" size="59.0" />
-         </font>
-      </Label>
-   </center>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -190,4 +187,15 @@
         </menus>
       </MenuBar>
    </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="98.0" prefWidth="401.0" text="AruGest Software" textAlignment="CENTER" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="250.0">
+               <font>
+                  <Font name="Dekar" size="59.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>
