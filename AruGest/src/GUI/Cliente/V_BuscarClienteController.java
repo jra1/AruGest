@@ -8,19 +8,23 @@ import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class V_BuscarClienteController {
-
+	@FXML
+	private AnchorPane ap;
 	@FXML
 	private ComboBox<String> comboTipoCliente;
 	@FXML
@@ -75,6 +79,15 @@ public class V_BuscarClienteController {
 	 */
 	@FXML
 	private void initialize() {
+		// btnBuscar.defaultButtonProperty().bind(btnBuscar.focusedProperty());
+		btnBuscar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.F12 || ke.getCode() == KeyCode.ENTER) {
+					buscarCliente();
+				}
+			}
+		});
+		comboTipoCliente.requestFocus();
 		comboTipoCliente.getItems().addAll("Particular", "Empresa");
 		comboTipoCliente.setValue("Particular");
 		comboTipoCliente.getSelectionModel().selectedItemProperty()
@@ -112,9 +125,9 @@ public class V_BuscarClienteController {
 			for (ClienteParticularEmpresaDireccion cpe : lista) {
 				listaClientes.add(cpe);
 				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				if(cpe.getParticular() != null){
-					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getParticular().nifProperty());					
-				}else if(cpe.getEmpresa() != null){
+				if (cpe.getParticular() != null) {
+					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getParticular().nifProperty());
+				} else if (cpe.getEmpresa() != null) {
 					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getEmpresa().cifProperty());
 				}
 				columnaDomicilio.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());

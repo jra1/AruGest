@@ -35,7 +35,8 @@ public class Inicio extends Application {
 	public static int FACTURA_ID;
 	public static float PRECIO_HORA;
 	public static float PRECIO_IVA;
-
+	public static boolean ESINICIO = true;
+	
 	public void init() throws Exception {
 		CONEXION.crearConexion();
 	}

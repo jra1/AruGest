@@ -12,19 +12,25 @@
    <children>
       <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
          <children>
-            <TextField fx:id="txtNombre" layoutX="117.0" layoutY="44.0" prefHeight="25.0" prefWidth="308.0" promptText="Nombre cliente" />
-            <Label layoutX="14.0" layoutY="48.0" text="Nombre " />
+            <Label layoutX="14.0" layoutY="14.0" text="Tipo cliente" />
+            <ComboBox fx:id="comboTipoCliente" layoutX="117.0" layoutY="10.0" prefWidth="150.0" />
+            <Label layoutX="14.0" layoutY="48.0" text="Modelo vehículo" />
+            <TextField fx:id="txtModelo" layoutX="117.0" layoutY="44.0" prefHeight="25.0" prefWidth="308.0" promptText="Modelo vehiculo" />
+            <Label layoutX="433.0" layoutY="48.0" text="Matrícula vehículo" />
+            <TextField fx:id="txtMatricula" layoutX="536.0" layoutY="44.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
+            <Label layoutX="14.0" layoutY="79.0" text="Nombre " />
+            <TextField fx:id="txtNombre" layoutX="117.0" layoutY="75.0" prefHeight="25.0" prefWidth="308.0" promptText="Nombre cliente" />
+            <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
+            <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
+            <Label layoutX="14.0" layoutY="140.0" text="Domicilio" />
+            <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />
             <Label layoutX="14.0" layoutY="169.0" text="Población" />
             <TextField fx:id="txtPoblacion" layoutX="117.0" layoutY="165.0" prefHeight="25.0" prefWidth="139.0" promptText="Población cliente" />
-            <Label layoutX="433.0" layoutY="78.0" text="Matrícula vehículo" />
-            <TextField fx:id="txtMatricula" disable="true" editable="false" layoutX="536.0" layoutY="74.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
-            <Label layoutX="14.0" layoutY="78.0" text="Modelo vehículo" />
-            <TextField fx:id="txtModelo" layoutX="117.0" layoutY="74.0" prefHeight="25.0" prefWidth="308.0" promptText="Modelo vehiculo" />
             <Label layoutX="271.0" layoutY="107.0" text="Tlf. 1" />
             <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 1" />
-            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 2" />
             <Label layoutX="271.0" layoutY="140.0" text="Tlf. 2" />
-            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="48.0" prefWidth="114.0" text="BUSCAR">
+            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 2" />
+            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="34.0" prefWidth="150.0" text="BUSCAR (F12)">
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -35,12 +41,6 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-            <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
-            <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
-            <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />
-            <Label layoutX="14.0" layoutY="140.0" text="Domicilio" />
-            <Label layoutX="14.0" layoutY="14.0" text="Tipo cliente" />
-            <ComboBox fx:id="comboTipoCliente" layoutX="117.0" layoutY="10.0" prefWidth="150.0" />
          </children>
       </Pane>
       <Label layoutX="14.0" text="Buscar cliente" />

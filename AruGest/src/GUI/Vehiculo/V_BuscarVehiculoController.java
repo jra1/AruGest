@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -19,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 public class V_BuscarVehiculoController {
@@ -70,12 +70,12 @@ public class V_BuscarVehiculoController {
 	private Label lblColor;
 	@FXML
 	private Label lblCodRadio;
-	
+
 	@FXML
 	private Button btnHacerFactura;
 
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
-	//private int tipoVehiculo = 1; // 1=Particular, 2=Empresa
+	// private int tipoVehiculo = 1; // 1=Particular, 2=Empresa
 
 	private Inicio main;
 
@@ -92,9 +92,9 @@ public class V_BuscarVehiculoController {
 		comboTipoVehiculo.getItems().addAll("Turismo", "Furgoneta", "Camión", "Autobús", "Autocaravana", "Moto",
 				"Remolque");
 		comboTipoVehiculo.setValue("Turismo");
-		
+
 		tableVehiculos.getSelectionModel().selectedItemProperty()
-		.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));	
+				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
 	}
 
 	/**
@@ -119,16 +119,17 @@ public class V_BuscarVehiculoController {
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
 				columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaProperty());
 				columnaModelo.setCellValueFactory(cellData -> cellData.getValue().modeloProperty());
-				columnaCliente.setCellValueFactory(cellData -> Inicio.CONEXION.leerClientePorID(cellData.getValue().getClienteID()).nombreProperty());
+				columnaCliente.setCellValueFactory(cellData -> Inicio.CONEXION
+						.leerClientePorID(cellData.getValue().getClienteID()).nombreProperty());
 				tableVehiculos.setItems(listaVehiculos);
-				
+
 			}
 		}
 	}
 
 	/**
-	 * Muestra los detalles del vehículo seleccionado. Si el vehiculo es null, se
-	 * limpian los campos.
+	 * Muestra los detalles del vehículo seleccionado. Si el vehiculo es null,
+	 * se limpian los campos.
 	 * 
 	 * @param vehiculo
 	 *            o null
@@ -160,7 +161,7 @@ public class V_BuscarVehiculoController {
 			lblCodRadio.setText("-");
 		}
 	}
-	
+
 	/**
 	 * Edita el vehículo seleccionado
 	 */
@@ -221,7 +222,7 @@ public class V_BuscarVehiculoController {
 			try {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/NuevaFactura.fxml"));
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root

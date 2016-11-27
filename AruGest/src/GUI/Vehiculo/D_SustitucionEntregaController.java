@@ -126,13 +126,18 @@ public class D_SustitucionEntregaController {
 	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
-
+		int selectedIndex = tableDisponibles.getSelectionModel().getSelectedIndex();
+		if (selectedIndex < 0) {
+			errorMessage += "Debes seleccionar un vehículo de sustitución en la tabla \n";
+		}
 		if (txtFecha.getValue() == null) {
 			errorMessage += "Introduce la fecha \n";
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
-			return false;
+		}
+		if(errorMessage.isEmpty()){
+			return true;
 		}else{
-			return true;			
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
+			return false;			
 		}
 	}
 }

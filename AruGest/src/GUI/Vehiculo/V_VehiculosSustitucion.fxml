@@ -59,17 +59,17 @@
                   <Label text="Vehículo" GridPane.rowIndex="2" />
                   <Label text="Matrícula" GridPane.rowIndex="1" />
                   <Label text="Nombre cliente" />
-                  <TextField fx:id="txtNombre" editable="false" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Joseba Ruiz" GridPane.columnIndex="1">
+                  <TextField fx:id="txtNombre" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Joseba Ruiz" GridPane.columnIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtMatricula" editable="false" prefHeight="23.0" prefWidth="179.0" promptText="Ej. 1947FFY" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="txtMatricula" prefHeight="23.0" prefWidth="179.0" promptText="Ej. 1947FFY" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtVehiculo" editable="false" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Renault Megane" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="txtVehiculo" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Renault Megane" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="10.0" />
                      </font>

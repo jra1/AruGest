@@ -17,9 +17,9 @@ public class VehiculoSustitucion {
 	private final IntegerProperty clienteID;
 	private final IntegerProperty vehiculoID;
 	private final StringProperty observaciones;
-	
-	public VehiculoSustitucion(int idvehiculosusti, Date fechacoge,
-			Date fechadevuelve, int clienteID, int vehiculoID, String observaciones) {
+
+	public VehiculoSustitucion(int idvehiculosusti, Date fechacoge, Date fechadevuelve, int clienteID, int vehiculoID,
+			String observaciones) {
 		super();
 		this.idvehiculosusti = new SimpleIntegerProperty(idvehiculosusti);
 		this.fechacoge = new SimpleObjectProperty<Date>(fechacoge);
@@ -28,9 +28,10 @@ public class VehiculoSustitucion {
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
 		this.observaciones = new SimpleStringProperty(observaciones);
 	}
-	
+
 	public VehiculoSustitucion(IntegerProperty idvehiculosusti, ObjectProperty<Date> fechacoge,
-			ObjectProperty<Date> fechadevuelve, IntegerProperty clienteID, IntegerProperty vehiculoID, StringProperty observaciones) {
+			ObjectProperty<Date> fechadevuelve, IntegerProperty clienteID, IntegerProperty vehiculoID,
+			StringProperty observaciones) {
 		super();
 		this.idvehiculosusti = idvehiculosusti;
 		this.fechacoge = fechacoge;
@@ -43,82 +44,72 @@ public class VehiculoSustitucion {
 	public IntegerProperty idvehiculosustiProperty() {
 		return this.idvehiculosusti;
 	}
-	
 
 	public int getIdvehiculosusti() {
 		return this.idvehiculosustiProperty().get();
 	}
-	
 
 	public void setIdvehiculosusti(final int idvehiculosusti) {
 		this.idvehiculosustiProperty().set(idvehiculosusti);
 	}
-	
 
 	public ObjectProperty<Date> fechacogeProperty() {
 		return this.fechacoge;
 	}
-	
+
 	public StringProperty fechacogePropertyFormat() {
 		SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 		return new SimpleStringProperty(formateador.format(getFechacoge()));
 	}
-	
 
 	public Date getFechacoge() {
 		return this.fechacogeProperty().get();
 	}
-	
 
 	public void setFechacoge(final Date fechacoge) {
 		this.fechacogeProperty().set(fechacoge);
 	}
-	
 
 	public ObjectProperty<Date> fechadevuelveProperty() {
 		return this.fechadevuelve;
 	}
-	
+
 	public StringProperty fechadevuelvePropertyFormat() {
 		SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-		return new SimpleStringProperty(formateador.format(getFechadevuelve()));
+		if (getFechadevuelve() != null) {
+			return new SimpleStringProperty(formateador.format(getFechadevuelve()));
+		} else {
+			return new SimpleStringProperty(" - ");
+		}
 	}
-	
 
 	public Date getFechadevuelve() {
 		return this.fechadevuelveProperty().get();
 	}
-	
 
 	public void setFechadevuelve(final Date fechadevuelve) {
 		this.fechadevuelveProperty().set(fechadevuelve);
 	}
-	
 
 	public IntegerProperty clienteIDProperty() {
 		return this.clienteID;
 	}
-	
 
 	public int getClienteID() {
 		return this.clienteIDProperty().get();
 	}
-	
 
 	public void setClienteID(final int clienteID) {
 		this.clienteIDProperty().set(clienteID);
 	}
-	
 
 	public IntegerProperty vehiculoIDProperty() {
 		return this.vehiculoID;
 	}
-	
 
 	public int getVehiculoID() {
 		return this.vehiculoIDProperty().get();
 	}
-	
 
 	public void setVehiculoID(final int vehiculoID) {
 		this.vehiculoIDProperty().set(vehiculoID);
@@ -127,16 +118,13 @@ public class VehiculoSustitucion {
 	public StringProperty observacionesProperty() {
 		return this.observaciones;
 	}
-	
 
 	public String getObservaciones() {
 		return this.observacionesProperty().get();
 	}
-	
 
 	public void setObservaciones(final String observaciones) {
 		this.observacionesProperty().set(observaciones);
 	}
-	
-	
+
 }

@@ -1,7 +1,5 @@
 package Logica;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

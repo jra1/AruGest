@@ -264,13 +264,16 @@ public class V_NuevaFacturaController {
 
 		actualizarPrecio();
 	}
-	
+
 	/**
 	 * Carga en la factura los datos del cliente y del vehículo
-	 * @param c: cliente a cargar los datos
-	 * @param v: vehiculo a cargar los datos
+	 * 
+	 * @param c:
+	 *            cliente a cargar los datos
+	 * @param v:
+	 *            vehiculo a cargar los datos
 	 */
-	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v){
+	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v) {
 		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
 		if (p != null) {
 			comboTipoCliente.setValue("Particular");
@@ -480,10 +483,10 @@ public class V_NuevaFacturaController {
 		}
 	}
 
-	
-	private void comprobarComboTipoVehiculo(String valor){
+	private void comprobarComboTipoVehiculo(String valor) {
 		tipoVehiculo = Utilidades.StringToTipoID(valor);
 	}
+
 	/**
 	 * Se añade el servicio o material a la tabla correspondiente
 	 */
@@ -689,9 +692,9 @@ public class V_NuevaFacturaController {
 				// tipoCliente).getIdcliente();
 				v = new Vehiculo(1, Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
 						txtMatricula.getText(), tipoVehiculo);
-				if(Inicio.CONEXION.guardarVehiculo(v)){
-					v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());					
-				}else{
+				if (Inicio.CONEXION.guardarVehiculo(v)) {
+					v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
+				} else {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Error");
 					alert.setHeaderText("Error al guardar el vehículo");

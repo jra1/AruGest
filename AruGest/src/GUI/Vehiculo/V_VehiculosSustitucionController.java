@@ -10,6 +10,8 @@ import Modelo.VehiculoSustitucion;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -93,8 +95,7 @@ public class V_VehiculosSustitucionController {
 	 */
 	@FXML
 	private void initialize() {
-		// Menú que aparece al pulsar con el botón derecho sobre la tabla de
-		// disponibles
+		// MENU AL PULSAR EL BOTON DERECHO SOBRE TABLA DISPONIBLES
 		ContextMenu context = new ContextMenu();
 		MenuItem item1 = new MenuItem("Prestar este vehículo");
 		context.getItems().addAll(item1);
@@ -110,18 +111,49 @@ public class V_VehiculosSustitucionController {
 		// ATAJO DE TECLADO
 		item1.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
 		// PONER TOOLTIP
-		tableDisponibles.setTooltip(new Tooltip("TABLAAAA"));
+		tableDisponibles.setTooltip(new Tooltip("Vehículos de sustitución disponibles"));
 
+		
+		
 		// Cargar disponibles
 		cargarDisponibles();
 		// Cargar prestados
 		cargarPrestados();
-		// Cargar histórico ¿¿??
+		// Cargar histórico 
 		cargarHistorico();
+		
+		//FILTRO AL ESCRIBIR EN EL TEXTO DEL NOMBRE EL NOMBRE DEL CLIENTE O LA MATRÍCULA DEL VEHÍCULO
+		// 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<VehiculoSustitucionClienteVehiculo> filteredData = new FilteredList<>(listaHistorico, p -> true);
 
-		// tableVehiculos.getSelectionModel().selectedItemProperty()
-		// .addListener((observable, oldValue, newValue) ->
-		// mostrarDetallesVehiculo(newValue));
+        // 2. Set the filter Predicate whenever the filter changes.
+        txtNombre.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(person -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (person.getCliente().getNombre().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (person.getVehiculo().getMatricula().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<VehiculoSustitucionClienteVehiculo> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableHistorico.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableHistorico.setItems(sortedData);
 	}
 
 	/**

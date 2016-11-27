@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -21,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 public class V_ClienteController {
@@ -92,10 +92,25 @@ public class V_ClienteController {
 	@FXML
 	private Label lblCodRadio;
 
+	// Datos Vehiculo sustitución
+	@FXML
+	private TableView<VehiculoSustitucionClienteVehiculo> tableSustitucion;
+	@FXML
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaMarcaSustitucion;
+	@FXML
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaMatriculaSustitucion;
+	@FXML
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFEntregaSustitucion;
+	@FXML
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFDevolucionSustitucion;
+	@FXML
+	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesSustitucion;
+
 	private Inicio main;
 
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
 	private ClienteParticularEmpresaDireccion cped;
+	private ObservableList<VehiculoSustitucionClienteVehiculo> listaSustitucion = FXCollections.observableArrayList();
 
 	public Inicio getMain() {
 		return main;
@@ -154,6 +169,20 @@ public class V_ClienteController {
 		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
 		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
 		tableVehiculo.setItems(listaVehiculos);
+
+		// Cargar tabla vehículos de sustitución
+		listaSustitucion = Inicio.CONEXION.buscarVehiculosSustitucionPorClienteID(Inicio.CLIENTE_ID);
+		columnaMarcaSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+		columnaMatriculaSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+		columnaFEntregaSustitucion.setCellValueFactory(
+				cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+		columnaFDevolucionSustitucion.setCellValueFactory(
+				cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
+		columnaObservacionesSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+		tableSustitucion.setItems(listaSustitucion);
 	}
 
 	/**
@@ -370,9 +399,9 @@ public class V_ClienteController {
 					"Selecciona el vehículo al que quieras hacer una factura.");
 		}
 	}
-	
+
 	@FXML
-	private void addVehiculoSustitucion(){
+	private void addVehiculoSustitucion() {
 		VehiculoSustitucionClienteVehiculo vscv = new VehiculoSustitucionClienteVehiculo();
 		if (Inicio.mostrarD_SustitucionEntrega(vscv)) {
 			if (Inicio.CONEXION.actualizarVehiculoSustitucion("E", vscv)) {
@@ -382,6 +411,6 @@ public class V_ClienteController {
 						"Ocurrió un error al registrar la prestación del vehículo en la base de datos.");
 			}
 		}
-		
+
 	}
 }

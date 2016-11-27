@@ -165,7 +165,14 @@
                   </TitledPane>
               </panes>
             </Accordion>
-            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#atras" text="Atrás" />
+            <VBox prefHeight="82.0" prefWidth="260.0">
+               <children>
+                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" text="Atrás" visible="false" />
+                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" text="Button" visible="false" />
+                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" text="Button" visible="false" />
+                  <Separator prefWidth="200.0" />
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </left>
@@ -181,7 +188,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#atras" text="Sobre AruGest Software" />
+              <MenuItem mnemonicParsing="false" text="Sobre AruGest Software" />
             </items>
           </Menu>
         </menus>

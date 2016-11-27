@@ -152,7 +152,7 @@ public class V_BuscarFacturaController {
 			try {
 	            // Cargar la vista de nueva factura
 	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/NuevaFactura.fxml"));
+	            loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 	            AnchorPane nuevaFactura = (AnchorPane) loader.load();
 	        	
 	            // Poner la nueva vista en el centro del root

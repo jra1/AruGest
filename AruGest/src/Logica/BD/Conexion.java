@@ -1265,7 +1265,7 @@ public class Conexion {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();
 			if (tipo == 1) {
-				sql = "SELECT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
+				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
 						sql += "WHERE UPPER(PARTICULAR.NIF) LIKE UPPER('%" + dni + "%') ";
@@ -1276,7 +1276,7 @@ public class Conexion {
 				}
 
 			} else if (tipo == 2) {
-				sql = "SELECT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
+				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
 						sql += "WHERE UPPER(EMPRESA.CIF) LIKE UPPER('%" + dni + "%') ";
@@ -1295,15 +1295,32 @@ public class Conexion {
 					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 				}
 			}
-			/*
-			 * if (!modelo.equalsIgnoreCase("")) { if (esPrimero) { sql +=
-			 * "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' "; esPrimero =
-			 * false; } else { sql += "AND VEHICULO.MODELO LIKE '%" + modelo +
-			 * "%' "; } } if (!matricula.equalsIgnoreCase("")) { if (esPrimero)
-			 * { sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula + "%' ";
-			 * esPrimero = false; } else { sql +=
-			 * "AND VEHICULO.MATRICULA LIKE '%" + matricula + "%' "; } }
-			 */
+
+			// ESTAS CAMBIAN UN POCO
+			if (!modelo.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%"
+							+ modelo + "%'))";
+					// sql += "WHERE VEHICULO.MODELO LIKE '%" + modelo + "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%"
+							+ modelo + "%'))";
+				}
+			}
+			if (!matricula.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%"
+							+ matricula + "%'))";
+					// sql += "WHERE VEHICULO.MATRICULA LIKE '%" + matricula +
+					// "%' ";
+					esPrimero = false;
+				} else {
+					sql += "AND CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%"
+							+ matricula + "%'))";
+				}
+			}
+
 			if (!fijo.equalsIgnoreCase("")) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.TELF1 = '" + fijo + "' ";
@@ -1320,6 +1337,7 @@ public class Conexion {
 					sql += "AND CLIENTE.TELF2 = '" + movil + "' ";
 				}
 			}
+
 			if (!domicilio.equalsIgnoreCase("")) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(DIRECCION.CALLE) LIKE UPPER('%" + domicilio + "%') ";
@@ -1570,23 +1588,25 @@ public class Conexion {
 		PreparedStatement st;
 		boolean res = true;
 		try {
-			if(tipo.equalsIgnoreCase("D")){
-				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = " + vscv.getVehiculoSustitucion().getIdvehiculosusti();
+			if (tipo.equalsIgnoreCase("D")) {
+				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = "
+						+ vscv.getVehiculoSustitucion().getIdvehiculosusti();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechadevuelve().getTime()));
 				st.setString(2, vscv.getVehiculoSustitucion().getObservaciones());
 				// Ejecutamos la sentencia
-				st.executeUpdate();				
-			}else if(tipo.equalsIgnoreCase("E")){
-				//Crear el registro del vehiculo de sustitucion en la base de datos
+				st.executeUpdate();
+			} else if (tipo.equalsIgnoreCase("E")) {
+				// Crear el registro del vehiculo de sustitucion en la base de
+				// datos
 				sql = "INSERT INTO VEHICULOSUSTITUCION (FECHACOGE, FECHADEVUELVE, CLIENTEID, VEHICULOID, OBSERVACIONES) VALUES (?,?,?,?,?)";
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechacoge().getTime()));
 				st.setDate(2, null);
-				st.setInt(3, vscv.getVehiculo().getIdvehiculo());
-				st.setInt(4, Inicio.CLIENTE_ID);
+				st.setInt(3, Inicio.CLIENTE_ID);
+				st.setInt(4, vscv.getVehiculo().getIdvehiculo());
 				st.setString(5, vscv.getVehiculoSustitucion().getObservaciones());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
@@ -1596,6 +1616,44 @@ public class Conexion {
 			res = false;
 		}
 		return res;
+	}
+
+	/**
+	 * Busca en la BD los vehiculos de sustitucion que hayan estado vinculados
+	 * al cliente con idcliente id
+	 * 
+	 * @return lista
+	 */
+	public ObservableList<VehiculoSustitucionClienteVehiculo> buscarVehiculosSustitucionPorClienteID(int id) {
+		ObservableList<VehiculoSustitucionClienteVehiculo> lista = FXCollections.observableArrayList();
+		VehiculoSustitucionClienteVehiculo vscv;
+		VehiculoSustitucion vs;
+		Vehiculo v;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM VEHICULOSUSTITUCION INNER JOIN VEHICULO ON VEHICULOSUSTITUCION.VEHICULOID = VEHICULO.IDVEHICULO WHERE VEHICULOSUSTITUCION.CLIENTEID = "
+					+ id;
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				vs = new VehiculoSustitucion(rs.getInt("IDVEHICULOSUSTI"), rs.getDate("FECHACOGE"),
+						rs.getDate("FECHADEVUELVE"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getString("OBSERVACIONES"));
+				vscv = new VehiculoSustitucionClienteVehiculo(vs, null, v);
+				lista.add(vscv);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return lista;
 	}
 
 	/**
