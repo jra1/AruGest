@@ -1,8 +1,57 @@
+/*AnchorPane general */
+.back{
+	-fx-background-color: rgb(192,192,192);
+    -fx-border-style: solid ;
+    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 16px;
+}
+
+/*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de las pane verde */
+.titulo{
+	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+/*TextField */
+.my-text-field {
+    -fx-background-color:
+        #FFFFFF,
+        #FFFFFF;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0;
+    -fx-font-size: 14px;
+ }
+
+.my-text-field:focused {
+    -fx-background-color:
+        #0093EF;
+}
+
+.my-text-field:hover {
+    -fx-background-color:
+        #909090,
+        #FFFFFF;
+}
+
+.my-text-field:focused:hover {
+    -fx-background-color:
+        #0093EF,
+        #FFFFFF;
+}
+
+
+
+
+
+/*Paneles */
 .background {
     -fx-background-color: rgb(139,248,164);
     -fx-border-style: solid ;
 }
 
+/*Botones */
 .dark-blue {
     -fx-background-color: 
         #090a0c,

@@ -35,8 +35,8 @@ public class Inicio extends Application {
 	public static int FACTURA_ID;
 	public static float PRECIO_HORA;
 	public static float PRECIO_IVA;
-	public static boolean ESINICIO = true;
-	
+	// public static boolean ESINICIO = true;
+
 	public void init() throws Exception {
 		CONEXION.crearConexion();
 	}
@@ -170,7 +170,7 @@ public class Inicio extends Application {
 	 * Muestra el diálogo para preguntar la fecha y las observaciones de un
 	 * vehículo de sustitución
 	 * 
-	 * @param 
+	 * @param
 	 * @return
 	 */
 	public static boolean mostrarD_SustitucionDevolucion(VehiculoSustitucionClienteVehiculo vscv) {
@@ -193,7 +193,7 @@ public class Inicio extends Application {
 			D_SustitucionDevolucionController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setVehiculoSustitucion(vscv);
-			
+
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
@@ -203,9 +203,10 @@ public class Inicio extends Application {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Muestra el diálogo para la entrega de un vehículo de sustitución
+	 * 
 	 * @param vscv
 	 * @return
 	 */
@@ -228,7 +229,7 @@ public class Inicio extends Application {
 			D_SustitucionEntregaController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setVehiculoSustitucion(vscv);
-			
+
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 

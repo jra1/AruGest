@@ -87,11 +87,14 @@ public class V_BuscarClienteController {
 				}
 			}
 		});
-		comboTipoCliente.requestFocus();
 		comboTipoCliente.getItems().addAll("Particular", "Empresa");
 		comboTipoCliente.setValue("Particular");
 		comboTipoCliente.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarComboTipoCliente(newValue));
+	}
+
+	public void setFocus() {
+		txtModelo.requestFocus();
 	}
 
 	/**
