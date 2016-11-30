@@ -10,10 +10,24 @@ import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 public class Utilidades {
+
+	/**
+	 * Se ajusta la resoluion del escenario a la pantalla en que se esté
+	 * mostrando
+	 * 
+	 * @param stage
+	 * @param x
+	 * @param y
+	 */
+	public static void ajustarResolucion(Stage stage, double x, double y) {
+		stage.setWidth(x);
+		stage.setHeight(y);
+	}
 
 	public static Date LocalDateADate(LocalDate localDate) {
 		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -57,7 +71,7 @@ public class Utilidades {
 		}
 		return respuesta;
 	}
-	
+
 	/**
 	 * Se le pasa como parámetro el entero del tipo vehiculo y devuelve el
 	 * StringProperty correspondiente (Para las tablas)
@@ -129,22 +143,28 @@ public class Utilidades {
 
 	/**
 	 * Muestra una alerta con los parámetros que se le pasan
-	 * @param at: Tipo de alerta (Error, Information, ... )
-	 * @param titulo: Titulo de la alerta
-	 * @param header: Cabecera de la alerta
-	 * @param texto: Mensaje de la alerta
+	 * 
+	 * @param at:
+	 *            Tipo de alerta (Error, Information, ... )
+	 * @param titulo:
+	 *            Titulo de la alerta
+	 * @param header:
+	 *            Cabecera de la alerta
+	 * @param texto:
+	 *            Mensaje de la alerta
 	 */
-	public static Optional<ButtonType> mostrarAlerta(AlertType at, String titulo, String header, String texto){
+	public static Optional<ButtonType> mostrarAlerta(AlertType at, String titulo, String header, String texto) {
 		Alert alert = new Alert(at);
-		//Point p = MouseInfo.getPointerInfo().getLocation(); 
-		//alert.setX(p.getX()); 		/**CON ESTAS LINEAS EL MENSAJE APARECE EN LA POSICION DEL RATON**/
-		//alert.setY(p.getY());
+		// Point p = MouseInfo.getPointerInfo().getLocation();
+		// alert.setX(p.getX()); /**CON ESTAS LINEAS EL MENSAJE APARECE EN LA
+		// POSICION DEL RATON**/
+		// alert.setY(p.getY());
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
 		alert.setContentText(texto);
 		return alert.showAndWait();
 	}
-	
+
 	public static Date asDate(LocalDateTime localDateTime) {
 		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}

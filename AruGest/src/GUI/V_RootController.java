@@ -122,6 +122,12 @@ public class V_RootController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 			AnchorPane nuevaFactura = (AnchorPane) loader.load();
+			if (Inicio.CAMBIAR_RESOLUCION) {
+				nuevaFactura.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
+				nuevaFactura.setPrefHeight(Inicio.ALTO_PANTALLA - 40);
+				nuevaFactura.getStylesheets().add("GUI/EstiloPequenio.css");
+			}
+
 			nombre = "Nueva Factura";
 			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root

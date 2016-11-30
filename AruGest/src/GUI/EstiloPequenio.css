@@ -4,14 +4,14 @@
     -fx-border-style: solid ;
     -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
     /*-fx-font-weight: bold;*/
-    -fx-font-size: 14px;
+    -fx-font-size: 10px;
 }
 
 /*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de las pane verde */
 .titulo{
 	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
     -fx-font-weight: bold;
-    -fx-font-size: 18px;
+    -fx-font-size: 14px;
 }
 
 /*TextField */
@@ -21,11 +21,12 @@
         #FFFFFF;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 0, 0;
-    -fx-font-size: 14px;
+    -fx-font-size: 10px;
  }
 
 .my-text-field:focused {
-    -fx-background-color: rgb(133,197,158); /* #0093EF;*/
+    -fx-background-color:
+        #0093EF;
 }
 
 .my-text-field:hover {
@@ -39,9 +40,6 @@
         #0093EF,
         #FFFFFF;
 }
-
-
-
 
 
 /*Paneles */

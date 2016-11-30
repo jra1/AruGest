@@ -14,11 +14,13 @@ import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Inicio extends Application {
@@ -35,10 +37,25 @@ public class Inicio extends Application {
 	public static int FACTURA_ID;
 	public static float PRECIO_HORA;
 	public static float PRECIO_IVA;
+	public static double ANCHO_PANTALLA;
+	public static double ALTO_PANTALLA;
+	public static boolean CAMBIAR_RESOLUCION = false; // Se pondrá a true cuando
+														// sea necesario cambiar
+														// la resolucion porque
+														// la pantalla es más
+														// pequeña de 1680*1010
 	// public static boolean ESINICIO = true;
 
 	public void init() throws Exception {
 		CONEXION.crearConexion();
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		if (primaryScreenBounds.getWidth() < 1680 || primaryScreenBounds.getHeight() < 1010) {
+			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+			ALTO_PANTALLA = primaryScreenBounds.getHeight();
+			CAMBIAR_RESOLUCION = true;
+			// Utilidades.ajustarEscena(escenario,
+			// primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
+		}
 	}
 
 	@Override
@@ -56,7 +73,12 @@ public class Inicio extends Application {
 		try {
 			// 1.- Crear la escena desde el AnchorPane
 			root = (BorderPane) loader.load();
-			Scene escena = new Scene(root);
+			Scene escena = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
+			if (CAMBIAR_RESOLUCION) {
+				Utilidades.ajustarResolucion(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
+			}
+			// System.out.println("Anchura: " + primaryScreenBounds.getWidth() +
+			// " ; Altura: " + primaryScreenBounds.getHeight());
 			// 2.- Ponerla y mostrarla
 			escenario.setScene(escena);
 			escenario.show();
