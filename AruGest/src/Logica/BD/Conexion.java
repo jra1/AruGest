@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,7 +88,6 @@ public class Conexion {
 
 			int seleccion = JOptionPane.showOptionDialog(null, "Servidor arrancado en: " + server.getStatus(),
 					"Servidor arrancado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, // null
-																												// para
 																												// icono
 																												// por
 																												// defecto.
@@ -200,6 +200,65 @@ public class Conexion {
 	}
 
 	/**
+	 * Guarda la direccion pasada como parámetro en la BD
+	 * 
+	 * @param d
+	 * @return id generado en la BD o CERO si ocurrió algún error
+	 */
+	public long guardarDireccion(Direccion d) {
+		PreparedStatement st;
+		ResultSet rs;
+		long idGenerado = 0;
+		String sql = "";
+		try {
+			sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
+			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			// Añadimos los parametros
+			st.setString(1, d.getCalle());
+			st.setInt(2, d.getNumero());
+			st.setString(3, d.getPiso());
+			st.setString(4, d.getLetra());
+			st.setInt(5, d.getCpostal());
+			st.setString(6, d.getLocalidad());
+			st.setString(7, d.getProvincia());
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				idGenerado = rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			idGenerado = 0;
+		}
+		return idGenerado;
+	}
+
+	/**
+	 * Actualiza el DIRECCIONID de un cliente
+	 * 
+	 * @param idcliente
+	 * @param iddireccion
+	 * @return true si fue bien, false si hubo algún error
+	 */
+	public boolean actualizarIDDireccionCliente(int idcliente, int iddireccion) {
+		String sql = "";
+		boolean resul = true;
+		PreparedStatement st;
+		try {
+			sql = "UPDATE CLIENTE SET DIRECCIONID = ? WHERE IDCLIENTE = " + idcliente;
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setInt(1, (int) iddireccion);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			resul = true;
+		} catch (SQLException e) {
+			resul = false;
+		}
+		return resul;
+	}
+
+	/**
 	 * Guarda en la base de datos el cliente que se le pasa como parámetro
 	 * 
 	 * @param Direccion,
@@ -217,42 +276,21 @@ public class Conexion {
 			// Se prepara la sentencia para introducir los datos de la direccion
 			// SI NO ES NULL
 			if (cped.getDireccion() != null) {
-				sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
-				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				// Añadimos los parametros
-				st.setString(1, cped.getDireccion().getCalle());
-				st.setInt(2, cped.getDireccion().getNumero());
-				st.setString(3, cped.getDireccion().getPiso());
-				st.setString(4, cped.getDireccion().getLetra());
-				st.setInt(5, cped.getDireccion().getCpostal());
-				st.setString(6, cped.getDireccion().getLocalidad());
-				st.setString(7, cped.getDireccion().getProvincia());
-				// Ejecutamos la sentencia
-				st.executeUpdate();
-				rs = st.getGeneratedKeys();
-				if (rs.next()) {
-					idGenerado = rs.getLong(1);
-				}
+				idGenerado = guardarDireccion(cped.getDireccion());
 			}
 
 			// 2º Guardar Cliente
+			sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID) VALUES (?,?,?,?,?)";
+			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			// Añadimos los parametros
+			st.setString(1, cped.getCliente().getNombre());
+			st.setString(2, cped.getCliente().getTelf1());
+			st.setString(3, cped.getCliente().getTelf2());
+			st.setString(4, cped.getCliente().getTelf3());
 			if (idGenerado != 0) {
-				sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID) VALUES (?,?,?,?,?)";
-				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				// Añadimos los parametros
-				st.setString(1, cped.getCliente().getNombre());
-				st.setString(2, cped.getCliente().getTelf1());
-				st.setString(3, cped.getCliente().getTelf2());
-				st.setString(4, cped.getCliente().getTelf3());
 				st.setInt(5, (int) idGenerado);
 			} else {
-				sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3) VALUES (?,?,?,?)";
-				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				// Añadimos los parametros
-				st.setString(1, cped.getCliente().getNombre());
-				st.setString(2, cped.getCliente().getTelf1());
-				st.setString(3, cped.getCliente().getTelf2());
-				st.setString(4, cped.getCliente().getTelf3());
+				st.setInt(5, 0);
 			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -442,22 +480,37 @@ public class Conexion {
 	public boolean editarCliente(ClienteParticularEmpresaDireccion cped) {
 		boolean res = true;
 		String sql = "";
+		long idGenerado;
 		try {
+			PreparedStatement st;
 			// 1º Direccion
-			sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
-					+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
-					+ cped.getCliente().getDireccionID();
-			PreparedStatement st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
-			st.setString(1, cped.getDireccion().getCalle());
-			st.setInt(2, cped.getDireccion().getNumero());
-			st.setString(3, cped.getDireccion().getPiso());
-			st.setString(4, cped.getDireccion().getLetra());
-			st.setInt(5, cped.getDireccion().getCpostal());
-			st.setString(6, cped.getDireccion().getLocalidad());
-			st.setString(7, cped.getDireccion().getProvincia());
-			// Ejecutamos la sentencia
-			st.executeUpdate();
+			// Si ya tiene direccion, se actualiza
+			// Si no tiene direccion (iddireccion = 0), se crea
+			if (cped.getCliente().getDireccionID() != 0) {
+				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
+						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
+						+ cped.getCliente().getDireccionID();
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setString(1, cped.getDireccion().getCalle());
+				st.setInt(2, cped.getDireccion().getNumero());
+				st.setString(3, cped.getDireccion().getPiso());
+				st.setString(4, cped.getDireccion().getLetra());
+				st.setInt(5, cped.getDireccion().getCpostal());
+				st.setString(6, cped.getDireccion().getLocalidad());
+				st.setString(7, cped.getDireccion().getProvincia());
+				// Ejecutamos la sentencia
+				st.executeUpdate();
+			} else {
+				// Guardar direccion y asignarle su iddireccion al cliente
+				idGenerado = guardarDireccion(cped.getDireccion());
+				if (idGenerado > 0) { // Si es 0 es que hubo un error al guardar
+										// la direccion
+					res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
+					// Acabar aquí la funcion si res = false
+				}
+
+			}
 			// 2º Cliente
 			sql = "UPDATE CLIENTE SET NOMBRE = ?, TELF1 = ?, TELF2 = ?, " + "TELF3 = ? " + "WHERE IDCLIENTE = "
 					+ cped.getCliente().getIdcliente();
@@ -1011,7 +1064,7 @@ public class Conexion {
 	 *            a buscar
 	 * @return Direccion encontrada o null si no existe
 	 */
-	public Direccion buscarDireccionPorID(int iddireccion) {
+	public Direccion leerDireccionPorID(int iddireccion) {
 		String sql = "";
 		Direccion d = null;
 		try {

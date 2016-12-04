@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
@@ -44,6 +45,8 @@ public class V_RootController {
 	private Button btnNuevoPresupuesto;
 
 	private Inicio main;
+	@FXML
+	private ScrollPane sp;
 
 	ArrayList<GestorVentana> lista = new ArrayList<GestorVentana>();
 	GestorVentana gv;
@@ -63,6 +66,10 @@ public class V_RootController {
 	 */
 	@FXML
 	private void initialize() {
+		if (Inicio.CAMBIAR_RESOLUCION) {
+			sp.setPrefHeight(Inicio.ALTO_PANTALLA - 45);
+			sp.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
+		}
 		// Añadir un listener a los botones de Nuevo Presupuesto y Nueva Factura
 		btnNuevaFactura.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -93,7 +100,8 @@ public class V_RootController {
 			nombre = "Buscar Vehículo";
 			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(buscarVehiculo);
+			// main.getRoot().setCenter(buscarVehiculo);
+			sp.setContent(buscarVehiculo);
 			ap = (AnchorPane) main.getRoot().getCenter();
 			// Inicio.ESINICIO = false;
 			// }else{
@@ -106,6 +114,7 @@ public class V_RootController {
 			// Poner el controlador de la nueva vista.
 			V_BuscarVehiculoController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -122,17 +131,20 @@ public class V_RootController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 			AnchorPane nuevaFactura = (AnchorPane) loader.load();
-			if (Inicio.CAMBIAR_RESOLUCION) {
-				nuevaFactura.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
-				nuevaFactura.setPrefHeight(Inicio.ALTO_PANTALLA - 40);
-				nuevaFactura.getStylesheets().add("GUI/EstiloPequenio.css");
-			}
+			// if (Inicio.CAMBIAR_RESOLUCION) {
+			// nuevaFactura.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
+			// nuevaFactura.setPrefHeight(Inicio.ALTO_PANTALLA - 40);
+			// nuevaFactura.getStylesheets().add("GUI/EstiloPequenio.css");
+			// }
 
 			nombre = "Nueva Factura";
 			// if(Inicio.ESINICIO){
+
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(nuevaFactura);
+			sp.setContent(nuevaFactura);
+			// main.getRoot().setCenter(nuevaFactura);
 			ap = (AnchorPane) main.getRoot().getCenter();
+
 			// Inicio.ESINICIO = false;
 			// }else{
 			// ap = (AnchorPane) main.getRoot().getCenter();
@@ -142,12 +154,10 @@ public class V_RootController {
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
-			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(nuevaFactura);
-
 			// Poner el controlador de la nueva vista.
 			V_NuevaFacturaController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -167,7 +177,8 @@ public class V_RootController {
 			nombre = "Buscar Factura";
 			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(nuevaFactura);
+			// main.getRoot().setCenter(nuevaFactura);
+			sp.setContent(nuevaFactura);
 			ap = (AnchorPane) main.getRoot().getCenter();
 			// Inicio.ESINICIO = false;
 			// }else{
@@ -244,7 +255,8 @@ public class V_RootController {
 			nombre = "Buscar Cliente";
 			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(buscarCliente);
+			// main.getRoot().setCenter(buscarCliente);
+			sp.setContent(buscarCliente);
 			ap = (AnchorPane) main.getRoot().getCenter();
 			// Inicio.ESINICIO = false;
 			// }else{
@@ -278,7 +290,8 @@ public class V_RootController {
 			nombre = "Vehiculos Sustitucion";
 			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(vs);
+			// main.getRoot().setCenter(vs);
+			sp.setContent(vs);
 			ap = (AnchorPane) main.getRoot().getCenter();
 			// Inicio.ESINICIO = false;
 			// }else{

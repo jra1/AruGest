@@ -97,6 +97,10 @@ public class V_BuscarVehiculoController {
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
 	}
 
+	public void setFocus() {
+		txtMatricula.requestFocus();
+	}
+
 	/**
 	 * Busca los vehiculos que coincidan con los parámetros de búsqueda y pone
 	 * los encontrados en la tabla

@@ -289,7 +289,7 @@ public class V_NuevaFacturaController {
 			}
 		}
 		if (c.getDireccionID() != 0) {
-			Direccion d = Inicio.CONEXION.buscarDireccionPorID(c.getDireccionID());
+			Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
 			txtCalle.setText(d.getCalle());
 			txtNumero.setText("" + d.getNumero());
 			txtPiso.setText(d.getPiso());
@@ -391,6 +391,10 @@ public class V_NuevaFacturaController {
 			// Se actualizan los valores del precio
 			actualizarPrecio();
 		});
+	}
+
+	public void setFocus() {
+		txtNumPresupuesto.requestFocus();
 	}
 
 	/**
@@ -663,8 +667,8 @@ public class V_NuevaFacturaController {
 			c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
 			if (c == null) {
 				Direccion d = null;
-				c = new Cliente(txtNombre.getText() + " " + txtApellidos.getText(), txtFijo.getText(),
-						txtMovil.getText());
+				c = new Cliente(0, txtNombre.getText() + " " + txtApellidos.getText(), txtFijo.getText(),
+						txtMovil.getText(), "", 0);
 				Particular p = null;
 				Empresa e = null;
 				if (!txtCalle.getText().isEmpty()) {
@@ -679,6 +683,16 @@ public class V_NuevaFacturaController {
 				ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
 				Inicio.CONEXION.guardarCliente(cped);
 				c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
+			} else {
+				// Si está el cliente pero no tiene direccion, la guardo
+				if (c.getDireccionID() == 0) {
+					if (!txtCalle.getText().isEmpty()) {
+						Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
+								txtPiso.getText(), txtLetra.getText(), txtPoblacion.getText());
+						int id = (int) Inicio.CONEXION.guardarDireccion(d);
+						Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
+					}
+				}
 			}
 			Inicio.CLIENTE_ID = c.getIdcliente();
 
@@ -691,7 +705,7 @@ public class V_NuevaFacturaController {
 				// Inicio.CONEXION.buscarClientePorDni(txtDni.getText(),
 				// tipoCliente).getIdcliente();
 				v = new Vehiculo(1, Inicio.CLIENTE_ID, txtMarca.getText(), txtModelo.getText(), txtVersion.getText(),
-						txtMatricula.getText(), tipoVehiculo);
+						txtMatricula.getText(), 0, "", "", "", "", tipoVehiculo, false);
 				if (Inicio.CONEXION.guardarVehiculo(v)) {
 					v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
 				} else {
