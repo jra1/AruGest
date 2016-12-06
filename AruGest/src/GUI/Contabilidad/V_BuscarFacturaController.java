@@ -12,12 +12,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -78,11 +79,16 @@ public class V_BuscarFacturaController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporte;
 
 	private ObservableList<FacturaClienteVehiculo> listaFacturas = FXCollections.observableArrayList();
-	
+
 	private Inicio main;
+	private ScrollPane sp;
 
 	public void setMainAPP(Inicio p) {
 		main = p;
+	}
+
+	public void setScrollPane(ScrollPane root) {
+		this.sp = root;
 	}
 
 	/**
@@ -128,12 +134,14 @@ public class V_BuscarFacturaController {
 				numResguardo, txtNombreCliente.getText(), txtModelo.getText(), txtMatricula.getText(),
 				txtFijo.getText(), txtMovil.getText(), txtFechaDesde.getValue(), txtFechaHasta.getValue());
 		if (lista.isEmpty()) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado", "No hay facturas con los parámetros de búsqueda introducidos.");
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
+					"No hay facturas con los parámetros de búsqueda introducidos.");
 		} else {
-			for(FacturaClienteVehiculo fce : lista){
+			for (FacturaClienteVehiculo fce : lista) {
 				listaFacturas.add(fce);
 				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaVehiculo.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+				columnaVehiculo
+						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 				columnaFecha.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
 				columnaImporte.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
@@ -141,31 +149,32 @@ public class V_BuscarFacturaController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Función para cargar la factura seleccionada
 	 */
 	@FXML
-	private void cargarFactura(){
+	private void cargarFactura() {
 		int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			try {
-	            // Cargar la vista de nueva factura
-	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
-	            AnchorPane nuevaFactura = (AnchorPane) loader.load();
-	        	
-	            // Poner la nueva vista en el centro del root
-	            main.getRoot().setCenter(nuevaFactura);
-	            
-	            // Poner el controlador de la nueva vista.
-	            V_NuevaFacturaController controller = loader.getController();
-	            controller.setMainAPP(main);
-	            controller.cargaFactura(listaFacturas.get(selectedIndex));
+				// Cargar la vista de nueva factura
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+				// Poner la nueva vista en el centro del root
+				sp.setContent(nuevaFactura);
+				// main.getRoot().setCenter(nuevaFactura);
+
+				// Poner el controlador de la nueva vista.
+				V_NuevaFacturaController controller = loader.getController();
+				controller.setMainAPP(main);
+				controller.cargaFactura(listaFacturas.get(selectedIndex));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			// Nada seleccionado.
 			Alert alert = new Alert(AlertType.INFORMATION);

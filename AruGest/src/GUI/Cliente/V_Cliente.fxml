@@ -199,6 +199,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button layoutX="216.0" layoutY="254.0" mnemonicParsing="false" onAction="#marcarDevuelto" text="Marcar vehículo como devuelto" />
          </children>
       </Pane>
       <Label layoutX="4.0" layoutY="145.0" text="Vehículos">

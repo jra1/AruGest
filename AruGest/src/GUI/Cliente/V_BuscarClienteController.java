@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -68,9 +69,14 @@ public class V_BuscarClienteController {
 	private int tipoCliente = 1; // 1=Particular, 2=Empresa
 
 	private Inicio main;
+	private ScrollPane sp;
 
 	public void setMainAPP(Inicio p) {
 		main = p;
+	}
+
+	public void setScrollPane(ScrollPane root) {
+		this.sp = root;
 	}
 
 	/**
@@ -157,11 +163,13 @@ public class V_BuscarClienteController {
 				AnchorPane cliente = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
-				main.getRoot().setCenter(cliente);
+				sp.setContent(cliente);
+				// main.getRoot().setCenter(cliente);
 
 				// Poner el controlador de la nueva vista.
 				V_ClienteController controller = loader.getController();
 				controller.setMainAPP(main);
+				controller.setScrollPane(sp);
 				controller.cargaCliente(listaClientes.get(selectedIndex));
 
 			} catch (IOException e) {

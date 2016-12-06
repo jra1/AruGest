@@ -13,12 +13,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -107,6 +107,7 @@ public class V_ClienteController {
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesSustitucion;
 
 	private Inicio main;
+	private ScrollPane sp;
 
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
 	private ClienteParticularEmpresaDireccion cped;
@@ -116,12 +117,12 @@ public class V_ClienteController {
 		return main;
 	}
 
-	public void setMain(Inicio main) {
-		this.main = main;
+	public void setMainAPP(Inicio p) {
+		this.main = p;
 	}
 
-	public void setMainAPP(Inicio p) {
-		setMain(p);
+	public void setScrollPane(ScrollPane root) {
+		this.sp = root;
 	}
 
 	/**
@@ -171,18 +172,7 @@ public class V_ClienteController {
 		tableVehiculo.setItems(listaVehiculos);
 
 		// Cargar tabla vehículos de sustitución
-		listaSustitucion = Inicio.CONEXION.buscarVehiculosSustitucionPorClienteID(Inicio.CLIENTE_ID);
-		columnaMarcaSustitucion
-				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
-		columnaMatriculaSustitucion
-				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
-		columnaFEntregaSustitucion.setCellValueFactory(
-				cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-		columnaFDevolucionSustitucion.setCellValueFactory(
-				cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
-		columnaObservacionesSustitucion
-				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
-		tableSustitucion.setItems(listaSustitucion);
+		cargarVehiculosSustitucionCliente();
 	}
 
 	/**
@@ -213,20 +203,11 @@ public class V_ClienteController {
 	private void editarCliente() {
 		boolean okClicked = Inicio.mostrarEditorCliente(cped);
 		if (okClicked) {
-			// EDITAR EN LA BD
 			if (Inicio.CONEXION.editarCliente(cped)) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Atención");
-				alert.setHeaderText("Cliente modificado con éxito");
-
-				alert.showAndWait();
+				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Cliente modificado con éxito", "");
 			} else {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error");
-				alert.setHeaderText("Error al modificar el cliente");
-				alert.setContentText("Ocurrió un error al modificar el cliente en la base de datos.");
-
-				alert.showAndWait();
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar el cliente",
+						"Ocurrió un error al modificar el cliente en la base de datos.");
 			}
 
 			cargaCliente(cped);
@@ -384,7 +365,8 @@ public class V_ClienteController {
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
-				main.getRoot().setCenter(nuevaFactura);
+				sp.setContent(nuevaFactura);
+				// main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.
 				V_NuevaFacturaController controller = loader.getController();
@@ -405,6 +387,7 @@ public class V_ClienteController {
 		VehiculoSustitucionClienteVehiculo vscv = new VehiculoSustitucionClienteVehiculo();
 		if (Inicio.mostrarD_SustitucionEntrega(vscv)) {
 			if (Inicio.CONEXION.actualizarVehiculoSustitucion("E", vscv)) {
+				cargarVehiculosSustitucionCliente();
 				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo entregado", "");
 			} else {
 				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al registrar el vehículo",
@@ -412,5 +395,54 @@ public class V_ClienteController {
 			}
 		}
 
+	}
+
+	/**
+	 * Marca el vehículo seleccionado como devuelto, añadiéndole la fecha de
+	 * devolución
+	 */
+	@FXML
+	private void marcarDevuelto() {
+		int selectedIndex = tableSustitucion.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			VehiculoSustitucionClienteVehiculo vscv = tableSustitucion.getSelectionModel().getSelectedItem();
+			try {
+				vscv.getVehiculoSustitucion().getFechadevuelve().toString();
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Vehículo ya devuelto",
+						"El vehículo seleccionado ya está marcado como devuelto.");
+			} catch (NullPointerException e) {
+				if (Inicio.mostrarD_SustitucionDevolucion(vscv)) {
+					if (Inicio.CONEXION.actualizarVehiculoSustitucion("D", vscv)) {
+						tableSustitucion.refresh();
+						Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
+					} else {
+						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",
+								"Ocurrió un error al marcar el vehículo como devuelto en la base de datos.");
+					}
+				}
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
+					"Selecciona el vehículo que quieras marcar como devuelto.");
+		}
+	}
+
+	/**
+	 * Carga los vehículos de sustitución del cliente en la tabla
+	 * correspondiente
+	 */
+	private void cargarVehiculosSustitucionCliente() {
+		listaSustitucion = Inicio.CONEXION.buscarVehiculosSustitucionPorClienteID(Inicio.CLIENTE_ID);
+		columnaMarcaSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+		columnaMatriculaSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+		columnaFEntregaSustitucion.setCellValueFactory(
+				cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
+		columnaFDevolucionSustitucion.setCellValueFactory(
+				cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
+		columnaObservacionesSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+		tableSustitucion.setItems(listaSustitucion);
 	}
 }

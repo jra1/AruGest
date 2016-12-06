@@ -214,13 +214,41 @@ public class Conexion {
 			sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
-			st.setString(1, d.getCalle());
-			st.setInt(2, d.getNumero());
-			st.setString(3, d.getPiso());
-			st.setString(4, d.getLetra());
-			st.setInt(5, d.getCpostal());
-			st.setString(6, d.getLocalidad());
-			st.setString(7, d.getProvincia());
+			try {
+				st.setString(1, d.getCalle());
+			} catch (NullPointerException e) {
+				st.setString(1, "");
+			}
+			try {
+				st.setInt(2, d.getNumero());
+			} catch (NullPointerException e) {
+				st.setInt(2, 0);
+			}
+			try {
+				st.setString(3, d.getPiso());
+			} catch (NullPointerException e) {
+				st.setString(3, "");
+			}
+			try {
+				st.setString(4, d.getLetra());
+			} catch (NullPointerException e) {
+				st.setString(4, "");
+			}
+			try {
+				st.setInt(5, d.getCpostal());
+			} catch (NullPointerException e) {
+				st.setInt(5, 0);
+			}
+			try {
+				st.setString(6, d.getLocalidad());
+			} catch (NullPointerException e) {
+				st.setString(6, "");
+			}
+			try {
+				st.setString(7, d.getProvincia());
+			} catch (NullPointerException e) {
+				st.setString(7, "");
+			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			rs = st.getGeneratedKeys();

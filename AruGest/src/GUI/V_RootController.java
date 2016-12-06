@@ -56,7 +56,7 @@ public class V_RootController {
 	public void setMainAPP(Inicio p) {
 		main = p;
 
-		// acor.setExpandedPane(tPane); //Para que al iniciar se expanda el
+		acor.setExpandedPane(tPane); // Para que al iniciar se expanda el
 		// panel de contabilidad (Se puede poner el que quiera)
 	}
 
@@ -67,8 +67,8 @@ public class V_RootController {
 	@FXML
 	private void initialize() {
 		if (Inicio.CAMBIAR_RESOLUCION) {
-			sp.setPrefHeight(Inicio.ALTO_PANTALLA - 45);
 			sp.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
+			sp.setPrefHeight(Inicio.ALTO_PANTALLA - 45);
 		}
 		// Añadir un listener a los botones de Nuevo Presupuesto y Nueva Factura
 		btnNuevaFactura.setOnAction(new EventHandler<ActionEvent>() {
@@ -98,23 +98,18 @@ public class V_RootController {
 			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/V_BuscarVehiculo.fxml"));
 			AnchorPane buscarVehiculo = (AnchorPane) loader.load();
 			nombre = "Buscar Vehículo";
-			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(buscarVehiculo);
 			sp.setContent(buscarVehiculo);
-			ap = (AnchorPane) main.getRoot().getCenter();
-			// Inicio.ESINICIO = false;
-			// }else{
-			// ap = (AnchorPane) main.getRoot().getCenter();
-			// main.getRoot().setCenter(buscarVehiculo);
-			// }
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarVehiculoController controller = loader.getController();
 			controller.setMainAPP(main);
-			controller.setFocus();
+			controller.setScrollPane(sp);
+			// controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -138,26 +133,17 @@ public class V_RootController {
 			// }
 
 			nombre = "Nueva Factura";
-			// if(Inicio.ESINICIO){
 
 			// Poner la nueva vista en el centro del root
 			sp.setContent(nuevaFactura);
-			// main.getRoot().setCenter(nuevaFactura);
-			ap = (AnchorPane) main.getRoot().getCenter();
-
-			// Inicio.ESINICIO = false;
-			// }else{
-			// ap = (AnchorPane) main.getRoot().getCenter();
-			// // Poner la nueva vista en el centro del root
-			// main.getRoot().setCenter(nuevaFactura);
-			// }
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
 			// Poner el controlador de la nueva vista.
 			V_NuevaFacturaController controller = loader.getController();
 			controller.setMainAPP(main);
-			controller.setFocus();
+			// controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -175,23 +161,16 @@ public class V_RootController {
 			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_BuscarFactura.fxml"));
 			AnchorPane nuevaFactura = (AnchorPane) loader.load();
 			nombre = "Buscar Factura";
-			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
-			// main.getRoot().setCenter(nuevaFactura);
 			sp.setContent(nuevaFactura);
-			ap = (AnchorPane) main.getRoot().getCenter();
-			// Inicio.ESINICIO = false;
-			// }else{
-			// ap = (AnchorPane) main.getRoot().getCenter();
-			// // Poner la nueva vista en el centro del root
-			// main.getRoot().setCenter(nuevaFactura);
-			// }
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarFacturaController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.setScrollPane(sp);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -253,24 +232,17 @@ public class V_RootController {
 			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_BuscarCliente.fxml"));
 			AnchorPane buscarCliente = (AnchorPane) loader.load();
 			nombre = "Buscar Cliente";
-			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(buscarCliente);
 			sp.setContent(buscarCliente);
-			ap = (AnchorPane) main.getRoot().getCenter();
-			// Inicio.ESINICIO = false;
-			// }else{
-			// ap = (AnchorPane) main.getRoot().getCenter();
-			// // Poner la nueva vista en el centro del root
-			// main.getRoot().setCenter(buscarCliente);
-			// }
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarClienteController controller = loader.getController();
 			controller.setMainAPP(main);
-			controller.setFocus();
+			controller.setScrollPane(sp);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -288,17 +260,12 @@ public class V_RootController {
 			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/V_VehiculosSustitucion.fxml"));
 			AnchorPane vs = (AnchorPane) loader.load();
 			nombre = "Vehiculos Sustitucion";
-			// if(Inicio.ESINICIO){
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(vs);
+			sp.setVisible(false);
 			sp.setContent(vs);
-			ap = (AnchorPane) main.getRoot().getCenter();
-			// Inicio.ESINICIO = false;
-			// }else{
-			// ap = (AnchorPane) main.getRoot().getCenter();
-			// // Poner la nueva vista en el centro del root
-			// main.getRoot().setCenter(vs);
-			// }
+			sp.setVisible(true);
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			gestionarPantallas();
 
@@ -392,7 +359,8 @@ public class V_RootController {
 	private void atras1() {
 		try {
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(lista.get(0).getAp());
+			sp.setContent(lista.get(0).getAp());
+			// main.getRoot().setCenter(lista.get(0).getAp());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -406,7 +374,8 @@ public class V_RootController {
 	private void atras2() {
 		try {
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(lista.get(1).getAp());
+			sp.setContent(lista.get(1).getAp());
+			// main.getRoot().setCenter(lista.get(1).getAp());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -419,10 +388,15 @@ public class V_RootController {
 	private void atras3() {
 		try {
 			// Poner la nueva vista en el centro del root
-			main.getRoot().setCenter(lista.get(2).getAp());
+			sp.setContent(lista.get(2).getAp());
+			// main.getRoot().setCenter(lista.get(2).getAp());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ScrollPane getScrollPane() {
+		return sp;
 	}
 
 }

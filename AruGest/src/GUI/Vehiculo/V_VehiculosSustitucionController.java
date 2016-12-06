@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
@@ -22,7 +23,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -113,47 +113,48 @@ public class V_VehiculosSustitucionController {
 		// PONER TOOLTIP
 		tableDisponibles.setTooltip(new Tooltip("Vehículos de sustitución disponibles"));
 
-		
-		
 		// Cargar disponibles
 		cargarDisponibles();
 		// Cargar prestados
 		cargarPrestados();
-		// Cargar histórico 
+		// Cargar histórico
 		cargarHistorico();
-		
-		//FILTRO AL ESCRIBIR EN EL TEXTO DEL NOMBRE EL NOMBRE DEL CLIENTE O LA MATRÍCULA DEL VEHÍCULO
-		// 1. Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<VehiculoSustitucionClienteVehiculo> filteredData = new FilteredList<>(listaHistorico, p -> true);
 
-        // 2. Set the filter Predicate whenever the filter changes.
-        txtNombre.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(person -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+		// FILTRO AL ESCRIBIR EN EL TEXTO DEL NOMBRE EL NOMBRE DEL CLIENTE O LA
+		// MATRÍCULA DEL VEHÍCULO
+		// 1. Wrap the ObservableList in a FilteredList (initially display all
+		// data).
+		FilteredList<VehiculoSustitucionClienteVehiculo> filteredData = new FilteredList<>(listaHistorico, p -> true);
 
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
+		// 2. Set the filter Predicate whenever the filter changes.
+		txtNombre.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(person -> {
+				// If filter text is empty, display all persons.
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
 
-                if (person.getCliente().getNombre().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (person.getVehiculo().getMatricula().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }
-                return false; // Does not match.
-            });
-        });
+				// Compare first name and last name of every person with filter
+				// text.
+				String lowerCaseFilter = newValue.toLowerCase();
 
-        // 3. Wrap the FilteredList in a SortedList. 
-        SortedList<VehiculoSustitucionClienteVehiculo> sortedData = new SortedList<>(filteredData);
+				if (person.getCliente().getNombre().toLowerCase().contains(lowerCaseFilter)) {
+					return true; // Filter matches first name.
+				} else if (person.getVehiculo().getMatricula().toLowerCase().contains(lowerCaseFilter)) {
+					return true; // Filter matches last name.
+				}
+				return false; // Does not match.
+			});
+		});
 
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(tableHistorico.comparatorProperty());
+		// 3. Wrap the FilteredList in a SortedList.
+		SortedList<VehiculoSustitucionClienteVehiculo> sortedData = new SortedList<>(filteredData);
 
-        // 5. Add sorted (and filtered) data to the table.
-        tableHistorico.setItems(sortedData);
+		// 4. Bind the SortedList comparator to the TableView comparator.
+		sortedData.comparatorProperty().bind(tableHistorico.comparatorProperty());
+
+		// 5. Add sorted (and filtered) data to the table.
+		tableHistorico.setItems(sortedData);
 	}
 
 	/**

@@ -14,6 +14,12 @@
     -fx-font-size: 18px;
 }
 
+/*Labels */
+.my-label{
+	-fx-text-fill: rgb(64,128,128);	
+	-fx-font-weight: bold;
+}
+
 /*TextField */
 .my-text-field {
     -fx-background-color:
@@ -29,9 +35,7 @@
 }
 
 .my-text-field:hover {
-    -fx-background-color:
-        #909090,
-        #FFFFFF;
+    -fx-background-color: #909090, #FFFFFF;
 }
 
 .my-text-field:focused:hover {
@@ -42,12 +46,13 @@
 
 
 
-
-
 /*Paneles */
 .background {
-    -fx-background-color: rgb(139,248,164);
-    -fx-border-style: solid ;
+    /*-fx-background-color: rgb(139,248,164);*/
+    -fx-border-style: solid;
+    -fx-border-color: darkorange ; 
+    -fx-border-radius: 10px;
+    -fx-border-width: 2px; /* Grosor del borde */
 }
 
 /*Botones */

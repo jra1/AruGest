@@ -18,6 +18,7 @@ import Modelo.Servicio;
 import Modelo.Vehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -29,9 +30,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -84,9 +86,9 @@ public class V_NuevaFacturaController {
 	@FXML
 	private TextField txtDni;
 	@FXML
-	private TextField txtFijo;
-	@FXML
-	private TextField txtMovil;
+	private TextField txtTel1;
+	// @FXML
+	// private TextField txtMovil;
 
 	// Datos Vehiculo
 	@FXML
@@ -108,7 +110,7 @@ public class V_NuevaFacturaController {
 	@FXML
 	private ComboBox<String> comboTipo;
 	@FXML
-	private TextArea txtConcepto;
+	private TextField txtConcepto;
 	@FXML
 	private Label lblCantidad;
 	@FXML
@@ -296,8 +298,8 @@ public class V_NuevaFacturaController {
 			txtLetra.setText(d.getLetra());
 			txtPoblacion.setText(d.getLocalidad());
 		}
-		txtFijo.setText(c.getTelf1());
-		txtMovil.setText(c.getTelf2());
+		txtTel1.setText(c.getTelf1());
+		// txtMovil.setText(c.getTelf2());
 
 		// Cargar datos vehiculo
 		txtMatricula.setText(v.getMatricula());
@@ -313,9 +315,18 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
+		// Para que el botón de añadir funcione con el Enter
+		btnAdd.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.F12 || ke.getCode() == KeyCode.ENTER) {
+					add();
+				}
+			}
+		});
+
 		// Obtener los precios de Hora e IVA
 		Inicio.CONEXION.getPrecioHoraIva();
-		lblIva.setText(Inicio.PRECIO_IVA + "%");
+		lblIva.setText("I.V.A. " + Inicio.PRECIO_IVA + "%");
 
 		tableServicio.setEditable(true);
 		tableMaterial.setEditable(true);
@@ -426,8 +437,8 @@ public class V_NuevaFacturaController {
 		txtLetra.setDisable(true);
 		txtPoblacion.setDisable(true);
 		txtDni.setDisable(true);
-		txtFijo.setDisable(true);
-		txtMovil.setDisable(true);
+		txtTel1.setDisable(true);
+		// txtMovil.setDisable(true);
 		txtMarca.setDisable(true);
 		txtModelo.setDisable(true);
 		txtVersion.setDisable(true);
@@ -498,11 +509,9 @@ public class V_NuevaFacturaController {
 	private void add() {
 		if (esServicio) {
 			if (txtConcepto.getText().equals("") || txtCantidad.getText().equals("")) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Atención");
-				alert.setHeaderText("Introduce todos los datos del servicio a añadir");
-				alert.setContentText("Indica el concepto y el número de horas del servicio realizado.");
-				alert.showAndWait();
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
+						"Introduce todos los datos del servicio a añadir",
+						"Indica el concepto y el número de horas del servicio.");
 			} else {
 				String horasComa = txtCantidad.getText();
 				String horasPunto = horasComa.replace(",", ".");
@@ -516,15 +525,14 @@ public class V_NuevaFacturaController {
 				actualizarPrecio();
 				txtConcepto.setText("");
 				txtCantidad.setText("");
+				comboTipo.requestFocus();
 			}
 
 		} else {
 			if (txtConcepto.getText().equals("") || txtCantidad.getText().equals("") || txtValor.getText().equals("")) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Atención");
-				alert.setHeaderText("Introduce todos los datos del material a añadir");
-				alert.setContentText("Indica el concepto, la cantidad y el precio unitario del material.");
-				alert.showAndWait();
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
+						"Introduce todos los datos del material a añadir",
+						"Indica el concepto, la cantidad y el precio unitario del material.");
 			} else {
 				String precioComa = txtValor.getText();
 				String precioPunto = precioComa.replace(",", ".");
@@ -541,6 +549,7 @@ public class V_NuevaFacturaController {
 				txtConcepto.setText("");
 				txtCantidad.setText("");
 				txtValor.setText("");
+				comboTipo.requestFocus();
 			}
 		}
 	}
@@ -649,8 +658,8 @@ public class V_NuevaFacturaController {
 			mensaje = "Debes marcar si es factura, presupuesto, orden de reparación o resguardo de depósito e indicar su número.";
 		}
 		// Comprobar datos cliente
-		if (txtNombre.getText().isEmpty() || txtDni.getText().isEmpty()
-				|| (txtFijo.getText().isEmpty() && txtMovil.getText().isEmpty())) {
+		if (txtNombre.getText().isEmpty() || txtDni.getText().isEmpty() || (txtTel1.getText()
+				.isEmpty() /* && txtMovil.getText().isEmpty() */)) {
 			mensaje = "Debes indicar por lo menos el nombre, DNI y un teléfono del cliente.";
 		}
 		// Datos del vehiculo
@@ -667,8 +676,8 @@ public class V_NuevaFacturaController {
 			c = Inicio.CONEXION.buscarClientePorDni(txtDni.getText(), tipoCliente);
 			if (c == null) {
 				Direccion d = null;
-				c = new Cliente(0, txtNombre.getText() + " " + txtApellidos.getText(), txtFijo.getText(),
-						txtMovil.getText(), "", 0);
+				c = new Cliente(0, txtNombre.getText() + " " + txtApellidos.getText(), txtTel1.getText(),
+						/* txtMovil.getText() */"", "", 0);
 				Particular p = null;
 				Empresa e = null;
 				if (!txtCalle.getText().isEmpty()) {

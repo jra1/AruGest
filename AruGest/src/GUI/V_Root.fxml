@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="1010.0" prefWidth="1680.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.V_RootController">
+<BorderPane prefHeight="965.0" prefWidth="1680.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.V_RootController">
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
@@ -197,11 +197,11 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="sp" prefHeight="985.0" prefWidth="1420.0">
+            <ScrollPane fx:id="sp" prefHeight="970.0" prefWidth="1420.0">
                <content>
-                  <Label prefHeight="131.0" prefWidth="437.0" text="AruGest Software" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1415.0" text="AruGest Software" textAlignment="CENTER">
                      <font>
-                        <Font name="Dekar" size="59.0" />
+                        <Font name="Dekar" size="70.0" />
                      </font>
                   </Label>
                </content>

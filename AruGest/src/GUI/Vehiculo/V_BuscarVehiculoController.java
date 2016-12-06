@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -78,9 +79,14 @@ public class V_BuscarVehiculoController {
 	// private int tipoVehiculo = 1; // 1=Particular, 2=Empresa
 
 	private Inicio main;
+	private ScrollPane sp;
 
 	public void setMainAPP(Inicio p) {
 		setMain(p);
+	}
+
+	public void setScrollPane(ScrollPane root) {
+		this.sp = root;
 	}
 
 	/**
@@ -230,7 +236,8 @@ public class V_BuscarVehiculoController {
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
-				main.getRoot().setCenter(nuevaFactura);
+				sp.setContent(nuevaFactura);
+				// main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.
 				V_NuevaFacturaController controller = loader.getController();
