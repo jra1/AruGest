@@ -40,5 +40,5 @@ CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int
 ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 
-CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal, iva decimal)
+CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal, iva decimal, presupuesto int, factura int);
 

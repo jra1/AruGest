@@ -181,11 +181,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="Inicio" />
           <Menu mnemonicParsing="false" text="Opciones">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Precio hora" />
-                  <MenuItem mnemonicParsing="false" text="IVA" />
-            </items>
-          </Menu>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mostrarOpciones" text="Cambiar opciones" />
+               </items></Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
               <MenuItem mnemonicParsing="false" text="Sobre AruGest Software" />

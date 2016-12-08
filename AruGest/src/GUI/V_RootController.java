@@ -353,6 +353,14 @@ public class V_RootController {
 	}
 
 	/**
+	 * Llama al método para abrir el diálogo de opciones
+	 */
+	@FXML
+	private void mostrarOpciones() {
+		Inicio.mostrarDialogoOpciones();
+	}
+
+	/**
 	 * Va a la página 1
 	 */
 	@FXML

@@ -26,14 +26,15 @@
         #FFFFFF,
         #FFFFFF;
     -fx-background-insets: 0, 2;
-    -fx-background-radius: 0, 0;
-    -fx-font-size: 14px;
+    -fx-background-radius: 2;	/*0, 0;*/
+    -fx-font-size: 15px;
  }
 
 .my-text-field:focused {
-    -fx-background-color: rgb(133,197,158); /* #0093EF;*/
+    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
 }
 
+/*
 .my-text-field:hover {
     -fx-background-color: #909090, #FFFFFF;
 }
@@ -43,7 +44,7 @@
         #0093EF,
         #FFFFFF;
 }
-
+*/
 
 
 /*Paneles */
@@ -93,5 +94,10 @@
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395357;
+}
+
+/*CheckBox vehículo de sustitución */
+#chckbox-vehi-susti{
+	-fx-opacity: 1;
 }
 

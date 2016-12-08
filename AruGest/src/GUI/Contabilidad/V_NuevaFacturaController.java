@@ -324,8 +324,6 @@ public class V_NuevaFacturaController {
 			}
 		});
 
-		// Obtener los precios de Hora e IVA
-		Inicio.CONEXION.getPrecioHoraIva();
 		lblIva.setText("I.V.A. " + Inicio.PRECIO_IVA + "%");
 
 		tableServicio.setEditable(true);
@@ -356,10 +354,12 @@ public class V_NuevaFacturaController {
 		// Marcar algunos checkbox que son habituales
 		if (Inicio.getOpcionNueva().equalsIgnoreCase("P")) {
 			chckbxPresupuesto.setSelected(true);
+			txtNumPresupuesto.setText("" + Inicio.NUM_PRESUPUESTO);
 			chckbxFactura.setSelected(false);
 		} else if (Inicio.getOpcionNueva().equalsIgnoreCase("F")) {
 			chckbxPresupuesto.setSelected(false);
 			chckbxFactura.setSelected(true);
+			txtNumfactura.setText("" + Inicio.NUM_FACTURA);
 		}
 		chckbxPermisoPruebas.setSelected(true);
 		chckbxNoPiezas.setSelected(true);

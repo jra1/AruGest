@@ -63,7 +63,7 @@
                   <TableColumn fx:id="columnaCliente" maxWidth="623.0" prefWidth="230.0" text="Cliente" />
               </columns>
             </TableView>
-            <GridPane layoutX="777.0" layoutY="32.0" prefHeight="391.0" prefWidth="286.0">
+            <GridPane layoutX="777.0" layoutY="32.0" prefHeight="371.0" prefWidth="286.0">
                <children>
                   <Label text="Marca" GridPane.rowIndex="2" />
                   <Label text="Modelo" GridPane.rowIndex="3" />
@@ -93,12 +93,14 @@
                   <Label fx:id="lblLetrasMotor" layoutX="10.0" layoutY="227.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label fx:id="lblColor" layoutX="10.0" layoutY="257.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Label fx:id="lblCodRadio" layoutX="10.0" layoutY="287.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <CheckBox id="chckbox-vehi-susti" fx:id="esVehiculoSusti" disable="true" mnemonicParsing="false" text="Vehículo sustitución" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="76.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="210.0" />
                </columnConstraints>
                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

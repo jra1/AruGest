@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import org.h2.tools.Server;
 
 import Logica.Inicio;
+import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
@@ -29,7 +30,6 @@ import Modelo.VehiculoSustitucion;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 /**
@@ -183,19 +183,69 @@ public class Conexion {
 			}
 
 			if (i > 0) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Atención");
-				alert.setHeaderText("Factura guardada");
-				alert.setContentText("La factura ha sido guardada en la base de datos");
-
-				alert.showAndWait();
+				// Actualizar próximo número de presupuesto y factura
+				actualizarNumPresuFactura();
+				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Factura guardada",
+						"La factura ha sido guardada en la base de datos");
 			}
 
 			// Se cierra la conexion
 			getCon().close();
 
 		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar factura",
+					"Ocurrió un error al guardar la factura en la base de datos");
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Se actualiza en la BD el nº siguiente de presupuesto/factura
+	 */
+	public void actualizarNumPresuFactura() {
+		String sql = "";
+		PreparedStatement st;
+		try {
+			// Actualizar nº presupuesto
+			sql = "UPDATE AUXILIAR SET PRESUPUESTO = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE IDAUXILIAR = 0";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar nº factura
+			sql = "UPDATE AUXILIAR SET FACTURA = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE IDAUXILIAR = 0";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención",
+					"Error al actualizar el número de presupuesto/factura",
+					"Ocurrió un error al actualizar el número de presupuesto/factura en la base de datos");
+			e.printStackTrace();
+		}
+
+	}
+
+	public boolean actualizarOpciones(float precioHora, float iva, int numPresupuesto, int numFactura) {
+		String sql = "";
+		PreparedStatement st;
+		try {
+			// Actualizar nº presupuesto
+			sql = "UPDATE AUXILIAR SET PRECIOHORA = ?, IVA = ?, PRESUPUESTO = ?, FACTURA = ? WHERE IDAUXILIAR = 0";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setFloat(1, precioHora);
+			st.setFloat(2, iva);
+			st.setInt(3, numPresupuesto);
+			st.setInt(4, numFactura);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar las opciones",
+					"Ocurrió un error al actualizar las opciones en la base de datos");
+			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -1563,6 +1613,92 @@ public class Conexion {
 	}
 
 	/**
+	 * Busca en la BD los presupuestos de un cliente dado
+	 * 
+	 * @param clienteID
+	 * @return
+	 */
+	public ObservableList<FacturaClienteVehiculo> buscarPresupuestosPorClienteID(int clienteID) {
+		String sql = "";
+		Factura f = null;
+		Cliente c = null;
+		Vehiculo v = null;
+		FacturaClienteVehiculo fcv;
+		ObservableList<FacturaClienteVehiculo> l = FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM FACTURA INNER JOIN VEHICULO ON FACTURA.VEHICULOID = VEHICULO.IDVEHICULO WHERE FACTURA.NUMPRESUPUESTO > 0 AND FACTURA.CLIENTEID = "
+					+ clienteID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
+						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
+						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				fcv = new FacturaClienteVehiculo(f, c, v);
+				l.add(fcv);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+
+	/**
+	 * Busca en la BD las facturas de un cliente dado
+	 * 
+	 * @param clienteID
+	 * @return
+	 */
+	public ObservableList<FacturaClienteVehiculo> buscarFacturasPorClienteID(int clienteID) {
+		String sql = "";
+		Factura f = null;
+		Cliente c = null;
+		Vehiculo v = null;
+		FacturaClienteVehiculo fcv;
+		ObservableList<FacturaClienteVehiculo> l = FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM FACTURA INNER JOIN VEHICULO ON FACTURA.VEHICULOID = VEHICULO.IDVEHICULO WHERE FACTURA.NUMFACTURA > 0 AND FACTURA.CLIENTEID = "
+					+ clienteID + "";
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
+						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
+						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
+						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
+						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
+						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				fcv = new FacturaClienteVehiculo(f, c, v);
+				l.add(fcv);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+
+	/**
 	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
 	 * disponibles
 	 * 
@@ -1752,6 +1888,8 @@ public class Conexion {
 			while (rs.next()) {
 				Inicio.PRECIO_HORA = rs.getFloat("PRECIOHORA");
 				Inicio.PRECIO_IVA = rs.getFloat("IVA");
+				Inicio.NUM_PRESUPUESTO = rs.getInt("PRESUPUESTO");
+				Inicio.NUM_FACTURA = rs.getInt("FACTURA");
 			}
 			// Se cierra la conexion
 			getCon().close();

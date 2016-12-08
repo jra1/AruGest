@@ -3,6 +3,7 @@ package Logica;
 import java.io.IOException;
 //import java.security.Principal;
 
+import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_EditClienteController;
 import GUI.Vehiculo.D_EditVehiculoController;
@@ -37,6 +38,8 @@ public class Inicio extends Application {
 	public static int FACTURA_ID;
 	public static float PRECIO_HORA;
 	public static float PRECIO_IVA;
+	public static int NUM_PRESUPUESTO;
+	public static int NUM_FACTURA;
 	public static double ANCHO_PANTALLA;
 	public static double ALTO_PANTALLA;
 	public static boolean CAMBIAR_RESOLUCION = false; // Se pondrá a true cuando
@@ -48,6 +51,8 @@ public class Inicio extends Application {
 
 	public void init() throws Exception {
 		CONEXION.crearConexion();
+		// Obtener los precios de Hora e IVA
+		Inicio.CONEXION.getPrecioHoraIva();
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		if (primaryScreenBounds.getWidth() < 1680 || primaryScreenBounds.getHeight() < 1010) {
 			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
@@ -251,6 +256,42 @@ public class Inicio extends Application {
 			D_SustitucionEntregaController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setVehiculoSustitucion(vscv);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Abre un diálogo para las opciones
+	 * 
+	 * @param
+	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 */
+	public static boolean mostrarDialogoOpciones() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_Opciones.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Opciones");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_OpcionesController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();

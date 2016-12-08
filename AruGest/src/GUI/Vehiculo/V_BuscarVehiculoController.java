@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -71,6 +72,8 @@ public class V_BuscarVehiculoController {
 	private Label lblColor;
 	@FXML
 	private Label lblCodRadio;
+	@FXML
+	private CheckBox esVehiculoSusti;
 
 	@FXML
 	private Button btnHacerFactura;
@@ -157,6 +160,7 @@ public class V_BuscarVehiculoController {
 			lblLetrasMotor.setText(v.getLetrasmotor());
 			lblColor.setText(v.getColor());
 			lblCodRadio.setText(v.getCodradio());
+			esVehiculoSusti.setSelected(v.isEsVehiculoSustitucion());
 		} else {
 			Inicio.CLIENTE_ID = 0;
 			lblTipoVehiculo.setText("Selecciona un vehículo");
@@ -169,6 +173,7 @@ public class V_BuscarVehiculoController {
 			lblLetrasMotor.setText("-");
 			lblColor.setText("-");
 			lblCodRadio.setText("-");
+			esVehiculoSusti.setSelected(false);
 		}
 	}
 

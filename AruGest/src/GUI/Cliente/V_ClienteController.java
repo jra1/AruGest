@@ -7,6 +7,7 @@ import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.FacturaClienteVehiculo;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
@@ -91,6 +92,42 @@ public class V_ClienteController {
 	private Label lblColor;
 	@FXML
 	private Label lblCodRadio;
+	@FXML
+	private CheckBox esVehiculoSusti;
+
+	// Datos presupuestos
+	@FXML
+	private TableView<FacturaClienteVehiculo> tablePresupuestos;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, Number> columnaNumPresupuesto;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaVehiculoPresupuesto;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaMatriculaPresupuesto;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaFechaPresupuesto;
+	// @FXML
+	// private TableColumn<FacturaClienteVehiculo, Number>
+	// columnaSubtotalPresupuesto;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, Number> columnaImportePresupuesto;
+
+	// Datos facturas
+	@FXML
+	private TableView<FacturaClienteVehiculo> tableFacturas;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, Number> columnaNumFactura;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaVehiculoFactura;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaMatriculaFactura;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaFechaFactura;
+	// @FXML
+	// private TableColumn<FacturaClienteVehiculo, Number>
+	// columnaSubtotalPresupuesto;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, Number> columnaImporteFactura;
 
 	// Datos Vehiculo sustitución
 	@FXML
@@ -112,6 +149,8 @@ public class V_ClienteController {
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
 	private ClienteParticularEmpresaDireccion cped;
 	private ObservableList<VehiculoSustitucionClienteVehiculo> listaSustitucion = FXCollections.observableArrayList();
+	private ObservableList<FacturaClienteVehiculo> listaPresupuestos = FXCollections.observableArrayList();
+	private ObservableList<FacturaClienteVehiculo> listaFacturas = FXCollections.observableArrayList();
 
 	public Inicio getMain() {
 		return main;
@@ -126,50 +165,23 @@ public class V_ClienteController {
 	}
 
 	/**
-	 * Carga una factura
+	 * Carga un cliente
 	 */
 	public void cargaCliente(ClienteParticularEmpresaDireccion cped) {
-		// btnGuardar.setVisible(false);
 		Inicio.CLIENTE_ID = cped.getCliente().getIdcliente();
 		this.cped = cped;
 
 		// Cargar datos cliente
-		if (cped.getParticular() != null) {
-			lblTipoCliente.setText("Particular");
-			txtDni.setText(cped.getParticular().getNif());
-			txtNombre.setText(cped.getParticular().getNombre());
-			lblApellidos.setVisible(true);
-			chkboxEsProveedor.setVisible(false);
-			txtApellidos.setVisible(true);
-			txtApellidos.setText(cped.getParticular().getApellidos());
-		} else if (cped.getEmpresa() != null) {
-			lblTipoCliente.setText("Empresa");
-			txtDni.setText(cped.getEmpresa().getCif());
-			txtNombre.setText(cped.getEmpresa().getNombre());
-			lblApellidos.setVisible(false);
-			chkboxEsProveedor.setVisible(true);
-			chkboxEsProveedor.setSelected(cped.getEmpresa().isEsProveedor());
-			;
-			txtApellidos.setVisible(false);
-		}
-		if (cped.getCliente().getDireccionID() != 0) {
-			txtCalle.setText(cped.getDireccion().getCalle());
-			txtNumero.setText("" + cped.getDireccion().getNumero());
-			txtPiso.setText(cped.getDireccion().getPiso());
-			txtLetra.setText(cped.getDireccion().getLetra());
-			txtCPostal.setText("" + cped.getDireccion().getCpostal());
-			txtPoblacion.setText(cped.getDireccion().getLocalidad());
-			txtProvincia.setText(cped.getDireccion().getProvincia());
-		}
-		txtTelf1.setText(cped.getCliente().getTelf1());
-		txtTelf2.setText(cped.getCliente().getTelf2());
-		txtTelf3.setText(cped.getCliente().getTelf3());
+		cargarDatosCliente();
 
-		// CARGAR TABLA DE VEHICULOS
-		listaVehiculos = Inicio.CONEXION.buscarVehiculosPorClienteID(Inicio.CLIENTE_ID);
-		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
-		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
-		tableVehiculo.setItems(listaVehiculos);
+		// Cargar vehículos
+		cargarVehiculosCliente();
+
+		// Cargar presupuestos
+		cargarPresupuestosCliente();
+
+		// Cargar facturas
+		cargarFacturasCliente();
 
 		// Cargar tabla vehículos de sustitución
 		cargarVehiculosSustitucionCliente();
@@ -269,17 +281,19 @@ public class V_ClienteController {
 			lblLetrasMotor.setText(v.getLetrasmotor());
 			lblColor.setText(v.getColor());
 			lblCodRadio.setText(v.getCodradio());
+			esVehiculoSusti.setSelected(v.isEsVehiculoSustitucion());
 		} else {
 			lblTipoVehiculo.setText("Selecciona un vehículo");
-			lblMatricula.setText("");
-			lblMarca.setText("");
-			lblModelo.setText("");
-			lblVersion.setText("");
-			lblAnio.setText("");
-			lblBastidor.setText("");
-			lblLetrasMotor.setText("");
-			lblColor.setText("");
-			lblCodRadio.setText("");
+			lblMatricula.setText("-");
+			lblMarca.setText("-");
+			lblModelo.setText("-");
+			lblVersion.setText("-");
+			lblAnio.setText("-");
+			lblBastidor.setText("-");
+			lblLetrasMotor.setText("-");
+			lblColor.setText("-");
+			lblCodRadio.setText("-");
+			esVehiculoSusti.setSelected(false);
 		}
 	}
 
@@ -428,6 +442,86 @@ public class V_ClienteController {
 	}
 
 	/**
+	 * Carga los datos de un cliente en su lugar correspondiente
+	 */
+	private void cargarDatosCliente() {
+		if (cped.getParticular() != null) {
+			lblTipoCliente.setText("Particular");
+			txtDni.setText(cped.getParticular().getNif());
+			txtNombre.setText(cped.getParticular().getNombre());
+			lblApellidos.setVisible(true);
+			chkboxEsProveedor.setVisible(false);
+			txtApellidos.setVisible(true);
+			txtApellidos.setText(cped.getParticular().getApellidos());
+		} else if (cped.getEmpresa() != null) {
+			lblTipoCliente.setText("Empresa");
+			txtDni.setText(cped.getEmpresa().getCif());
+			txtNombre.setText(cped.getEmpresa().getNombre());
+			lblApellidos.setVisible(false);
+			chkboxEsProveedor.setVisible(true);
+			chkboxEsProveedor.setSelected(cped.getEmpresa().isEsProveedor());
+			;
+			txtApellidos.setVisible(false);
+		}
+		if (cped.getCliente().getDireccionID() != 0) {
+			txtCalle.setText(cped.getDireccion().getCalle());
+			txtNumero.setText("" + cped.getDireccion().getNumero());
+			txtPiso.setText(cped.getDireccion().getPiso());
+			txtLetra.setText(cped.getDireccion().getLetra());
+			txtCPostal.setText("" + cped.getDireccion().getCpostal());
+			txtPoblacion.setText(cped.getDireccion().getLocalidad());
+			txtProvincia.setText(cped.getDireccion().getProvincia());
+		}
+		txtTelf1.setText(cped.getCliente().getTelf1());
+		txtTelf2.setText(cped.getCliente().getTelf2());
+		txtTelf3.setText(cped.getCliente().getTelf3());
+	}
+
+	/**
+	 * Carga los vehículos de un cliente en su tabla correspondiente
+	 */
+	private void cargarVehiculosCliente() {
+		listaVehiculos = Inicio.CONEXION.buscarVehiculosPorClienteID(Inicio.CLIENTE_ID);
+		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
+		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
+		tableVehiculo.setItems(listaVehiculos);
+	}
+
+	/**
+	 * Carga los presupuestos de un cliente en su tabla correspondiente
+	 */
+	private void cargarPresupuestosCliente() {
+		listaPresupuestos = Inicio.CONEXION.buscarPresupuestosPorClienteID(Inicio.CLIENTE_ID);
+		columnaNumPresupuesto
+				.setCellValueFactory(cellData -> cellData.getValue().getFactura().numpresupuestoProperty());
+		columnaVehiculoPresupuesto
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+		columnaMatriculaPresupuesto
+				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+		columnaFechaPresupuesto.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
+		// columnaSubtotalPresupuesto.setCellValueFactory(cellData ->
+		// cellData.getValue().getFactura().);
+		columnaImportePresupuesto
+				.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
+		tablePresupuestos.setItems(listaPresupuestos);
+	}
+
+	/**
+	 * Carga las facturas de un cliente en su tabla correspondiente
+	 */
+	private void cargarFacturasCliente() {
+		listaFacturas = Inicio.CONEXION.buscarFacturasPorClienteID(Inicio.CLIENTE_ID);
+		columnaNumFactura.setCellValueFactory(cellData -> cellData.getValue().getFactura().numfacturaProperty());
+		columnaVehiculoFactura.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+		columnaMatriculaFactura.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
+		columnaFechaFactura.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
+		// columnaSubtotalPresupuesto.setCellValueFactory(cellData ->
+		// cellData.getValue().getFactura().);
+		columnaImporteFactura.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
+		tableFacturas.setItems(listaFacturas);
+	}
+
+	/**
 	 * Carga los vehículos de sustitución del cliente en la tabla
 	 * correspondiente
 	 */
@@ -445,4 +539,5 @@ public class V_ClienteController {
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 		tableSustitucion.setItems(listaSustitucion);
 	}
+
 }
