@@ -376,6 +376,8 @@ public class V_ClienteController {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+				Inicio.setOpcionNueva("A"); // Para que marque presupuesto y
+											// factura
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root

@@ -7,8 +7,15 @@
     -fx-font-size: 14px;
 }
 
-/*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de las pane verde */
+/*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */
 .titulo{
+	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+/*Tabs */
+.my-tab{
 	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
     -fx-font-weight: bold;
     -fx-font-size: 18px;
@@ -46,6 +53,26 @@
 }
 */
 
+/*Botones de la aplicación */
+.my-button{
+	-fx-text-fill: rgb(64,128,128);	
+	-fx-font-weight: bold;
+    /*
+	-fx-background-color: rgb(255,128,0);
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+    */
+}
+
+.my-button:hover{
+	-fx-text-fill: black;	
+}
 
 /*Paneles */
 .background {
@@ -56,7 +83,7 @@
     -fx-border-width: 2px; /* Grosor del borde */
 }
 
-/*Botones */
+/*Botones del root */
 .dark-blue {
     -fx-background-color: 
         #090a0c,
@@ -84,16 +111,18 @@
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: #395306;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
-.green :hover {
+.green:hover {
     -fx-background-color:
         linear-gradient(#f0ff80, #a9ff70),
         radial-gradient(center 50% -40%, radius 200%, #b8ee46 45%, #80c810 50%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
+    -fx-text-fill: white;	
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 5, 0.0 , 0 , 1 );
-    -fx-text-fill: #395357;
 }
 
 /*CheckBox vehículo de sustitución */

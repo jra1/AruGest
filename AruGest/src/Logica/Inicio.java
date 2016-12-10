@@ -2,6 +2,7 @@ package Logica;
 
 import java.io.IOException;
 //import java.security.Principal;
+import java.util.ArrayList;
 
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
@@ -10,7 +11,9 @@ import GUI.Vehiculo.D_EditVehiculoController;
 import GUI.Vehiculo.D_SustitucionDevolucionController;
 import GUI.Vehiculo.D_SustitucionEntregaController;
 import Logica.BD.Conexion;
+import Modelo.BotonVentana;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.GestorVentana;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.application.Application;
@@ -42,11 +45,17 @@ public class Inicio extends Application {
 	public static int NUM_FACTURA;
 	public static double ANCHO_PANTALLA;
 	public static double ALTO_PANTALLA;
+	public static ArrayList<GestorVentana> LISTA_VENTANAS = new ArrayList<GestorVentana>();
+	public static BotonVentana BOTON1 = new BotonVentana(0, false, "");
+	public static BotonVentana BOTON2 = new BotonVentana(0, false, "");
+	public static BotonVentana BOTON3 = new BotonVentana(0, false, "");
 	public static boolean CAMBIAR_RESOLUCION = false; // Se pondrá a true cuando
-														// sea necesario cambiar
-														// la resolucion porque
-														// la pantalla es más
-														// pequeña de 1680*1010
+														// sea necesario
+														// sea necesario
+														// cambiar
+	// la resolucion porque
+	// la pantalla es más
+	// pequeña de 1680*1010
 	// public static boolean ESINICIO = true;
 
 	public void init() throws Exception {

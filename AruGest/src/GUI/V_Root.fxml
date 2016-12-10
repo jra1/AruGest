@@ -167,9 +167,9 @@
             </Accordion>
             <VBox prefHeight="82.0" prefWidth="260.0">
                <children>
-                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" text="Atrás" visible="false" />
-                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" text="Button" visible="false" />
-                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" text="Button" visible="false" />
+                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" styleClass="my-button" text="Atrás" visible="false" />
+                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" styleClass="my-button" text="Button" visible="false" />
+                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" styleClass="my-button" text="Button" visible="false" />
                   <Separator prefWidth="200.0" />
                </children>
             </VBox>
@@ -195,7 +195,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="sp" prefHeight="970.0" prefWidth="1420.0">
+            <ScrollPane fx:id="sp" prefHeight="965.0" prefWidth="1420.0">
                <content>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1415.0" text="AruGest Software" textAlignment="CENTER">
                      <font>

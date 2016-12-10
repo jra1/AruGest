@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_ClienteController">
    <children>
-      <Label layoutX="4.0" layoutY="1.0" text="Datos cliente">
+      <Label layoutX="4.0" layoutY="1.0" styleClass="titulo" text="Datos cliente">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
@@ -111,13 +111,13 @@
       </Pane>
       <TabPane layoutX="4.0" layoutY="149.0" prefHeight="530.0" prefWidth="1096.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Vehículos">
+            <Tab styleClass="my-tab" text="Vehículos">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="469.0" prefWidth="1086.0" styleClass="background">
                            <children>
-                              <TableView fx:id="tableVehiculo" editable="true" layoutX="6.0" layoutY="34.0" prefHeight="401.0" prefWidth="768.0">
+                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="37.0" prefHeight="401.0" prefWidth="768.0">
                                 <columns>
                                   <TableColumn fx:id="columnaMarca" prefWidth="642.0" text="Marca y modelo" />
                                   <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="124.0" text="Matrícula" />
@@ -129,10 +129,10 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
                               </TableView>
-                              <Button layoutX="6.0" layoutY="4.0" mnemonicParsing="false" onAction="#nuevoVehiculo" prefHeight="25.0" prefWidth="63.0" text="Añadir" />
-                              <Button layoutX="78.0" layoutY="4.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="25.0" prefWidth="70.0" text="Modificar" />
-                              <Button layoutX="158.0" layoutY="4.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="25.0" prefWidth="112.0" text="Eliminar vehículo" />
-                              <GridPane layoutX="789.0" layoutY="13.0" prefHeight="416.0" prefWidth="286.0">
+                              <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#nuevoVehiculo" prefHeight="25.0" prefWidth="63.0" text="Añadir" />
+                              <Button layoutX="80.0" layoutY="7.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="25.0" prefWidth="70.0" text="Modificar" />
+                              <Button layoutX="160.0" layoutY="7.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="25.0" prefWidth="112.0" text="Eliminar vehículo" />
+                              <GridPane layoutX="791.0" layoutY="16.0" prefHeight="416.0" prefWidth="286.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="76.0" />
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="210.0" />
@@ -182,7 +182,7 @@
                                     <CheckBox id="chckbox-vehi-susti" fx:id="esVehiculoSusti" disable="true" mnemonicParsing="false" text="Vehículo sustitución" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                  </children>
                               </GridPane>
-                              <Button fx:id="btnHacerFactura" layoutX="338.0" layoutY="4.0" mnemonicParsing="false" onAction="#hacerFactura" text="Hacer factura / presupuesto" />
+                              <Button fx:id="btnHacerFactura" layoutX="340.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" text="Hacer factura / presupuesto" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -191,7 +191,7 @@
                      </children>
                   </AnchorPane>
                </content></Tab>
-            <Tab text="Presupuestos">
+            <Tab styleClass="my-tab" text="Presupuestos">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -213,7 +213,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Facturas">
+            <Tab styleClass="my-tab" text="Facturas">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -234,7 +234,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="Vehículos de sustitución">
+            <Tab styleClass="my-tab" text="Vehículos de sustitución">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

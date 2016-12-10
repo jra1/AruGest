@@ -1,7 +1,6 @@
 package GUI;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import GUI.Cliente.V_BuscarClienteController;
 import GUI.Cliente.V_ClienteController;
@@ -29,11 +28,11 @@ public class V_RootController {
 
 	// Variables de la vista
 	@FXML
-	private Button btnPantalla1;
+	public Button btnPantalla1;
 	@FXML
-	private Button btnPantalla2;
+	public Button btnPantalla2;
 	@FXML
-	private Button btnPantalla3;
+	public Button btnPantalla3;
 
 	@FXML
 	private Accordion acor;
@@ -48,7 +47,6 @@ public class V_RootController {
 	@FXML
 	private ScrollPane sp;
 
-	ArrayList<GestorVentana> lista = new ArrayList<GestorVentana>();
 	GestorVentana gv;
 	private AnchorPane ap;
 	private String nombre;
@@ -103,7 +101,13 @@ public class V_RootController {
 			sp.setContent(buscarVehiculo);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
-			gestionarPantallas();
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarVehiculoController controller = loader.getController();
@@ -138,7 +142,13 @@ public class V_RootController {
 			sp.setContent(nuevaFactura);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
-			gestionarPantallas();
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
 
 			// Poner el controlador de la nueva vista.
 			V_NuevaFacturaController controller = loader.getController();
@@ -165,7 +175,13 @@ public class V_RootController {
 			sp.setContent(nuevaFactura);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
-			gestionarPantallas();
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarFacturaController controller = loader.getController();
@@ -237,12 +253,21 @@ public class V_RootController {
 			sp.setContent(buscarCliente);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
-			gestionarPantallas();
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
 
 			// Poner el controlador de la nueva vista.
 			V_BuscarClienteController controller = loader.getController();
 			controller.setMainAPP(main);
 			controller.setScrollPane(sp);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -267,7 +292,13 @@ public class V_RootController {
 			sp.setVisible(true);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
-			gestionarPantallas();
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
 
 			// Poner el controlador de la nueva vista.
 			V_VehiculosSustitucionController controller = loader.getController();
@@ -276,80 +307,6 @@ public class V_RootController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void gestionarPantallas() {
-		boolean esta = false;
-		switch (lista.size()) {
-		case 0:
-			lista.add(0, gv);
-			break;
-		case 1:
-			for (GestorVentana gv : lista) {
-				if (gv.getNombre().equalsIgnoreCase(nombre)) {
-					esta = true;
-				}
-			}
-			if (!esta) {
-				lista.add(0, gv);
-			}
-			break;
-		case 2:
-			for (GestorVentana gv : lista) {
-				if (gv.getNombre().equalsIgnoreCase(nombre)) {
-					esta = true;
-				}
-			}
-			if (!esta) {
-				lista.add(0, gv);
-			}
-			break;
-		case 3:
-			for (GestorVentana gv : lista) {
-				if (gv.getNombre().equalsIgnoreCase(nombre)) {
-					esta = true;
-				}
-			}
-			if (!esta) {
-				lista.remove(2);
-				lista.add(0, gv);
-			}
-			break;
-		default:
-			break;
-		}
-
-		switch (lista.size()) {
-		case 0:
-			btnPantalla1.setVisible(false);
-			btnPantalla2.setVisible(false);
-			btnPantalla3.setVisible(false);
-			break;
-		case 1:
-			btnPantalla1.setText(lista.get(0).getNombre());
-			btnPantalla1.setVisible(true);
-			btnPantalla2.setVisible(false);
-			btnPantalla3.setVisible(false);
-			break;
-		case 2:
-			btnPantalla1.setText(lista.get(0).getNombre());
-			btnPantalla1.setVisible(true);
-			btnPantalla2.setText(lista.get(1).getNombre());
-			btnPantalla2.setVisible(true);
-			btnPantalla3.setVisible(false);
-			break;
-		case 3:
-			btnPantalla1.setText(lista.get(0).getNombre());
-			btnPantalla1.setVisible(true);
-			btnPantalla2.setText(lista.get(1).getNombre());
-			btnPantalla2.setVisible(true);
-			btnPantalla3.setText(lista.get(2).getNombre());
-			btnPantalla3.setVisible(true);
-			break;
-		default:
-			break;
-		}
-
 	}
 
 	/**
@@ -367,7 +324,7 @@ public class V_RootController {
 	private void atras1() {
 		try {
 			// Poner la nueva vista en el centro del root
-			sp.setContent(lista.get(0).getAp());
+			sp.setContent(Inicio.LISTA_VENTANAS.get(0).getAp());
 			// main.getRoot().setCenter(lista.get(0).getAp());
 
 		} catch (Exception e) {
@@ -382,7 +339,7 @@ public class V_RootController {
 	private void atras2() {
 		try {
 			// Poner la nueva vista en el centro del root
-			sp.setContent(lista.get(1).getAp());
+			sp.setContent(Inicio.LISTA_VENTANAS.get(1).getAp());
 			// main.getRoot().setCenter(lista.get(1).getAp());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -396,7 +353,7 @@ public class V_RootController {
 	private void atras3() {
 		try {
 			// Poner la nueva vista en el centro del root
-			sp.setContent(lista.get(2).getAp());
+			sp.setContent(Inicio.LISTA_VENTANAS.get(2).getAp());
 			// main.getRoot().setCenter(lista.get(2).getAp());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -407,4 +364,27 @@ public class V_RootController {
 		return sp;
 	}
 
+	public Button getBtnPantalla1() {
+		return btnPantalla1;
+	}
+
+	public void setBtnPantalla1(Button btnPantalla1) {
+		this.btnPantalla1 = btnPantalla1;
+	}
+
+	public Button getBtnPantalla2() {
+		return btnPantalla2;
+	}
+
+	public void setBtnPantalla2(Button btnPantalla2) {
+		this.btnPantalla2 = btnPantalla2;
+	}
+
+	public Button getBtnPantalla3() {
+		return btnPantalla3;
+	}
+
+	public void setBtnPantalla3(Button btnPantalla3) {
+		this.btnPantalla3 = btnPantalla3;
+	}
 }

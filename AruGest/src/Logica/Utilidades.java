@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
 
+import Modelo.GestorVentana;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -27,6 +28,128 @@ public class Utilidades {
 	public static void ajustarResolucion(Stage stage, double x, double y) {
 		stage.setWidth(x);
 		stage.setHeight(y);
+	}
+
+	public static void gestionarPantallas(GestorVentana pGgv) {
+		boolean esta = false;
+		switch (Inicio.LISTA_VENTANAS.size()) {
+		case 0:
+			Inicio.LISTA_VENTANAS.add(0, pGgv);
+			break;
+		case 1:
+			for (GestorVentana gv : Inicio.LISTA_VENTANAS) {
+				if (gv.getNombre().equalsIgnoreCase(pGgv.getNombre())) {
+					esta = true;
+				}
+			}
+			if (!esta) {
+				Inicio.LISTA_VENTANAS.add(0, pGgv);
+			}
+			break;
+		case 2:
+			for (GestorVentana gv : Inicio.LISTA_VENTANAS) {
+				if (gv.getNombre().equalsIgnoreCase(pGgv.getNombre())) {
+					esta = true;
+				}
+			}
+			if (!esta) {
+				Inicio.LISTA_VENTANAS.add(0, pGgv);
+			}
+			break;
+		case 3:
+			for (GestorVentana gv : Inicio.LISTA_VENTANAS) {
+				if (gv.getNombre().equalsIgnoreCase(pGgv.getNombre())) {
+					esta = true;
+				}
+			}
+			if (!esta) {
+				Inicio.LISTA_VENTANAS.remove(2);
+				Inicio.LISTA_VENTANAS.add(0, pGgv);
+			}
+			break;
+		default:
+			break;
+		}
+
+		switch (Inicio.LISTA_VENTANAS.size()) {
+		case 0:
+			Inicio.BOTON1.setNum(1);
+			Inicio.BOTON1.setVisible(false);
+			Inicio.BOTON1.setNombre("");
+
+			Inicio.BOTON2.setNum(2);
+			Inicio.BOTON2.setVisible(false);
+			Inicio.BOTON2.setNombre("");
+
+			Inicio.BOTON3.setNum(3);
+			Inicio.BOTON3.setVisible(false);
+			Inicio.BOTON3.setNombre("");
+
+			// btnPantalla1.setVisible(false);
+			// btnPantalla2.setVisible(false);
+			// btnPantalla3.setVisible(false);
+			break;
+		case 1:
+			Inicio.BOTON1.setNum(1);
+			Inicio.BOTON1.setVisible(true);
+			Inicio.BOTON1.setNombre(Inicio.LISTA_VENTANAS.get(0).getNombre());
+
+			Inicio.BOTON2.setNum(2);
+			Inicio.BOTON2.setVisible(false);
+			Inicio.BOTON2.setNombre("");
+
+			Inicio.BOTON3.setNum(3);
+			Inicio.BOTON3.setVisible(false);
+			Inicio.BOTON3.setNombre("");
+
+			// btnPantalla1.setText(Inicio.LISTA_VENTANAS.get(0).getNombre());
+			// btnPantalla1.setVisible(true);
+			// btnPantalla2.setVisible(false);
+			// btnPantalla3.setVisible(false);
+			break;
+		case 2:
+			Inicio.BOTON1.setNum(1);
+			Inicio.BOTON1.setVisible(true);
+			Inicio.BOTON1.setNombre(Inicio.LISTA_VENTANAS.get(0).getNombre());
+
+			Inicio.BOTON2.setNum(2);
+			Inicio.BOTON2.setVisible(true);
+			Inicio.BOTON2.setNombre(Inicio.LISTA_VENTANAS.get(1).getNombre());
+
+			Inicio.BOTON3.setNum(3);
+			Inicio.BOTON3.setVisible(false);
+			Inicio.BOTON3.setNombre("");
+
+			// btnPantalla1.setText(Inicio.LISTA_VENTANAS.get(0).getNombre());
+			// btnPantalla1.setVisible(true);
+			// btnPantalla2.setText(Inicio.LISTA_VENTANAS.get(1).getNombre());
+			// btnPantalla2.setVisible(true);
+			// btnPantalla3.setVisible(false);
+			break;
+		case 3:
+			Inicio.BOTON1.setNum(1);
+			Inicio.BOTON1.setVisible(true);
+			Inicio.BOTON1.setNombre(Inicio.LISTA_VENTANAS.get(0).getNombre());
+
+			Inicio.BOTON2.setNum(2);
+			Inicio.BOTON2.setVisible(true);
+			Inicio.BOTON2.setNombre(Inicio.LISTA_VENTANAS.get(1).getNombre());
+
+			Inicio.BOTON3.setNum(3);
+			Inicio.BOTON3.setVisible(true);
+			Inicio.BOTON3.setNombre(Inicio.LISTA_VENTANAS.get(2).getNombre());
+
+			// btnPantalla1.setText(Inicio.LISTA_VENTANAS.get(0).getNombre());
+			// btnPantalla1.setVisible(true);
+			// btnPantalla2.setText(Inicio.LISTA_VENTANAS.get(1).getNombre());
+			// btnPantalla2.setVisible(true);
+			// btnPantalla3.setText(Inicio.LISTA_VENTANAS.get(2).getNombre());
+			// btnPantalla3.setVisible(true);
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	public static Date LocalDateADate(LocalDate localDate) {

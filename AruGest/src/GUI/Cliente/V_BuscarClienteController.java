@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.GestorVentana;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -68,8 +68,14 @@ public class V_BuscarClienteController {
 	private ObservableList<ClienteParticularEmpresaDireccion> listaClientes = FXCollections.observableArrayList();
 	private int tipoCliente = 1; // 1=Particular, 2=Empresa
 
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
+
 	private Inicio main;
 	private ScrollPane sp;
+	private GestorVentana gv;
+	private String nombre = "";
 
 	public void setMainAPP(Inicio p) {
 		main = p;
@@ -164,6 +170,17 @@ public class V_BuscarClienteController {
 
 				// Poner la nueva vista en el centro del root
 				sp.setContent(cliente);
+				nombre = "Cliente: " + listaClientes.get(selectedIndex).getCliente().getNombre();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
+
 				// main.getRoot().setCenter(cliente);
 
 				// Poner el controlador de la nueva vista.
@@ -177,12 +194,8 @@ public class V_BuscarClienteController {
 			}
 		} else {
 			// Nada seleccionado.
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Ningún cliente seleccionado");
-			alert.setContentText("Selecciona el cliente que quieras cargar.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún cliente seleccionado",
+					"Selecciona el cliente que quieras cargar.");
 		}
 	}
 }

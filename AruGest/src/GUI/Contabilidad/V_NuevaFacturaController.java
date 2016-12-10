@@ -352,14 +352,21 @@ public class V_NuevaFacturaController {
 				.addListener((observable, oldValue, newValue) -> comprobarComboTipoVehiculo(newValue));
 
 		// Marcar algunos checkbox que son habituales
-		if (Inicio.getOpcionNueva().equalsIgnoreCase("P")) {
+		if (Inicio.OPCION_NUEVA.equalsIgnoreCase("P")) {
 			chckbxPresupuesto.setSelected(true);
 			txtNumPresupuesto.setText("" + Inicio.NUM_PRESUPUESTO);
 			chckbxFactura.setSelected(false);
-		} else if (Inicio.getOpcionNueva().equalsIgnoreCase("F")) {
+		} else if (Inicio.OPCION_NUEVA.equalsIgnoreCase("F")) {
 			chckbxPresupuesto.setSelected(false);
 			chckbxFactura.setSelected(true);
 			txtNumfactura.setText("" + Inicio.NUM_FACTURA);
+		} else if (Inicio.OPCION_NUEVA.equalsIgnoreCase("A")) { // A se ponen
+																// los dos
+			chckbxFactura.setSelected(true);
+			txtNumfactura.setText("" + Inicio.NUM_FACTURA);
+
+			chckbxPresupuesto.setSelected(true);
+			txtNumPresupuesto.setText("" + Inicio.NUM_PRESUPUESTO);
 		}
 		chckbxPermisoPruebas.setSelected(true);
 		chckbxNoPiezas.setSelected(true);
