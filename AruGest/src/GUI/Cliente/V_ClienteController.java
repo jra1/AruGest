@@ -12,6 +12,8 @@ import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
@@ -111,6 +113,8 @@ public class V_ClienteController {
 	// columnaSubtotalPresupuesto;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImportePresupuesto;
+	@FXML
+	private Button btnEliminarPresupuesto;
 
 	// Datos facturas
 	@FXML
@@ -128,6 +132,8 @@ public class V_ClienteController {
 	// columnaSubtotalPresupuesto;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporteFactura;
+	@FXML
+	private Button btnEliminarFactura;
 
 	// Datos Vehiculo sustitución
 	@FXML
@@ -142,6 +148,9 @@ public class V_ClienteController {
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFDevolucionSustitucion;
 	@FXML
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesSustitucion;
+
+	// Para saber si pulsa eliminar presupuesto o factura
+	private boolean esFactura = false;
 
 	private Inicio main;
 	private ScrollPane sp;
@@ -196,6 +205,22 @@ public class V_ClienteController {
 		// btnGuardar.setVisible(true);
 		tableVehiculo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
+
+		// Añadir un listener a los botones de Nuevo Presupuesto y Nueva Factura
+		btnEliminarFactura.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				esFactura = true;
+				eliminarFactura();
+			}
+		});
+		btnEliminarPresupuesto.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				esFactura = false;
+				eliminarFactura();
+			}
+		});
 
 		/*
 		 * comboTipoCliente.getSelectionModel().selectedItemProperty()
@@ -362,6 +387,51 @@ public class V_ClienteController {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
 					"Selecciona el vehículo que quieras eliminar.");
 		}
+	}
+
+	/**
+	 * Elimina el presupuesto / factura seleccionado
+	 */
+	@FXML
+	private void eliminarFactura() {
+		if (esFactura) {
+			int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
+			if (selectedIndex >= 0) {
+				Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar factura",
+						"¿Está seguro que quiere eliminar esta factura?", "");
+				if (result.get() == ButtonType.OK) {
+					if (Inicio.CONEXION.eliminarFacturaPorID(
+							tableFacturas.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
+						tableFacturas.getItems().remove(selectedIndex);
+					} else {
+						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar la factura",
+								"Ocurrió un error al eliminar la factura de la base de datos.");
+					}
+				}
+			} else {
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ninguna factura seleccionada",
+						"Selecciona la factura que quieras eliminar.");
+			}
+		} else {
+			int selectedIndex = tablePresupuestos.getSelectionModel().getSelectedIndex();
+			if (selectedIndex >= 0) {
+				Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar presupuesto",
+						"¿Está seguro que quiere eliminar este presupuesto?", "");
+				if (result.get() == ButtonType.OK) {
+					if (Inicio.CONEXION.eliminarFacturaPorID(
+							tablePresupuestos.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
+						tablePresupuestos.getItems().remove(selectedIndex);
+					} else {
+						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el presupuesto",
+								"Ocurrió un error al eliminar el presupuesto de la base de datos.");
+					}
+				}
+			} else {
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún presupuesto seleccionado",
+						"Selecciona el presupuesto que quieras eliminar.");
+			}
+		}
+
 	}
 
 	/**
@@ -540,6 +610,12 @@ public class V_ClienteController {
 		columnaObservacionesSustitucion
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 		tableSustitucion.setItems(listaSustitucion);
+	}
+
+	@FXML
+	private void mensajeNoModificar() {
+		Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
+				"Para modificar los datos del cliente utilice el botón 'Modificar'", "");
 	}
 
 }

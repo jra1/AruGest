@@ -15,112 +15,134 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_ClienteController">
+<AnchorPane prefHeight="961.0" prefWidth="1418.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_ClienteController">
    <children>
       <Label layoutX="4.0" layoutY="1.0" styleClass="titulo" text="Datos cliente">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="4.0" layoutY="21.0" prefHeight="122.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="21.0">
+      <Pane layoutX="7.0" layoutY="24.0" prefHeight="210.0" prefWidth="1401.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="23.0">
          <children>
-            <TextField fx:id="txtNombre" editable="false" layoutX="62.0" layoutY="31.0" prefHeight="23.0" prefWidth="328.0" promptText="Nombre cliente">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtApellidos" editable="false" layoutX="62.0" layoutY="58.0" prefHeight="23.0" prefWidth="328.0" promptText="Apellidos cliente">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtCalle" editable="false" layoutX="627.0" layoutY="4.0" prefHeight="23.0" prefWidth="238.0" promptText="Calle">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtNumero" editable="false" layoutX="627.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtPiso" editable="false" layoutX="701.0" layoutY="31.0" prefHeight="23.0" prefWidth="38.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtLetra" editable="false" layoutX="774.0" layoutY="31.0" prefHeight="23.0" prefWidth="44.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" prefHeight="23.0" prefWidth="95.0" promptText="Población">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtDni" editable="false" layoutX="261.0" layoutY="4.0" prefHeight="23.0" prefWidth="130.0" promptText="DNI o CIF">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtTelf1" editable="false" layoutX="442.0" layoutY="4.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 1">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtTelf2" editable="false" layoutX="442.0" layoutY="31.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 2">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <Label layoutX="5.0" layoutY="35.0" text="Nombre" />
             <CheckBox fx:id="chkboxEsProveedor" disable="true" layoutX="5.0" layoutY="62.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
-            <Label layoutX="559.0" layoutY="8.0" text="Calle" />
-            <Label layoutX="895.0" layoutY="18.0" text="Población" />
-            <Label layoutX="198.0" layoutY="8.0" text="N.I.F/C.I.F." />
-            <Label layoutX="401.0" layoutY="35.0" text="Telf. 2" />
-            <Label layoutX="401.0" layoutY="8.0" text="Telf. 1" />
-            <Label layoutX="559.0" layoutY="35.0" text="Número" />
-            <Label layoutX="674.0" layoutY="35.0" text="Piso" />
-            <Label layoutX="745.0" layoutY="35.0" text="Letra" />
-            <Label fx:id="lblApellidos" layoutX="5.0" layoutY="62.0" text="Apellidos" />
-            <Label layoutX="401.0" layoutY="62.0" text="Telf. 3" />
-            <TextField fx:id="txtTelf3" editable="false" layoutX="442.0" layoutY="58.0" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 3">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <Label layoutX="5.0" layoutY="8.0" text="Tipo" />
-            <Label layoutX="559.0" layoutY="62.0" text="Cod. Postal" />
-            <TextField fx:id="txtCPostal" editable="false" layoutX="627.0" layoutY="58.0" prefHeight="23.0" prefWidth="112.0" promptText="Código postal">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <Label layoutX="895.0" layoutY="47.0" text="Provincia" />
-            <TextField fx:id="txtProvincia" editable="false" layoutX="952.0" layoutY="43.0" prefHeight="23.0" prefWidth="95.0" promptText="Provincia">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextField>
-            <Button fx:id="btnModificarCliente" layoutX="5.0" layoutY="89.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" text="Modificar" />
-            <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" text="-" />
-            <Button fx:id="btnEliminarCliente" layoutX="111.0" layoutY="89.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="25.0" prefWidth="112.0" text="Eliminar cliente" />
+            <Button fx:id="btnModificarCliente" layoutX="7.0" layoutY="173.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" styleClass="my-button" text="Modificar" />
+            <Button fx:id="btnEliminarCliente" layoutX="113.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="27.0" prefWidth="139.0" styleClass="my-button" text="Eliminar cliente" />
+            <GridPane hgap="10.0" layoutX="7.0" layoutY="9.0" prefHeight="149.0" prefWidth="1384.0" vgap="5.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="82.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="63.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="53.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" prefWidth="112.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="248.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="TIPO" />
+                  <Label layoutX="559.0" layoutY="8.0" styleClass="my-label" text="CALLE" GridPane.columnIndex="4" />
+                  <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Población" styleClass="my-text-field" GridPane.columnIndex="9" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="401.0" layoutY="62.0" styleClass="my-label" text="TELF. 3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtTelf3" editable="false" layoutX="442.0" layoutY="58.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 3" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="559.0" layoutY="62.0" styleClass="my-label" text="COD. POSTAL" GridPane.columnIndex="8" />
+                  <Label layoutX="5.0" layoutY="35.0" styleClass="my-label" text="NOMBRE" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtLetra" editable="false" layoutX="774.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="44.0" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="895.0" layoutY="18.0" styleClass="my-label" text="POBLACIÓN" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtTelf2" editable="false" layoutX="442.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 2" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="559.0" layoutY="35.0" styleClass="my-label" text="NÚMERO" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label layoutX="401.0" layoutY="8.0" styleClass="my-label" text="TELF. 1" GridPane.columnIndex="2" />
+                  <TextField fx:id="txtProvincia" editable="false" layoutX="952.0" layoutY="43.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Provincia" styleClass="my-text-field" GridPane.columnIndex="9" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="895.0" layoutY="47.0" styleClass="my-label" text="PROVINCIA" GridPane.columnIndex="8" GridPane.rowIndex="2" />
+                  <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" styleClass="titulo" text="-" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtTelf1" editable="false" layoutX="442.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 1" styleClass="my-text-field" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtApellidos" editable="false" layoutX="62.0" layoutY="58.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="328.0" promptText="Apellidos cliente" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtCalle" editable="false" layoutX="627.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="31.0" prefWidth="66.0" promptText="Calle" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="lblApellidos" layoutX="5.0" layoutY="62.0" styleClass="my-label" text="APELLIDOS" GridPane.rowIndex="3" />
+                  <Label layoutX="745.0" layoutY="35.0" styleClass="my-label" text="LETRA" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Label layoutX="401.0" layoutY="35.0" styleClass="my-label" text="TELF. 2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label layoutX="674.0" layoutY="35.0" styleClass="my-label" text="PISO" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtDni" editable="false" layoutX="261.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="130.0" promptText="DNI o CIF" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtCPostal" editable="false" layoutX="627.0" layoutY="58.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="112.0" promptText="Código postal" styleClass="my-text-field" GridPane.columnIndex="9">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtPiso" editable="false" layoutX="701.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtNombre" editable="false" layoutX="62.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="328.0" promptText="Nombre cliente" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="198.0" layoutY="8.0" styleClass="my-label" text="N.I.F/C.I.F." GridPane.rowIndex="1" />
+                  <TextField fx:id="txtNumero" editable="false" layoutX="627.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
          </children>
       </Pane>
-      <TabPane layoutX="4.0" layoutY="149.0" prefHeight="530.0" prefWidth="1096.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="4.0" layoutY="248.0" prefHeight="702.0" prefWidth="1401.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab styleClass="my-tab" text="Vehículos">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane prefHeight="660.0" prefWidth="1401.0">
                      <children>
-                        <Pane layoutX="3.0" layoutY="3.0" prefHeight="469.0" prefWidth="1086.0" styleClass="background">
+                        <Pane layoutX="3.0" layoutY="3.0" prefHeight="644.0" prefWidth="1384.0" styleClass="background">
                            <children>
-                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="37.0" prefHeight="401.0" prefWidth="768.0">
+                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="37.0" prefHeight="401.0" prefWidth="992.0">
                                 <columns>
-                                  <TableColumn fx:id="columnaMarca" prefWidth="642.0" text="Marca y modelo" />
-                                  <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="124.0" text="Matrícula" />
+                                  <TableColumn fx:id="columnaMarca" prefWidth="811.0" text="Marca y modelo" />
+                                  <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="179.0" text="Matrícula" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -129,10 +151,10 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
                               </TableView>
-                              <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#nuevoVehiculo" prefHeight="25.0" prefWidth="63.0" text="Añadir" />
-                              <Button layoutX="80.0" layoutY="7.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="25.0" prefWidth="70.0" text="Modificar" />
-                              <Button layoutX="160.0" layoutY="7.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="25.0" prefWidth="112.0" text="Eliminar vehículo" />
-                              <GridPane layoutX="791.0" layoutY="16.0" prefHeight="416.0" prefWidth="286.0">
+                              <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#nuevoVehiculo" prefHeight="27.0" prefWidth="75.0" styleClass="my-button" text="Añadir" />
+                              <Button layoutX="92.0" layoutY="7.0" mnemonicParsing="false" onAction="#editarVehiculo" prefHeight="27.0" prefWidth="93.0" styleClass="my-button" text="Modificar" />
+                              <Button layoutX="192.0" layoutY="7.0" mnemonicParsing="false" onAction="#eliminarVehiculo" prefHeight="27.0" prefWidth="148.0" styleClass="my-button" text="Eliminar vehículo" />
+                              <GridPane layoutX="1023.0" layoutY="21.0" prefHeight="416.0" prefWidth="341.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="76.0" />
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="210.0" />
@@ -151,38 +173,38 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Marca" GridPane.rowIndex="2" />
-                                    <Label text="Modelo" GridPane.rowIndex="3" />
-                                    <Label text="Versión" GridPane.rowIndex="4" />
-                                    <Label text="Matrícula" GridPane.rowIndex="1">
+                                    <Label styleClass="my-label" text="MARCA" GridPane.rowIndex="2" />
+                                    <Label styleClass="my-label" text="MODELO" GridPane.rowIndex="3" />
+                                    <Label styleClass="my-label" text="VERSIÓN" GridPane.rowIndex="4" />
+                                    <Label styleClass="my-label" text="MATRÍCULA" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Año" GridPane.rowIndex="5" />
-                                    <Label text="Nº Bastidor" GridPane.rowIndex="6" />
-                                    <Label text="Letras motor" GridPane.rowIndex="7" />
-                                    <Label text="Color" GridPane.rowIndex="8" />
-                                    <Label text="Código radio" GridPane.rowIndex="9" />
-                                    <Label text="Tipo" />
-                                    <Label fx:id="lblTipoVehiculo" text="-" GridPane.columnIndex="1" />
-                                    <Label fx:id="lblMatricula" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label styleClass="my-label" text="AÑO" GridPane.rowIndex="5" />
+                                    <Label styleClass="my-label" text="Nº BASTIDOR" GridPane.rowIndex="6" />
+                                    <Label styleClass="my-label" text="LETRAS MOTOR" GridPane.rowIndex="7" />
+                                    <Label styleClass="my-label" text="COLOR" GridPane.rowIndex="8" />
+                                    <Label styleClass="my-label" text="CÓDIGO RADIO" GridPane.rowIndex="9" />
+                                    <Label styleClass="my-label" text="TIPO" />
+                                    <Label fx:id="lblTipoVehiculo" styleClass="titulo" text="-" GridPane.columnIndex="1" />
+                                    <Label fx:id="lblMatricula" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblMarca" layoutX="10.0" layoutY="77.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="lblModelo" layoutX="10.0" layoutY="107.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="lblVersion" layoutX="10.0" layoutY="137.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label fx:id="lblAnio" layoutX="10.0" layoutY="167.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Label fx:id="lblBastidor" layoutX="10.0" layoutY="197.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Label fx:id="lblLetrasMotor" layoutX="10.0" layoutY="227.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Label fx:id="lblColor" layoutX="10.0" layoutY="257.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                    <Label fx:id="lblCodRadio" layoutX="10.0" layoutY="287.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                    <CheckBox id="chckbox-vehi-susti" fx:id="esVehiculoSusti" disable="true" mnemonicParsing="false" text="Vehículo sustitución" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <Label fx:id="lblMarca" layoutX="10.0" layoutY="77.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="lblModelo" layoutX="10.0" layoutY="107.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="lblVersion" layoutX="10.0" layoutY="137.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="lblAnio" layoutX="10.0" layoutY="167.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label fx:id="lblBastidor" layoutX="10.0" layoutY="197.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Label fx:id="lblLetrasMotor" layoutX="10.0" layoutY="227.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Label fx:id="lblColor" layoutX="10.0" layoutY="257.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <Label fx:id="lblCodRadio" layoutX="10.0" layoutY="287.0" styleClass="titulo" text="-" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <CheckBox id="chckbox-vehi-susti" fx:id="esVehiculoSusti" disable="true" mnemonicParsing="false" styleClass="my-label" text="VEHÍCULO SUSTITUCIÓN" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                  </children>
                               </GridPane>
-                              <Button fx:id="btnHacerFactura" layoutX="340.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" text="Hacer factura / presupuesto" />
+                              <Button fx:id="btnHacerFactura" layoutX="372.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" styleClass="my-button" text="Hacer factura / presupuesto" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -190,23 +212,25 @@
                         </Pane>
                      </children>
                   </AnchorPane>
-               </content></Tab>
+               </content>
+            </Tab>
             <Tab styleClass="my-tab" text="Presupuestos">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Pane layoutY="4.0" prefHeight="434.0" prefWidth="1096.0" styleClass="background">
+                        <Pane layoutX="3.0" layoutY="3.0" prefHeight="644.0" prefWidth="1384.0" styleClass="background">
                            <children>
-                              <TableView fx:id="tablePresupuestos" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="1072.0">
+                              <TableView fx:id="tablePresupuestos" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0">
                                 <columns>
                                   <TableColumn fx:id="columnaNumPresupuesto" prefWidth="105.0" text="Nº Presupuesto" />
                                   <TableColumn fx:id="columnaVehiculoPresupuesto" prefWidth="432.0" text="Vehículo" />
-                                    <TableColumn fx:id="columnaMatriculaPresupuesto" minWidth="2.0" prefWidth="135.0" text="Matrícula" />
-                                    <TableColumn fx:id="columnaFechaPresupuesto" prefWidth="133.0" text="Fecha" />
+                                    <TableColumn fx:id="columnaMatriculaPresupuesto" minWidth="2.0" prefWidth="142.0" text="Matrícula" />
+                                    <TableColumn fx:id="columnaFechaPresupuesto" prefWidth="126.0" text="Fecha" />
                                     <TableColumn prefWidth="115.0" text="Subtotal" visible="false" />
-                                    <TableColumn fx:id="columnaImportePresupuesto" prefWidth="149.0" text="Importe" />
+                                    <TableColumn fx:id="columnaImportePresupuesto" prefWidth="159.0" text="Importe" />
                                 </columns>
                               </TableView>
+                              <Button fx:id="btnEliminarPresupuesto" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar presupuesto" />
                            </children>
                         </Pane>
                      </children>
@@ -217,28 +241,30 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="434.0" prefWidth="1096.0" styleClass="background">
+                        <Pane layoutX="3.0" layoutY="3.0" prefHeight="644.0" prefWidth="1384.0" styleClass="background">
                            <children>
-                              <TableView fx:id="tableFacturas" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="1072.0">
+                              <TableView fx:id="tableFacturas" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0">
                                  <columns>
                                     <TableColumn fx:id="columnaNumFactura" prefWidth="105.0" text="Nº Factura" />
-                                    <TableColumn fx:id="columnaVehiculoFactura" prefWidth="432.0" text="Vehículo" />
-                                    <TableColumn fx:id="columnaMatriculaFactura" minWidth="2.0" prefWidth="135.0" text="Matrícula" />
-                                    <TableColumn fx:id="columnaFechaFactura" prefWidth="133.0" text="Fecha" />
+                                    <TableColumn fx:id="columnaVehiculoFactura" prefWidth="494.0" text="Vehículo" />
+                                    <TableColumn fx:id="columnaMatriculaFactura" minWidth="2.0" prefWidth="121.0" text="Matrícula" />
+                                    <TableColumn fx:id="columnaFechaFactura" minWidth="6.0" prefWidth="85.0" text="Fecha" />
                                     <TableColumn prefWidth="115.0" text="Subtotal" visible="false" />
-                                    <TableColumn fx:id="columnaImporteFactura" prefWidth="149.0" text="Importe" />
+                                    <TableColumn fx:id="columnaImporteFactura" minWidth="6.0" prefWidth="200.0" text="Importe" />
                                  </columns>
                               </TableView>
                            </children>
                         </Pane>
-                     </children></AnchorPane>
+                        <Button fx:id="btnEliminarFactura" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
             <Tab styleClass="my-tab" text="Vehículos de sustitución">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Pane layoutY="4.0" prefHeight="328.0" prefWidth="1090.0" styleClass="background">
+                        <Pane layoutX="3.0" layoutY="3.0" prefHeight="644.0" prefWidth="1384.0" styleClass="background">
                            <children>
                               <Button layoutX="10.0" layoutY="8.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="25.0" prefWidth="29.0">
                                  <graphic>

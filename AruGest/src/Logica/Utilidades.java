@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
 public class Utilidades {
@@ -285,6 +286,9 @@ public class Utilidades {
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
 		alert.setContentText(texto);
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+		dialogPane.getStyleClass().add("my-dialog");
 		return alert.showAndWait();
 	}
 

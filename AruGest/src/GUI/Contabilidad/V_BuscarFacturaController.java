@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -177,12 +176,8 @@ public class V_BuscarFacturaController {
 			}
 		} else {
 			// Nada seleccionado.
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Ninguna factura seleccionada");
-			alert.setContentText("Selecciona la factura que quieras cargar.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ninguna factura seleccionada",
+					"Selecciona la factura que quieras cargar");
 		}
 	}
 }

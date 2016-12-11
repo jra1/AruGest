@@ -7,6 +7,32 @@
     -fx-font-size: 14px;
 }
 
+/*Alerts */
+.my-dialog{
+    -fx-background-color: rgb(192,192,192);
+    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-text-fill: rgb(64,128,128);
+}
+.my-dialog > *.button-bar > *.container{
+    -fx-background-color: rgb(192,192,192);
+}
+.my-dialog > *.label.content{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.my-dialog:header *.header-panel{
+    -fx-background-color: rgb(192,192,192);
+    -fx-border-style: solid;
+    -fx-border-color: darkorange ; 
+    -fx-border-radius: 10px;
+    -fx-border-width: 2px; /* Grosor del borde */
+}
+.my-dialog:header *.header-panel *.label{
+    -fx-font-size: 20px;
+    -fx-font-style: normal;
+    /*-fx-fill: #292929;*/
+}
+
 /*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */
 .titulo{
 	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */

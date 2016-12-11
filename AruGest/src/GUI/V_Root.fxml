@@ -15,42 +15,9 @@
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <Accordion fx:id="acor" layoutY="81.0" prefHeight="649.0" prefWidth="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="81.0">
+            <Accordion fx:id="acor" layoutY="85.0" prefHeight="880.0" prefWidth="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
               <panes>
-                <TitledPane fx:id="tPane" animated="false" text="Contabilidad">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox layoutX="1.0" layoutY="1.0" prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" onAction="#buscarPresupuesto" styleClass="green" text="Buscar presupuesto / factura">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo presupuesto">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva factura" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/conta.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                </TitledPane>
-                <TitledPane animated="false" text="Clientes">
+                <TitledPane fx:id="tPane" animated="false" text="Clientes">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -110,6 +77,39 @@
                         </ImageView>
                      </graphic>
                 </TitledPane>
+                <TitledPane animated="false" text="Contabilidad">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="1.0" layoutY="1.0" prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarPresupuesto" styleClass="green" text="Buscar presupuesto / factura">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo presupuesto">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva factura" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/conta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                </TitledPane>
                   <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Proveedores &amp; Cías">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -165,7 +165,7 @@
                   </TitledPane>
               </panes>
             </Accordion>
-            <VBox prefHeight="82.0" prefWidth="260.0">
+            <VBox prefHeight="82.0" prefWidth="260.0" spacing="2.0">
                <children>
                   <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" styleClass="my-button" text="Atrás" visible="false" />
                   <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" styleClass="my-button" text="Button" visible="false" />

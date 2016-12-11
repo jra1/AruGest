@@ -185,6 +185,8 @@ public class Conexion {
 			if (i > 0) {
 				// Actualizar próximo número de presupuesto y factura
 				actualizarNumPresuFactura();
+				// Actualizar los valores de próximos presupuestos/facturas
+				Inicio.CONEXION.getPrecioHoraIva();
 				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Factura guardada",
 						"La factura ha sido guardada en la base de datos");
 			}
@@ -633,6 +635,13 @@ public class Conexion {
 		return res;
 	}
 
+	/**
+	 * Elimina el cliente pasado como parámetro de la BD con todo lo que tenga
+	 * asociado (Facturas, vehiculos de sustitucion, documentos...)
+	 * 
+	 * @param cped
+	 * @return
+	 */
 	public boolean eliminarCliente(ClienteParticularEmpresaDireccion cped) {
 		/*
 		 * Orden para eliminar un cliente: 1º Facturas asociadas 2º
@@ -660,6 +669,11 @@ public class Conexion {
 				sql = "DELETE FROM FACTURA WHERE CLIENTEID = " + id;
 				pt = getCon().prepareStatement(sql);
 				pt.executeUpdate();
+
+				// Actualizar próximo número de presupuesto y factura
+				actualizarNumPresuFactura();
+				// Actualizar los valores de próximos presupuestos/facturas
+				Inicio.CONEXION.getPrecioHoraIva();
 			}
 
 			// 2º VehiculosSustitucion
@@ -707,6 +721,38 @@ public class Conexion {
 			if (iddireccion > 0) {
 				eliminarDireccionPorID(iddireccion);
 			}
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina de la BD la factura cuyo ID se pasa como parámetro
+	 * 
+	 * @param idFactura
+	 * @return
+	 */
+	public boolean eliminarFacturaPorID(int idFactura) {
+		String sql = "";
+		boolean res = true;
+		PreparedStatement pt;
+		try {
+			// 1º Eliminar servicios y materiales y después la factura
+			eliminarServiciosPorFacturaID(idFactura);
+			eliminarMaterialesPorFacturaID(idFactura);
+
+			sql = "DELETE FROM FACTURA WHERE IDFACTURA = " + idFactura;
+			pt = getCon().prepareStatement(sql);
+			pt.executeUpdate();
+
+			// Actualizar próximo número de presupuesto y factura
+			actualizarNumPresuFactura();
+			// Actualizar los valores de próximos presupuestos/facturas
+			Inicio.CONEXION.getPrecioHoraIva();
 
 			res = true;
 		} catch (Exception ex) {

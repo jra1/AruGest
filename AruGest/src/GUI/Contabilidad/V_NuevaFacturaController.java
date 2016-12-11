@@ -20,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -621,12 +620,8 @@ public class V_NuevaFacturaController {
 			actualizarPrecio();
 		} else {
 			// Nada seleccionado.
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Ningún servicio seleccionado");
-			alert.setContentText("Selecciona el servicio que quieras eliminar de la tabla.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún servicio seleccionado",
+					"Selecciona el servicio que quieras eliminar de la tabla.");
 		}
 	}
 
@@ -641,12 +636,8 @@ public class V_NuevaFacturaController {
 			actualizarPrecio();
 		} else {
 			// Nada seleccionado.
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Ningún material seleccionado");
-			alert.setContentText("Selecciona el material que quieras eliminar de la tabla.");
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún material seleccionado",
+					"Selecciona el material que quieras eliminar de la tabla.");
 		}
 	}
 
@@ -725,12 +716,8 @@ public class V_NuevaFacturaController {
 				if (Inicio.CONEXION.guardarVehiculo(v)) {
 					v = Inicio.CONEXION.buscarVehiculoPorMatricula(txtMatricula.getText());
 				} else {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error");
-					alert.setHeaderText("Error al guardar el vehículo");
-					alert.setContentText("Ocurrió un error al guardar el vehículo en la base de datos.");
-
-					alert.showAndWait();
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
+							"Ocurrió un error al guardar el vehículo en la base de datos.");
 				}
 			}
 			Inicio.VEHICULO_ID = v.getIdvehiculo();
@@ -763,12 +750,7 @@ public class V_NuevaFacturaController {
 					chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), Float.parseFloat(txtTotal.getText()));
 			Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Atención");
-			alert.setHeaderText("Faltan datos");
-			alert.setContentText(mensaje);
-
-			alert.showAndWait();
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", mensaje);
 		}
 	}
 }
