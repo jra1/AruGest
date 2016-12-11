@@ -1,16 +1,16 @@
 package GUI.Cliente;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Empresa;
 import Modelo.Particular;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * Dialog to edit details of a person.
@@ -140,14 +140,16 @@ public class D_EditClienteController {
 				cped.setParticular(p);
 			} else {
 				Empresa e;
-				if(cped.getEmpresa() != null){
-					e = new Empresa(cped.getEmpresa().getIdempresa(), cped.getEmpresa().getClienteID(), txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());					
-				}else{
+				if (cped.getEmpresa() != null) {
+					e = new Empresa(cped.getEmpresa().getIdempresa(), cped.getEmpresa().getClienteID(),
+							txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
+				} else {
 					e = new Empresa(txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
 				}
 				cped.setEmpresa(e);
 			}
-			if (!txtCalle.getText().isEmpty()) {
+			if (!txtCalle.getText().isEmpty() || !txtCodPostal.getText().isEmpty() || !txtLocalidad.getText().isEmpty()
+					|| !txtProvincia.getText().isEmpty()) {
 				cped.getDireccion().setCalle(txtCalle.getText());
 				cped.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
 				cped.getDireccion().setPiso(txtPiso.getText());
@@ -206,7 +208,8 @@ public class D_EditClienteController {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
+					errorMessage);
 			return false;
 		}
 	}

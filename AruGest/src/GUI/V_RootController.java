@@ -6,6 +6,7 @@ import GUI.Cliente.V_BuscarClienteController;
 import GUI.Cliente.V_ClienteController;
 import GUI.Contabilidad.V_BuscarFacturaController;
 import GUI.Contabilidad.V_NuevaFacturaController;
+import GUI.ProveedorCompania.V_BuscarProveedorCompaniaController;
 import GUI.Vehiculo.V_BuscarVehiculoController;
 import GUI.Vehiculo.V_VehiculosSustitucionController;
 import Logica.Inicio;
@@ -113,6 +114,9 @@ public class V_RootController {
 			V_BuscarVehiculoController controller = loader.getController();
 			controller.setMainAPP(main);
 			controller.setScrollPane(sp);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
 			// controller.setFocus();
 
 		} catch (IOException e) {
@@ -187,6 +191,46 @@ public class V_RootController {
 			V_BuscarFacturaController controller = loader.getController();
 			controller.setMainAPP(main);
 			controller.setScrollPane(sp);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Coloca la ventana de buscar proveedor / compañía
+	 */
+	@FXML
+	private void buscarCompania() {
+		try {
+			// Cargar la vista de nueva factura
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/ProveedorCompania/V_BuscarProveedorCompania.fxml"));
+			AnchorPane buscar = (AnchorPane) loader.load();
+			nombre = "Buscar proveedor / compañía";
+			// Poner la nueva vista en el centro del root
+			sp.setContent(buscar);
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+			gv = new GestorVentana(ap, nombre);
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
+
+			// Poner el controlador de la nueva vista.
+			V_BuscarProveedorCompaniaController controller = loader.getController();
+			controller.setMainAPP(main);
+			/*
+			 * controller.setScrollPane(sp); controller.boton1 = btnPantalla1;
+			 * controller.boton2 = btnPantalla2; controller.boton3 =
+			 * btnPantalla3;
+			 */
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -210,7 +254,8 @@ public class V_RootController {
 					AnchorPane cliente = (AnchorPane) loader.load();
 
 					// Poner la nueva vista en el centro del root
-					main.getRoot().setCenter(cliente);
+					sp.setContent(cliente);
+					// main.getRoot().setCenter(cliente);
 
 					// Poner el controlador de la nueva vista.
 					V_ClienteController controller = loader.getController();

@@ -1453,7 +1453,7 @@ public class Conexion {
 				}
 
 			} else if (tipo == 2) {
-				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID ";
+				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
 				if (!dni.equalsIgnoreCase("")) {
 					if (esPrimero) {
 						sql += "WHERE UPPER(EMPRESA.CIF) LIKE UPPER('%" + dni + "%') ";
@@ -1540,10 +1540,11 @@ public class Conexion {
 						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
-					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"),
-							rs.getString("APELLIDOS"), rs.getString("NIF"));
+					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"),
+							rs.getString("PARTICULAR.NOMBRE"), rs.getString("PARTICULAR.APELLIDOS"),
+							rs.getString("NIF"));
 				} else if (tipo == 2) {
-					e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"),
+					e = new Empresa(rs.getInt("IDEMPRESA"), rs.getInt("IDCLIENTE"), rs.getString("EMPRESA.NOMBRE"),
 							rs.getString("CIF"), rs.getBoolean("ESPROVEEDOR"));
 				}
 				cped = new ClienteParticularEmpresaDireccion(c, p, e, d);

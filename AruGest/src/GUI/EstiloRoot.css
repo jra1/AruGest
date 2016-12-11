@@ -53,6 +53,13 @@
 	-fx-font-weight: bold;
 }
 
+/*Labels Sin información */
+.my-label-si{
+	-fx-font-size: 50px;
+	-fx-text-fill: rgb(64,128,128);	
+	-fx-font-weight: bold;
+}
+
 /*TextField */
 .my-text-field {
     -fx-background-color:
@@ -104,7 +111,7 @@
 .background {
     /*-fx-background-color: rgb(139,248,164);*/
     -fx-border-style: solid;
-    -fx-border-color: darkorange ; 
+    -fx-border-color: rgb(171,27,48)/*rgb(236,145,53) darkorange */; 
     -fx-border-radius: 10px;
     -fx-border-width: 2px; /* Grosor del borde */
 }

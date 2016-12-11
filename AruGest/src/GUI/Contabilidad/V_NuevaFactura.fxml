@@ -64,7 +64,7 @@
                            </font>
                         </TextField>
                         <Label styleClass="my-label" text="FECHA" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                        <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="FECHA" GridPane.columnIndex="5" />
+                        <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="FECHA" styleClass="my-text-field" GridPane.columnIndex="5" />
                      </children>
                   </GridPane>
                </children>
@@ -347,7 +347,7 @@
                      </children>
                   </GridPane>
                   <Button fx:id="btnActualizarPrecio" layoutX="1204.0" layoutY="292.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="31.0" prefWidth="179.0" styleClass="my-button" text="ACTUALIZAR PRECIO" />
-                  <CheckBox fx:id="chckbxModificable" layoutX="1243.0" layoutY="336.0" mnemonicParsing="false" text="Modificable" />
+                  <CheckBox fx:id="chckbxModificable" layoutX="1243.0" layoutY="336.0" mnemonicParsing="false" styleClass="my-label" text="Modificable" />
                   <Button layoutX="1222.0" layoutY="370.0" mnemonicParsing="false" onAction="#guardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
                   <Button fx:id="btnGenerarFactura" layoutX="1222.0" layoutY="412.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GENERAR FACTURA">
                      <font>
@@ -358,16 +358,16 @@
             </Pane>
          </children>
       </Group>
-      <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="7.0" layoutY="896.0" mnemonicParsing="false" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
-      <TextField fx:id="txtPorcentajeDefOcultos" layoutX="237.0" layoutY="890.0" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field">
+      <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="7.0" layoutY="896.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
+      <TextField fx:id="txtPorcentajeDefOcultos" layoutX="255.0" layoutY="890.0" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>
       </TextField>
-      <CheckBox fx:id="chckbxPermisoPruebas" layoutX="7.0" layoutY="922.0" mnemonicParsing="false" text="Permiso para realizar pruebas para diagnóstico y reparación" />
-      <CheckBox fx:id="chckbxNoPiezas" layoutX="518.0" layoutY="896.0" mnemonicParsing="false" text="No deseo recoger las piezas sustituidas a mi vehículo" />
-      <Label layoutX="522.0" layoutY="923.0" text="Fecha de entrega en caso de aprobación de presupuesto:" />
-      <DatePicker fx:id="txtFechaEntrega" layoutX="855.0" layoutY="918.0" prefHeight="25.0" prefWidth="150.0" promptText="FECHA" />
+      <CheckBox fx:id="chckbxPermisoPruebas" layoutX="7.0" layoutY="922.0" mnemonicParsing="false" styleClass="my-label" text="Permiso para realizar pruebas para diagnóstico y reparación" />
+      <CheckBox fx:id="chckbxNoPiezas" layoutX="518.0" layoutY="896.0" mnemonicParsing="false" styleClass="my-label" text="No deseo recoger las piezas sustituidas a mi vehículo" />
+      <Label layoutX="522.0" layoutY="923.0" styleClass="my-label" text="Fecha de entrega en caso de aprobación de presupuesto:" />
+      <DatePicker fx:id="txtFechaEntrega" layoutX="886.0" layoutY="918.0" prefHeight="25.0" prefWidth="150.0" promptText="FECHA" styleClass="my-text-field" />
       <Label disable="true" layoutX="783.0" layoutY="271.0" text="TELF. 2" />
       <TextField fx:id="txtMovil" disable="true" layoutX="834.0" layoutY="265.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249" styleClass="my-text-field">
          <font>

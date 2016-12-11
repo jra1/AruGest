@@ -474,6 +474,7 @@ public class V_NuevaFacturaController {
 			lblValor.setVisible(true);
 			txtValor.setVisible(true);
 			lblCantidad.setText("Cantidad");
+			txtCantidad.setPromptText("Uds");
 			esServicio = false;
 		} else {
 			lblValor.setVisible(false);
@@ -678,7 +679,7 @@ public class V_NuevaFacturaController {
 						/* txtMovil.getText() */"", "", 0);
 				Particular p = null;
 				Empresa e = null;
-				if (!txtCalle.getText().isEmpty()) {
+				if (!txtCalle.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
 					d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()), txtPiso.getText(),
 							txtLetra.getText(), txtPoblacion.getText());
 				}
@@ -693,7 +694,7 @@ public class V_NuevaFacturaController {
 			} else {
 				// Si está el cliente pero no tiene direccion, la guardo
 				if (c.getDireccionID() == 0) {
-					if (!txtCalle.getText().isEmpty()) {
+					if (!txtCalle.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
 						Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
 								txtPiso.getText(), txtLetra.getText(), txtPoblacion.getText());
 						int id = (int) Inicio.CONEXION.guardarDireccion(d);

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.V_BuscarFacturaController">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.V_BuscarFacturaController">
    <children>
       <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
          <children>
@@ -23,7 +23,7 @@
             <TextField fx:id="txtFijo" layoutX="675.0" layoutY="68.0" prefHeight="25.0" prefWidth="139.0" />
             <TextField fx:id="txtMovil" layoutX="873.0" layoutY="68.0" prefHeight="25.0" prefWidth="114.0" />
             <Label layoutX="817.0" layoutY="72.0" text="Tlf. móvil" />
-            <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#buscarFacturas" text="Buscar" />
+            <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#buscarFacturas" styleClass="my-button" text="Buscar" />
             <CheckBox fx:id="chckbxOrdenDeReparacion" layoutX="194.0" layoutY="14.0" mnemonicParsing="false" text="Ordenes de reparación" />
             <CheckBox fx:id="chckbxResguardoDeposito" layoutX="350.0" layoutY="14.0" mnemonicParsing="false" text="Resguardos de depósito" />
             <TextField fx:id="txtNumPresupuesto" layoutX="117.0" layoutY="40.0" prefHeight="25.0" prefWidth="139.0" />
@@ -40,8 +40,8 @@
             <DatePicker fx:id="txtFechaHasta" layoutX="552.0" layoutY="132.0" prefHeight="25.0" prefWidth="149.0" />
          </children>
       </Pane>
-      <Label layoutX="14.0" text="Buscar" />
-      <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
+      <Label layoutX="14.0" styleClass="titulo" text="Buscar" />
+      <Label layoutX="14.0" layoutY="221.0" styleClass="titulo" text="Resultados de la búsqueda" />
       <Pane layoutX="11.0" layoutY="242.0" prefHeight="418.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
             <TableView fx:id="tableFacturas" layoutX="14.0" layoutY="14.0" prefHeight="391.0" prefWidth="869.0">
@@ -56,7 +56,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button layoutX="903.0" layoutY="14.0" mnemonicParsing="false" onAction="#cargarFactura" text="Cargar factura" />
+            <Button layoutX="903.0" layoutY="14.0" mnemonicParsing="false" onAction="#cargarFactura" styleClass="my-button" text="Cargar factura" />
          </children>
       </Pane>
    </children>

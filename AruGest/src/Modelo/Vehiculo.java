@@ -23,7 +23,7 @@ public class Vehiculo {
 	private final BooleanProperty esVehiculoSustitucion;
 
 	public Vehiculo(Integer clienteID) {
-		//this(null,null,null,null,null,null,null);
+		// this(null,null,null,null,null,null,null);
 		this.idvehiculo = new SimpleIntegerProperty(0);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.marca = new SimpleStringProperty("");
@@ -110,7 +110,8 @@ public class Vehiculo {
 
 	public Vehiculo(IntegerProperty idvehiculo, IntegerProperty clienteID, StringProperty marca, StringProperty modelo,
 			StringProperty version, StringProperty matricula, IntegerProperty anio, StringProperty bastidor,
-			StringProperty letrasmotor, StringProperty color, StringProperty codradio, IntegerProperty tipoID, BooleanProperty esVehiculoSustitucion) {
+			StringProperty letrasmotor, StringProperty color, StringProperty codradio, IntegerProperty tipoID,
+			BooleanProperty esVehiculoSustitucion) {
 		super();
 		this.idvehiculo = idvehiculo;
 		this.clienteID = clienteID;
@@ -169,6 +170,10 @@ public class Vehiculo {
 
 	public String getModelo() {
 		return this.modeloProperty().get();
+	}
+
+	public String getMarcaModelo() {
+		return this.marcaProperty().get() + " " + this.modeloProperty().get() + " " + this.versionProperty().get();
 	}
 
 	public void setModelo(final String modelo) {
@@ -278,16 +283,13 @@ public class Vehiculo {
 	public BooleanProperty esVehiculoSustitucionProperty() {
 		return this.esVehiculoSustitucion;
 	}
-	
 
 	public boolean isEsVehiculoSustitucion() {
 		return this.esVehiculoSustitucionProperty().get();
 	}
-	
 
 	public void setEsVehiculoSustitucion(final boolean esVehiculoSustitucion) {
 		this.esVehiculoSustitucionProperty().set(esVehiculoSustitucion);
 	}
-	
 
 }

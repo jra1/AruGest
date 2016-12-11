@@ -24,7 +24,6 @@
       </Label>
       <Pane layoutX="7.0" layoutY="24.0" prefHeight="210.0" prefWidth="1401.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="23.0">
          <children>
-            <CheckBox fx:id="chkboxEsProveedor" disable="true" layoutX="5.0" layoutY="62.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
             <Button fx:id="btnModificarCliente" layoutX="7.0" layoutY="173.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" styleClass="my-button" text="Modificar" />
             <Button fx:id="btnEliminarCliente" layoutX="113.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="27.0" prefWidth="139.0" styleClass="my-button" text="Eliminar cliente" />
             <GridPane hgap="10.0" layoutX="7.0" layoutY="9.0" prefHeight="149.0" prefWidth="1384.0" vgap="5.0">
@@ -127,6 +126,7 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
+                  <CheckBox id="chckbox-vehi-susti" fx:id="chkboxEsProveedor" disable="true" mnemonicParsing="false" styleClass="my-label" text="ES PROVEEDOR" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
@@ -205,6 +205,7 @@
                                  </children>
                               </GridPane>
                               <Button fx:id="btnHacerFactura" layoutX="372.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" styleClass="my-button" text="Hacer factura / presupuesto" />
+                              <Label fx:id="lblSI" alignment="CENTER" layoutX="8.0" layoutY="37.0" prefHeight="401.0" prefWidth="992.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -231,6 +232,7 @@
                                 </columns>
                               </TableView>
                               <Button fx:id="btnEliminarPresupuesto" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar presupuesto" />
+                              <Label fx:id="lblSIP" alignment="CENTER" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                         </Pane>
                      </children>
@@ -255,7 +257,8 @@
                               </TableView>
                            </children>
                         </Pane>
-                        <Button fx:id="btnEliminarFactura" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
+                        <Button fx:id="btnEliminarFactura" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
+                        <Label fx:id="lblSIF" alignment="CENTER" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0" styleClass="my-label-si" text="Sin información" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
@@ -288,6 +291,7 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
                               </TableView>
+                              <Label fx:id="lblSIVS" alignment="CENTER" layoutX="10.0" layoutY="41.0" prefHeight="216.0" prefWidth="1074.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                         </Pane>
                      </children>

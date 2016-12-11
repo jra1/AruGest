@@ -25,8 +25,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class V_BuscarClienteController {
 	@FXML
-	private AnchorPane ap;
-	@FXML
 	private ComboBox<String> comboTipoCliente;
 	@FXML
 	private TextField txtNombre;
@@ -74,6 +72,7 @@ public class V_BuscarClienteController {
 
 	private Inicio main;
 	private ScrollPane sp;
+	private AnchorPane ap;
 	private GestorVentana gv;
 	private String nombre = "";
 

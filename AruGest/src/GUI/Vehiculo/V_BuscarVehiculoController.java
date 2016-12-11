@@ -7,6 +7,7 @@ import java.util.Optional;
 import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
+import Modelo.GestorVentana;
 import Modelo.Vehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -83,6 +84,13 @@ public class V_BuscarVehiculoController {
 
 	private Inicio main;
 	private ScrollPane sp;
+	private AnchorPane ap;
+	private GestorVentana gv;
+	private String nombre = "";
+
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
 
 	public void setMainAPP(Inicio p) {
 		setMain(p);
@@ -242,13 +250,26 @@ public class V_BuscarVehiculoController {
 
 				// Poner la nueva vista en el centro del root
 				sp.setContent(nuevaFactura);
+				nombre = "Factura: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
+
 				// main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.
+				Inicio.setOpcionNueva("A");
 				V_NuevaFacturaController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
 						tableVehiculos.getSelectionModel().getSelectedItem());
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

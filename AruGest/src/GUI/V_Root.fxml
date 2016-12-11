@@ -116,12 +116,7 @@
                            <children>
                               <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Buscar proveedor">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Buscar compañía">
+                                    <Button mnemonicParsing="false" onAction="#buscarCompania" styleClass="green" text="Buscar proveedor / compañía">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>

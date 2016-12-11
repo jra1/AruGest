@@ -1,5 +1,6 @@
 package Logica;
 
+import java.io.File;
 import java.io.IOException;
 //import java.security.Principal;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Inicio extends Application {
 	private BorderPane root;
 
 	// Variables globales para todo el proyecto
+	private final static String DBFILENAME = "AruGestDB";
 	public static Conexion CONEXION = new Conexion();
 	public static String OPCION_NUEVA = ""; // Para saber si se ha pulsado en
 											// Nueva Factura o Nuevo Presupuesto
@@ -59,6 +61,7 @@ public class Inicio extends Application {
 	// public static boolean ESINICIO = true;
 
 	public void init() throws Exception {
+		comprobacionesIniciales();
 		CONEXION.crearConexion();
 		// Obtener los precios de Hora e IVA
 		Inicio.CONEXION.getPrecioHoraIva();
@@ -69,6 +72,22 @@ public class Inicio extends Application {
 			CAMBIAR_RESOLUCION = true;
 			// Utilidades.ajustarEscena(escenario,
 			// primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
+		}
+	}
+
+	/**
+	 * Se comprueba si existe la BD y si no existe se crea
+	 */
+	public void comprobacionesIniciales() {
+		// Leemos el parametro del contexto
+		String spath = System.getProperty("user.home");// C:\Users\Joseba
+		spath += "\\AruGest";// C:\Users\Joseba\AruGest
+		// Comprobamos si no existe la base de datos
+		// Esto devuelve true o false si existe ese archivo en esa ruta
+		boolean exists = new File(spath, DBFILENAME + ".h2.db").exists();
+		// System.out.println(spath);
+		if (!exists) {
+
 		}
 	}
 

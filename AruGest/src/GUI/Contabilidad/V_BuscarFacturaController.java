@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.FacturaClienteVehiculo;
+import Modelo.GestorVentana;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
@@ -81,6 +83,13 @@ public class V_BuscarFacturaController {
 
 	private Inicio main;
 	private ScrollPane sp;
+	private AnchorPane ap;
+	private GestorVentana gv;
+	private String nombre = "";
+
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
 
 	public void setMainAPP(Inicio p) {
 		main = p;
@@ -164,6 +173,16 @@ public class V_BuscarFacturaController {
 
 				// Poner la nueva vista en el centro del root
 				sp.setContent(nuevaFactura);
+				nombre = "Factura: " + listaFacturas.get(selectedIndex).getCliente().getNombre();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
 				// main.getRoot().setCenter(nuevaFactura);
 
 				// Poner el controlador de la nueva vista.

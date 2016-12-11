@@ -73,6 +73,8 @@ public class V_ClienteController {
 	private TableColumn<Vehiculo, String> columnaMarca;
 	@FXML
 	private TableColumn<Vehiculo, String> columnaMatricula;
+	@FXML
+	private Label lblSI;
 
 	@FXML
 	private Label lblTipoVehiculo;
@@ -115,6 +117,8 @@ public class V_ClienteController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImportePresupuesto;
 	@FXML
 	private Button btnEliminarPresupuesto;
+	@FXML
+	private Label lblSIP;
 
 	// Datos facturas
 	@FXML
@@ -134,6 +138,8 @@ public class V_ClienteController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporteFactura;
 	@FXML
 	private Button btnEliminarFactura;
+	@FXML
+	private Label lblSIF;
 
 	// Datos Vehiculo sustitución
 	@FXML
@@ -148,6 +154,8 @@ public class V_ClienteController {
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFDevolucionSustitucion;
 	@FXML
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesSustitucion;
+	@FXML
+	private Label lblSIVS;
 
 	// Para saber si pulsa eliminar presupuesto o factura
 	private boolean esFactura = false;
@@ -268,7 +276,8 @@ public class V_ClienteController {
 						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/BuscarCliente.fxml"));
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
 						// Poner la nueva vista en el centro del root
-						main.getRoot().setCenter(buscarCliente);
+						sp.setContent(buscarCliente);
+						// main.getRoot().setCenter(buscarCliente);
 
 						// Poner el controlador de la nueva vista.
 						V_BuscarClienteController controller = loader.getController();
@@ -403,6 +412,13 @@ public class V_ClienteController {
 					if (Inicio.CONEXION.eliminarFacturaPorID(
 							tableFacturas.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
 						tableFacturas.getItems().remove(selectedIndex);
+						if (tableFacturas.getItems().isEmpty()) {
+							tableFacturas.setVisible(false);
+							lblSIF.setVisible(true);
+						} else {
+							tableFacturas.setVisible(true);
+							lblSIF.setVisible(false);
+						}
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar la factura",
 								"Ocurrió un error al eliminar la factura de la base de datos.");
@@ -421,6 +437,13 @@ public class V_ClienteController {
 					if (Inicio.CONEXION.eliminarFacturaPorID(
 							tablePresupuestos.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
 						tablePresupuestos.getItems().remove(selectedIndex);
+						if (tablePresupuestos.getItems().isEmpty()) {
+							tablePresupuestos.setVisible(false);
+							lblSIP.setVisible(true);
+						} else {
+							tablePresupuestos.setVisible(true);
+							lblSIP.setVisible(false);
+						}
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el presupuesto",
 								"Ocurrió un error al eliminar el presupuesto de la base de datos.");
@@ -500,7 +523,7 @@ public class V_ClienteController {
 				if (Inicio.mostrarD_SustitucionDevolucion(vscv)) {
 					if (Inicio.CONEXION.actualizarVehiculoSustitucion("D", vscv)) {
 						tableSustitucion.refresh();
-						Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
+						Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Vehículo marcado como devuelto", "");
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",
 								"Ocurrió un error al marcar el vehículo como devuelto en la base de datos.");
@@ -557,6 +580,13 @@ public class V_ClienteController {
 		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
 		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
 		tableVehiculo.setItems(listaVehiculos);
+		if (tableVehiculo.getItems().isEmpty()) {
+			tableVehiculo.setVisible(false);
+			lblSI.setVisible(true);
+		} else {
+			tableVehiculo.setVisible(true);
+			lblSI.setVisible(false);
+		}
 	}
 
 	/**
@@ -576,6 +606,13 @@ public class V_ClienteController {
 		columnaImportePresupuesto
 				.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 		tablePresupuestos.setItems(listaPresupuestos);
+		if (tablePresupuestos.getItems().isEmpty()) {
+			tablePresupuestos.setVisible(false);
+			lblSIP.setVisible(true);
+		} else {
+			tablePresupuestos.setVisible(true);
+			lblSIP.setVisible(false);
+		}
 	}
 
 	/**
@@ -591,6 +628,13 @@ public class V_ClienteController {
 		// cellData.getValue().getFactura().);
 		columnaImporteFactura.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 		tableFacturas.setItems(listaFacturas);
+		if (tableFacturas.getItems().isEmpty()) {
+			tableFacturas.setVisible(false);
+			lblSIF.setVisible(true);
+		} else {
+			tableFacturas.setVisible(true);
+			lblSIF.setVisible(false);
+		}
 	}
 
 	/**
@@ -610,6 +654,13 @@ public class V_ClienteController {
 		columnaObservacionesSustitucion
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
 		tableSustitucion.setItems(listaSustitucion);
+		if (tableSustitucion.getItems().isEmpty()) {
+			tableSustitucion.setVisible(false);
+			lblSIVS.setVisible(true);
+		} else {
+			tableSustitucion.setVisible(true);
+			lblSIVS.setVisible(false);
+		}
 	}
 
 	@FXML
