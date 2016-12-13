@@ -23,7 +23,7 @@
                   <Font name="Arial Black" size="15.0" />
                </font>
             </Label>
-            <Pane layoutX="14.0" layoutY="25.0" prefHeight="85.0" prefWidth="1387.0" styleClass="background" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="25.0">
+            <Pane fx:id="paneDatosFactura" layoutX="14.0" layoutY="25.0" prefHeight="85.0" prefWidth="1387.0" styleClass="background" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="25.0">
                <children>
                   <GridPane hgap="20.0" layoutX="13.0" layoutY="5.0" prefHeight="74.0" prefWidth="1346.0" vgap="10.0">
                     <columnConstraints>

@@ -1,3 +1,33 @@
+#toolbar {
+    /*-fx-background-color: deepskyblue;*/
+}
+
+#toolbar:extreme-small-device {
+    -fx-padding: 1 1 0 1;
+    -fx-background-color: deepskyblue;
+}
+
+#toolbar:small-device {
+    -fx-padding: 2 2 1 2;
+    -fx-background-color: darkgreen;
+}
+
+#toolbar:medium-device {
+    -fx-padding: 6 6 1 6;
+    -fx-background-color: white;
+}
+
+#toolbar:large-device {
+    -fx-padding: 6 6 1 6;
+    -fx-background-color: darkorange ;
+    /*-fx-background-image: url(blue-background.png);*/
+}
+
+
+
+
+
+
 /*AnchorPane general */
 .back{
 	-fx-background-color: rgb(192,192,192);

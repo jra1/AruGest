@@ -5,6 +5,8 @@ import java.io.IOException;
 //import java.security.Principal;
 import java.util.ArrayList;
 
+import com.guigarage.responsive.ResponsiveHandler;
+
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_EditClienteController;
@@ -115,6 +117,7 @@ public class Inicio extends Application {
 			// 2.- Ponerla y mostrarla
 			escenario.setScene(escena);
 			escenario.show();
+			ResponsiveHandler.addResponsiveToWindow(escenario);
 			// 3.- Poner el controlador de la escena
 			V_RootController controlador = loader.getController();
 			controlador.setMainAPP(this);

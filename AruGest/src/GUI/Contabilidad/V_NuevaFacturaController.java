@@ -33,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -40,6 +41,9 @@ import javafx.util.converter.NumberStringConverter;
  *
  */
 public class V_NuevaFacturaController {
+
+	@FXML
+	private Pane paneDatosFactura;
 
 	// Datos Factura
 	@FXML
@@ -314,6 +318,9 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
+		txtNumfactura.setId("toolbar");
+		paneDatosFactura.getChildren().add(txtNumfactura);
+
 		// Para que el botón de añadir funcione con el Enter
 		btnAdd.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
