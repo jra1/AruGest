@@ -168,6 +168,7 @@ public class V_BuscarClienteController {
 				AnchorPane cliente = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
+				Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 				sp.setContent(cliente);
 				nombre = "Cliente: " + listaClientes.get(selectedIndex).getCliente().getNombre();
 				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -8,29 +9,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_BuscarClienteController">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_BuscarClienteController">
    <children>
-      <Pane layoutX="14.0" layoutY="17.0" prefHeight="200.0" prefWidth="1028.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="17.0">
+      <Pane id="panel" layoutX="11.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="225.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="23.0">
          <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Tipo cliente" />
-            <ComboBox fx:id="comboTipoCliente" layoutX="117.0" layoutY="10.0" prefWidth="150.0" />
-            <Label layoutX="14.0" layoutY="48.0" text="Modelo vehículo" />
-            <TextField fx:id="txtModelo" layoutX="117.0" layoutY="44.0" prefHeight="25.0" prefWidth="308.0" promptText="Modelo vehiculo" />
-            <Label layoutX="433.0" layoutY="48.0" text="Matrícula vehículo" />
-            <TextField fx:id="txtMatricula" layoutX="536.0" layoutY="44.0" prefHeight="25.0" prefWidth="139.0" promptText="Matrícula vehículo" />
-            <Label layoutX="14.0" layoutY="79.0" text="Nombre " />
-            <TextField fx:id="txtNombre" layoutX="117.0" layoutY="75.0" prefHeight="25.0" prefWidth="308.0" promptText="Nombre cliente" />
-            <Label layoutX="14.0" layoutY="109.0" text="N.I.F/C.I.F." />
-            <TextField fx:id="txtDni" layoutX="117.0" layoutY="105.0" prefHeight="25.0" prefWidth="139.0" promptText="N.I.F/C.I.F. cliente" />
-            <Label layoutX="14.0" layoutY="140.0" text="Domicilio" />
-            <TextField fx:id="txtDomicilio" layoutX="117.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" promptText="Domicilio cliente" />
-            <Label layoutX="14.0" layoutY="169.0" text="Población" />
-            <TextField fx:id="txtPoblacion" layoutX="117.0" layoutY="165.0" prefHeight="25.0" prefWidth="139.0" promptText="Población cliente" />
-            <Label layoutX="271.0" layoutY="107.0" text="Tlf. 1" />
-            <TextField fx:id="txtFijo" layoutX="327.0" layoutY="105.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 1" />
-            <Label layoutX="271.0" layoutY="140.0" text="Tlf. 2" />
-            <TextField fx:id="txtMovil" layoutX="327.0" layoutY="136.0" prefHeight="25.0" prefWidth="114.0" promptText="Tlf. 2" />
-            <Button fx:id="btnBuscar" layoutX="469.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="34.0" prefWidth="150.0" text="BUSCAR (F12)">
+            <Label layoutX="19.0" layoutY="19.0" styleClass="my-label" text="Tipo cliente" />
+            <ComboBox fx:id="comboTipoCliente" layoutX="135.0" layoutY="5.0" styleClass="my-text-field" />
+            <Label layoutX="16.0" layoutY="67.0" styleClass="my-label" text="Modelo vehículo" />
+            <TextField fx:id="txtModelo" layoutX="135.0" layoutY="57.0" prefHeight="25.0" promptText="Modelo vehiculo" styleClass="my-text-field" />
+            <Label layoutX="21.0" layoutY="108.0" styleClass="my-label" text="Nombre " />
+            <TextField fx:id="txtNombre" layoutX="135.0" layoutY="98.0" prefHeight="25.0" promptText="Nombre cliente" styleClass="my-text-field" />
+            <Label layoutX="23.0" layoutY="149.0" styleClass="my-label" text="N.I.F/C.I.F." />
+            <TextField fx:id="txtDni" layoutX="135.0" layoutY="139.0" prefHeight="25.0" promptText="N.I.F/C.I.F. cliente" styleClass="my-text-field" />
+            <Label layoutX="373.0" layoutY="141.0" styleClass="my-label" text="Domicilio" />
+            <TextField fx:id="txtFijo" layoutX="135.0" layoutY="178.0" prefHeight="25.0" promptText="Tlf. 1" styleClass="my-text-field" />
+            <TextField fx:id="txtMatricula" layoutX="530.0" layoutY="44.0" prefHeight="25.0" promptText="Matrícula vehículo" styleClass="my-text-field" />
+            <TextField fx:id="txtMovil" layoutX="530.0" layoutY="87.0" prefHeight="25.0" promptText="Tlf. 2" styleClass="my-text-field" />
+            <TextField fx:id="txtDomicilio" layoutX="530.0" layoutY="130.0" prefHeight="25.0" promptText="Domicilio cliente" styleClass="my-text-field" />
+            <Label layoutX="372.0" layoutY="48.0" styleClass="my-label" text="Matrícula vehículo" />
+            <Label layoutX="372.0" layoutY="183.0" styleClass="my-label" text="Población" />
+            <TextField fx:id="txtPoblacion" layoutX="530.0" layoutY="172.0" prefHeight="25.0" promptText="Población cliente" styleClass="my-text-field" />
+            <Label layoutX="23.0" layoutY="183.0" styleClass="my-label" text="Tlf. 1" />
+            <Label layoutX="372.0" layoutY="98.0" styleClass="my-label" text="Tlf. 2" />
+            <Button fx:id="btnBuscar" layoutX="803.0" layoutY="72.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="46.0" prefWidth="173.0" styleClass="my-button" text="BUSCAR (F12)">
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,11 +44,11 @@
                </font></Button>
          </children>
       </Pane>
-      <Label layoutX="14.0" text="Buscar cliente" />
-      <Label layoutX="14.0" layoutY="223.0" text="Resultados de la búsqueda" />
-      <Pane layoutX="11.0" layoutY="243.0" prefHeight="427.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
+      <Label layoutX="14.0" styleClass="titulo" text="Buscar cliente" />
+      <Label layoutX="11.0" layoutY="254.0" styleClass="titulo" text="Resultados de la búsqueda" />
+      <Pane layoutX="11.0" layoutY="279.0" prefHeight="391.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="32.0" prefHeight="350.0" prefWidth="1054.0">
+            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="46.0" prefHeight="336.0" prefWidth="1054.0">
               <columns>
                 <TableColumn fx:id="columnaNombre" prefWidth="287.0" text="Nombre cliente" />
                 <TableColumn fx:id="columnaDni" prefWidth="133.0" text="NIF / CIF" />
@@ -56,7 +57,7 @@
                   <TableColumn fx:id="columnaTelf" maxWidth="519.0" prefWidth="141.0" text="Teléfono" />
               </columns>
             </TableView>
-            <Button fx:id="btnVerCliente" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#cargarCliente" text="Ver cliente" />
+            <Button fx:id="btnVerCliente" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#cargarCliente" styleClass="my-button" text="Ver cliente" />
          </children>
       </Pane>
    </children>

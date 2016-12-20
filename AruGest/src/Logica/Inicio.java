@@ -68,13 +68,14 @@ public class Inicio extends Application {
 		// Obtener los precios de Hora e IVA
 		Inicio.CONEXION.getPrecioHoraIva();
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-		if (primaryScreenBounds.getWidth() < 1680 || primaryScreenBounds.getHeight() < 1010) {
-			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-			ALTO_PANTALLA = primaryScreenBounds.getHeight();
-			CAMBIAR_RESOLUCION = true;
-			// Utilidades.ajustarEscena(escenario,
-			// primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
-		}
+		// if (primaryScreenBounds.getWidth() < 1680 ||
+		// primaryScreenBounds.getHeight() < 1010) {
+		ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+		ALTO_PANTALLA = primaryScreenBounds.getHeight();
+		CAMBIAR_RESOLUCION = true;
+		// Utilidades.ajustarEscena(escenario,
+		// primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
+		// }
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class Inicio extends Application {
 			root = (BorderPane) loader.load();
 			Scene escena = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
-				Utilidades.ajustarResolucion(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
+				Utilidades.ajustarResolucionEscenario(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
 			}
 			// System.out.println("Anchura: " + primaryScreenBounds.getWidth() +
 			// " ; Altura: " + primaryScreenBounds.getHeight());

@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Utilidades {
@@ -26,9 +27,14 @@ public class Utilidades {
 	 * @param x
 	 * @param y
 	 */
-	public static void ajustarResolucion(Stage stage, double x, double y) {
+	public static void ajustarResolucionEscenario(Stage stage, double x, double y) {
 		stage.setWidth(x);
 		stage.setHeight(y);
+	}
+
+	public static void ajustarResolucionAnchorPane(AnchorPane ap, double x, double y) {
+		ap.setPrefWidth(x - 262);
+		ap.setPrefHeight(y - 89);
 	}
 
 	public static void gestionarPantallas(GestorVentana pGgv) {

@@ -318,7 +318,7 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
-		txtNumfactura.setId("toolbar");
+		// txtNumfactura.setId("toolbar");
 		paneDatosFactura.getChildren().add(txtNumfactura);
 
 		// Para que el botón de añadir funcione con el Enter

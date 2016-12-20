@@ -190,12 +190,19 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="sp" prefHeight="965.0" prefWidth="1420.0">
+            <ScrollPane fx:id="sp" prefHeight="940.0" prefWidth="1410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1415.0" text="AruGest Software" textAlignment="CENTER">
                      <font>
                         <Font name="Dekar" size="70.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/logo_cargando.gif" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Label>
                </content>
             </ScrollPane>

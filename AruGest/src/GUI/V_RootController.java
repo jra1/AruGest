@@ -295,6 +295,10 @@ public class V_RootController {
 			nombre = "Buscar Cliente";
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(buscarCliente);
+
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(buscarCliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(buscarCliente);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
@@ -313,6 +317,7 @@ public class V_RootController {
 			controller.boton1 = btnPantalla1;
 			controller.boton2 = btnPantalla2;
 			controller.boton3 = btnPantalla3;
+			controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();

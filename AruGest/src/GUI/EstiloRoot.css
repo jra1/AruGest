@@ -1,5 +1,6 @@
+/*
 #toolbar {
-    /*-fx-background-color: deepskyblue;*/
+    -fx-background-color: deepskyblue;
 }
 
 #toolbar:extreme-small-device {
@@ -20,22 +21,146 @@
 #toolbar:large-device {
     -fx-padding: 6 6 1 6;
     -fx-background-color: darkorange ;
-    /*-fx-background-image: url(blue-background.png);*/
 }
-
-
-
+*/
 
 
 
 /*AnchorPane general */
 .back{
-	-fx-background-color: rgb(192,192,192);
+	-fx-background-color: #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);/*rgb(192,192,192);*/
+}
+.back:extreme-small-device{
+	
     -fx-border-style: solid ;
     -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
     /*-fx-font-weight: bold;*/
     -fx-font-size: 14px;
 }
+
+.back:small-device{
+	-fx-border-style: solid ;
+    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 14px;
+}
+
+.back:medium-device{
+	-fx-border-style: solid ;
+    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 14px;
+}
+
+.back:large-device{
+	-fx-border-style: solid ;
+    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 14px;
+}
+
+/*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */
+.titulo{
+	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
+.titulo:extreme-small-device{
+    -fx-font-size: 11px;
+}
+.titulo:small-device{
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+.titulo:medium-device{
+    -fx-font-size: 15px;
+}
+.titulo:large-device{
+    -fx-font-size: 18px;
+}
+
+/*Labels */
+.my-label{
+	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+}
+
+.my-label:extreme-small-device{
+	-fx-font-size: 8px;
+}
+
+.my-label:small-device{
+	-fx-font-size: 10px;
+}
+
+.my-label:medium-device{
+	-fx-font-size: 12px;
+}
+
+.my-label:large-device{
+	-fx-font-size: 14px;
+}
+
+/*TextFields que cambian de tamaño */
+.my-text-field {
+    -fx-background-color:
+        #FFFFFF,
+        #FFFFFF;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 2;	/*0, 0;*/
+    -fx-font-size: 13px;
+    -fx-pref-width: 200px;
+ }
+ .my-text-field:extreme-small-device {
+    -fx-font-size: 10px;
+    -fx-pref-width: 120px;
+    /*-fx-padding: 0 0 0 0;*/
+ }
+ .my-text-field:small-device {
+    -fx-font-size: 11px;
+    -fx-pref-width: 140px;
+    /*-fx-padding: 4 4 4 4;*/
+ }
+ .my-text-field:medium-device {
+    -fx-font-size: 13px;
+    -fx-pref-width: 150px;
+    /*-fx-padding: 6 6 6 6;*/
+ }
+ .my-text-field:large-device {
+    -fx-font-size: 15px;
+    -fx-pref-width: 200px;
+    /*-fx-padding: 10 10 10 10;*/
+ }
+
+.my-text-field:focused {
+    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
+}
+
+/*TextFields que no cambian de tamaño */
+.my-text-field-fijo{
+	-fx-background-color:
+        #FFFFFF,
+        #FFFFFF;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 2;	/*0, 0;*/
+    -fx-font-size: 13px;
+    -fx-pref-width: 200px;
+    -fx-font-weight: bold;
+    
+}
+
+.my-text-field-fijo:focused {
+    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
+}
+
+/*Tablas */
+.my-table{
+	-fx-background-color: rgb(0,255,128);
+}
+
 
 /*Alerts */
 .my-dialog{
@@ -63,12 +188,6 @@
     /*-fx-fill: #292929;*/
 }
 
-/*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */
-.titulo{
-	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    -fx-font-weight: bold;
-    -fx-font-size: 18px;
-}
 
 /*Tabs */
 .my-tab{
@@ -77,11 +196,7 @@
     -fx-font-size: 18px;
 }
 
-/*Labels */
-.my-label{
-	-fx-text-fill: rgb(64,128,128);	
-	-fx-font-weight: bold;
-}
+
 
 /*Labels Sin información */
 .my-label-si{
@@ -90,31 +205,7 @@
 	-fx-font-weight: bold;
 }
 
-/*TextField */
-.my-text-field {
-    -fx-background-color:
-        #FFFFFF,
-        #FFFFFF;
-    -fx-background-insets: 0, 2;
-    -fx-background-radius: 2;	/*0, 0;*/
-    -fx-font-size: 15px;
- }
 
-.my-text-field:focused {
-    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
-}
-
-/*
-.my-text-field:hover {
-    -fx-background-color: #909090, #FFFFFF;
-}
-
-.my-text-field:focused:hover {
-    -fx-background-color:
-        #0093EF,
-        #FFFFFF;
-}
-*/
 
 /*Botones de la aplicación */
 .my-button{
@@ -144,7 +235,52 @@
     -fx-border-color: rgb(171,27,48)/*rgb(236,145,53) darkorange */; 
     -fx-border-radius: 10px;
     -fx-border-width: 2px; /* Grosor del borde */
+    
 }
+
+
+
+
+
+/*
+#panel {
+    -fx-background-color: deepskyblue;
+}
+
+#panel:extreme-small-device {
+    -fx-padding: 1 1 0 1;
+    -fx-background-color: deepskyblue;
+    -fx-font-size: 18px;
+}
+
+#panel:small-device {
+    -fx-padding: 2 2 1 2;
+    -fx-background-color: darkgreen;
+    -fx-font-size: 10px;
+}
+
+#panel:medium-device {
+    -fx-padding: 6 6 1 6;
+    -fx-background-color: white;
+    -fx-font-size: 12px;
+}
+
+#panel:large-device {
+    -fx-padding: 15 15 15 15;
+    -fx-background-color: darkorange ;
+    -fx-font-size: 15px;
+}
+*/
+
+
+
+
+
+
+
+
+
+
 
 /*Botones del root */
 .dark-blue {
