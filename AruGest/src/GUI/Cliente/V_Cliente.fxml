@@ -57,7 +57,7 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="559.0" layoutY="62.0" styleClass="my-label" text="Cos. Postal" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <Label layoutX="559.0" layoutY="62.0" styleClass="my-label" text="Cod. Postal" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                   <Label layoutX="5.0" layoutY="35.0" styleClass="my-label" text="Nombre" GridPane.rowIndex="2" />
                   <TextField fx:id="txtLetra" editable="false" layoutX="774.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="44.0" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <font>

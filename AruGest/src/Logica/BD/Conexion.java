@@ -24,6 +24,8 @@ import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
 import Modelo.Material;
 import Modelo.Particular;
+import Modelo.ProveedorCompania;
+import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Servicio;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucion;
@@ -1558,6 +1560,66 @@ public class Conexion {
 		return listaClientes;
 	}
 
+	/**
+	 * Busca en la BD las compañías que coincidan con los parámetros
+	 * 
+	 * @param nombre
+	 * @param telf
+	 * @return ArrayList con los resultados obtenidos
+	 */
+	public ArrayList<ProveedorCompaniaDireccion> buscarCias(boolean esCia, boolean esDesguace, String nombre,
+			String telf) {
+		String sql = "";
+		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion();
+		ProveedorCompania pc;
+		Direccion d;
+		ArrayList<ProveedorCompaniaDireccion> lista = new ArrayList<ProveedorCompaniaDireccion>();
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			if (esCia) {
+				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESCOMPANIA = TRUE ";
+			} else if (esDesguace) {
+				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESDESGUACE = TRUE ";
+			} else {
+				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESCOMPANIA = FALSE AND PROVEEDORCOMPANIA.ESDESGUACE = FALSE ";
+			}
+			if (!nombre.equalsIgnoreCase("")) {
+				sql += "AND UPPER(PROVEEDORCOMPANIA.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+			}
+
+			if (!telf.equalsIgnoreCase("")) {
+				sql += "AND UPPER(VEHICULO.TELEFONO1) LIKE UPPER('%" + telf + "%') ";
+			}
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				pc = new ProveedorCompania(rs.getInt("IDPROVECOMPA"), rs.getString("CIF"), rs.getString("NOMBRE"),
+						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"),
+						rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
+				d = leerDireccionPorID(rs.getInt("DIRECCIONID"));
+				pcd.setDireccion(d);
+				pcd.setPc(pc);
+				lista.add(pcd);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return lista;
+	}
+
+	/**
+	 * Busca un vehículo en la BD que coincida con los parámetros pasados
+	 * 
+	 * @param tipo
+	 * @param matricula
+	 * @param marca
+	 * @param modelo
+	 * @param nombre
+	 * @return ArrayList con los resultados obtenidos
+	 */
 	public ArrayList<Vehiculo> buscarVehiculos(int tipo, String matricula, String marca, String modelo, String nombre) {
 		String sql = "";
 		Vehiculo v;

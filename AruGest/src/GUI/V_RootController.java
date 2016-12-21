@@ -99,6 +99,9 @@ public class V_RootController {
 			nombre = "Buscar Vehículo";
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(buscarVehiculo);
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(buscarVehiculo, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(buscarVehiculo);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
@@ -143,6 +146,9 @@ public class V_RootController {
 			nombre = "Nueva Factura";
 
 			// Poner la nueva vista en el centro del root
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(nuevaFactura);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
@@ -176,6 +182,9 @@ public class V_RootController {
 			AnchorPane nuevaFactura = (AnchorPane) loader.load();
 			nombre = "Buscar Factura";
 			// Poner la nueva vista en el centro del root
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(nuevaFactura);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
@@ -212,6 +221,9 @@ public class V_RootController {
 			AnchorPane buscar = (AnchorPane) loader.load();
 			nombre = "Buscar proveedor / compañía";
 			// Poner la nueva vista en el centro del root
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(buscar, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(buscar);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
@@ -338,6 +350,9 @@ public class V_RootController {
 			// Poner la nueva vista en el centro del root
 			// main.getRoot().setCenter(vs);
 			sp.setVisible(false);
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(vs, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
 			sp.setContent(vs);
 			sp.setVisible(true);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
