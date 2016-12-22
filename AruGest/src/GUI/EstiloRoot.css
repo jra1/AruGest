@@ -30,6 +30,7 @@
 .back{
 	-fx-background-color: #090a0c,
         linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);/*rgb(192,192,192);*/
+        
 }
 .back:extreme-small-device{
 	
@@ -81,7 +82,7 @@
     -fx-font-size: 18px;
 }
 
-/*Labels */
+/*Labels generales*/
 .my-label{
 	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/
 	-fx-font-weight: bold;
@@ -102,6 +103,30 @@
 
 .my-label:large-device{
 	-fx-font-size: 14px;
+}
+
+/*Labels detalles informacion*/
+.my-label-detalles{
+	-fx-text-fill: white;/*rgb(64,128,128);	*/
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+}
+
+.my-label-detalles:extreme-small-device{
+	-fx-font-size: 8px;
+}
+
+.my-label-detalles:small-device{
+	-fx-font-size: 10px;
+}
+
+.my-label-detalles:medium-device{
+	-fx-font-size: 12px;
+}
+
+.my-label-detalles:large-device{
+	-fx-font-size: 15px;
 }
 
 /*TextFields que cambian de tamaño */

@@ -10,6 +10,7 @@ import com.guigarage.responsive.ResponsiveHandler;
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_EditClienteController;
+import GUI.ProveedorCompania.D_EditCiaController;
 import GUI.Vehiculo.D_EditVehiculoController;
 import GUI.Vehiculo.D_SustitucionDevolucionController;
 import GUI.Vehiculo.D_SustitucionEntregaController;
@@ -17,6 +18,7 @@ import Logica.BD.Conexion;
 import Modelo.BotonVentana;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.GestorVentana;
+import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.application.Application;
@@ -33,6 +35,7 @@ import javafx.stage.Stage;
 public class Inicio extends Application {
 
 	private static Stage escenario; // Donde se cargan las escenas (interfaces)
+	public Scene scene;
 	private BorderPane root;
 
 	// Variables globales para todo el proyecto
@@ -97,28 +100,32 @@ public class Inicio extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		escenario = primaryStage;
+
 		escenario.setTitle("AruGest Software");
 
 		// Ponemos nuestro propio icono de la aplicación
 		escenario.getIcons().add(new Image("file:images/logo_coche.png"));
 
-		// Maximizado
-		escenario.setMaximized(true);
-
 		FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("/GUI/V_Root.fxml"));
 		try {
 			// 1.- Crear la escena desde el AnchorPane
 			root = (BorderPane) loader.load();
-			Scene escena = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
+			scene = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
 				Utilidades.ajustarResolucionEscenario(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
 			}
 			// System.out.println("Anchura: " + primaryScreenBounds.getWidth() +
 			// " ; Altura: " + primaryScreenBounds.getHeight());
 			// 2.- Ponerla y mostrarla
-			escenario.setScene(escena);
-			escenario.show();
+			escenario.setScene(scene);
 			ResponsiveHandler.addResponsiveToWindow(escenario);
+
+			// Maximizado
+			escenario.setMaximized(true);
+
+			// Mostrar
+			escenario.show();
+
 			// 3.- Poner el controlador de la escena
 			V_RootController controlador = loader.getController();
 			controlador.setMainAPP(this);
@@ -214,6 +221,54 @@ public class Inicio extends Application {
 			// if(v != null){
 			controller.setCliente(cped);
 			// }
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean mostrarEditorCia(ProveedorCompaniaDireccion pcd, int tipo) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/ProveedorCompania/D_EditCia.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			switch (tipo) {
+			case 0: // 0 = Cia
+				dialogStage.setTitle("Compañía");
+			case 1: // 1 = Proveedor
+				dialogStage.setTitle("Proveedor");
+			case 2: // 2 = Desguace
+				dialogStage.setTitle("Desguace");
+			}
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_EditCiaController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setCia(pcd);
+			if (tipo == 0) {
+				controller.setEsDesguace(false);
+				controller.setEsCia(true);
+			} else if (tipo == 1) {
+				controller.setEsDesguace(false);
+				controller.setEsCia(false);
+			} else {
+				controller.setEsDesguace(true);
+				controller.setEsCia(false);
+			}
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -333,6 +388,14 @@ public class Inicio extends Application {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public Scene getScene() {
+		return scene;
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 }

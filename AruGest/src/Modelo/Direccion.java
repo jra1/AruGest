@@ -77,6 +77,11 @@ public class Direccion {
 		return this.calleProperty().get();
 	}
 
+	public String getDireccionCompleta() {
+		return this.calleProperty().get() + " " + this.numeroProperty().get() + " " + this.pisoProperty().get() + " "
+				+ this.letraProperty().get();
+	}
+
 	public void setCalle(final String calle) {
 		this.calleProperty().set(calle);
 	}

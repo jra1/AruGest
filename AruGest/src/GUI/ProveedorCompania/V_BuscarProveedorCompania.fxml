@@ -60,10 +60,10 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <GridPane layoutX="701.0" layoutY="3.0" prefHeight="256.0" prefWidth="293.0">
+            <GridPane layoutX="740.0" layoutY="5.0" prefHeight="256.0" prefWidth="339.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="5.66015625" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="96.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="243.0" minWidth="5.66015625" prefWidth="243.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -72,21 +72,31 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label layoutX="916.0" layoutY="123.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="lblTelf1Cia" layoutX="916.0" layoutY="123.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label layoutX="756.0" layoutY="123.0" styleClass="my-label" text="TELÉFONO 1" GridPane.rowIndex="3" />
-                  <Label layoutX="907.0" layoutY="58.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label layoutX="916.0" layoutY="168.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="lblNombreCia" layoutX="907.0" layoutY="58.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="lblDireccionCia" layoutX="916.0" layoutY="168.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label layoutX="756.0" layoutY="58.0" styleClass="my-label" text="NOMBRE CÍA" GridPane.rowIndex="1" />
                   <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="5" />
                   <Label layoutX="756.0" layoutY="85.0" styleClass="my-label" text="CIF" GridPane.rowIndex="2" />
-                  <Label layoutX="913.0" layoutY="85.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="lblCifCia" layoutX="913.0" layoutY="85.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ImageView fitHeight="45.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" />
                   <Label styleClass="my-label" text="TELÉFONO 2" GridPane.rowIndex="4" />
-                  <Label styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="lblTelf2Cia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label styleClass="my-label" text="COD. POSTAL" GridPane.rowIndex="6" />
+                  <Label styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="7" />
+                  <Label styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="8" />
+                  <Label fx:id="lblCPostalCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="lblLocalidadCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label fx:id="lblProvinciaCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
             </GridPane>
+            <Button cancelButton="true" layoutX="585.0" layoutY="186.0" mnemonicParsing="false" onAction="#editarCia" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Editar" />
          </children>
       </Pane>
       <Label layoutX="20.0" layoutY="2.0" styleClass="titulo" text="Buscar compañía de seguros">
@@ -124,6 +134,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#editarProve" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Editar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="357.0" minWidth="10.0" prefWidth="112.33333587646484" />
@@ -151,31 +162,37 @@
                   <TableColumn fx:id="columnaLogoProve" minWidth="0.0" prefWidth="294.6666717529297" text="Logo" />
                </columns>
             </TableView>
-            <GridPane layoutX="816.0" layoutY="15.0" prefHeight="344.0" prefWidth="262.0">
+            <GridPane layoutX="804.0" layoutY="15.0" prefHeight="344.0" prefWidth="276.0">
                <children>
-                  <Label layoutX="916.0" layoutY="123.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label layoutX="756.0" layoutY="123.0" styleClass="my-label" text="TELÉFONO" GridPane.rowIndex="3" />
-                  <Label layoutX="907.0" layoutY="58.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label layoutX="916.0" layoutY="168.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="lblTelf1Prove" layoutX="916.0" layoutY="123.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label layoutX="756.0" layoutY="123.0" styleClass="my-label" text="TELEF. 1" GridPane.rowIndex="3" />
+                  <Label fx:id="lblNombreProve" layoutX="907.0" layoutY="58.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="lblProvinciaProve" layoutX="916.0" layoutY="168.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Label layoutX="756.0" layoutY="58.0" styleClass="my-label" text="NOMBRE" GridPane.rowIndex="1" />
-                  <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="4" />
+                  <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="5" />
                   <Label layoutX="756.0" layoutY="85.0" styleClass="my-label" text="CIF" GridPane.rowIndex="2" />
-                  <Label layoutX="913.0" layoutY="85.0" styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="lblCifProve" layoutX="913.0" layoutY="85.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ImageView fitHeight="45.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" />
-                  <Label styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="5" />
-                  <Label styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="6" />
-                  <Label styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label styleClass="my-label" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="7" />
+                  <Label styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="8" />
+                  <Label fx:id="lblDireccionProve" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="lblLocalidadProve" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label styleClass="my-label" text="TELEF. 2" GridPane.rowIndex="4" />
+                  <Label fx:id="lblTelf2Prove" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label styleClass="my-label" text="C. POSTAL" GridPane.rowIndex="6" />
+                  <Label fx:id="lblCPostalProve" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="5.66015625" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="85.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="198.0" minWidth="5.66015625" prefWidth="191.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />

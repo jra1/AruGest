@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +35,22 @@ public class V_BuscarProveedorCompaniaController {
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaDireccionCompa;
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, Blob> columnaLogoCompa;
+	@FXML
+	private Label lblNombreCia;
+	@FXML
+	private Label lblCifCia;
+	@FXML
+	private Label lblTelf1Cia;
+	@FXML
+	private Label lblTelf2Cia;
+	@FXML
+	private Label lblDireccionCia;
+	@FXML
+	private Label lblCPostalCia;
+	@FXML
+	private Label lblLocalidadCia;
+	@FXML
+	private Label lblProvinciaCia;
 
 	// Variables de proveedores
 	@FXML
@@ -62,12 +79,29 @@ public class V_BuscarProveedorCompaniaController {
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaDireccionProve;
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, Blob> columnaLogoProve;
+	@FXML
+	private Label lblNombreProve;
+	@FXML
+	private Label lblCifProve;
+	@FXML
+	private Label lblTelf1Prove;
+	@FXML
+	private Label lblTelf2Prove;
+	@FXML
+	private Label lblDireccionProve;
+	@FXML
+	private Label lblCPostalProve;
+	@FXML
+	private Label lblLocalidadProve;
+	@FXML
+	private Label lblProvinciaProve;
 
 	// Resto de variables
 	private Inicio main;
 
 	private ObservableList<ProveedorCompaniaDireccion> listaCias = FXCollections.observableArrayList();
 	private ObservableList<ProveedorCompaniaDireccion> listaProveedores = FXCollections.observableArrayList();
+
 	/*
 	 * private ScrollPane sp; private AnchorPane ap; private GestorVentana gv;
 	 * private String nombre = "";
@@ -89,7 +123,11 @@ public class V_BuscarProveedorCompaniaController {
 	 */
 	@FXML
 	private void initialize() {
+		tableCompania.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> mostrarDetallesCia(newValue));
 
+		tableProveedor.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> mostrarDetallesProve(newValue));
 	}
 
 	/**
@@ -155,6 +193,113 @@ public class V_BuscarProveedorCompaniaController {
 				columnaLogoProve.setCellValueFactory(cellData -> cellData.getValue().getPc().logoProperty());
 				tableProveedor.setItems(listaProveedores);
 			}
+		}
+	}
+
+	/**
+	 * Muestra los detalles de la cía seleccionada
+	 * 
+	 * @param pcd
+	 */
+	private void mostrarDetallesCia(ProveedorCompaniaDireccion pcd) {
+		if (pcd != null) {
+			lblNombreCia.setText(pcd.getPc().getNombre());
+			lblCifCia.setText(pcd.getPc().getCif());
+			lblTelf1Cia.setText(pcd.getPc().getTelf1());
+			lblTelf2Cia.setText(pcd.getPc().getTelf2());
+			lblDireccionCia.setText(pcd.getDireccion().getDireccionCompleta());
+			lblCPostalCia.setText("" + pcd.getDireccion().getCpostal());
+			lblLocalidadCia.setText(pcd.getDireccion().getLocalidad());
+			lblProvinciaCia.setText(pcd.getDireccion().getProvincia());
+		} else {
+			lblNombreCia.setText("Selecciona una compañía");
+			lblCifCia.setText("-");
+			lblTelf1Cia.setText("-");
+			lblTelf2Cia.setText("-");
+			lblDireccionCia.setText("-");
+			lblCPostalCia.setText("-");
+			lblLocalidadCia.setText("-");
+			lblProvinciaCia.setText("-");
+		}
+	}
+
+	/**
+	 * Muestra los detalles del proveedor seleccionado
+	 * 
+	 * @param pcd
+	 */
+	private void mostrarDetallesProve(ProveedorCompaniaDireccion pcd) {
+		if (pcd != null) {
+			lblNombreProve.setText(pcd.getPc().getNombre());
+			lblCifProve.setText(pcd.getPc().getCif());
+			lblTelf1Prove.setText(pcd.getPc().getTelf1());
+			lblTelf2Prove.setText(pcd.getPc().getTelf2());
+			lblDireccionProve.setText(pcd.getDireccion().getDireccionCompleta());
+			lblCPostalProve.setText("" + pcd.getDireccion().getCpostal());
+			lblLocalidadProve.setText(pcd.getDireccion().getLocalidad());
+			lblProvinciaProve.setText(pcd.getDireccion().getProvincia());
+		} else {
+			lblNombreProve.setText("Selecciona un proveedor/desguace");
+			lblCifProve.setText("-");
+			lblTelf1Prove.setText("-");
+			lblTelf2Prove.setText("-");
+			lblDireccionProve.setText("-");
+			lblCPostalProve.setText("-");
+			lblLocalidadProve.setText("-");
+			lblProvinciaProve.setText("-");
+		}
+	}
+
+	/**
+	 * Se llama al ventanuco de editar compañía
+	 */
+	@FXML
+	private void editarCia() {
+		ProveedorCompaniaDireccion pcd = tableCompania.getSelectionModel().getSelectedItem();
+		if (pcd != null) {
+			boolean okClicked = Inicio.mostrarEditorCia(pcd, 0);
+			if (okClicked) {
+				if (Inicio.CONEXION.editarCia(pcd)) {
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Compañía modificada con éxito", "");
+					mostrarDetallesCia(pcd);
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar la compañía",
+							"Ocurrió un error al modificar la compañía en la base de datos.");
+				}
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ninguna compañía seleccionada",
+					"Selecciona la compañía que quieras editar.");
+		}
+	}
+
+	/**
+	 * Se llama al ventanuco de editar proveedor
+	 */
+	@FXML
+	private void editarProve() {
+		ProveedorCompaniaDireccion pcd = tableProveedor.getSelectionModel().getSelectedItem();
+		if (pcd != null) {
+			int tipo = 1; // 1-Proveedor, 2-Desguace
+			if (pcd.getPc().isEsdesguace()) {
+				tipo = 2;
+			} else {
+				tipo = 1;
+			}
+			boolean okClicked = Inicio.mostrarEditorCia(pcd, tipo);
+			if (okClicked) {
+				if (Inicio.CONEXION.editarCia(pcd)) {
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Compañía modificada con éxito", "");
+					mostrarDetallesProve(pcd);
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar la compañía",
+							"Ocurrió un error al modificar la compañía en la base de datos.");
+				}
+
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún proveedor/desguace seleccionado",
+					"Selecciona el proveedor/desguace que quieras editar.");
 		}
 	}
 

@@ -2,6 +2,8 @@ package GUI;
 
 import java.io.IOException;
 
+import com.guigarage.responsive.ResponsiveHandler;
+
 import GUI.Cliente.V_BuscarClienteController;
 import GUI.Cliente.V_ClienteController;
 import GUI.Contabilidad.V_BuscarFacturaController;
@@ -225,6 +227,9 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(buscar, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(buscar);
+
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);

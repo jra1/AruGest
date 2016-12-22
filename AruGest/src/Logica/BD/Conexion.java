@@ -341,6 +341,31 @@ public class Conexion {
 	}
 
 	/**
+	 * Actualiza el DIRECCIONID de un proveedor/cia
+	 * 
+	 * @param idproveedor
+	 * @param iddireccion
+	 * @return
+	 */
+	public boolean actualizarIDDireccionProveedor(int idproveedor, int iddireccion) {
+		String sql = "";
+		boolean resul = true;
+		PreparedStatement st;
+		try {
+			sql = "UPDATE PROVEEDORCOMPANIA SET DIRECCIONID = ? WHERE IDPROVECOMPA = " + idproveedor;
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setInt(1, (int) iddireccion);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			resul = true;
+		} catch (SQLException e) {
+			resul = false;
+		}
+		return resul;
+	}
+
+	/**
 	 * Guarda en la base de datos el cliente que se le pasa como parámetro
 	 * 
 	 * @param Direccion,
@@ -624,6 +649,72 @@ public class Conexion {
 				st.setString(2, cped.getEmpresa().getCif());
 				st.setBoolean(3, cped.getEmpresa().isEsProveedor());
 			}
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Edita en la BD la cia/proveedor pasado como parámetro
+	 * 
+	 * @param pcd
+	 * @return
+	 */
+	public boolean editarCia(ProveedorCompaniaDireccion pcd) {
+		boolean res = true;
+		String sql = "";
+		long idGenerado;
+		try {
+			PreparedStatement st;
+			// 1º Direccion
+			// Si ya tiene direccion, se actualiza
+			// Si no tiene direccion (iddireccion = 0), se crea
+			if (pcd.getPc().getDireccionID() != 0) {
+				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
+						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
+						+ pcd.getPc().getDireccionID();
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setString(1, pcd.getDireccion().getCalle());
+				st.setInt(2, pcd.getDireccion().getNumero());
+				st.setString(3, pcd.getDireccion().getPiso());
+				st.setString(4, pcd.getDireccion().getLetra());
+				st.setInt(5, pcd.getDireccion().getCpostal());
+				st.setString(6, pcd.getDireccion().getLocalidad());
+				st.setString(7, pcd.getDireccion().getProvincia());
+				// Ejecutamos la sentencia
+				st.executeUpdate();
+			} else {
+				if (!pcd.getDireccion().getCalle().equalsIgnoreCase("Sin información")) {
+					// Guardar direccion y asignarle su iddireccion al cliente
+					idGenerado = guardarDireccion(pcd.getDireccion());
+					if (idGenerado > 0) { // Si es 0 es que hubo un error al
+						// guardar
+						// la direccion
+						res = actualizarIDDireccionProveedor(pcd.getPc().getIdprovecompa(), (int) idGenerado);
+						// Acabar aquí la funcion si res = false
+					}
+				}
+			}
+			// 2º Cia
+			sql = "UPDATE PROVEEDORCOMPANIA SET CIF = ?, NOMBRE = ?, TELF1 = ?, TELF2 = ?, ESDESGUACE = ?, ESCOMPANIA = ? WHERE IDPROVECOMPA = "
+					+ pcd.getPc().getIdprovecompa();
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setString(1, pcd.getPc().getCif());
+			st.setString(2, pcd.getPc().getNombre());
+			st.setString(3, pcd.getPc().getTelf1());
+			st.setString(4, pcd.getPc().getTelf2());
+			st.setBoolean(5, pcd.getPc().isEsdesguace());
+			st.setBoolean(6, pcd.getPc().isEscompania());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
