@@ -34,7 +34,7 @@
                   <TextField fx:id="txtNombreCompa" promptText="Nombre de compañía" styleClass="my-text-field" GridPane.columnIndex="1" />
                   <Label styleClass="my-label" text="Teléfono" GridPane.rowIndex="1" />
                   <TextField fx:id="txtTelfCompa" promptText="Tlf. de la compañía" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="btnBuscarCompa" mnemonicParsing="false" onAction="#buscarCompania" prefHeight="48.0" prefWidth="136.0" styleClass="my-button" text="BUSCAR" GridPane.columnIndex="2">
+                  <Button fx:id="btnBuscarCompa" mnemonicParsing="false" onAction="#buscarCompania" prefWidth="136.0" styleClass="my-button" text="BUSCAR" GridPane.columnIndex="2">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -85,7 +85,7 @@
                   <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="5" />
                   <Label layoutX="756.0" layoutY="85.0" styleClass="my-label" text="CIF" GridPane.rowIndex="2" />
                   <Label fx:id="lblCifCia" layoutX="913.0" layoutY="85.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ImageView fitHeight="45.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" />
+                  <ImageView fx:id="logoCia" fitHeight="45.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" />
                   <Label styleClass="my-label" text="TELÉFONO 2" GridPane.rowIndex="4" />
                   <Label fx:id="lblTelf2Cia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label styleClass="my-label" text="COD. POSTAL" GridPane.rowIndex="6" />
@@ -97,6 +97,8 @@
                </children>
             </GridPane>
             <Button cancelButton="true" layoutX="585.0" layoutY="186.0" mnemonicParsing="false" onAction="#editarCia" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Editar" />
+            <Button cancelButton="true" layoutX="572.0" layoutY="80.0" mnemonicParsing="false" onAction="#guardarImagen" prefHeight="25.0" prefWidth="158.0" styleClass="my-button" text="GUARDAR IMAGEN" />
+            <Button cancelButton="true" layoutX="572.0" layoutY="120.0" mnemonicParsing="false" onAction="#cargarLogoCia" prefHeight="25.0" prefWidth="158.0" styleClass="my-button" text="CARGAR IMAGEN" />
          </children>
       </Pane>
       <Label layoutX="20.0" layoutY="2.0" styleClass="titulo" text="Buscar compañía de seguros">

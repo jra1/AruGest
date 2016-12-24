@@ -15,10 +15,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class V_BuscarProveedorCompaniaController {
 
 	// Variables de compañías
+	@FXML
+	private ImageView logoCia;
 	@FXML
 	private TextField txtNombreCompa;
 	@FXML
@@ -289,7 +293,7 @@ public class V_BuscarProveedorCompaniaController {
 			boolean okClicked = Inicio.mostrarEditorCia(pcd, tipo);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarCia(pcd)) {
-					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Compañía modificada con éxito", "");
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Compañía modificada con éxito", "");
 					mostrarDetallesProve(pcd);
 				} else {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar la compañía",
@@ -300,6 +304,25 @@ public class V_BuscarProveedorCompaniaController {
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún proveedor/desguace seleccionado",
 					"Selecciona el proveedor/desguace que quieras editar.");
+		}
+	}
+
+	@FXML
+	private void guardarImagen() {
+		if (Inicio.CONEXION.guardarLogo()) {
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Imagen guardada con éxito", "");
+		} else {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar la imagen", "");
+		}
+	}
+
+	@FXML
+	private void cargarLogoCia() {
+		Image i = Inicio.CONEXION.cargarLogo();
+		if (i != null) {
+			logoCia.setImage(i);
+		} else {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al cargar la imagen", "");
 		}
 	}
 

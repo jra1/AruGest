@@ -195,7 +195,7 @@ public class V_BuscarVehiculoController {
 			boolean okClicked = Inicio.mostrarEditorVehiculo(v);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarVehiculo(v)) {
-					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Error", "Vehículo modificado con éxito", "");
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Vehículo modificado con éxito", "");
 				} else {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
 							"Ocurrió un error al guardar el vehículo en la base de datos.");

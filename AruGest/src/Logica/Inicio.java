@@ -244,10 +244,13 @@ public class Inicio extends Application {
 			switch (tipo) {
 			case 0: // 0 = Cia
 				dialogStage.setTitle("Compañía");
+				break;
 			case 1: // 1 = Proveedor
 				dialogStage.setTitle("Proveedor");
+				break;
 			case 2: // 2 = Desguace
 				dialogStage.setTitle("Desguace");
+				break;
 			}
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);

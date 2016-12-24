@@ -1,6 +1,10 @@
 package Logica.BD;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,6 +37,7 @@ import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 
 /**
  * Esta clase se utilizará para todas las funciones que tengan que hacer accesos
@@ -419,6 +424,7 @@ public class Conexion {
 				} else if (cped.getEmpresa() != null) {
 					// Guardar Empresa
 					sql = "INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)";
+					st.close();
 					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					// Añadimos los parametros
 					st.setInt(1, (int) idGenerado);
@@ -429,6 +435,52 @@ public class Conexion {
 					st.executeUpdate();
 				}
 			}
+			res = true;
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * 
+	 * @param cped
+	 * @return
+	 */
+	public boolean guardarCia(ProveedorCompaniaDireccion pcd) {
+		boolean res = true;
+		// 1º Guardar Direccion
+		try {
+			PreparedStatement st;
+			long idGenerado = 0;
+			String sql = "";
+			// Se prepara la sentencia para introducir los datos de la direccion
+			// SI NO ES NULL
+			if (pcd.getDireccion() != null) {
+				idGenerado = guardarDireccion(pcd.getDireccion());
+			}
+
+			// 2º Guardar cía/proveedor
+			sql = "INSERT INTO PROVEEDORCOMPANIA (CIF, NOMBRE, DIRECCIONID, TELF1, TELF2, LOGO, ESDESGUACE, ESCOMPANIA) VALUES (?,?,?,?,?,?,?,?)";
+			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			// Añadimos los parametros
+			st.setString(1, pcd.getPc().getCif());
+			st.setString(2, pcd.getPc().getNombre());
+			if (idGenerado != 0) {
+				st.setInt(3, (int) idGenerado);
+			} else {
+				st.setInt(3, 0);
+			}
+			st.setString(4, pcd.getPc().getTelf1());
+			st.setString(5, pcd.getPc().getTelf2());
+			st.setBlob(6, (Blob) pcd.getPc().getLogo());
+			st.setBoolean(7, pcd.getPc().isEsdesguace());
+			st.setBoolean(8, pcd.getPc().isEscompania());
+			// Ejecutamos la sentencia
+			st.executeUpdate();
 			res = true;
 			// Se cierra la conexion
 			getCon().close();
@@ -643,6 +695,7 @@ public class Conexion {
 				// Guardar Empresa
 				sql = "UPDATE EMPRESA SET NOMBRE = ?, CIF = ?, ESPROVEEDOR = ? " + "WHERE IDEMPRESA = "
 						+ cped.getEmpresa().getIdempresa();
+				st.close();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setString(1, cped.getEmpresa().getNombre());
@@ -799,6 +852,7 @@ public class Conexion {
 				}
 			} else if (cped.getEmpresa() != null) {
 				sql = "SELECT IDEMPRESA FROM EMPRESA WHERE CLIENTEID = " + id;
+				rs.close();
 				rs = st.executeQuery(sql);
 				while (rs.next()) {
 					eliminarEmpresaPorClienteID(id);
@@ -1293,7 +1347,8 @@ public class Conexion {
 
 			while (rs.next()) {
 				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
-						rs.getString("LETRA"), rs.getString("LOCALIDAD"));
+						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+						rs.getString("PROVINCIA"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -1301,6 +1356,54 @@ public class Conexion {
 			ex.printStackTrace();
 		}
 		return d;
+	}
+
+	public boolean guardarLogo() {
+		String sql = "";
+		FileInputStream fis = null;
+		boolean res = true;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			sql = "INSERT INTO DOCUMENTO (CLIENTEID, VEHICULOID, TITULO, DOCUMENTO) VALUES (?, ?, ?, ?)";
+			PreparedStatement stmt = getCon().prepareStatement(sql);
+			stmt.setInt(1, 2); // Cliente JOSEBA RUIZ ARANA
+			stmt.setInt(2, 6); // Vehiculo RENAULT MEGANE 1947FFY
+			stmt.setString(3, "Prueba");
+
+			File image = new File("C:/Users/Joseba/git/AruGest/AruGest/images/docus.png");
+			fis = new FileInputStream(image);
+			stmt.setBinaryStream(4, fis, (int) image.length());
+			stmt.execute();
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	public Image cargarLogo() {
+		String sql = "";
+		InputStream is = null;
+		Image i = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM DOCUMENTO WHERE DOCUMENTO.CLIENTEID = 2";
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				is = rs.getBinaryStream("DOCUMENTO");
+				i = new Image(is);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return i;
 	}
 
 	/**
@@ -1661,7 +1764,7 @@ public class Conexion {
 	public ArrayList<ProveedorCompaniaDireccion> buscarCias(boolean esCia, boolean esDesguace, String nombre,
 			String telf) {
 		String sql = "";
-		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion();
+		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion(esCia);
 		ProveedorCompania pc;
 		Direccion d;
 		ArrayList<ProveedorCompaniaDireccion> lista = new ArrayList<ProveedorCompaniaDireccion>();
@@ -1689,8 +1792,9 @@ public class Conexion {
 						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"),
 						rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
 				d = leerDireccionPorID(rs.getInt("DIRECCIONID"));
-				pcd.setDireccion(d);
-				pcd.setPc(pc);
+				pcd = new ProveedorCompaniaDireccion(pc, d);
+				// pcd.setDireccion(d);
+				// pcd.setPc(pc);
 				lista.add(pcd);
 			}
 			// Se cierra la conexion

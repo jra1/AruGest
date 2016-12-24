@@ -121,12 +121,12 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo proveedor">
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoProve" styleClass="green" text="Nuevo proveedor">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva compañía" />
+                                    <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevaCia" styleClass="green" text="Nueva compañía" />
                                  </children>
                               </VBox>
                            </children>

@@ -83,6 +83,12 @@ public class D_EditCiaController {
 		txtCodPostal.setText("" + pcd.getDireccion().getCpostal());
 		txtLocalidad.setText(pcd.getDireccion().getLocalidad());
 		txtProvincia.setText(pcd.getDireccion().getProvincia());
+		if (pcd.getPc().isEscompania()) {
+			chckboxEsDesguace.setVisible(false);
+		} else {
+			chckboxEsDesguace.setVisible(true);
+			chckboxEsDesguace.setSelected(pcd.getPc().isEsdesguace());
+		}
 	}
 
 	/**
@@ -101,7 +107,8 @@ public class D_EditCiaController {
 	private void handleOk() {
 		if (isInputValid()) {
 			if (pcd.getDireccion() != null) {
-				if (!txtCalle.getText().isEmpty() || !txtCodPostal.getText().isEmpty()
+				if (!txtCalle.getText().isEmpty()
+						|| (!txtCodPostal.getText().isEmpty() && Integer.parseInt(txtCodPostal.getText()) != 0)
 						|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
 					pcd.getDireccion().setCalle(txtCalle.getText());
 					pcd.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
@@ -112,17 +119,20 @@ public class D_EditCiaController {
 					pcd.getDireccion().setProvincia(txtProvincia.getText());
 				}
 			} else {
-				Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
-						txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
-						txtLocalidad.getText(), txtProvincia.getText());
-				pcd.setDireccion(d);
+				if (!txtCalle.getText().isEmpty() || !txtCodPostal.getText().isEmpty()
+						|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
+					Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
+							txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
+							txtLocalidad.getText(), txtProvincia.getText());
+					pcd.setDireccion(d);
+				}
 			}
 
 			pcd.getPc().setNombre(txtNombre.getText());
-			pcd.getPc().setTelf2(txtCif.getText());
+			pcd.getPc().setCif(txtCif.getText());
 			pcd.getPc().setTelf1(txtTel1.getText());
 			pcd.getPc().setTelf2(txtTel2.getText());
-			pcd.getPc().setEsdesguace(esDesguace);
+			pcd.getPc().setEsdesguace(chckboxEsDesguace.isSelected());
 			pcd.getPc().setEscompania(esCia);
 
 			okClicked = true;

@@ -16,6 +16,7 @@ import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.GestorVentana;
+import Modelo.ProveedorCompaniaDireccion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -105,6 +106,8 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(buscarVehiculo, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(buscarVehiculo);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);
@@ -152,6 +155,8 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(nuevaFactura);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);
@@ -188,6 +193,8 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(nuevaFactura);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);
@@ -227,7 +234,6 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(buscar, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(buscar);
-
 			// Esta línea es para que se ejecute la pseudoclase del CSS ya
 			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
@@ -271,7 +277,13 @@ public class V_RootController {
 					AnchorPane cliente = (AnchorPane) loader.load();
 
 					// Poner la nueva vista en el centro del root
+					// **************************************************************************************************
+					Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+					// **************************************************************************************************
 					sp.setContent(cliente);
+					// Esta línea es para que se ejecute la pseudoclase del CSS
+					// ya
+					ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 					// main.getRoot().setCenter(cliente);
 
 					// Poner el controlador de la nueva vista.
@@ -300,6 +312,43 @@ public class V_RootController {
 	}
 
 	/**
+	 * Abre el diálogo de nueva Cía
+	 */
+	@FXML
+	private void nuevaCia() {
+		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion(true);
+		boolean okClicked = Inicio.mostrarEditorCia(pcd, 0);
+		if (okClicked) {
+			// Cuando llega aqui son correctos los datos introducidos
+			if (Inicio.CONEXION.guardarCia(pcd)) {
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Compañía guardada en la base de datos", "");
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar la compañía",
+						"Ocurrió un error al guardar la compañía en la base de datos.");
+			}
+		}
+	}
+
+	/**
+	 * Abre el diálogo de nuevo proveedor
+	 */
+	@FXML
+	private void nuevoProve() {
+		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion(false);
+		boolean okClicked = Inicio.mostrarEditorCia(pcd, 1);
+		if (okClicked) {
+			// Cuando llega aqui son correctos los datos introducidos
+			if (Inicio.CONEXION.guardarCia(pcd)) {
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito",
+						"Proveedor/desguace guardado en la base de datos", "");
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el proveedor/desguace",
+						"Ocurrió un error al guardar el proveedor/desguace en la base de datos.");
+			}
+		}
+	}
+
+	/**
 	 * Coloca la ventana de buscar cliente
 	 */
 	@FXML
@@ -317,6 +366,8 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(buscarCliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(buscarCliente);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);
@@ -359,6 +410,8 @@ public class V_RootController {
 			Utilidades.ajustarResolucionAnchorPane(vs, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			// **************************************************************************************************
 			sp.setContent(vs);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 			sp.setVisible(true);
 			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 			gv = new GestorVentana(ap, nombre);

@@ -4,9 +4,14 @@ public class ProveedorCompaniaDireccion {
 	private ProveedorCompania pc;
 	private Direccion direccion;
 
-	public ProveedorCompaniaDireccion() {
-		setPc(new ProveedorCompania(0, "", "", 0, "", "", null, false, false));
+	public ProveedorCompaniaDireccion(boolean esCia) {
+		setPc(new ProveedorCompania(0, "", "", 0, "", "", null, false, esCia));
 		setDireccion(new Direccion("", 0, "", "", 0, "", ""));
+	}
+
+	public ProveedorCompaniaDireccion(ProveedorCompania pc, Direccion d) {
+		setPc(pc);
+		setDireccion(d);
 	}
 
 	public ProveedorCompania getPc() {

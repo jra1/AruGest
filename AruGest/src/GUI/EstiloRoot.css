@@ -110,7 +110,7 @@
 	-fx-text-fill: white;/*rgb(64,128,128);	*/
 	-fx-font-weight: bold;
 	-fx-font-size: 14px;
-	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+	-fx-font-family: "Trebuchet MT"; /*"Asimov NarOu Mediana" */
 }
 
 .my-label-detalles:extreme-small-device{
