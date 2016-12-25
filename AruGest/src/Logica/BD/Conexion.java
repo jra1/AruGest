@@ -476,7 +476,15 @@ public class Conexion {
 			}
 			st.setString(4, pcd.getPc().getTelf1());
 			st.setString(5, pcd.getPc().getTelf2());
+
+			// File theFile = new File("sample_resume.pdf");
+			// FileInputStream input = null;
+			// input = new FileInputStream(theFile);
+			// myStmt.setBinaryStream(1, input);
+
+			// st.setBinaryStream(6, pcd.getPc().getLogo().getBinaryStream());
 			st.setBlob(6, (Blob) pcd.getPc().getLogo());
+
 			st.setBoolean(7, pcd.getPc().isEsdesguace());
 			st.setBoolean(8, pcd.getPc().isEscompania());
 			// Ejecutamos la sentencia
@@ -758,7 +766,7 @@ public class Conexion {
 				}
 			}
 			// 2º Cia
-			sql = "UPDATE PROVEEDORCOMPANIA SET CIF = ?, NOMBRE = ?, TELF1 = ?, TELF2 = ?, ESDESGUACE = ?, ESCOMPANIA = ? WHERE IDPROVECOMPA = "
+			sql = "UPDATE PROVEEDORCOMPANIA SET CIF = ?, NOMBRE = ?, TELF1 = ?, TELF2 = ?, LOGO = ?, ESDESGUACE = ?, ESCOMPANIA = ? WHERE IDPROVECOMPA = "
 					+ pcd.getPc().getIdprovecompa();
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
@@ -766,14 +774,36 @@ public class Conexion {
 			st.setString(2, pcd.getPc().getNombre());
 			st.setString(3, pcd.getPc().getTelf1());
 			st.setString(4, pcd.getPc().getTelf2());
-			st.setBoolean(5, pcd.getPc().isEsdesguace());
-			st.setBoolean(6, pcd.getPc().isEscompania());
+			st.setBlob(5, (Blob) pcd.getPc().getLogo());
+			st.setBoolean(6, pcd.getPc().isEsdesguace());
+			st.setBoolean(7, pcd.getPc().isEscompania());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
 			// Se cierra la conexion
 			getCon().close();
 			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+
+	public boolean eliminarCia(int idCia, int idDireccion) {
+		String sql = "";
+		boolean res = true;
+		PreparedStatement pt;
+		try {
+			// Eliminar cía
+			sql = "DELETE FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.IDPROVECOMPA = " + idCia;
+			pt = getCon().prepareStatement(sql);
+			pt.executeUpdate();
+
+			// Eliminar direccion
+			if (idDireccion > 0) {
+				res = eliminarDireccionPorID(idDireccion);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			res = false;
@@ -1372,7 +1402,14 @@ public class Conexion {
 
 			File image = new File("C:/Users/Joseba/git/AruGest/AruGest/images/docus.png");
 			fis = new FileInputStream(image);
-			stmt.setBinaryStream(4, fis, (int) image.length());
+			stmt.setBinaryStream(4, fis/* , (int) image.length() */);
+			// stmt.setBlob(4, fis);
+
+			// File theFile = new File("sample_resume.pdf");
+			// FileInputStream input = null;
+			// input = new FileInputStream(theFile);
+			// myStmt.setBinaryStream(1, input);
+
 			stmt.execute();
 			// Se cierra la conexion
 			getCon().close();
@@ -1384,19 +1421,28 @@ public class Conexion {
 		return res;
 	}
 
-	public Image cargarLogo() {
+	/**
+	 * Carga y devuelve el logo de la cía / proveedor cuyo id se le pasa como
+	 * parámetro
+	 * 
+	 * @param id
+	 * @return logo o null
+	 */
+	public Image cargarLogo(int id) {
 		String sql = "";
 		InputStream is = null;
 		Image i = null;
 		try {
 			// Se prepara la sentencia para buscar los datos del cliente
 			Statement st = getCon().createStatement();
-			sql = "SELECT * FROM DOCUMENTO WHERE DOCUMENTO.CLIENTEID = 2";
+			sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.IDPROVECOMPA = " + id;
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				is = rs.getBinaryStream("DOCUMENTO");
-				i = new Image(is);
+				is = rs.getBinaryStream("LOGO");
+				if (is != null) {
+					i = new Image(is);
+				}
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -1788,13 +1834,14 @@ public class Conexion {
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
+				// InputStream is = rs.getBinaryStream("LOGO");
+				// Blob b = getCon().createBlob();
+				// b.setBytes(1, new byte[is.read()]);
 				pc = new ProveedorCompania(rs.getInt("IDPROVECOMPA"), rs.getString("CIF"), rs.getString("NOMBRE"),
 						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"),
 						rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
 				d = leerDireccionPorID(rs.getInt("DIRECCIONID"));
 				pcd = new ProveedorCompaniaDireccion(pc, d);
-				// pcd.setDireccion(d);
-				// pcd.setPc(pc);
 				lista.add(pcd);
 			}
 			// Se cierra la conexion

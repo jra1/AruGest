@@ -1,5 +1,13 @@
 package GUI.ProveedorCompania;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+
+import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Direccion;
 import Modelo.ProveedorCompaniaDireccion;
@@ -7,6 +15,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -40,12 +51,15 @@ public class D_EditCiaController {
 	private TextField txtLocalidad;
 	@FXML
 	private TextField txtProvincia;
+	@FXML
+	private ImageView logo;
 
 	private Stage dialogStage;
 	private ProveedorCompaniaDireccion pcd = null;
 	private boolean esDesguace = false;
 	private boolean esCia = false;
 	private boolean okClicked = false;
+	File imgFile;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -88,6 +102,15 @@ public class D_EditCiaController {
 		} else {
 			chckboxEsDesguace.setVisible(true);
 			chckboxEsDesguace.setSelected(pcd.getPc().isEsdesguace());
+		}
+		if (pcd.getPc().getLogo() != null) {
+			try {
+				InputStream is = pcd.getPc().getLogo().getBinaryStream();
+				logo.setImage(new Image(is));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", "");
+			}
 		}
 	}
 
@@ -134,6 +157,34 @@ public class D_EditCiaController {
 			pcd.getPc().setTelf2(txtTel2.getText());
 			pcd.getPc().setEsdesguace(chckboxEsDesguace.isSelected());
 			pcd.getPc().setEscompania(esCia);
+			if (imgFile != null) {
+				// Se guarda el logo como logo del ProveedorCompania
+				try {
+					Blob b1 = Inicio.CONEXION.getCon().createBlob();
+					FileInputStream fis = new FileInputStream(new File(imgFile.getAbsolutePath()));
+					ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+					int nRead;
+					byte[] data = new byte[(int) imgFile.length()];
+					while ((nRead = fis.read(data, 0, data.length)) != -1) {
+						buffer.write(data, 0, nRead);
+					}
+					buffer.flush();
+					byte[] bytes = buffer.toByteArray();
+					buffer.close();
+					fis.close();
+					b1.setBytes(1, bytes);
+					pcd.getPc().setLogo(b1);
+
+					// File image = new
+					// File("C:/Users/Joseba/git/AruGest/AruGest/images/docus.png");
+					// fis = new FileInputStream(image);
+					// stmt.setBinaryStream(4, fis, (int) image.length());
+					// stmt.setBinar(4, fis);
+				} catch (Exception e) {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el logo en el objeto",
+							e.getMessage());
+				}
+			}
 
 			okClicked = true;
 			dialogStage.close();
@@ -183,6 +234,34 @@ public class D_EditCiaController {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
 					errorMessage);
 			return false;
+		}
+	}
+
+	/**
+	 * Abre un selector de archivos para que el usuario seleccione el logo de la
+	 * compañía/proveedor
+	 */
+	@FXML
+	private void buscarLogo() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Buscar logo compañía/proveedor");
+
+		// Agregar filtros para facilitar la busqueda
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.*"),
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
+
+		// Obtener la imagen seleccionada
+		imgFile = fileChooser.showOpenDialog(dialogStage);
+
+		// Mostar la imagen
+		if (imgFile != null) {
+			try {
+				// Se muestra el logo en el ImageView
+				Image image = new Image("file:" + imgFile.getAbsolutePath());
+				logo.setImage(image);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -29,36 +29,26 @@
 /*AnchorPane general */
 .back{
 	-fx-background-color: #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);/*rgb(192,192,192);*/
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);/*rgb(192,192,192);*/ 
+     -fx-border-style: solid ;
+    -fx-font-family: "Trebuchet MT";/*"Linux Biolinum G"; "Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
         
 }
 .back:extreme-small-device{
-	
-    -fx-border-style: solid ;
-    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    /*-fx-font-weight: bold;*/
-    -fx-font-size: 14px;
+	-fx-font-size: 14px;
 }
 
 .back:small-device{
-	-fx-border-style: solid ;
-    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    /*-fx-font-weight: bold;*/
-    -fx-font-size: 14px;
+	-fx-font-size: 14px;
 }
 
 .back:medium-device{
-	-fx-border-style: solid ;
-    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    /*-fx-font-weight: bold;*/
-    -fx-font-size: 14px;
+	-fx-font-size: 14px;
 }
 
 .back:large-device{
-	-fx-border-style: solid ;
-    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    /*-fx-font-weight: bold;*/
-    -fx-font-size: 14px;
+	-fx-font-size: 14px;
 }
 
 /*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */

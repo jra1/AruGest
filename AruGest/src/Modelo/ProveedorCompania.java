@@ -126,7 +126,7 @@ public class ProveedorCompania {
 		return this.logo;
 	}
 
-	public Object getLogo() {
+	public Blob getLogo() {
 		return this.logoProperty().get();
 	}
 

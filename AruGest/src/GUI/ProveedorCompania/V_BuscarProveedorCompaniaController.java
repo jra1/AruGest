@@ -1,15 +1,19 @@
 package GUI.ProveedorCompania;
 
-import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ProveedorCompaniaDireccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -38,8 +42,6 @@ public class V_BuscarProveedorCompaniaController {
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaDireccionCompa;
 	@FXML
-	private TableColumn<ProveedorCompaniaDireccion, Blob> columnaLogoCompa;
-	@FXML
 	private Label lblNombreCia;
 	@FXML
 	private Label lblCifCia;
@@ -55,8 +57,12 @@ public class V_BuscarProveedorCompaniaController {
 	private Label lblLocalidadCia;
 	@FXML
 	private Label lblProvinciaCia;
+	@FXML
+	private Button btnEliminarCia;
 
 	// Variables de proveedores
+	@FXML
+	private ImageView logoProve;
 	@FXML
 	private TextField txtNombreProve;
 	@FXML
@@ -72,8 +78,6 @@ public class V_BuscarProveedorCompaniaController {
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaNombreProve;
 	@FXML
-	private TableColumn<ProveedorCompaniaDireccion, String> columnaCifProve;
-	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaTelfProve;
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaLocalidadProve;
@@ -81,8 +85,6 @@ public class V_BuscarProveedorCompaniaController {
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaProvinciaProve;
 	@FXML
 	private TableColumn<ProveedorCompaniaDireccion, String> columnaDireccionProve;
-	@FXML
-	private TableColumn<ProveedorCompaniaDireccion, Blob> columnaLogoProve;
 	@FXML
 	private Label lblNombreProve;
 	@FXML
@@ -99,6 +101,8 @@ public class V_BuscarProveedorCompaniaController {
 	private Label lblLocalidadProve;
 	@FXML
 	private Label lblProvinciaProve;
+	@FXML
+	private Button btnEliminarProve;
 
 	// Resto de variables
 	private Inicio main;
@@ -132,6 +136,21 @@ public class V_BuscarProveedorCompaniaController {
 
 		tableProveedor.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesProve(newValue));
+
+		// Añadir un listener a los botones de eliminar cía y eliminar proveedor
+		btnEliminarCia.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				eliminarCia(0);
+			}
+		});
+
+		btnEliminarProve.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				eliminarCia(1);
+			}
+		});
 	}
 
 	/**
@@ -159,7 +178,6 @@ public class V_BuscarProveedorCompaniaController {
 					columnaDireccionCompa.setCellValueFactory(
 							cellData -> cellData.getValue().getDireccion().direccionCompletaProperty());
 				}
-				columnaLogoCompa.setCellValueFactory(cellData -> cellData.getValue().getPc().logoProperty());
 				tableCompania.setItems(listaCias);
 			}
 		}
@@ -181,7 +199,6 @@ public class V_BuscarProveedorCompaniaController {
 			for (ProveedorCompaniaDireccion pcd : lista) {
 				listaProveedores.add(pcd);
 				columnaNombreProve.setCellValueFactory(cellData -> cellData.getValue().getPc().nombreProperty());
-				columnaCifProve.setCellValueFactory(cellData -> cellData.getValue().getPc().cifProperty());
 				columnaTelfProve.setCellValueFactory(cellData -> cellData.getValue().getPc().telf1Property());
 				columnaLocalidadProve
 						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
@@ -194,7 +211,6 @@ public class V_BuscarProveedorCompaniaController {
 					columnaDireccionProve.setCellValueFactory(
 							cellData -> cellData.getValue().getDireccion().direccionCompletaProperty());
 				}
-				columnaLogoProve.setCellValueFactory(cellData -> cellData.getValue().getPc().logoProperty());
 				tableProveedor.setItems(listaProveedores);
 			}
 		}
@@ -215,6 +231,18 @@ public class V_BuscarProveedorCompaniaController {
 			lblCPostalCia.setText("" + pcd.getDireccion().getCpostal());
 			lblLocalidadCia.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaCia.setText(pcd.getDireccion().getProvincia());
+			try {
+				Image i = Inicio.CONEXION.cargarLogo(pcd.getPc().getIdprovecompa());
+				if (i != null) {
+					logoCia.setImage(i);
+					logoCia.setVisible(true);
+				} else {
+					logoCia.setVisible(false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", "");
+			}
 		} else {
 			lblNombreCia.setText("Selecciona una compañía");
 			lblCifCia.setText("-");
@@ -242,6 +270,18 @@ public class V_BuscarProveedorCompaniaController {
 			lblCPostalProve.setText("" + pcd.getDireccion().getCpostal());
 			lblLocalidadProve.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaProve.setText(pcd.getDireccion().getProvincia());
+			try {
+				Image i = Inicio.CONEXION.cargarLogo(pcd.getPc().getIdprovecompa());
+				if (i != null) {
+					logoProve.setImage(i);
+					logoProve.setVisible(true);
+				} else {
+					logoProve.setVisible(false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", e.getMessage());
+			}
 		} else {
 			lblNombreProve.setText("Selecciona un proveedor/desguace");
 			lblCifProve.setText("-");
@@ -307,23 +347,55 @@ public class V_BuscarProveedorCompaniaController {
 		}
 	}
 
-	@FXML
-	private void guardarImagen() {
-		if (Inicio.CONEXION.guardarLogo()) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Imagen guardada con éxito", "");
+	private void eliminarCia(int tipo) { // 0-cía, 1-proveedor/desguace
+		ProveedorCompaniaDireccion pcd = null;
+		String nombre = "";
+		int selectedIndex = -1;
+		if (tipo == 0) {
+			selectedIndex = tableCompania.getSelectionModel().getSelectedIndex();
+			pcd = tableCompania.getSelectionModel().getSelectedItem();
+			nombre = "compañía";
+		} else if (tipo == 1) {
+			selectedIndex = tableProveedor.getSelectionModel().getSelectedIndex();
+			pcd = tableProveedor.getSelectionModel().getSelectedItem();
+			nombre = "proveedor/desguace";
+		}
+		if (selectedIndex >= 0) {
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar " + nombre,
+					"¿Está seguro que quiere eliminar " + pcd.getPc().getNombre() + "?", "");
+			if (result.get() == ButtonType.OK) {
+				if (Inicio.CONEXION.eliminarCia(pcd.getPc().getIdprovecompa(), pcd.getDireccion().getIddireccion())) {
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Compañía eliminada", "");
+					if (tipo == 0) {
+						tableCompania.getItems().remove(selectedIndex);
+						tableCompania.getSelectionModel().clearSelection();
+						logoCia.setVisible(false);
+					} else if (tipo == 1) {
+						tableProveedor.getItems().remove(selectedIndex);
+						tableProveedor.getSelectionModel().clearSelection();
+						logoProve.setVisible(false);
+					}
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar la compañía",
+							"Ocurrió un error al eliminar la compañía de la base de datos.");
+				}
+			}
 		} else {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar la imagen", "");
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ninguna compañía seleccionada",
+					"Selecciona la compañía que quieras eliminar.");
 		}
 	}
 
 	@FXML
 	private void cargarLogoCia() {
-		Image i = Inicio.CONEXION.cargarLogo();
-		if (i != null) {
-			logoCia.setImage(i);
-		} else {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al cargar la imagen", "");
-		}
+		// Image i = Inicio.CONEXION.cargarLogo();
+		// if (i != null) {
+		// logoCia.setImage(i);
+		// } else {
+		// Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al cargar
+		// la
+		// imagen", "");
+		// }
 	}
 
 	public Inicio getMain() {
