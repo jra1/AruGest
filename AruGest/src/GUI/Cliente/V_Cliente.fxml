@@ -137,7 +137,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="37.0" prefHeight="282.0" prefWidth="636.0">
+                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="282.0" prefWidth="636.0">
                                 <columns>
                                   <TableColumn fx:id="columnaMarca" prefWidth="811.0" text="Marca y modelo" />
                                   <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="179.0" text="Matrícula" />
@@ -202,7 +202,7 @@
                                     <CheckBox id="chckbox-vehi-susti" fx:id="esVehiculoSusti" disable="true" mnemonicParsing="false" styleClass="my-label" text="VEHÍCULO SUSTITUCIÓN" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                  </children>
                               </GridPane>
-                              <Button fx:id="btnHacerFactura" layoutX="372.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" styleClass="my-button" text="Hacer factura / presupuesto" />
+                              <Button fx:id="btnHacerFactura" layoutX="372.0" layoutY="7.0" mnemonicParsing="false" onAction="#hacerFactura" prefHeight="27.0" styleClass="my-button" text="Hacer factura / presupuesto" />
                               <Label fx:id="lblSI" alignment="CENTER" layoutX="8.0" layoutY="37.0" prefHeight="401.0" prefWidth="992.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                            <opaqueInsets>
@@ -276,7 +276,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="53.0" layoutY="9.0" mnemonicParsing="false" onAction="#marcarDevuelto" text="Marcar vehículo como devuelto" />
+                              <Button layoutX="53.0" layoutY="8.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="25.0" prefWidth="206.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
                               <TableView fx:id="tableSustitucion" editable="true" layoutX="10.0" layoutY="41.0" prefHeight="216.0" prefWidth="1053.0">
                                  <columns>
                                     <TableColumn fx:id="columnaMarcaSustitucion" prefWidth="126.0" text="Vehículo sustitución" />

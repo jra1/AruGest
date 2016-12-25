@@ -13,17 +13,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="680.0" prefWidth="1106.0" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.V_VehiculosSustitucionController">
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.V_VehiculosSustitucionController">
    <children>
-      <Label layoutX="4.0" layoutY="4.0" text="Disponibles">
+      <Label layoutX="4.0" layoutY="4.0" styleClass="titulo" text="Disponibles">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="4.0" layoutY="24.0" prefHeight="242.0" prefWidth="245.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="24.0">
+      <Pane layoutX="6.0" layoutY="26.0" prefHeight="242.0" prefWidth="238.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="25.0">
          <children>
             <CheckBox fx:id="chkboxEsProveedor" disable="true" layoutX="5.0" layoutY="62.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
-            <TableView fx:id="tableDisponibles" editable="true" layoutX="11.0" layoutY="11.0" prefHeight="220.0" prefWidth="224.0">
+            <TableView fx:id="tableDisponibles" editable="true" layoutX="7.0" layoutY="11.0" prefHeight="220.0" prefWidth="224.0">
                <columns>
                   <TableColumn fx:id="columnaVehiculoDisponibles" prefWidth="126.0" text="Vehículo sustitución" />
                   <TableColumn fx:id="columnaMatriculaDisponibles" minWidth="50.0" prefWidth="96.0" text="Matrícula" />
@@ -34,58 +34,57 @@
             </TableView>
          </children>
       </Pane>
-      <Pane layoutX="4.0" layoutY="288.0" prefHeight="384.0" prefWidth="1096.0" styleClass="background" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="288.0">
+      <Pane layoutX="6.0" layoutY="290.0" prefHeight="384.0" prefWidth="1088.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="289.0">
          <children>
-            <TableView fx:id="tableHistorico" editable="true" layoutX="11.0" layoutY="109.0" prefHeight="258.0" prefWidth="1068.0">
+            <TableView fx:id="tableHistorico" editable="true" layoutX="7.0" layoutY="130.0" prefHeight="242.0" prefWidth="1068.0">
               <columns>
-                <TableColumn fx:id="columnaVehiculoHistorico" prefWidth="126.0" text="Vehículo sustitución" />
-                <TableColumn fx:id="columnaMatriculaHistorico" minWidth="50.0" prefWidth="96.0" text="Matrícula" />
-                  <TableColumn fx:id="columnaClienteHistorico" minWidth="50.0" prefWidth="264.0" text="Cliente" />
-                  <TableColumn fx:id="columnaFechaEntregaHistorico" minWidth="39.0" prefWidth="88.0" text="Fecha entrega" />
-                  <TableColumn fx:id="columnaFechaDevolucionHistorico" minWidth="50.0" prefWidth="110.0" text="Fecha devolución" />
-                  <TableColumn fx:id="columnaObservacionesHistorico" minWidth="50.0" prefWidth="382.0" text="Observaciones" />
+                <TableColumn fx:id="columnaVehiculoHistorico" prefWidth="151.0" text="Vehículo sustitución" />
+                <TableColumn fx:id="columnaMatriculaHistorico" minWidth="50.0" prefWidth="95.0" text="Matrícula" />
+                  <TableColumn fx:id="columnaClienteHistorico" minWidth="50.0" prefWidth="203.0" text="Cliente" />
+                  <TableColumn fx:id="columnaFechaEntregaHistorico" minWidth="39.0" prefWidth="125.0" text="Fecha entrega" />
+                  <TableColumn fx:id="columnaFechaDevolucionHistorico" minWidth="50.0" prefWidth="145.0" text="Fecha devolución" />
+                  <TableColumn fx:id="columnaObservacionesHistorico" minWidth="50.0" prefWidth="347.0" text="Observaciones" />
               </columns>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </TableView>
-            <Label layoutX="8.0" layoutY="3.0" text="Filtrar por:">
+            <Label layoutX="8.0" layoutY="3.0" styleClass="my-label" text="Filtrar por:">
                <font>
                   <Font name="Caladea" size="15.0" />
                </font>
             </Label>
-            <GridPane layoutX="14.0" layoutY="19.0" prefHeight="86.0" prefWidth="755.0">
+            <GridPane hgap="5.0" layoutX="14.0" layoutY="19.0" prefHeight="99.0" prefWidth="641.0" vgap="5.0">
                <children>
-                  <Label text="Vehículo" GridPane.rowIndex="2" />
-                  <Label text="Matrícula" GridPane.rowIndex="1" />
-                  <Label text="Nombre cliente" />
-                  <TextField fx:id="txtNombre" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Joseba Ruiz" GridPane.columnIndex="1">
+                  <Label styleClass="my-label" text="Vehículo" GridPane.rowIndex="2" />
+                  <Label styleClass="my-label" text="Matrícula" GridPane.rowIndex="1" />
+                  <Label styleClass="my-label" text="Nombre cliente" />
+                  <TextField fx:id="txtNombre" prefHeight="23.0" prefWidth="240.0" promptText="Ej. Joseba Ruiz" styleClass="my-text-field" GridPane.columnIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtMatricula" prefHeight="23.0" prefWidth="179.0" promptText="Ej. 1947FFY" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="txtMatricula" prefHeight="23.0" prefWidth="179.0" promptText="Ej. 1947FFY" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtVehiculo" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Renault Megane" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="txtVehiculo" prefHeight="23.0" prefWidth="179.0" promptText="Ej. Renault Megane" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <Label text="Fecha entrega" GridPane.columnIndex="3" />
-                  <Label text="Fecha devolución" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <DatePicker fx:id="txtFechaEntrega" GridPane.columnIndex="4" />
-                  <DatePicker fx:id="txtFechaDevolucion" prefHeight="13.0" prefWidth="174.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Button fx:id="btnFiltrar" mnemonicParsing="false" onAction="#filtrar" text="Filtrar" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label styleClass="my-label" text="Fecha entrega" GridPane.columnIndex="2" />
+                  <Label styleClass="my-label" text="Fecha devolución" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="txtFechaEntrega" styleClass="my-text-field" GridPane.columnIndex="3" />
+                  <DatePicker fx:id="txtFechaDevolucion" prefHeight="13.0" prefWidth="174.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="btnFiltrar" mnemonicParsing="false" onAction="#filtrar" prefHeight="25.0" prefWidth="62.0" styleClass="my-button" text="Filtrar" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="114.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="319.0" minWidth="10.0" prefWidth="270.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="124.0" />
-                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="106.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" prefWidth="207.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="128.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="319.0" minWidth="10.0" prefWidth="209.0" />
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="209.0" />
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="155.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -95,14 +94,14 @@
             </GridPane>
          </children>
       </Pane>
-      <Label layoutX="4.0" layoutY="268.0" text="Histórico de vehículos de sustitución">
+      <Label layoutX="4.0" layoutY="268.0" styleClass="titulo" text="Histórico de vehículos de sustitución">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="259.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background">
+      <Pane layoutX="252.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background">
          <children>
-            <TableView fx:id="tablePrestados" editable="true" layoutX="11.0" layoutY="37.0" prefHeight="194.0" prefWidth="817.0">
+            <TableView fx:id="tablePrestados" editable="true" layoutX="9.0" layoutY="41.0" prefHeight="194.0" prefWidth="817.0">
                <columns>
                   <TableColumn fx:id="columnaVehiculoPrestados" prefWidth="126.0" text="Vehículo sustitución" />
                   <TableColumn fx:id="columnaMatriculaPrestados" minWidth="50.0" prefWidth="84.0" text="Matrícula" />
@@ -114,10 +113,10 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </TableView>
-            <Button layoutX="11.0" layoutY="6.0" mnemonicParsing="false" onAction="#marcarDevuelto" text="Marcar vehículo como devuelto" />
+            <Button layoutX="11.0" layoutY="6.0" mnemonicParsing="false" onAction="#marcarDevuelto" styleClass="my-button" text="Marcar vehículo como devuelto" />
          </children>
       </Pane>
-      <Label layoutX="259.0" layoutY="4.0" text="Prestados actualmente">
+      <Label layoutX="252.0" layoutY="4.0" styleClass="titulo" text="Prestados actualmente">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
