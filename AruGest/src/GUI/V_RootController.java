@@ -170,6 +170,9 @@ public class V_RootController {
 			// Poner el controlador de la nueva vista.
 			V_NuevaFacturaController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
 			// controller.setFocus();
 
 		} catch (IOException e) {
@@ -249,6 +252,9 @@ public class V_RootController {
 			// Poner el controlador de la nueva vista.
 			V_BuscarProveedorCompaniaController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
 			/*
 			 * controller.setScrollPane(sp); controller.boton1 = btnPantalla1;
 			 * controller.boton2 = btnPantalla2; controller.boton3 =
@@ -426,6 +432,10 @@ public class V_RootController {
 			// Poner el controlador de la nueva vista.
 			V_VehiculosSustitucionController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
+			controller.setFocus();
 
 		} catch (IOException e) {
 			e.printStackTrace();

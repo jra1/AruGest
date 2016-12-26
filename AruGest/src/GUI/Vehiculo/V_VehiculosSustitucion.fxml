@@ -34,7 +34,7 @@
             </TableView>
          </children>
       </Pane>
-      <Pane layoutX="6.0" layoutY="290.0" prefHeight="384.0" prefWidth="1088.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="289.0">
+      <Pane layoutX="6.0" layoutY="290.0" prefHeight="384.0" prefWidth="1088.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="289.0">
          <children>
             <TableView fx:id="tableHistorico" editable="true" layoutX="7.0" layoutY="130.0" prefHeight="242.0" prefWidth="1068.0">
               <columns>
@@ -99,7 +99,7 @@
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="252.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background">
+      <Pane layoutX="252.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="11.0">
          <children>
             <TableView fx:id="tablePrestados" editable="true" layoutX="9.0" layoutY="41.0" prefHeight="194.0" prefWidth="817.0">
                <columns>

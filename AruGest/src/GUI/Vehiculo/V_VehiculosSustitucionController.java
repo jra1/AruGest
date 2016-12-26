@@ -84,6 +84,9 @@ public class V_VehiculosSustitucionController {
 	private ObservableList<VehiculoSustitucionClienteVehiculo> listaHistorico = FXCollections.observableArrayList();
 
 	private Inicio main;
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
 
 	public void setMainAPP(Inicio p) {
 		setMain(p);
@@ -304,6 +307,10 @@ public class V_VehiculosSustitucionController {
 		//
 		// }
 		// }
+	}
+
+	public void setFocus() {
+		txtNombre.requestFocus();
 	}
 
 	public Inicio getMain() {

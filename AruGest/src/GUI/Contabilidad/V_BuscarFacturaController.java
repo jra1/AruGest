@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.guigarage.responsive.ResponsiveHandler;
+
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.FacturaClienteVehiculo;
@@ -172,7 +174,12 @@ public class V_BuscarFacturaController {
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
+				// **************************************************************************************************
+				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+				// **************************************************************************************************
 				sp.setContent(nuevaFactura);
+				// Esta línea es para que se ejecute la pseudoclase del CSS ya
+				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 				nombre = "Factura: " + listaFacturas.get(selectedIndex).getCliente().getNombre();
 				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 				gv = new GestorVentana(ap, nombre);

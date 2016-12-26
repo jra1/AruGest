@@ -106,6 +106,9 @@ public class V_BuscarProveedorCompaniaController {
 
 	// Resto de variables
 	private Inicio main;
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
 
 	private ObservableList<ProveedorCompaniaDireccion> listaCias = FXCollections.observableArrayList();
 	private ObservableList<ProveedorCompaniaDireccion> listaProveedores = FXCollections.observableArrayList();

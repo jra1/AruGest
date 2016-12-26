@@ -17,14 +17,14 @@
 
 <AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.V_ClienteController">
    <children>
-      <Label layoutX="4.0" layoutY="1.0" styleClass="titulo" text="Datos cliente">
+      <Label layoutX="8.0" layoutY="2.0" styleClass="titulo" text="Datos cliente">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
       <Pane layoutX="7.0" layoutY="24.0" prefHeight="210.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="23.0">
          <children>
-            <Button fx:id="btnModificarCliente" layoutX="7.0" layoutY="173.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="25.0" prefWidth="95.0" styleClass="my-button" text="Modificar" />
+            <Button fx:id="btnModificarCliente" layoutX="7.0" layoutY="173.0" mnemonicParsing="false" onAction="#editarCliente" prefHeight="27.0" prefWidth="95.0" styleClass="my-button" text="Modificar" />
             <Button fx:id="btnEliminarCliente" layoutX="113.0" layoutY="173.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="27.0" prefWidth="139.0" styleClass="my-button" text="Eliminar cliente" />
             <GridPane hgap="10.0" layoutX="7.0" layoutY="9.0" prefHeight="149.0" prefWidth="1056.0" vgap="5.0">
                <columnConstraints>
@@ -137,7 +137,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="282.0" prefWidth="636.0">
+                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="636.0">
                                 <columns>
                                   <TableColumn fx:id="columnaMarca" prefWidth="811.0" text="Marca y modelo" />
                                   <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="179.0" text="Matrícula" />
@@ -230,7 +230,7 @@
                                 </columns>
                               </TableView>
                               <Button fx:id="btnEliminarPresupuesto" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar presupuesto" />
-                              <Label fx:id="lblSIP" alignment="CENTER" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0" styleClass="my-label-si" text="Sin información" visible="false" />
+                              <Label fx:id="lblSIP" alignment="CENTER" layoutX="9.0" layoutY="43.0" prefHeight="318.0" prefWidth="1043.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                         </Pane>
                      </children>
@@ -256,7 +256,7 @@
                            </children>
                         </Pane>
                         <Button fx:id="btnEliminarFactura" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
-                        <Label fx:id="lblSIF" alignment="CENTER" layoutX="6.0" layoutY="39.0" prefHeight="200.0" prefWidth="1362.0" styleClass="my-label-si" text="Sin información" visible="false" />
+                        <Label fx:id="lblSIF" alignment="CENTER" layoutX="9.0" layoutY="43.0" prefHeight="318.0" prefWidth="1046.0" styleClass="my-label-si" text="Sin información" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
@@ -267,7 +267,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" prefWidth="1071.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <Button layoutX="10.0" layoutY="8.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="25.0" prefWidth="29.0">
+                              <Button layoutX="10.0" layoutY="8.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="27.0" prefWidth="29.0">
                                  <graphic>
                                     <ImageView fitHeight="24.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -276,8 +276,8 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="53.0" layoutY="8.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="25.0" prefWidth="206.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
-                              <TableView fx:id="tableSustitucion" editable="true" layoutX="10.0" layoutY="41.0" prefHeight="216.0" prefWidth="1053.0">
+                              <Button layoutX="53.0" layoutY="8.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="27.0" prefWidth="259.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
+                              <TableView fx:id="tableSustitucion" editable="true" layoutX="10.0" layoutY="44.0" prefHeight="320.0" prefWidth="1053.0">
                                  <columns>
                                     <TableColumn fx:id="columnaMarcaSustitucion" prefWidth="126.0" text="Vehículo sustitución" />
                                     <TableColumn fx:id="columnaMatriculaSustitucion" minWidth="50.0" prefWidth="96.0" text="Matrícula" />
@@ -289,7 +289,7 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
                               </TableView>
-                              <Label fx:id="lblSIVS" alignment="CENTER" layoutX="10.0" layoutY="41.0" prefHeight="216.0" prefWidth="1074.0" styleClass="my-label-si" text="Sin información" visible="false" />
+                              <Label fx:id="lblSIVS" alignment="CENTER" layoutX="10.0" layoutY="41.0" prefHeight="324.0" prefWidth="1052.0" styleClass="my-label-si" text="Sin información" visible="false" />
                            </children>
                         </Pane>
                      </children>

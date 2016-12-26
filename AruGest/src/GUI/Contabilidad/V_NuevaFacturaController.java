@@ -184,6 +184,9 @@ public class V_NuevaFacturaController {
 	private ObservableList<Material> listaMaterial = FXCollections.observableArrayList();
 
 	private Inicio main;
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
 
 	private boolean esServicio = false; // Variable para controlar si es un
 										// servicio o un material

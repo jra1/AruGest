@@ -162,9 +162,9 @@
             </Accordion>
             <VBox prefHeight="82.0" prefWidth="260.0" spacing="2.0">
                <children>
-                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" styleClass="my-button" text="Atrás" visible="false" />
-                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" styleClass="my-button" text="Button" visible="false" />
-                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" styleClass="my-button" text="Button" visible="false" />
+                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" styleClass="my-button" />
+                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" styleClass="my-button" />
+                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" styleClass="my-button" />
                   <Separator prefWidth="200.0" />
                </children>
             </VBox>
@@ -192,7 +192,7 @@
          <children>
             <ScrollPane fx:id="sp" prefHeight="940.0" prefWidth="1410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1415.0" text="AruGest Software" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="680.0" prefWidth="1106.0" text="AruGest Software" textAlignment="CENTER">
                      <font>
                         <Font name="Dekar" size="70.0" />
                      </font>

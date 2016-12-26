@@ -608,9 +608,11 @@ public class V_ClienteController {
 		tablePresupuestos.setItems(listaPresupuestos);
 		if (tablePresupuestos.getItems().isEmpty()) {
 			tablePresupuestos.setVisible(false);
+			btnEliminarPresupuesto.setVisible(false);
 			lblSIP.setVisible(true);
 		} else {
 			tablePresupuestos.setVisible(true);
+			btnEliminarPresupuesto.setVisible(true);
 			lblSIP.setVisible(false);
 		}
 	}
@@ -630,9 +632,11 @@ public class V_ClienteController {
 		tableFacturas.setItems(listaFacturas);
 		if (tableFacturas.getItems().isEmpty()) {
 			tableFacturas.setVisible(false);
+			btnEliminarFactura.setVisible(false);
 			lblSIF.setVisible(true);
 		} else {
 			tableFacturas.setVisible(true);
+			btnEliminarFactura.setVisible(true);
 			lblSIF.setVisible(false);
 		}
 	}
