@@ -3,11 +3,14 @@ package GUI.Cliente;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.guigarage.responsive.ResponsiveHandler;
+
 import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.FacturaClienteVehiculo;
+import Modelo.GestorVentana;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
@@ -163,6 +166,10 @@ public class V_ClienteController {
 	private Inicio main;
 	private ScrollPane sp;
 
+	public Button boton1;
+	public Button boton2;
+	public Button boton3;
+
 	private ObservableList<Vehiculo> listaVehiculos = FXCollections.observableArrayList();
 	private ClienteParticularEmpresaDireccion cped;
 	private ObservableList<VehiculoSustitucionClienteVehiculo> listaSustitucion = FXCollections.observableArrayList();
@@ -271,17 +278,54 @@ public class V_ClienteController {
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION.eliminarCliente(cped)) {
 					try {
-						// Cargar la vista de nueva factura
+						// Cargar la vista de buscar vehiculo
 						FXMLLoader loader = new FXMLLoader();
 						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_BuscarCliente.fxml"));
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
+						String nombre = "Buscar Cliente";
 						// Poner la nueva vista en el centro del root
-						sp.setContent(buscarCliente);
 						// main.getRoot().setCenter(buscarCliente);
+
+						// **************************************************************************************************
+						Utilidades.ajustarResolucionAnchorPane(buscarCliente, Inicio.ANCHO_PANTALLA,
+								Inicio.ALTO_PANTALLA);
+						// **************************************************************************************************
+						sp.setContent(buscarCliente);
+						// Esta línea es para que se ejecute la pseudoclase del
+						// CSS ya
+						ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+						AnchorPane ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+						GestorVentana gv = new GestorVentana(ap, nombre);
+						Utilidades.gestionarPantallas(gv);
+						boton1.setVisible(Inicio.BOTON1.isVisible());
+						boton1.setText(Inicio.BOTON1.getNombre());
+						boton2.setVisible(Inicio.BOTON2.isVisible());
+						boton2.setText(Inicio.BOTON2.getNombre());
+						boton3.setVisible(Inicio.BOTON3.isVisible());
+						boton3.setText(Inicio.BOTON3.getNombre());
 
 						// Poner el controlador de la nueva vista.
 						V_BuscarClienteController controller = loader.getController();
 						controller.setMainAPP(main);
+						controller.setScrollPane(sp);
+						controller.boton1 = boton1;
+						controller.boton2 = boton2;
+						controller.boton3 = boton3;
+						controller.setFocus();
+
+						// // Cargar la vista de nueva factura
+						// FXMLLoader loader = new FXMLLoader();
+						// loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_BuscarCliente.fxml"));
+						// AnchorPane buscarCliente = (AnchorPane)
+						// loader.load();
+						// // Poner la nueva vista en el centro del root
+						// sp.setContent(buscarCliente);
+						// // main.getRoot().setCenter(buscarCliente);
+						//
+						// // Poner el controlador de la nueva vista.
+						// V_BuscarClienteController controller =
+						// loader.getController();
+						// controller.setMainAPP(main);
 
 					} catch (IOException e) {
 						e.printStackTrace();

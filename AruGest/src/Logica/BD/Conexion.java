@@ -387,7 +387,7 @@ public class Conexion {
 			String sql = "";
 			// Se prepara la sentencia para introducir los datos de la direccion
 			// SI NO ES NULL
-			if (cped.getDireccion() != null) {
+			if (cped.getDireccion() != null && cped.getCliente().getDireccionID() != 0) {
 				idGenerado = guardarDireccion(cped.getDireccion());
 			}
 
@@ -652,7 +652,8 @@ public class Conexion {
 			PreparedStatement st;
 			// 1º Direccion
 			// Si ya tiene direccion, se actualiza
-			// Si no tiene direccion (iddireccion = 0), se crea
+			// Si no tiene direccion (iddireccion = 0) Y SE HA INTRODUCIDO UNA
+			// NUEVA, se crea
 			if (cped.getCliente().getDireccionID() != 0) {
 				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
 						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
@@ -669,14 +670,18 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
-				// Guardar direccion y asignarle su iddireccion al cliente
-				idGenerado = guardarDireccion(cped.getDireccion());
-				if (idGenerado > 0) { // Si es 0 es que hubo un error al guardar
-										// la direccion
-					res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
-					// Acabar aquí la funcion si res = false
+				// Si llega aquí: iddireccion = 0
+				if (cped.getDireccion().getCalle() != "" || cped.getDireccion().getLocalidad() != ""
+						|| cped.getDireccion().getProvincia() != "") {
+					// Guardar direccion y asignar su id al cliente
+					idGenerado = guardarDireccion(cped.getDireccion());
+					if (idGenerado > 0) { // Si es 0 es que hubo un error al
+						// guardar
+						// la direccion
+						res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
+						// Acabar aquí la funcion si res = false
+					}
 				}
-
 			}
 			// 2º Cliente
 			sql = "UPDATE CLIENTE SET NOMBRE = ?, TELF1 = ?, TELF2 = ?, " + "TELF3 = ? " + "WHERE IDCLIENTE = "

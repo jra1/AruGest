@@ -187,6 +187,9 @@ public class V_BuscarClienteController {
 				V_ClienteController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.setScrollPane(sp);
+				controller.boton1 = boton1;
+				controller.boton2 = boton2;
+				controller.boton3 = boton3;
 				controller.cargaCliente(listaClientes.get(selectedIndex));
 
 			} catch (IOException e) {

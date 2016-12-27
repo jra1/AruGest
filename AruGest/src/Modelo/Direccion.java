@@ -15,6 +15,17 @@ public class Direccion {
 	private final StringProperty localidad;
 	private final StringProperty provincia;
 
+	public Direccion() {
+		this.calle = new SimpleStringProperty("");
+		this.numero = new SimpleIntegerProperty(0);
+		this.piso = new SimpleStringProperty("");
+		this.letra = new SimpleStringProperty("");
+		this.localidad = new SimpleStringProperty("");
+		this.iddireccion = new SimpleIntegerProperty(0);
+		this.provincia = new SimpleStringProperty("");
+		this.cpostal = new SimpleIntegerProperty(0);
+	}
+
 	public Direccion(String calle, Integer numero, String piso, String letra, String localidad) {
 		this.calle = new SimpleStringProperty(calle);
 		this.numero = new SimpleIntegerProperty(numero);

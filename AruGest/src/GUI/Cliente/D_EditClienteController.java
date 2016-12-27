@@ -106,7 +106,7 @@ public class D_EditClienteController {
 		txtTel1.setText(cped.getCliente().getTelf1());
 		txtTel2.setText(cped.getCliente().getTelf2());
 		txtTel3.setText(cped.getCliente().getTelf3());
-		if (cped.getDireccion() != null) {
+		if (cped.getDireccion() != null && cped.getDireccion().getIddireccion() != 0) {
 			txtCalle.setText(cped.getDireccion().getCalle());
 			txtNumero.setText("" + cped.getDireccion().getNumero());
 			txtPiso.setText(cped.getDireccion().getPiso());
@@ -132,6 +132,7 @@ public class D_EditClienteController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
+			// Particular / Empresa
 			if (!esEmpresa) {
 				Particular p;
 				if (cped.getParticular() != null) {
@@ -151,10 +152,11 @@ public class D_EditClienteController {
 				}
 				cped.setEmpresa(e);
 			}
+			// Dirección
 			if (!txtCalle.getText().isEmpty()
 					|| (!txtCodPostal.getText().isEmpty() && Integer.parseInt(txtCodPostal.getText()) != 0)
 					|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
-				if (cped.getDireccion() == null) {
+				if (cped.getDireccion() == null || cped.getDireccion().getIddireccion() == 0) {
 					cped.setDireccion(new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
 							txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
 							txtLocalidad.getText(), txtProvincia.getText()));
@@ -166,6 +168,21 @@ public class D_EditClienteController {
 					cped.getDireccion().setCpostal(Integer.parseInt(txtCodPostal.getText()));
 					cped.getDireccion().setLocalidad(txtLocalidad.getText());
 					cped.getDireccion().setProvincia(txtProvincia.getText());
+				}
+			} else {
+				// Calle vacía || cpostal vacío || localidad vacía ||
+				// provincia vacía
+				if (cped.getDireccion() == null) {
+					cped.setDireccion(new Direccion());
+					cped.getCliente().setDireccionID(0);
+				} else {
+					cped.getDireccion().setCalle("");
+					cped.getDireccion().setNumero(0);
+					cped.getDireccion().setPiso("");
+					cped.getDireccion().setLetra("");
+					cped.getDireccion().setCpostal(0);
+					cped.getDireccion().setLocalidad("");
+					cped.getDireccion().setProvincia("");
 				}
 			}
 			cped.getCliente().setNombre(txtNombre.getText() + " " + txtApellidos.getText());
