@@ -273,7 +273,7 @@ public class V_ClienteController {
 					try {
 						// Cargar la vista de nueva factura
 						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/BuscarCliente.fxml"));
+						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_BuscarCliente.fxml"));
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
 						// Poner la nueva vista en el centro del root
 						sp.setContent(buscarCliente);

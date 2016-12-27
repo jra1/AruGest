@@ -8,14 +8,14 @@ public class ClienteParticularEmpresaDireccion {
 
 	public ClienteParticularEmpresaDireccion() {
 		this.cliente = new Cliente(0, "", "", "", "", 0);
-		this.particular = null;//new Particular(0, 0, "","","");
-		this.empresa = null;//new Empresa(0, 0, "","", false);
-		this.direccion = new Direccion("", 0, "", "", 0, "", "");
+		this.particular = null;// new Particular(0, 0, "","","");
+		this.empresa = null;// new Empresa(0, 0, "","", false);
+		this.direccion = null;// new Direccion("", 0, "", "", 0, "", "");
 	}
-	
+
 	public ClienteParticularEmpresaDireccion(Cliente cliente, Particular particular, Empresa empresa,
 			Direccion direccion) {
-		//super();
+		// super();
 		setCliente(cliente);
 		setParticular(particular);
 		setEmpresa(empresa);
@@ -53,5 +53,5 @@ public class ClienteParticularEmpresaDireccion {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
-	
+
 }
