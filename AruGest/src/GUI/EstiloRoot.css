@@ -95,6 +95,30 @@
 	-fx-font-size: 14px;
 }
 
+/*Labels Nombre cliente y Vehículo en NuevaFactura*/
+.my-label-sub{
+	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/
+	-fx-font-weight: bold;
+	-fx-font-size: 14px;
+	-fx-underline: true;
+}
+
+.my-label-sub:extreme-small-device{
+	-fx-font-size: 8px;
+}
+
+.my-label-sub:small-device{
+	-fx-font-size: 10px;
+}
+
+.my-label-sub:medium-device{
+	-fx-font-size: 12px;
+}
+
+.my-label-sub:large-device{
+	-fx-font-size: 14px;
+}
+
 /*Labels detalles informacion*/
 .my-label-detalles{
 	-fx-text-fill: white;/*rgb(64,128,128);	*/
@@ -170,6 +194,11 @@
 
 #fecha{
 	-fx-pref-width: 150px;
+}
+
+#dni{
+	-fx-pref-width: 120px;
+	-fx-opacity: 1;
 }
 
 /*TextFields que no cambian de tamaño */
