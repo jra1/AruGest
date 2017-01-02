@@ -7,12 +7,13 @@ public class ClienteParticularEmpresaDireccionVehiculo {
 	private Direccion direccion;
 	private Vehiculo vehiculo;
 
-	// public ClienteParticularEmpresaDireccionVehiculo() {
-	// this.cliente = new Cliente(0, "", "", "", "", 0);
-	// this.particular = null;// new Particular(0, 0, "","","");
-	// this.empresa = null;// new Empresa(0, 0, "","", false);
-	// this.direccion = null;// new Direccion("", 0, "", "", 0, "", "");
-	// }
+	public ClienteParticularEmpresaDireccionVehiculo() {
+		this.cliente = new Cliente(0, "", "", "", "", 0);
+		this.particular = new Particular(0, 0, "", "", "");
+		this.empresa = new Empresa(0, 0, "", "", false);
+		this.direccion = new Direccion("", 0, "", "", 0, "", "");
+		this.vehiculo = new Vehiculo(0, 0, "", "", "", "", 1);
+	}
 
 	public ClienteParticularEmpresaDireccionVehiculo(Cliente cliente, Particular particular, Empresa empresa,
 			Direccion direccion, Vehiculo vehiculo) {

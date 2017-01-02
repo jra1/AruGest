@@ -100,28 +100,40 @@ public class D_SelectorClienteVehiculoController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			// Comprobar datos cliente
-			if (!txtNombre.getText().isEmpty()) {
-				cpedv.getCliente().setNombre(txtNombre.getText() + " " + txtApellidos.getText());
-			}
-			if (!txtTel1.getText().isEmpty()) {
-				cpedv.getCliente().setTelf1(txtTel1.getText());
-			}
+			// Datos del cliente
+			cpedv.getCliente().setNombre(txtNombre.getText() + " " + txtApellidos.getText());
+			cpedv.getCliente().setTelf1(txtTel1.getText());
+
 			if (tipoCliente == 1) { // Particular
-				if (!txtDni.getText().isEmpty()) {
+				cpedv.getParticular().setNif(txtDni.getText());
+				cpedv.getParticular().setNombre(txtNombre.getText());
+				cpedv.getParticular().setApellidos(txtApellidos.getText());
 
-				}
+				cpedv.getEmpresa().setCif("");
+				cpedv.getEmpresa().setNombre("");
 			} else if (tipoCliente == 2) { // Empresa
+				cpedv.getEmpresa().setCif(txtDni.getText());
+				cpedv.getEmpresa().setNombre(txtNombre.getText());
 
+				cpedv.getParticular().setNif("");
+				cpedv.getParticular().setNombre("");
+				cpedv.getParticular().setApellidos("");
 			}
+
+			if (!txtCalle.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
+				cpedv.getDireccion().setCalle(txtCalle.getText());
+				cpedv.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
+				cpedv.getDireccion().setPiso(txtPiso.getText());
+				cpedv.getDireccion().setLetra(txtLetra.getText());
+				cpedv.getDireccion().setLocalidad(txtPoblacion.getText());
+			}
+
 			// Datos del vehiculo
-			if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty()) {
-				// mensaje = "Debes indicar la marca, modelo y matrícula del
-				// vehículo.";
-				if (tipoVehiculo == 1) {
-					// ESTE IF SE PUEDE BORRAR
-				}
-			}
+			cpedv.getVehiculo().setTipoID(tipoVehiculo);
+			cpedv.getVehiculo().setMatricula(txtMatricula.getText());
+			cpedv.getVehiculo().setMarca(txtMarca.getText());
+			cpedv.getVehiculo().setModelo(txtModelo.getText());
+			cpedv.getVehiculo().setVersion(txtVersion.getText());
 
 			okClicked = true;
 			dialogStage.close();

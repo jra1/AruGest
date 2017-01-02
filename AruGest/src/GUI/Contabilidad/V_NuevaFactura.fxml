@@ -92,7 +92,7 @@
                   <Label prefHeight="17.0" prefWidth="104.0" styleClass="my-label" text="TIPO CLIENTE" />
                   <ComboBox fx:id="comboTipoCliente" prefHeight="25.0" prefWidth="130.0" styleClass="my-text-field" GridPane.columnIndex="1" />
                   <Label layoutX="5.0" layoutY="58.0" styleClass="my-label" text="N.I.F/C.I.F." GridPane.rowIndex="1" />
-                  <TextField fx:id="txtDni" layoutX="60.0" layoutY="55.0" prefHeight="23.0" prefWidth="150.0" promptText="Ej. 12345678D" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField layoutX="60.0" layoutY="55.0" prefHeight="23.0" prefWidth="150.0" promptText="Ej. 12345678D" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -175,7 +175,7 @@
                   <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="VEHÍCULO" />
                   <ComboBox fx:id="comboTipoVehiculo" layoutX="54.0" layoutY="3.0" prefHeight="25.0" prefWidth="135.0" styleClass="my-text-field" GridPane.columnIndex="1" />
                   <Label layoutX="198.0" layoutY="8.0" styleClass="my-label" text="MATRÍCULA" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtMatricula" layoutX="258.0" layoutY="4.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField layoutX="258.0" layoutY="4.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -362,22 +362,22 @@
             <Font size="10.0" />
          </font>
       </TextField>
-      <TextField id="dni" fx:id="txtDni1" disable="true" editable="false" layoutX="92.0" layoutY="6.0" prefHeight="31.0" prefWidth="114.0" promptText="Ej. 12345678D" styleClass="my-text-field">
+      <TextField id="dni" fx:id="txtDni" disable="true" editable="false" layoutX="92.0" layoutY="6.0" prefHeight="31.0" prefWidth="114.0" promptText="Ej. 12345678D" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>
       </TextField>
-      <Label layoutX="224.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Nombre">
+      <Label fx:id="lblNombre" layoutX="224.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Pulse para introducir cliente">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <TextField id="dni" fx:id="txtMatricula1" disable="true" editable="false" layoutX="583.0" layoutY="6.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field">
+      <TextField id="dni" fx:id="txtMatricula" disable="true" editable="false" layoutX="583.0" layoutY="6.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>
       </TextField>
-      <Label layoutX="714.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Marca y modelo">
+      <Label fx:id="lblMarcaModelo" layoutX="714.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Pulse para introducir vehículo">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

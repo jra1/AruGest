@@ -410,7 +410,8 @@ public class Conexion {
 			if (rs.next()) {
 				idGenerado = rs.getLong(1);
 				// 3º Guardar Particular / Empresa
-				if (cped.getParticular() != null) {
+				if (cped.getParticular() != null && !cped.getParticular().getNif().equalsIgnoreCase("")
+						&& !cped.getParticular().getNombre().equalsIgnoreCase("")) {
 					// Guardar Particular
 					sql = "INSERT INTO PARTICULAR (CLIENTEID, NOMBRE, APELLIDOS, NIF) VALUES (?,?,?,?)";
 					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -421,7 +422,8 @@ public class Conexion {
 					st.setString(4, cped.getParticular().getNif());
 					// Ejecutamos la sentencia
 					st.executeUpdate();
-				} else if (cped.getEmpresa() != null) {
+				} else if (cped.getEmpresa() != null && !cped.getEmpresa().getCif().equalsIgnoreCase("")
+						&& !cped.getEmpresa().getNombre().equalsIgnoreCase("")) {
 					// Guardar Empresa
 					sql = "INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)";
 					st.close();
