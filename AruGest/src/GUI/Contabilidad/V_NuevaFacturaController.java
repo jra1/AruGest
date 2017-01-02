@@ -8,6 +8,7 @@ import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Factura;
@@ -197,6 +198,8 @@ public class V_NuevaFacturaController {
 
 	private int tipoVehiculo = 1;
 
+	private ClienteParticularEmpresaDireccionVehiculo cpedv = null;
+
 	public Inicio getMain() {
 		return main;
 	}
@@ -322,7 +325,7 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void initialize() {
 		// txtNumfactura.setId("toolbar");
-		paneDatosFactura.getChildren().add(txtNumfactura);
+		// paneDatosFactura.getChildren().add(txtNumfactura);
 
 		// Para que el botón de añadir funcione con el Enter
 		btnAdd.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -658,22 +661,12 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void guardarFactura() {
 		String mensaje = "";
-		// 1º Comprobar entradas de datos son correctas
 		// Comprobar datos factura
 		if ((!chckbxFactura.isSelected() && !chckbxPresupuesto.isSelected() && !chckbxOrdenDeReparacion.isSelected()
 				&& !chckbxResguardoDeposito.isSelected())
 				|| (txtNumfactura.getText().equals("") && txtNumPresupuesto.getText().equals("")
 						&& txtNumOrden.getText().equals("") && txtNumResguardo.getText().equals(""))) {
 			mensaje = "Debes marcar si es factura, presupuesto, orden de reparación o resguardo de depósito e indicar su número.";
-		}
-		// Comprobar datos cliente
-		if (txtNombre.getText().isEmpty() || txtDni.getText().isEmpty() || (txtTel1.getText()
-				.isEmpty() /* && txtMovil.getText().isEmpty() */)) {
-			mensaje = "Debes indicar por lo menos el nombre, DNI y un teléfono del cliente.";
-		}
-		// Datos del vehiculo
-		if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty()) {
-			mensaje = "Debes indicar la marca, modelo y matrícula del vehículo.";
 		}
 		if (listaServicios.isEmpty() && listaMaterial.isEmpty()) {
 			mensaje = "Debes añadir algún servicio o material.";
@@ -763,5 +756,20 @@ public class V_NuevaFacturaController {
 		} else {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", mensaje);
 		}
+	}
+
+	@FXML
+	private void abrirSelector() {
+		if (Inicio.abrirSelectorFactura(cpedv)) {
+
+		}
+	}
+
+	public ClienteParticularEmpresaDireccionVehiculo getCpedv() {
+		return cpedv;
+	}
+
+	public void setCpedv(ClienteParticularEmpresaDireccionVehiculo cpedv) {
+		this.cpedv = cpedv;
 	}
 }

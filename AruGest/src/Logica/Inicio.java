@@ -10,6 +10,7 @@ import com.guigarage.responsive.ResponsiveHandler;
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_EditClienteController;
+import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.ProveedorCompania.D_EditCiaController;
 import GUI.Vehiculo.D_EditVehiculoController;
 import GUI.Vehiculo.D_SustitucionDevolucionController;
@@ -17,6 +18,7 @@ import GUI.Vehiculo.D_SustitucionEntregaController;
 import Logica.BD.Conexion;
 import Modelo.BotonVentana;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.GestorVentana;
 import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Vehiculo;
@@ -389,6 +391,45 @@ public class Inicio extends Application {
 			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Abre el selector de cliente y vehículo desde una factura
+	 * 
+	 * @return
+	 */
+	public static boolean abrirSelectorFactura(ClienteParticularEmpresaDireccionVehiculo cpedv) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/D_SelectorClienteVehiculo.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Datos cliente / vehículo");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_SelectorClienteVehiculoController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			// if(v != null){
+			controller.setClienteVehiculo(cpedv);
+			// }
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			// e.printStackTrace();
 			return false;
 		}
 	}
