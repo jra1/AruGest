@@ -780,7 +780,7 @@ public class V_NuevaFacturaController {
 	 * cliente y vehículo
 	 */
 	@FXML
-	private void abrirSelector() {
+	private void abrirSelectorCliente() {
 		if (Inicio.abrirSelectorFactura(cpedv)) {
 			// Utilidades.mostrarAlerta(AlertType.INFORMATION, "Info", "",
 			// cpedv.getCliente().getNombre());
@@ -822,5 +822,16 @@ public class V_NuevaFacturaController {
 
 	public void setCpedv(ClienteParticularEmpresaDireccionVehiculo cpedv) {
 		this.cpedv = cpedv;
+	}
+
+	/**
+	 * Llama a la función para abrir el diálogo para seleccionar un golpe
+	 * predefinido
+	 */
+	@FXML
+	private void abrirSelectorGolpes() {
+		if (Inicio.abrirSelectorGolpes() != 0) {
+			// colocarGolpe(cpedv);
+		}
 	}
 }

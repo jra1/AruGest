@@ -11,6 +11,7 @@ import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_EditClienteController;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
+import GUI.Contabilidad.D_SelectorGolpesController;
 import GUI.ProveedorCompania.D_EditCiaController;
 import GUI.Vehiculo.D_EditVehiculoController;
 import GUI.Vehiculo.D_SustitucionDevolucionController;
@@ -431,6 +432,44 @@ public class Inicio extends Application {
 			Utilidades.mostrarError(e);
 			// e.printStackTrace();
 			return false;
+		}
+	}
+
+	/**
+	 * Abre el selector de golpes predefinidos
+	 * 
+	 * @param cpedv
+	 * @return
+	 */
+	public static int abrirSelectorGolpes() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/D_SelectorGolpes.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Seleccionar golpe predefinido");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_SelectorGolpesController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.cargarGolpes();
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.getId();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			// e.printStackTrace();
+			return 0;
 		}
 	}
 

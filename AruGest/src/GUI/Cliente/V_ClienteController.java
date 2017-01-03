@@ -271,6 +271,7 @@ public class V_ClienteController {
 	 */
 	@FXML
 	private void eliminarCliente() {
+		String cliente = cped.getCliente().getNombre();
 		if (cped.getCliente().getIdcliente() > 0) {
 			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar cliente",
 					"Se eliminará todo lo asociado a este cliente (facturas, vehículos, documentos... )\n¿Estás seguro que quieres eliminar este cliente?",
@@ -278,7 +279,7 @@ public class V_ClienteController {
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION.eliminarCliente(cped)) {
 					try {
-						// Cargar la vista de buscar vehiculo
+						// Cargar la vista de buscar cliente
 						FXMLLoader loader = new FXMLLoader();
 						loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_BuscarCliente.fxml"));
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
@@ -295,6 +296,8 @@ public class V_ClienteController {
 						// CSS ya
 						ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 						AnchorPane ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+						// Para quitar el botón del gestor de ventanas:
+						Utilidades.quitarBoton(cliente);
 						GestorVentana gv = new GestorVentana(ap, nombre);
 						Utilidades.gestionarPantallas(gv);
 						boton1.setVisible(Inicio.BOTON1.isVisible());
@@ -329,6 +332,7 @@ public class V_ClienteController {
 
 					} catch (IOException e) {
 						e.printStackTrace();
+						Utilidades.mostrarError(e);
 					}
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Cliente eliminado",
 							"El cliente y todo sus datos asociados han sido eliminados con éxito de la base de datos.");
@@ -528,6 +532,7 @@ public class V_ClienteController {
 						tableVehiculo.getSelectionModel().getSelectedItem());
 			} catch (IOException e) {
 				e.printStackTrace();
+				Utilidades.mostrarError(e);
 			}
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",

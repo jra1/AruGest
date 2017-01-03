@@ -101,6 +101,7 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 14px;
 	-fx-underline: true;
+	-fx-font-style: italic ;
 }
 
 .my-label-sub:extreme-small-device{

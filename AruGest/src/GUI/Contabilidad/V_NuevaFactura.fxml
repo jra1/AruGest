@@ -344,6 +344,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <Button layoutX="313.0" layoutY="397.0" mnemonicParsing="false" onAction="#abrirSelectorGolpes" prefHeight="27.0" prefWidth="214.0" styleClass="my-button" text="AÑADIR GOLPE PREDEFINIDO" />
          </children>
       </Pane>
       <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="19.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
@@ -367,7 +368,7 @@
             <Font size="10.0" />
          </font>
       </TextField>
-      <Label fx:id="lblNombre" layoutX="224.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Pulse para introducir cliente">
+      <Label fx:id="lblNombre" layoutX="224.0" layoutY="10.0" onMouseClicked="#abrirSelectorCliente" styleClass="my-label-sub" text="Pulse para introducir cliente">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -377,7 +378,7 @@
             <Font size="10.0" />
          </font>
       </TextField>
-      <Label fx:id="lblMarcaModelo" layoutX="714.0" layoutY="10.0" onMouseClicked="#abrirSelector" styleClass="my-label-sub" text="Pulse para introducir vehículo">
+      <Label fx:id="lblMarcaModelo" layoutX="714.0" layoutY="10.0" onMouseClicked="#abrirSelectorCliente" styleClass="my-label-sub" text="Pulse para introducir vehículo">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

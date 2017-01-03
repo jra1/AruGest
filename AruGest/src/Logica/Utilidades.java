@@ -43,6 +43,24 @@ public class Utilidades {
 		ap.setPrefHeight(y - 89);
 	}
 
+	/**
+	 * Se elimina el botón que contenga el nombre que se le pasa como parámetro
+	 * 
+	 * @param pNombre
+	 */
+	public static void quitarBoton(String pNombre) {
+		for (GestorVentana gv : Inicio.LISTA_VENTANAS) {
+			if (gv.getNombre().indexOf(pNombre) != -1) {
+				Inicio.LISTA_VENTANAS.remove(gv);
+			}
+		}
+	}
+
+	/**
+	 * Gestiona los botones del gestor de pantallas abiertas
+	 * 
+	 * @param pGgv
+	 */
 	public static void gestionarPantallas(GestorVentana pGgv) {
 		boolean esta = false;
 		switch (Inicio.LISTA_VENTANAS.size()) {
