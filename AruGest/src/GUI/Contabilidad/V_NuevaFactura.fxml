@@ -344,7 +344,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="313.0" layoutY="397.0" mnemonicParsing="false" onAction="#abrirSelectorGolpes" prefHeight="27.0" prefWidth="214.0" styleClass="my-button" text="AÑADIR GOLPE PREDEFINIDO" />
+            <Button layoutX="297.0" layoutY="397.0" mnemonicParsing="false" onAction="#abrirSelectorGolpes" prefHeight="27.0" prefWidth="236.0" styleClass="my-button" text="AÑADIR GOLPE PREDEFINIDO" />
          </children>
       </Pane>
       <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="19.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />

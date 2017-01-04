@@ -26,6 +26,7 @@ import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
+import Modelo.Golpe;
 import Modelo.Material;
 import Modelo.Particular;
 import Modelo.ProveedorCompania;
@@ -2227,6 +2228,34 @@ public class Conexion {
 			getCon().close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+		return lista;
+	}
+
+	/**
+	 * Busca en la BD los golpes predefinidos que hay almacenados
+	 * 
+	 * @return lista con los golpes encontrados
+	 */
+	public ObservableList<Golpe> buscarGolpes() {
+		ObservableList<Golpe> lista = FXCollections.observableArrayList();
+		Golpe g;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM GOLPES";
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				g = new Golpe(rs.getInt("IDGOLPE"), rs.getString("NOMBREGOLPE"));
+				lista.add(g);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
 		}
 		return lista;
 	}

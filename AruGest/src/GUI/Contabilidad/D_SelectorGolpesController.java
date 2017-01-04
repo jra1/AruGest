@@ -1,16 +1,28 @@
 package GUI.Contabilidad;
 
+import Logica.Inicio;
+import Logica.Utilidades;
+import Modelo.Golpe;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class D_SelectorGolpesController {
 	// Variables de la vista
 	@FXML
-	private TextField texto;
+	private TableView<Golpe> tablaGolpes;
+	@FXML
+	private TableColumn<Golpe, Number> columnaID;
+	@FXML
+	private TableColumn<Golpe, String> columnaNombre;
 
 	// Resto de variables
 	private Stage dialogStage;
+	private ObservableList<Golpe> listaGolpes = FXCollections.observableArrayList();
 	private int idseleccionado = 0;
 
 	/**
@@ -26,7 +38,10 @@ public class D_SelectorGolpesController {
 	 * 
 	 */
 	public void cargarGolpes() {
-
+		listaGolpes = Inicio.CONEXION.buscarGolpes();
+		columnaID.setCellValueFactory(cellData -> cellData.getValue().idgolpeProperty());
+		columnaNombre.setCellValueFactory(cellData -> cellData.getValue().nombreGolpeProperty());
+		tablaGolpes.setItems(listaGolpes);
 	}
 
 	/**
@@ -53,8 +68,7 @@ public class D_SelectorGolpesController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-
-			idseleccionado = 1;// *******************************
+			// idseleccionado = 1;
 			dialogStage.close();
 		}
 	}
@@ -73,6 +87,13 @@ public class D_SelectorGolpesController {
 	 * @return true si los campos son correctos
 	 */
 	private boolean isInputValid() {
-		return true;
+		if (tablaGolpes.getSelectionModel().getSelectedIndex() >= 0) {
+			idseleccionado = tablaGolpes.getSelectionModel().getSelectedItem().getIdgolpe();
+			return true;
+		} else {
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún golpe seleccionado",
+					"Selecciona en la tabla el golpe que desee añadir");
+			return false;
+		}
 	}
 }

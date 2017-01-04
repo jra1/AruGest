@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1418.0" styleClass="back" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Group layoutX="-7.0" layoutY="-2.0">
          <children>
@@ -23,7 +23,7 @@
                   <Font name="Arial Black" size="15.0" />
                </font>
             </Label>
-            <Pane layoutX="14.0" layoutY="25.0" prefHeight="564.0" prefWidth="1387.0" styleClass="background" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="25.0" />
+            <Pane layoutX="14.0" layoutY="25.0" prefHeight="637.0" prefWidth="1081.0" styleClass="background" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="25.0" />
          </children>
       </Group>
    </children>
