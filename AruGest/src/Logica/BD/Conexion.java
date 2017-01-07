@@ -23,6 +23,7 @@ import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
+import Modelo.ElementosGolpes;
 import Modelo.Empresa;
 import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
@@ -2258,6 +2259,155 @@ public class Conexion {
 			Utilidades.mostrarError(ex);
 		}
 		return lista;
+	}
+
+	/**
+	 * Busca en la BD los elementos que contenga el golpe predefinido cuyo id se
+	 * pasa como parámetro
+	 * 
+	 * @param idgolpe
+	 * @return ArrayList<ElementosGolpe> con los elementos encontrados
+	 */
+	public ArrayList<ElementosGolpes> buscarElementosPorGolpeID(int idgolpe) {
+		ArrayList<ElementosGolpes> lista = new ArrayList<ElementosGolpes>();
+		ElementosGolpes e;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM ELEMENTOSGOLPES WHERE ELEMENTOSGOLPES.GOLPEID = " + idgolpe;
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				e = new ElementosGolpes(rs.getInt("IDELEMENTO"), rs.getString("NOMBREELEMENTO"), rs.getString("TIPO"),
+						rs.getInt("GOLPEID"));
+				lista.add(e);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
+		}
+		return lista;
+	}
+
+	/**
+	 * Guarda en la BD el golpe con los elementos que se pasan por parámetro
+	 * 
+	 * @param g
+	 * @return true si fue ok, false si no
+	 */
+	public boolean guardarGolpe(Golpe g, ObservableList<ElementosGolpes> elementos) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia para introducir los datos del golpe
+			sql = "INSERT INTO GOLPES (NOMBREGOLPE) VALUES (?)";
+			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			// Añadimos los parametros
+			st.setString(1, g.getNombreGolpe());
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				long idGolpe = rs.getLong(1);
+				// Guardar elementos
+				sql = "INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO, TIPO, GOLPEID) VALUES (?,?,?)";
+				st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				for (ElementosGolpes e : elementos) {
+					st.setString(1, e.getNombreElemento());
+					st.setString(2, e.getTipo());
+					st.setInt(3, (int) idGolpe);
+					st.executeUpdate();
+				}
+			}
+			res = true;
+		} catch (Exception e) {
+			res = false;
+			Utilidades.mostrarError(e);
+		}
+		return res;
+	}
+
+	/**
+	 * Edita en la BD el golpe con los elementos que se pasan por parámetro
+	 * 
+	 * @param g
+	 * @return true si fue ok, false si no
+	 */
+	public boolean editarGolpe(int idgolpe, Golpe g, ObservableList<ElementosGolpes> elementos) {
+		boolean res = true;
+		String sql = "";
+		try {
+			sql = "UPDATE GOLPES SET NOMBREGOLPE = ? WHERE IDGOLPE = " + idgolpe;
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.setString(1, g.getNombreGolpe());
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Borrar los elementos de ese golpe y añadir los nuevos que se le
+			// pasan
+			sql = "DELETE FROM ELEMENTOSGOLPES WHERE ELEMENTOSGOLPES.GOLPEID = " + idgolpe;
+			st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			// Guardar elementos
+			sql = "INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO, TIPO, GOLPEID) VALUES (?,?,?)";
+			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			for (ElementosGolpes e : elementos) {
+				st.setString(1, e.getNombreElemento());
+				st.setString(2, e.getTipo());
+				st.setInt(3, idgolpe);
+				st.executeUpdate();
+			}
+
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+
+		} catch (Exception e) {
+			res = false;
+			Utilidades.mostrarError(e);
+		}
+		return res;
+	}
+
+	/**
+	 * Elimina de la BD el golpe cuyo id se pasa como parámetro
+	 * 
+	 * @param idgolpe
+	 * @return true si fue ok, false si no
+	 */
+	public boolean eliminarGolpe(int idgolpe) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Eliminar elementos
+			sql = "DELETE FROM ELEMENTOSGOLPES WHERE ELEMENTOSGOLPES.GOLPEID = " + idgolpe;
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			// Eliminar golpe
+			sql = "DELETE FROM GOLPES WHERE GOLPES.IDGOLPE = " + idgolpe;
+			st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
+			res = false;
+		}
+		return res;
 	}
 
 	/**

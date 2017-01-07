@@ -3,6 +3,7 @@ package GUI.Contabilidad;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -10,6 +11,7 @@ import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.Direccion;
+import Modelo.ElementosGolpes;
 import Modelo.Empresa;
 import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
@@ -589,21 +591,24 @@ public class V_NuevaFacturaController {
 
 		if (listaServicios.size() > 0) {
 			for (Servicio serv : listaServicios) {
-				String horasComa = serv.getHoras();
-				String horasPunto = horasComa.replace(",", ".");
-				valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA;
+				if (!serv.getHoras().equalsIgnoreCase("")) {
+					String horasComa = serv.getHoras();
+					String horasPunto = horasComa.replace(",", ".");
+					valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA;
+				}
 			}
 			txtManoObra.setText("" + dt.format(valorServicio));
-			// JOptionPane.showMessageDialog(null, "" +
-			// dt.format(valorServicio));
 		} else {
 			txtManoObra.setText("" + dt.format(0));
 		}
 
 		if (listaMaterial.size() > 0) {
 			for (Material mat : listaMaterial) {
-				float precioTotal = Float.parseFloat(mat.getPreciounit()) * mat.getCantidad();
-				valorMaterial += precioTotal;
+				if (!mat.getPreciounit().equalsIgnoreCase("")) {
+					String precioUnitPunto = mat.getPreciounit().replace(",", ".");
+					float precioTotal = Float.parseFloat(precioUnitPunto) * mat.getCantidad();
+					valorMaterial += precioTotal;
+				}
 			}
 			txtMateriales.setText("" + dt.format(valorMaterial));
 		} else {
@@ -830,8 +835,32 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void abrirSelectorGolpes() {
-		if (Inicio.abrirSelectorGolpes() != 0) {
-			// colocarGolpe(cpedv);
+		int idGolpe = Inicio.abrirSelectorGolpes();
+		if (idGolpe != 0) {
+			// Utilidades.mostrarAlerta(AlertType.ERROR, "", "" + idGolpe,"");
+			anadirGolpe(idGolpe);
+		}
+	}
+
+	private void anadirGolpe(int idGolpe) {
+		ArrayList<ElementosGolpes> listaElementos = Inicio.CONEXION.buscarElementosPorGolpeID(idGolpe);
+		if (listaElementos.size() > 0) {
+			for (ElementosGolpes e : listaElementos) {
+				if (e.getTipo().equalsIgnoreCase("Material")) {
+					material = new Material(0, e.getNombreElemento(), "", 0, 0, 0f);
+					listaMaterial.add(material);
+					columnaConceptoMat.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+					columnaCantidadMat.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
+					columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
+					tableMaterial.setItems(listaMaterial);
+				} else {
+					servicio = new Servicio(0, e.getNombreElemento(), "", 0, "");
+					listaServicios.add(servicio);
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
+					tableServicio.setItems(listaServicios);
+				}
+			}
 		}
 	}
 }

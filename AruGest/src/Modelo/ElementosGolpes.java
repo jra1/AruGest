@@ -1,6 +1,8 @@
 package Modelo;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class ElementosGolpes {
@@ -16,6 +18,15 @@ public class ElementosGolpes {
 		this.nombreElemento = nombreElemento;
 		this.tipo = tipo;
 		this.golpeID = golpeID;
+	}
+
+	public ElementosGolpes(Integer idelemento, String nombreElemento, String tipo, Integer golpeID) {
+		super();
+		this.idelemento = new SimpleIntegerProperty(idelemento);
+		this.nombreElemento = new SimpleStringProperty(nombreElemento);
+		this.tipo = new SimpleStringProperty(tipo);
+		this.golpeID = new SimpleIntegerProperty(golpeID);
+
 	}
 
 	public IntegerProperty idelementoProperty() {

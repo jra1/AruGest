@@ -43,5 +43,5 @@ ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehicul
 CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal, iva decimal, presupuesto int, factura int);
 
 CREATE TABLE golpes(idgolpe int primary key auto_increment, nombreGolpe varchar(255));
-CREATE TABLE elementosGolpes(idelemento int primary key auto_increment, nombreElemento varchar(255), tipo varchar(2), golpeID int);
+CREATE TABLE elementosGolpes(idelemento int primary key auto_increment, nombreElemento varchar(255), tipo varchar(30), golpeID int);
 ALTER TABLE elementosGolpes ADD FOREIGN KEY (golpeID ) REFERENCES golpes(idgolpe);

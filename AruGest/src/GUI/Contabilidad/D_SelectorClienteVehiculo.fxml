@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="448.0" prefWidth="816.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.D_SelectorClienteVehiculoController">
    <children>
-      <Pane layoutX="6.0" layoutY="4.0" prefHeight="436.0" prefWidth="802.0" styleClass="background">
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="436.0" prefWidth="802.0">
          <children>
             <Button defaultButton="true" layoutX="298.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
             <Button cancelButton="true" layoutX="459.0" layoutY="395.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />

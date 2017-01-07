@@ -60,7 +60,12 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button id="shiny-orange" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución" />
+                                    <Button id="shiny-orange" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button id="shiny-orange" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#golpesPredefinidos" styleClass="green" text="Golpes predefinidos" />
                                  </children>
                               </VBox>
                            </children>
