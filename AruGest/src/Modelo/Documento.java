@@ -4,6 +4,9 @@ import java.sql.Blob;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Documento {
@@ -21,6 +24,15 @@ public class Documento {
 		this.vehiculoID = vehiculoID;
 		this.titulo = titulo;
 		this.documento = documento;
+	}
+
+	public Documento(Integer iddocumento, Integer clienteID, Integer vehiculoID, String titulo, Blob documento) {
+		this.iddocumento = new SimpleIntegerProperty(iddocumento);
+		this.clienteID = new SimpleIntegerProperty(clienteID);
+		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
+		this.titulo = new SimpleStringProperty(titulo);
+		this.documento = new SimpleObjectProperty<Blob>(documento);
+
 	}
 
 	public IntegerProperty iddocumentoProperty() {

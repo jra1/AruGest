@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="335.0" prefWidth="474.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.D_AgregaDocumentoController">
+   <children>
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="324.0" prefWidth="459.0" styleClass="background">
+         <children>
+            <Label layoutX="14.0" layoutY="48.0" styleClass="my-label" text="Arrastre aquí un documento o pulse en &quot;Seleccionar documento&quot;" />
+            <ListView fx:id="lista" layoutX="14.0" layoutY="77.0" prefHeight="143.0" prefWidth="428.0" />
+            <Button defaultButton="true" layoutX="129.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
+            <Button cancelButton="true" layoutX="287.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+            <Label fx:id="textoSoltar" layoutX="255.0" layoutY="229.0" prefHeight="33.0" prefWidth="148.0" text="Suelta el archivo" textFill="#009900" visible="false">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button disable="true" layoutX="14.0" layoutY="233.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" styleClass="my-button" text="Seleccionar documento" />
+            <Label layoutX="14.0" layoutY="18.0" styleClass="my-label" text="Nombre: " />
+            <TextField fx:id="txtNombre" layoutX="79.0" layoutY="12.0" styleClass="my-text-field" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

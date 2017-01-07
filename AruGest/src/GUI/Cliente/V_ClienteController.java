@@ -9,6 +9,7 @@ import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.Documento;
 import Modelo.FacturaClienteVehiculo;
 import Modelo.GestorVentana;
 import Modelo.Vehiculo;
@@ -160,6 +161,12 @@ public class V_ClienteController {
 	@FXML
 	private Label lblSIVS;
 
+	// Datos Documentos
+	@FXML
+	private TableView<Documento> tableDocumentos;
+	@FXML
+	private TableColumn<Documento, String> columnaNombreDocumento;
+
 	// Para saber si pulsa eliminar presupuesto o factura
 	private boolean esFactura = false;
 
@@ -175,6 +182,7 @@ public class V_ClienteController {
 	private ObservableList<VehiculoSustitucionClienteVehiculo> listaSustitucion = FXCollections.observableArrayList();
 	private ObservableList<FacturaClienteVehiculo> listaPresupuestos = FXCollections.observableArrayList();
 	private ObservableList<FacturaClienteVehiculo> listaFacturas = FXCollections.observableArrayList();
+	private ObservableList<Documento> listaDocumentos = FXCollections.observableArrayList();
 
 	public Inicio getMain() {
 		return main;
@@ -565,7 +573,7 @@ public class V_ClienteController {
 		if (selectedIndex >= 0) {
 			VehiculoSustitucionClienteVehiculo vscv = tableSustitucion.getSelectionModel().getSelectedItem();
 			try {
-				vscv.getVehiculoSustitucion().getFechadevuelve().toString();
+				vscv.getFechadevuelve().toString();
 				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Vehículo ya devuelto",
 						"El vehículo seleccionado ya está marcado como devuelto.");
 			} catch (NullPointerException e) {
@@ -700,12 +708,10 @@ public class V_ClienteController {
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
 		columnaMatriculaSustitucion
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
-		columnaFEntregaSustitucion.setCellValueFactory(
-				cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-		columnaFDevolucionSustitucion.setCellValueFactory(
-				cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
-		columnaObservacionesSustitucion
-				.setCellValueFactory(cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+		columnaFEntregaSustitucion.setCellValueFactory(cellData -> cellData.getValue().fechacogePropertyFormat());
+		columnaFDevolucionSustitucion
+				.setCellValueFactory(cellData -> cellData.getValue().fechadevuelvePropertyFormat());
+		columnaObservacionesSustitucion.setCellValueFactory(cellData -> cellData.getValue().observacionesProperty());
 		tableSustitucion.setItems(listaSustitucion);
 		if (tableSustitucion.getItems().isEmpty()) {
 			tableSustitucion.setVisible(false);
@@ -720,6 +726,29 @@ public class V_ClienteController {
 	private void mensajeNoModificar() {
 		Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
 				"Para modificar los datos del cliente utilice el botón 'Modificar'", "");
+	}
+
+	/**
+	 * Llama a la función para abrir el diálogo para agregar un documento
+	 */
+	@FXML
+	private void agregaDocumento() {
+		Documento d = Inicio.abrirAgregaDocumento();
+		if (d != null) {
+			if (Inicio.CONEXION.guardarDocumento(d)) {
+				listaDocumentos.add(d);
+				columnaNombreDocumento.setCellValueFactory(cellData -> cellData.getValue().tituloProperty());
+				tableDocumentos.setItems(listaDocumentos);
+				// Abrir el pdf:
+				try {
+					// ************NO FUNCIONA, PROBAR PONIENDO EL
+					// getAbsolutePath()********************************
+					Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + d.getTitulo());
+				} catch (Exception e) {
+					Utilidades.mostrarError(e);
+				}
+			}
+		}
 	}
 
 }

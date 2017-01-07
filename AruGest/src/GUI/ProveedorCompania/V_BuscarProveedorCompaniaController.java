@@ -171,9 +171,9 @@ public class V_BuscarProveedorCompaniaController {
 		} else {
 			for (ProveedorCompaniaDireccion pcd : lista) {
 				listaCias.add(pcd);
-				columnaNombreCompa.setCellValueFactory(cellData -> cellData.getValue().getPc().nombreProperty());
-				columnaCifCompa.setCellValueFactory(cellData -> cellData.getValue().getPc().cifProperty());
-				columnaTelfCompa.setCellValueFactory(cellData -> cellData.getValue().getPc().telf1Property());
+				columnaNombreCompa.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+				columnaCifCompa.setCellValueFactory(cellData -> cellData.getValue().cifProperty());
+				columnaTelfCompa.setCellValueFactory(cellData -> cellData.getValue().telf1Property());
 				if (pcd.getDireccion().getIddireccion() == 0) {
 					columnaDireccionCompa
 							.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());
@@ -201,8 +201,8 @@ public class V_BuscarProveedorCompaniaController {
 		} else {
 			for (ProveedorCompaniaDireccion pcd : lista) {
 				listaProveedores.add(pcd);
-				columnaNombreProve.setCellValueFactory(cellData -> cellData.getValue().getPc().nombreProperty());
-				columnaTelfProve.setCellValueFactory(cellData -> cellData.getValue().getPc().telf1Property());
+				columnaNombreProve.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+				columnaTelfProve.setCellValueFactory(cellData -> cellData.getValue().telf1Property());
 				columnaLocalidadProve
 						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
 				columnaProvinciaProve
@@ -226,16 +226,16 @@ public class V_BuscarProveedorCompaniaController {
 	 */
 	private void mostrarDetallesCia(ProveedorCompaniaDireccion pcd) {
 		if (pcd != null) {
-			lblNombreCia.setText(pcd.getPc().getNombre());
-			lblCifCia.setText(pcd.getPc().getCif());
-			lblTelf1Cia.setText(pcd.getPc().getTelf1());
-			lblTelf2Cia.setText(pcd.getPc().getTelf2());
+			lblNombreCia.setText(pcd.getNombre());
+			lblCifCia.setText(pcd.getCif());
+			lblTelf1Cia.setText(pcd.getTelf1());
+			lblTelf2Cia.setText(pcd.getTelf2());
 			lblDireccionCia.setText(pcd.getDireccion().getDireccionCompleta());
 			lblCPostalCia.setText("" + pcd.getDireccion().getCpostal());
 			lblLocalidadCia.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaCia.setText(pcd.getDireccion().getProvincia());
 			try {
-				Image i = Inicio.CONEXION.cargarLogo(pcd.getPc().getIdprovecompa());
+				Image i = Inicio.CONEXION.cargarLogo(pcd.getIdprovecompa());
 				if (i != null) {
 					logoCia.setImage(i);
 					logoCia.setVisible(true);
@@ -265,16 +265,16 @@ public class V_BuscarProveedorCompaniaController {
 	 */
 	private void mostrarDetallesProve(ProveedorCompaniaDireccion pcd) {
 		if (pcd != null) {
-			lblNombreProve.setText(pcd.getPc().getNombre());
-			lblCifProve.setText(pcd.getPc().getCif());
-			lblTelf1Prove.setText(pcd.getPc().getTelf1());
-			lblTelf2Prove.setText(pcd.getPc().getTelf2());
+			lblNombreProve.setText(pcd.getNombre());
+			lblCifProve.setText(pcd.getCif());
+			lblTelf1Prove.setText(pcd.getTelf1());
+			lblTelf2Prove.setText(pcd.getTelf2());
 			lblDireccionProve.setText(pcd.getDireccion().getDireccionCompleta());
 			lblCPostalProve.setText("" + pcd.getDireccion().getCpostal());
 			lblLocalidadProve.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaProve.setText(pcd.getDireccion().getProvincia());
 			try {
-				Image i = Inicio.CONEXION.cargarLogo(pcd.getPc().getIdprovecompa());
+				Image i = Inicio.CONEXION.cargarLogo(pcd.getIdprovecompa());
 				if (i != null) {
 					logoProve.setImage(i);
 					logoProve.setVisible(true);
@@ -328,7 +328,7 @@ public class V_BuscarProveedorCompaniaController {
 		ProveedorCompaniaDireccion pcd = tableProveedor.getSelectionModel().getSelectedItem();
 		if (pcd != null) {
 			int tipo = 1; // 1-Proveedor, 2-Desguace
-			if (pcd.getPc().isEsdesguace()) {
+			if (pcd.isEsdesguace()) {
 				tipo = 2;
 			} else {
 				tipo = 1;
@@ -365,9 +365,9 @@ public class V_BuscarProveedorCompaniaController {
 		}
 		if (selectedIndex >= 0) {
 			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar " + nombre,
-					"¿Está seguro que quiere eliminar " + pcd.getPc().getNombre() + "?", "");
+					"¿Está seguro que quiere eliminar " + pcd.getNombre() + "?", "");
 			if (result.get() == ButtonType.OK) {
-				if (Inicio.CONEXION.eliminarCia(pcd.getPc().getIdprovecompa(), pcd.getDireccion().getIddireccion())) {
+				if (Inicio.CONEXION.eliminarCia(pcd.getIdprovecompa(), pcd.getDireccion().getIddireccion())) {
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Compañía eliminada", "");
 					if (tipo == 0) {
 						tableCompania.getItems().remove(selectedIndex);

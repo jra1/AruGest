@@ -86,10 +86,10 @@ public class D_EditCiaController {
 	 */
 	public void setCia(ProveedorCompaniaDireccion pcd) {
 		this.pcd = pcd;
-		txtCif.setText(pcd.getPc().getCif());
-		txtNombre.setText(pcd.getPc().getNombre());
-		txtTel1.setText(pcd.getPc().getTelf1());
-		txtTel2.setText(pcd.getPc().getTelf2());
+		txtCif.setText(pcd.getCif());
+		txtNombre.setText(pcd.getNombre());
+		txtTel1.setText(pcd.getTelf1());
+		txtTel2.setText(pcd.getTelf2());
 		txtCalle.setText(pcd.getDireccion().getCalle());
 		txtNumero.setText("" + pcd.getDireccion().getNumero());
 		txtPiso.setText(pcd.getDireccion().getPiso());
@@ -97,15 +97,15 @@ public class D_EditCiaController {
 		txtCodPostal.setText("" + pcd.getDireccion().getCpostal());
 		txtLocalidad.setText(pcd.getDireccion().getLocalidad());
 		txtProvincia.setText(pcd.getDireccion().getProvincia());
-		if (pcd.getPc().isEscompania()) {
+		if (pcd.isEscompania()) {
 			chckboxEsDesguace.setVisible(false);
 		} else {
 			chckboxEsDesguace.setVisible(true);
-			chckboxEsDesguace.setSelected(pcd.getPc().isEsdesguace());
+			chckboxEsDesguace.setSelected(pcd.isEsdesguace());
 		}
-		if (pcd.getPc().getLogo() != null) {
+		if (pcd.getLogo() != null) {
 			try {
-				InputStream is = pcd.getPc().getLogo().getBinaryStream();
+				InputStream is = pcd.getLogo().getBinaryStream();
 				logo.setImage(new Image(is));
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -151,12 +151,12 @@ public class D_EditCiaController {
 				}
 			}
 
-			pcd.getPc().setNombre(txtNombre.getText());
-			pcd.getPc().setCif(txtCif.getText());
-			pcd.getPc().setTelf1(txtTel1.getText());
-			pcd.getPc().setTelf2(txtTel2.getText());
-			pcd.getPc().setEsdesguace(chckboxEsDesguace.isSelected());
-			pcd.getPc().setEscompania(esCia);
+			pcd.setNombre(txtNombre.getText());
+			pcd.setCif(txtCif.getText());
+			pcd.setTelf1(txtTel1.getText());
+			pcd.setTelf2(txtTel2.getText());
+			pcd.setEsdesguace(chckboxEsDesguace.isSelected());
+			pcd.setEscompania(esCia);
 			if (imgFile != null) {
 				// Se guarda el logo como logo del ProveedorCompania
 				try {
@@ -173,7 +173,7 @@ public class D_EditCiaController {
 					buffer.close();
 					fis.close();
 					b1.setBytes(1, bytes);
-					pcd.getPc().setLogo(b1);
+					pcd.setLogo(b1);
 
 					// File image = new
 					// File("C:/Users/Joseba/git/AruGest/AruGest/images/docus.png");

@@ -200,10 +200,10 @@ public class V_VehiculosSustitucionController {
 						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 				columnaClientePrestados
 						.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaFechaEntregaPrestados.setCellValueFactory(
-						cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-				columnaObservacionesPrestados.setCellValueFactory(
-						cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+				columnaFechaEntregaPrestados
+						.setCellValueFactory(cellData -> cellData.getValue().fechacogePropertyFormat());
+				columnaObservacionesPrestados
+						.setCellValueFactory(cellData -> cellData.getValue().observacionesProperty());
 				tablePrestados.setItems(listaPrestados);
 			}
 		}
@@ -230,12 +230,12 @@ public class V_VehiculosSustitucionController {
 						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 				columnaClienteHistorico
 						.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
-				columnaFechaEntregaHistorico.setCellValueFactory(
-						cellData -> cellData.getValue().getVehiculoSustitucion().fechacogePropertyFormat());
-				columnaFechaDevolucionHistorico.setCellValueFactory(
-						cellData -> cellData.getValue().getVehiculoSustitucion().fechadevuelvePropertyFormat());
-				columnaObservacionesHistorico.setCellValueFactory(
-						cellData -> cellData.getValue().getVehiculoSustitucion().observacionesProperty());
+				columnaFechaEntregaHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().fechacogePropertyFormat());
+				columnaFechaDevolucionHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().fechadevuelvePropertyFormat());
+				columnaObservacionesHistorico
+						.setCellValueFactory(cellData -> cellData.getValue().observacionesProperty());
 				tableHistorico.setItems(listaHistorico);
 			}
 		}

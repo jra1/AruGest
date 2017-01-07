@@ -23,6 +23,7 @@ import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
+import Modelo.Documento;
 import Modelo.ElementosGolpes;
 import Modelo.Empresa;
 import Modelo.Factura;
@@ -471,15 +472,15 @@ public class Conexion {
 			sql = "INSERT INTO PROVEEDORCOMPANIA (CIF, NOMBRE, DIRECCIONID, TELF1, TELF2, LOGO, ESDESGUACE, ESCOMPANIA) VALUES (?,?,?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
-			st.setString(1, pcd.getPc().getCif());
-			st.setString(2, pcd.getPc().getNombre());
+			st.setString(1, pcd.getCif());
+			st.setString(2, pcd.getNombre());
 			if (idGenerado != 0) {
 				st.setInt(3, (int) idGenerado);
 			} else {
 				st.setInt(3, 0);
 			}
-			st.setString(4, pcd.getPc().getTelf1());
-			st.setString(5, pcd.getPc().getTelf2());
+			st.setString(4, pcd.getTelf1());
+			st.setString(5, pcd.getTelf2());
 
 			// File theFile = new File("sample_resume.pdf");
 			// FileInputStream input = null;
@@ -487,10 +488,10 @@ public class Conexion {
 			// myStmt.setBinaryStream(1, input);
 
 			// st.setBinaryStream(6, pcd.getPc().getLogo().getBinaryStream());
-			st.setBlob(6, (Blob) pcd.getPc().getLogo());
+			st.setBlob(6, (Blob) pcd.getLogo());
 
-			st.setBoolean(7, pcd.getPc().isEsdesguace());
-			st.setBoolean(8, pcd.getPc().isEscompania());
+			st.setBoolean(7, pcd.isEsdesguace());
+			st.setBoolean(8, pcd.isEscompania());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			res = true;
@@ -747,10 +748,10 @@ public class Conexion {
 			// 1º Direccion
 			// Si ya tiene direccion, se actualiza
 			// Si no tiene direccion (iddireccion = 0), se crea
-			if (pcd.getPc().getDireccionID() != 0) {
+			if (pcd.getDireccionID() != 0) {
 				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
 						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
-						+ pcd.getPc().getDireccionID();
+						+ pcd.getDireccionID();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
 				st.setString(1, pcd.getDireccion().getCalle());
@@ -769,23 +770,23 @@ public class Conexion {
 					if (idGenerado > 0) { // Si es 0 es que hubo un error al
 						// guardar
 						// la direccion
-						res = actualizarIDDireccionProveedor(pcd.getPc().getIdprovecompa(), (int) idGenerado);
+						res = actualizarIDDireccionProveedor(pcd.getIdprovecompa(), (int) idGenerado);
 						// Acabar aquí la funcion si res = false
 					}
 				}
 			}
 			// 2º Cia
 			sql = "UPDATE PROVEEDORCOMPANIA SET CIF = ?, NOMBRE = ?, TELF1 = ?, TELF2 = ?, LOGO = ?, ESDESGUACE = ?, ESCOMPANIA = ? WHERE IDPROVECOMPA = "
-					+ pcd.getPc().getIdprovecompa();
+					+ pcd.getIdprovecompa();
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
-			st.setString(1, pcd.getPc().getCif());
-			st.setString(2, pcd.getPc().getNombre());
-			st.setString(3, pcd.getPc().getTelf1());
-			st.setString(4, pcd.getPc().getTelf2());
-			st.setBlob(5, (Blob) pcd.getPc().getLogo());
-			st.setBoolean(6, pcd.getPc().isEsdesguace());
-			st.setBoolean(7, pcd.getPc().isEscompania());
+			st.setString(1, pcd.getCif());
+			st.setString(2, pcd.getNombre());
+			st.setString(3, pcd.getTelf1());
+			st.setString(4, pcd.getTelf2());
+			st.setBlob(5, (Blob) pcd.getLogo());
+			st.setBoolean(6, pcd.isEsdesguace());
+			st.setBoolean(7, pcd.isEscompania());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
@@ -2167,11 +2168,11 @@ public class Conexion {
 		try {
 			if (tipo.equalsIgnoreCase("D")) {
 				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = "
-						+ vscv.getVehiculoSustitucion().getIdvehiculosusti();
+						+ vscv.getIdvehiculosusti();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechadevuelve().getTime()));
-				st.setString(2, vscv.getVehiculoSustitucion().getObservaciones());
+				st.setDate(1, new java.sql.Date(vscv.getFechadevuelve().getTime()));
+				st.setString(2, vscv.getObservaciones());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else if (tipo.equalsIgnoreCase("E")) {
@@ -2180,11 +2181,11 @@ public class Conexion {
 				sql = "INSERT INTO VEHICULOSUSTITUCION (FECHACOGE, FECHADEVUELVE, CLIENTEID, VEHICULOID, OBSERVACIONES) VALUES (?,?,?,?,?)";
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setDate(1, new java.sql.Date(vscv.getVehiculoSustitucion().getFechacoge().getTime()));
+				st.setDate(1, new java.sql.Date(vscv.getFechacoge().getTime()));
 				st.setDate(2, null);
 				st.setInt(3, Inicio.CLIENTE_ID);
 				st.setInt(4, vscv.getVehiculo().getIdvehiculo());
-				st.setString(5, vscv.getVehiculoSustitucion().getObservaciones());
+				st.setString(5, vscv.getObservaciones());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			}
@@ -2406,6 +2407,38 @@ public class Conexion {
 			ex.printStackTrace();
 			Utilidades.mostrarError(ex);
 			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Guarda en la BD el documento que se pasa por parámetro
+	 * 
+	 * @param documento
+	 *            a guardar
+	 * @return true si fue ok, false si no
+	 */
+	public boolean guardarDocumento(Documento d) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia para introducir los datos del golpe
+			sql = "INSERT INTO DOCUMENTO (CLIENTEID, VEHICULOID, TITULO, DOCUMENTO) VALUES (?,?,?,?)";
+			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			// Añadimos los parametros
+			st.setInt(1, d.getClienteID());
+			st.setInt(2, d.getVehiculoID());
+			st.setString(3, d.getTitulo());
+			st.setBlob(4, (Blob) d.getDocumento());
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			res = true;
+		} catch (Exception e) {
+			res = false;
+			Utilidades.mostrarError(e);
 		}
 		return res;
 	}

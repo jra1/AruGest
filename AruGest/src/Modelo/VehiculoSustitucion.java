@@ -18,6 +18,15 @@ public class VehiculoSustitucion {
 	private final IntegerProperty vehiculoID;
 	private final StringProperty observaciones;
 
+	public VehiculoSustitucion() {
+		this.idvehiculosusti = new SimpleIntegerProperty(0);
+		this.fechacoge = new SimpleObjectProperty<Date>(null);
+		this.fechadevuelve = new SimpleObjectProperty<Date>(null);
+		this.clienteID = new SimpleIntegerProperty(0);
+		this.vehiculoID = new SimpleIntegerProperty(0);
+		this.observaciones = new SimpleStringProperty("");
+	}
+
 	public VehiculoSustitucion(int idvehiculosusti, Date fechacoge, Date fechadevuelve, int clienteID, int vehiculoID,
 			String observaciones) {
 		super();

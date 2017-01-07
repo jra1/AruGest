@@ -1,16 +1,15 @@
 package GUI.Vehiculo;
 
+import java.time.LocalDate;
+
+import Logica.Utilidades;
+import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
-
-import Logica.Utilidades;
-import Modelo.VehiculoSustitucionClienteVehiculo;
 
 /**
  * Dialog to edit details of a person.
@@ -67,9 +66,9 @@ public class D_SustitucionDevolucionController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			vscv.getVehiculoSustitucion().setFechadevuelve(Utilidades.LocalDateADate(txtFecha.getValue()));
-			vscv.getVehiculoSustitucion().setObservaciones(vscv.getVehiculoSustitucion().getObservaciones() + " " + txtObservaciones.getText());
-						
+			vscv.setFechadevuelve(Utilidades.LocalDateADate(txtFecha.getValue()));
+			vscv.setObservaciones(vscv.getObservaciones() + " " + txtObservaciones.getText());
+
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -93,10 +92,11 @@ public class D_SustitucionDevolucionController {
 
 		if (txtFecha.getValue() == null) {
 			errorMessage += "Introduce la fecha \n";
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
+					errorMessage);
 			return false;
-		}else{
-			return true;			
+		} else {
+			return true;
 		}
 	}
 }

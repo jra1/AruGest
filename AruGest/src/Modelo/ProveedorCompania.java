@@ -22,6 +22,18 @@ public class ProveedorCompania {
 	private final BooleanProperty esdesguace;
 	private final BooleanProperty escompania;
 
+	public ProveedorCompania(boolean esCia) {
+		this.idprovecompa = new SimpleIntegerProperty(0);
+		this.cif = new SimpleStringProperty("");
+		this.nombre = new SimpleStringProperty("");
+		this.direccionID = new SimpleIntegerProperty(0);
+		this.telf1 = new SimpleStringProperty("");
+		this.telf2 = new SimpleStringProperty("");
+		this.logo = new SimpleObjectProperty<Blob>(null);
+		this.esdesguace = new SimpleBooleanProperty(false);
+		this.escompania = new SimpleBooleanProperty(esCia);
+	}
+
 	public ProveedorCompania(Integer idprovecompa, String cif, String nombre, Integer direccionID, String telf1,
 			String telf2, Blob logo, Boolean esdesguace, Boolean escompania) {
 		this.idprovecompa = new SimpleIntegerProperty(idprovecompa);

@@ -9,6 +9,7 @@ import com.guigarage.responsive.ResponsiveHandler;
 
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
+import GUI.Cliente.D_AgregaDocumentoController;
 import GUI.Cliente.D_EditClienteController;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.Contabilidad.D_SelectorGolpesController;
@@ -20,6 +21,7 @@ import Logica.BD.Conexion;
 import Modelo.BotonVentana;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
+import Modelo.Documento;
 import Modelo.GestorVentana;
 import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Vehiculo;
@@ -470,6 +472,42 @@ public class Inicio extends Application {
 			Utilidades.mostrarError(e);
 			// e.printStackTrace();
 			return 0;
+		}
+	}
+
+	/**
+	 * Abre el diálogo para agregar un documento
+	 * 
+	 * @return Documento a añadir
+	 */
+	public static Documento abrirAgregaDocumento() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/D_AgregaDocumento.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Agregar documento");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Poner el controlador.
+			D_AgregaDocumentoController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			// controller.cargarGolpes();
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.getDocumento();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			return null;
 		}
 	}
 
