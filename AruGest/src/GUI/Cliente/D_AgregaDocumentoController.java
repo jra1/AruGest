@@ -104,7 +104,9 @@ public class D_AgregaDocumentoController implements Initializable {
 					// System.out.println(db.getFiles().get(0).getAbsolutePath());
 					// System.out.println(db.getFiles().get(0).getName());
 					lista.getItems().add(db.getFiles().get(0).getName());
-					txtNombre.setText(db.getFiles().get(0).getName());
+					if (txtNombre.getText().isEmpty()) {
+						txtNombre.setText(db.getFiles().get(0).getName());
+					}
 					path = db.getFiles().get(0).getAbsolutePath();
 
 					// archivoTextView.setText(db.getFiles().get(0).getPath());
@@ -169,15 +171,21 @@ public class D_AgregaDocumentoController implements Initializable {
 			buffer.close();
 			fis.close();
 			b1.setBytes(1, bytes);
-			this.docu = new Documento(0, Inicio.CLIENTE_ID, 6, txtNombre.getText(), b1); // Cambiar
-																							// el
-																							// 6
-																							// *********************
+
+			this.docu = new Documento(0, Inicio.CLIENTE_ID, 6, txtNombre.getText(), b1, Utilidades.getExtension(path)); // Cambiar
+			// el
+			// 6
+			// *********************
+
+			// Esto funciona, abre el archivo
+			// Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "
+			// + path);
 
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
 			docu = null;
 		}
+
 		dialogStage.close();
 	}
 

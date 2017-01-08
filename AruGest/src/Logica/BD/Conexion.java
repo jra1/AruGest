@@ -2,7 +2,9 @@ package Logica.BD;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -2416,14 +2418,14 @@ public class Conexion {
 	 * 
 	 * @param documento
 	 *            a guardar
-	 * @return true si fue ok, false si no
+	 * @return id generado o cero
 	 */
-	public boolean guardarDocumento(Documento d) {
-		boolean res = true;
+	public int guardarDocumento(Documento d) {
+		int res = 0;
 		String sql = "";
 		try {
 			// Se prepara la sentencia para introducir los datos del golpe
-			sql = "INSERT INTO DOCUMENTO (CLIENTEID, VEHICULOID, TITULO, DOCUMENTO) VALUES (?,?,?,?)";
+			sql = "INSERT INTO DOCUMENTO (CLIENTEID, VEHICULOID, TITULO, DOCUMENTO, EXTENSION) VALUES (?,?,?,?,?)";
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -2431,16 +2433,92 @@ public class Conexion {
 			st.setInt(2, d.getVehiculoID());
 			st.setString(3, d.getTitulo());
 			st.setBlob(4, (Blob) d.getDocumento());
+			st.setString(5, d.getExtension());
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
-
-			res = true;
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				long idGenerado = rs.getLong(1);
+				res = (int) idGenerado;
+			}
 		} catch (Exception e) {
-			res = false;
+			res = 0;
 			Utilidades.mostrarError(e);
 		}
 		return res;
+	}
+
+	/**
+	 * Busca en la BD el documento cuyo id se pasa como parámetro
+	 * 
+	 * @param id
+	 *            del documento a buscar
+	 * @return documento temporal encontrado o null
+	 */
+	public File leerDocumentoPorID(int id) {
+		Documento d = null;
+		File f = null;
+		InputStream is;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM DOCUMENTO WHERE DOCUMENTO.IDDOCUMENTO = " + id;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+
+				is = rs.getBinaryStream("DOCUMENTO");
+				InputStream initialStream = is;
+				byte[] buffer = new byte[initialStream.available()];
+				initialStream.read(buffer);
+				String ext = "." + d.getExtension();
+				// f = File.createTempFile("Archivo_TEMP", ext);
+				String r = System.getProperty("user.home") + "\\archivo" + ext;
+				f = new File(r);
+				OutputStream outStream = new FileOutputStream(f);
+				outStream.write(buffer);
+				outStream.close();
+
+				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
+				// " + f.getAbsolutePath());
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception e) {
+			Utilidades.mostrarError(e);
+		}
+		return f;
+	}
+
+	/**
+	 * Busca en la BD los documentos vinculados al cliente con idcliente id
+	 * 
+	 * @return lista de documentos
+	 */
+	public ObservableList<Documento> buscarDocumentosPorClienteID(int id) {
+		ObservableList<Documento> lista = FXCollections.observableArrayList();
+		Documento d;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM DOCUMENTO WHERE DOCUMENTO.CLIENTEID = " + id;
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+				lista.add(d);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
+		}
+		return lista;
 	}
 
 	/**

@@ -312,6 +312,7 @@
                                  </cursor>
                               </TableView>
                               <Label fx:id="lblSIVS1" alignment="CENTER" layoutX="10.0" layoutY="41.0" prefHeight="324.0" prefWidth="1052.0" styleClass="my-label-si" text="Sin información" visible="false" />
+                              <Button layoutX="392.0" layoutY="44.0" mnemonicParsing="false" onAction="#verDocumento" prefHeight="27.0" prefWidth="160.0" styleClass="my-button" text="Ver documento" />
                            </children>
                         </Pane>
                      </children>

@@ -1,5 +1,6 @@
 package Logica;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Instant;
@@ -365,5 +366,28 @@ public class Utilidades {
 
 	public static LocalDateTime asLocalDateTime(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+	}
+
+	/**
+	 * Método para identificar la extensión de un fichero
+	 * 
+	 * @param ruta
+	 *            del fichero
+	 * @return extensión del fichero ó cadena vacía
+	 */
+	public static String getExtension(String ruta) {
+		File f = new File(ruta);
+		if (f == null || f.isDirectory()) {
+			return "";
+		} else if (f.isFile()) {
+			int index = ruta.lastIndexOf('.');
+			if (index == -1) {
+				return "";
+			} else {
+				return ruta.substring(index + 1);
+			}
+		} else {
+			return "";
+		}
 	}
 }

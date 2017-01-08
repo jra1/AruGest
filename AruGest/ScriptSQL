@@ -36,7 +36,7 @@ ALTER TABLE servicio ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) 
 CREATE TABLE material(idmaterial int primary key auto_increment, nombre varchar(255), precioUnit decimal, facturaID int, cantidad int, precioTotal decimal);
 ALTER TABLE material ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) ;
 
-CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int, vehiculoID int, titulo varchar(255), documento blob)
+CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int, vehiculoID int, titulo varchar(255), documento blob, extension varchar(50));
 ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 

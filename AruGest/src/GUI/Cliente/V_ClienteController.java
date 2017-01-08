@@ -1,5 +1,6 @@
 package GUI.Cliente;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -217,6 +218,9 @@ public class V_ClienteController {
 
 		// Cargar tabla vehículos de sustitución
 		cargarVehiculosSustitucionCliente();
+
+		// Cargar documentos
+		cargarDocumentos();
 	}
 
 	/**
@@ -735,20 +739,103 @@ public class V_ClienteController {
 	private void agregaDocumento() {
 		Documento d = Inicio.abrirAgregaDocumento();
 		if (d != null) {
-			if (Inicio.CONEXION.guardarDocumento(d)) {
+			int id = Inicio.CONEXION.guardarDocumento(d);
+			if (id != 0) {
 				listaDocumentos.add(d);
 				columnaNombreDocumento.setCellValueFactory(cellData -> cellData.getValue().tituloProperty());
 				tableDocumentos.setItems(listaDocumentos);
-				// Abrir el pdf:
-				try {
-					// ************NO FUNCIONA, PROBAR PONIENDO EL
-					// getAbsolutePath()********************************
-					Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + d.getTitulo());
-				} catch (Exception e) {
-					Utilidades.mostrarError(e);
-				}
+				// d = Inicio.CONEXION.leerDocumentoPorID(id);
+				// File f = Inicio.CONEXION.leerDocumentoPorID(id);
+				// if (d != null) {
+				// // Abrir el documento:
+				// try {
+				// // // Crear un archivo temporal
+				// // File temp = File.createTempFile("Archivo_TEMP",
+				// // ".tmp");
+				// //
+				// // // Le indicamos que lo eleminte cuando se cierre el
+				// // // programa.
+				// // temp.deleteOnExit();
+				// //
+				// // // Escribir contenido con BufferedWriter
+				// // BufferedWriter bw = new BufferedWriter(new
+				// // FileWriter(temp));
+				// // bw.write("This is the temporary file content");
+				// // bw.close();
+				// //
+				// // /* ¨--- ALTERNATIVA --- */
+				// //
+				// // // Escribir el archivo con un InputStream
+				// // InputStream is =
+				// // Thread.currentThread().getContextClassLoader()
+				// // .getResourceAsStream("com/pack/yourfile");
+				// //
+				// // FileOutputStream outputStream = new
+				// // FileOutputStream(file);
+				// // int read = 0;
+				// // byte[] bytes = new byte[is.available()];
+				// //
+				// // while ((read = is.read(bytes)) != -1) {
+				// // outputStream.write(bytes, 0, read);
+				// // }
+				// //
+				// // is.close();
+				// // outputStream.close();
+				//
+				// Utilidades.mostrarAlerta(AlertType.INFORMATION, "",
+				// f.getAbsolutePath(), "");
+				// Runtime.getRuntime().exec("rundll32
+				// url.dll,FileProtocolHandler " + f.getAbsolutePath());
+				//
+				// } catch (IOException e) {
+				// Utilidades.mostrarError(e);
+				// }
+				//
+				// }
 			}
 		}
 	}
 
+	/**
+	 * Carga los documentos del cliente en la tabla correspondiente
+	 */
+	private void cargarDocumentos() {
+		listaDocumentos = Inicio.CONEXION.buscarDocumentosPorClienteID(Inicio.CLIENTE_ID);
+		columnaNombreDocumento.setCellValueFactory(cellData -> cellData.getValue().tituloProperty());
+		tableDocumentos.setItems(listaDocumentos);
+		// if (tableSustitucion.getItems().isEmpty()) {
+		// tableSustitucion.setVisible(false);
+		// lblSIVS.setVisible(true);
+		// } else {
+		// tableSustitucion.setVisible(true);
+		// lblSIVS.setVisible(false);
+		// }
+	}
+
+	/**
+	 * Abre el documento seleccionado en la tabla
+	 */
+	@FXML
+	private void verDocumento() {
+		int selectedIndex = tableDocumentos.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			Documento d = tableDocumentos.getSelectionModel().getSelectedItem();
+			File f = Inicio.CONEXION.leerDocumentoPorID(d.getIddocumento());
+
+			// Abrir el documento:
+			try {
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "", f.getAbsolutePath(), "");
+				// Runtime.getRuntime().exec("rundll32
+				// url.dll,FileProtocolHandler " + path);
+				Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler " + f.getAbsolutePath());
+
+			} catch (IOException e) {
+				Utilidades.mostrarError(e);
+			}
+
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún documento seleccionado",
+					"Selecciona el documento que quieras abrir.");
+		}
+	}
 }

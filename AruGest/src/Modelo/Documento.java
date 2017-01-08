@@ -15,23 +15,27 @@ public class Documento {
 	private final IntegerProperty vehiculoID;
 	private final StringProperty titulo;
 	private final ObjectProperty<Blob> documento;
+	private final StringProperty extension;
 
 	public Documento(IntegerProperty iddocumento, IntegerProperty clienteID, IntegerProperty vehiculoID,
-			StringProperty titulo, ObjectProperty<Blob> documento) {
+			StringProperty titulo, ObjectProperty<Blob> documento, StringProperty extension) {
 		super();
 		this.iddocumento = iddocumento;
 		this.clienteID = clienteID;
 		this.vehiculoID = vehiculoID;
 		this.titulo = titulo;
 		this.documento = documento;
+		this.extension = extension;
 	}
 
-	public Documento(Integer iddocumento, Integer clienteID, Integer vehiculoID, String titulo, Blob documento) {
+	public Documento(Integer iddocumento, Integer clienteID, Integer vehiculoID, String titulo, Blob documento,
+			String extension) {
 		this.iddocumento = new SimpleIntegerProperty(iddocumento);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
 		this.titulo = new SimpleStringProperty(titulo);
 		this.documento = new SimpleObjectProperty<Blob>(documento);
+		this.extension = new SimpleStringProperty(extension);
 
 	}
 
@@ -93,6 +97,18 @@ public class Documento {
 
 	public void setDocumento(final Blob documento) {
 		this.documentoProperty().set(documento);
+	}
+
+	public StringProperty extensionProperty() {
+		return this.extension;
+	}
+
+	public String getExtension() {
+		return this.extensionProperty().get();
+	}
+
+	public void setExtension(final String extension) {
+		this.extensionProperty().set(extension);
 	}
 
 }
