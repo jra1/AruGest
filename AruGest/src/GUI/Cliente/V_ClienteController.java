@@ -167,6 +167,8 @@ public class V_ClienteController {
 	private TableView<Documento> tableDocumentos;
 	@FXML
 	private TableColumn<Documento, String> columnaNombreDocumento;
+	@FXML
+	private TextField txtNombreDocumento;
 
 	// Para saber si pulsa eliminar presupuesto o factura
 	private boolean esFactura = false;
@@ -248,6 +250,9 @@ public class V_ClienteController {
 				eliminarFactura();
 			}
 		});
+
+		tableDocumentos.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> mostrarNombreDocumento(newValue));
 
 		/*
 		 * comboTipoCliente.getSelectionModel().selectedItemProperty()
@@ -744,6 +749,7 @@ public class V_ClienteController {
 				listaDocumentos.add(d);
 				columnaNombreDocumento.setCellValueFactory(cellData -> cellData.getValue().tituloProperty());
 				tableDocumentos.setItems(listaDocumentos);
+				cargarDocumentos();
 				// d = Inicio.CONEXION.leerDocumentoPorID(id);
 				// File f = Inicio.CONEXION.leerDocumentoPorID(id);
 				// if (d != null) {
@@ -824,12 +830,10 @@ public class V_ClienteController {
 
 			// Abrir el documento:
 			try {
-				Utilidades.mostrarAlerta(AlertType.INFORMATION, "", f.getAbsolutePath(), "");
-				// Runtime.getRuntime().exec("rundll32
-				// url.dll,FileProtocolHandler " + path);
-				Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler " + f.getAbsolutePath());
+				// String ruta = f.getAbsolutePath();
+				Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + f.getAbsolutePath());
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Utilidades.mostrarError(e);
 			}
 
@@ -838,4 +842,84 @@ public class V_ClienteController {
 					"Selecciona el documento que quieras abrir.");
 		}
 	}
+
+	/**
+	 * Elimina el documento seleccionado en la tabla
+	 */
+	@FXML
+	private void eliminarDocumento() {
+		int selectedIndex = tableDocumentos.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar documento",
+					"¿Está seguro que quiere eliminar este documento?",
+					"Si elimina un elemento de la BD no se podrá recuperar");
+			if (result.get() == ButtonType.OK) {
+				if (Inicio.CONEXION.eliminarDocumentoPorID(
+						tableDocumentos.getSelectionModel().getSelectedItem().getIddocumento())) {
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Documento eliminado",
+							"El documento ha sido eliminado de la BD");
+					cargarDocumentos();
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el documento",
+							"Ocurrió un error al eliminar el documento de la BD. Puede que no haya sido eliminado correctamente");
+				}
+			}
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún documento seleccionado",
+					"Selecciona el documento que quieras abrir.");
+		}
+	}
+
+	/**
+	 * Muestra el nombre del documento seleccionado en el TextField
+	 * correspondiente
+	 * 
+	 * @param documento
+	 *            seleccionado en la tabla
+	 */
+	private void mostrarNombreDocumento(Documento d) {
+		if (d != null) {
+			txtNombreDocumento.setText(d.getTitulo());
+		}
+	}
+
+	/**
+	 * Cambia el nombre del documento seleccionado por el introducido en el
+	 * TextField
+	 */
+	@FXML
+	private void cambiarNombreDocumento() {
+		if (txtNombreDocumento.getText().isEmpty()) {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Debe introducir un nombre",
+					"Seleccione un documento de la tabla e introduzca el nombre que quiere asignarle");
+		} else {
+			int selectedIndex = tableDocumentos.getSelectionModel().getSelectedIndex();
+			if (selectedIndex >= 0) {
+				if (!tableDocumentos.getSelectionModel().getSelectedItem().getTitulo()
+						.equals(txtNombreDocumento.getText())) {
+					String msg = "Cambiar el nombre del documento de '"
+							+ tableDocumentos.getSelectionModel().getSelectedItem().getTitulo() + "' a '"
+							+ txtNombreDocumento.getText() + "'";
+					Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION,
+							"Cambiar nombre documento", "¿Cambiar el nombre de este documento?", msg);
+					if (result.get() == ButtonType.OK) {
+						if (Inicio.CONEXION.editarTituloDocumento(
+								tableDocumentos.getSelectionModel().getSelectedItem().getIddocumento(),
+								txtNombreDocumento.getText())) {
+							Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Documento modificado",
+									"El documento se ha modificado en la BD");
+							cargarDocumentos();
+						} else {
+							Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar el documento",
+									"Ocurrió un error al modificar el documento en la BD. Puede que no haya sido modificado correctamente");
+						}
+					}
+				}
+			} else {
+				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún documento seleccionado",
+						"Selecciona el documento al que quiera cambiar el nombre.");
+			}
+		}
+	}
+
 }

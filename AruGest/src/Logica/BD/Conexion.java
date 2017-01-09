@@ -1438,6 +1438,7 @@ public class Conexion {
 	 * parámetro
 	 * 
 	 * @param id
+	 *            de la cía o proveedor
 	 * @return logo o null
 	 */
 	public Image cargarLogo(int id) {
@@ -2471,16 +2472,24 @@ public class Conexion {
 						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
 
 				is = rs.getBinaryStream("DOCUMENTO");
-				InputStream initialStream = is;
-				byte[] buffer = new byte[initialStream.available()];
-				initialStream.read(buffer);
+				// InputStream initialStream = is;
+				byte[] buffer = new byte[is.available()];
+				is.read(buffer);
 				String ext = "." + d.getExtension();
-				// f = File.createTempFile("Archivo_TEMP", ext);
-				String r = System.getProperty("user.home") + "\\archivo" + ext;
-				f = new File(r);
-				OutputStream outStream = new FileOutputStream(f);
-				outStream.write(buffer);
-				outStream.close();
+				f = File.createTempFile("Archivo_TEMP", ext);
+				f.deleteOnExit();
+				// OutputStream outStream = new FileOutputStream(f);
+				// outStream.write(buffer);
+				// outStream.close();
+
+				OutputStream out = new FileOutputStream(f);
+				byte buf[] = new byte[1024];
+				int len;
+				while ((len = is.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+				out.close();
+				is.close();
 
 				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
 				// " + f.getAbsolutePath());
@@ -2522,6 +2531,59 @@ public class Conexion {
 	}
 
 	/**
+	 * Elimina de la BD el documento cuyo id se pasa como parámetro
+	 * 
+	 * @param id
+	 *            del documento a eliminar
+	 * @return true si ha ido bien, false si no
+	 */
+	public boolean eliminarDocumentoPorID(int id) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Se prepara la sentencia
+			sql = "DELETE FROM DOCUMENTO WHERE DOCUMENTO.IDDOCUMENTO = " + id;
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
+			res = false;
+		}
+		return res;
+	}
+
+	/**
+	 * Edita en la BD el título del documento cuyo id se pasa como parámetro
+	 * 
+	 * @param id
+	 *            del documento y nuevo titulo a ponerle
+	 * @return true si fue bien, false si no
+	 */
+	public boolean editarTituloDocumento(int id, String titulo) {
+		boolean res = true;
+		String sql = "";
+		try {
+			sql = "UPDATE DOCUMENTO SET TITULO = ? WHERE DOCUMENTO.IDDOCUMENTO = " + id;
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.setString(1, titulo);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+			res = true;
+		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
+			res = false;
+		}
+		return res;
+	}
+
+	/**
 	 * Guarda en las variables globales los precios de Hora y de IVA
 	 */
 	public void getPrecioHoraIva() {
@@ -2542,7 +2604,7 @@ public class Conexion {
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
 		}
 	}
 
@@ -2552,7 +2614,7 @@ public class Conexion {
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
 			con.setAutoCommit(true);
 		} catch (Exception e) {
-
+			Utilidades.mostrarError(e);
 		}
 		return con;
 	}

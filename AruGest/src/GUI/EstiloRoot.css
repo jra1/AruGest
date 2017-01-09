@@ -202,6 +202,10 @@
 	-fx-opacity: 1;
 }
 
+#nombreDoc{
+	-fx-pref-width: 350px;
+}
+
 /*TextFields que no cambian de tamaño */
 .my-text-field-fijo{
 	-fx-background-color:

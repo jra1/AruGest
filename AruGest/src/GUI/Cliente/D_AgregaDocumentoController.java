@@ -13,6 +13,7 @@ import Modelo.Documento;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -156,37 +157,58 @@ public class D_AgregaDocumentoController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		try {
-			File file = new File(path);
-			Blob b1 = Inicio.CONEXION.getCon().createBlob();
-			FileInputStream fis = new FileInputStream(file);
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-			int nRead;
-			byte[] data = new byte[(int) file.length()];
-			while ((nRead = fis.read(data, 0, data.length)) != -1) {
-				buffer.write(data, 0, nRead);
+		if (isInputValid()) {
+			try {
+				File file = new File(path);
+				Blob b1 = Inicio.CONEXION.getCon().createBlob();
+				FileInputStream fis = new FileInputStream(file);
+				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+				int nRead;
+				byte[] data = new byte[(int) file.length()];
+				while ((nRead = fis.read(data, 0, data.length)) != -1) {
+					buffer.write(data, 0, nRead);
+				}
+				buffer.flush();
+				byte[] bytes = buffer.toByteArray();
+				buffer.close();
+				fis.close();
+				b1.setBytes(1, bytes);
+
+				this.docu = new Documento(0, Inicio.CLIENTE_ID, 6, txtNombre.getText(), b1,
+						Utilidades.getExtension(path)); // Cambiar
+				// el
+				// 6
+				// *********************
+
+				// Utilidades.mostrarAlerta(AlertType.INFORMATION, "", path,
+				// "");
+				// Esto funciona, abre el archivo
+				// Runtime.getRuntime().exec("rundll32
+				// url.dll,FileProtocolHandler "
+				// + path);
+
+			} catch (Exception e) {
+				Utilidades.mostrarError(e);
+				docu = null;
 			}
-			buffer.flush();
-			byte[] bytes = buffer.toByteArray();
-			buffer.close();
-			fis.close();
-			b1.setBytes(1, bytes);
 
-			this.docu = new Documento(0, Inicio.CLIENTE_ID, 6, txtNombre.getText(), b1, Utilidades.getExtension(path)); // Cambiar
-			// el
-			// 6
-			// *********************
-
-			// Esto funciona, abre el archivo
-			// Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "
-			// + path);
-
-		} catch (Exception e) {
-			Utilidades.mostrarError(e);
-			docu = null;
+			dialogStage.close();
 		}
+	}
 
-		dialogStage.close();
+	/**
+	 * Validaciones de los campos introducidos por el cliente
+	 * 
+	 * @return true si los campos son correctos
+	 */
+	private boolean isInputValid() {
+		if (lista.getItems().isEmpty() || txtNombre.getText().isEmpty()) {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Seleccione un documento y dele un nombre",
+					"Arrastre un documento a la lista y dele un nombre. Si quiere salir sin añadir un documento, pulse en \"Cancelar\"");
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**
