@@ -8,6 +8,7 @@ import GUI.Cliente.V_BuscarClienteController;
 import GUI.Cliente.V_ClienteController;
 import GUI.Contabilidad.V_BuscarFacturaController;
 import GUI.Contabilidad.V_NuevaFacturaController;
+import GUI.Documento.V_BuscarDocumentoController;
 import GUI.ProveedorCompania.V_BuscarProveedorCompaniaController;
 import GUI.Vehiculo.V_BuscarVehiculoController;
 import GUI.Vehiculo.V_GolpesPredefinidosController;
@@ -477,6 +478,51 @@ public class V_RootController {
 			// Poner el controlador de la nueva vista.
 			V_GolpesPredefinidosController controller = loader.getController();
 			controller.setMainAPP(main);
+			controller.boton1 = btnPantalla1;
+			controller.boton2 = btnPantalla2;
+			controller.boton3 = btnPantalla3;
+			controller.setFocus();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Coloca la ventana de buscar documento
+	 */
+	@FXML
+	public void buscarDocumento() {
+		try {
+			// Cargar la vista de buscar documento
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Documento/V_BuscarDocumento.fxml"));
+			AnchorPane vs = (AnchorPane) loader.load();
+			nombre = "Buscar documento";
+			// Poner la nueva vista en el centro del root
+			// main.getRoot().setCenter(vs);
+			sp.setVisible(false);
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(vs, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
+			sp.setContent(vs);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+			sp.setVisible(true);
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+			gv = new GestorVentana(ap, nombre);
+			Utilidades.gestionarPantallas(gv);
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
+
+			// Poner el controlador de la nueva vista.
+			V_BuscarDocumentoController controller = loader.getController();
+			controller.setMainAPP(main);
+			controller.setScrollPane(sp);
 			controller.boton1 = btnPantalla1;
 			controller.boton2 = btnPantalla2;
 			controller.boton3 = btnPantalla3;

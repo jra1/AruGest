@@ -24,6 +24,7 @@ import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
+import Modelo.ClienteParticularEmpresaDireccionDocumento;
 import Modelo.Direccion;
 import Modelo.Documento;
 import Modelo.ElementosGolpes;
@@ -2581,6 +2582,87 @@ public class Conexion {
 			res = false;
 		}
 		return res;
+	}
+
+	/**
+	 * Busca los documentos que coincidan con los parámetros introducidos
+	 * 
+	 * @param nombre
+	 *            documento
+	 * @param nombre
+	 *            cliente asociado al documento
+	 * @return ArrayList con los clientes encontrados
+	 */
+	public ArrayList<ClienteParticularEmpresaDireccionDocumento> buscarDocumentos(String nombreDocumento,
+			String nombreCliente) {
+
+		String sql = "";
+		Statement st;
+		Cliente c;
+		Particular p = null;
+		Empresa e = null;
+		Direccion d = null;
+		Documento docu = null;
+		ClienteParticularEmpresaDireccionDocumento cpedd;
+		ArrayList<ClienteParticularEmpresaDireccionDocumento> listaDocumentos = new ArrayList<ClienteParticularEmpresaDireccionDocumento>();
+		boolean esPrimero = true;
+		try {
+			// Se prepara la sentencia
+			st = getCon().createStatement();
+			sql = "SELECT DISTINCT * FROM DOCUMENTO INNER JOIN CLIENTE ON DOCUMENTO.CLIENTEID = CLIENTE.IDCLIENTE ";
+			if (!nombreDocumento.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(DOCUMENTO.TITULO) LIKE UPPER('%" + nombreDocumento + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(DOCUMENTO.TITULO) LIKE UPPER('%" + nombreDocumento + "%') ";
+				}
+			}
+
+			if (!nombreCliente.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombreCliente + "%') ";
+					esPrimero = false;
+				} else {
+					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombreCliente + "%') ";
+				}
+			}
+
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				int idcliente = rs.getInt("IDCLIENTE");
+				sql = "SELECT * FROM PARTICULAR WHERE PARTICULAR.CLIENTEID = " + idcliente;
+				Statement st2 = getCon().createStatement();
+				;
+				ResultSet rs2 = st2.executeQuery(sql);
+				if (rs2.isBeforeFirst()) {
+					while (rs2.next()) {
+						p = new Particular(rs2.getInt("IDPARTICULAR"), rs2.getInt("PARTICULAR.CLIENTEID"),
+								rs2.getString("PARTICULAR.NOMBRE"), rs2.getString("PARTICULAR.APELLIDOS"),
+								rs2.getString("PARTICULAR.NIF"));
+					}
+				} else {
+					sql = "SELECT * FROM PARTICULAR WHERE PARTICULAR.CLIENTEID = " + idcliente;
+					rs2 = st2.executeQuery(sql);
+					while (rs2.next()) {
+						e = new Empresa(rs2.getInt("IDEMPRESA"), rs2.getInt("IDCLIENTE"),
+								rs2.getString("EMPRESA.NOMBRE"), rs2.getString("CIF"), rs2.getBoolean("ESPROVEEDOR"));
+					}
+				}
+				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+				d = leerDireccionPorID(c.getDireccionID());
+				docu = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+				cpedd = new ClienteParticularEmpresaDireccionDocumento(c, p, e, d, docu);
+				listaDocumentos.add(cpedd);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
+		}
+		return listaDocumentos;
 	}
 
 	/**
