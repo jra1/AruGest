@@ -229,8 +229,9 @@
                                     <TableColumn fx:id="columnaImportePresupuesto" prefWidth="159.0" text="Importe" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="btnEliminarPresupuesto" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar presupuesto" />
+                              <Button fx:id="btnEliminarPresupuesto" layoutX="11.0" layoutY="7.0" mnemonicParsing="false" onAction="#eliminarFactura" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar presupuesto" />
                               <Label fx:id="lblSIP" alignment="CENTER" layoutX="9.0" layoutY="43.0" prefHeight="318.0" prefWidth="1043.0" styleClass="my-label-si" text="Sin información" visible="false" />
+                              <Button fx:id="btnEliminarPresupuesto1" layoutX="203.0" layoutY="7.0" mnemonicParsing="false" onAction="#cargarPresupuesto" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Cargar presupuesto" />
                            </children>
                         </Pane>
                      </children>
@@ -253,9 +254,10 @@
                                     <TableColumn fx:id="columnaImporteFactura" minWidth="6.0" prefWidth="200.0" text="Importe" />
                                  </columns>
                               </TableView>
+                              <Button fx:id="btnEliminarFactura1" layoutX="192.0" layoutY="8.0" mnemonicParsing="false" onAction="#cargarFactura" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Cargar factura" />
+                              <Button fx:id="btnEliminarFactura" layoutX="12.0" layoutY="8.0" mnemonicParsing="false" onAction="#eliminarFactura" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
                            </children>
                         </Pane>
-                        <Button fx:id="btnEliminarFactura" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="165.0" styleClass="my-button" text="Eliminar factura" />
                         <Label fx:id="lblSIF" alignment="CENTER" layoutX="9.0" layoutY="43.0" prefHeight="318.0" prefWidth="1046.0" styleClass="my-label-si" text="Sin información" visible="false" />
                      </children>
                   </AnchorPane>

@@ -175,6 +175,9 @@ public class V_ClienteController {
 
 	private Inicio main;
 	private ScrollPane sp;
+	private AnchorPane ap;
+	private GestorVentana gv;
+	private String nombre = "";
 
 	public Button boton1;
 	public Button boton2;
@@ -919,6 +922,100 @@ public class V_ClienteController {
 				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún documento seleccionado",
 						"Selecciona el documento al que quiera cambiar el nombre.");
 			}
+		}
+	}
+
+	/**
+	 * Función para cargar el presupuesto seleccionado
+	 */
+	@FXML
+	private void cargarPresupuesto() {
+		int selectedIndex = tablePresupuestos.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			try {
+				// Cargar la vista de nueva factura
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+				AnchorPane nuevaFactura = (AnchorPane) loader.load();
+
+				// Poner la nueva vista en el centro del root
+				// **************************************************************************************************
+				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+				// **************************************************************************************************
+				sp.setContent(nuevaFactura);
+				// Esta línea es para que se ejecute la pseudoclase del CSS ya
+				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+				nombre = "Presupuesto: " + listaPresupuestos.get(selectedIndex).getCliente().getNombre();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
+				// main.getRoot().setCenter(nuevaFactura);
+
+				// Poner el controlador de la nueva vista.
+				V_NuevaFacturaController controller = loader.getController();
+				controller.setMainAPP(main);
+				controller.cargaFactura(listaPresupuestos.get(selectedIndex));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			// Nada seleccionado.
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún presupuesto seleccionado",
+					"Selecciona el presupuesto que quieras cargar");
+		}
+	}
+
+	/**
+	 * Función para cargar la factura seleccionada
+	 */
+	@FXML
+	private void cargarFactura() {
+		int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			try {
+				// Cargar la vista de nueva factura
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+				AnchorPane nuevaFactura = (AnchorPane) loader.load();
+
+				// Poner la nueva vista en el centro del root
+				// **************************************************************************************************
+				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+				// **************************************************************************************************
+				sp.setContent(nuevaFactura);
+				// Esta línea es para que se ejecute la pseudoclase del CSS ya
+				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+				nombre = "Factura: " + listaFacturas.get(selectedIndex).getCliente().getNombre();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
+				// main.getRoot().setCenter(nuevaFactura);
+
+				// Poner el controlador de la nueva vista.
+				V_NuevaFacturaController controller = loader.getController();
+				controller.setMainAPP(main);
+				controller.cargaFactura(listaFacturas.get(selectedIndex));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			// Nada seleccionado.
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ninguna factura seleccionada",
+					"Selecciona la factura que quieras cargar");
 		}
 	}
 

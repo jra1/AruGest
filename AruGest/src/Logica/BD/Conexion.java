@@ -2009,6 +2009,7 @@ public class Conexion {
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
 						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				c = leerClientePorID(clienteID);
 				fcv = new FacturaClienteVehiculo(f, c, v);
 				l.add(fcv);
 			}
@@ -2052,6 +2053,7 @@ public class Conexion {
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
 						rs.getString("CODRADIO"), rs.getInt("TIPOID"), rs.getBoolean("ESVEHICULOSUSTITUCION"));
+				c = leerClientePorID(clienteID);
 				fcv = new FacturaClienteVehiculo(f, c, v);
 				l.add(fcv);
 			}
