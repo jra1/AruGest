@@ -38,6 +38,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.converter.NumberStringConverter;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  * @author Joseba
@@ -662,6 +669,8 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void guardarFactura() {
+		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
+
 		String mensaje = "";
 		// Comprobar datos cliente
 		if (cpedv.getCliente().getNombre().equalsIgnoreCase("") || txtDni.getText().isEmpty()
@@ -685,7 +694,8 @@ public class V_NuevaFacturaController {
 			mensaje = "Debes añadir algún servicio o material.";
 		}
 		if (mensaje.equals("")) {
-			// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo si
+			// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo
+			// si
 			// no lo está
 			Cliente c = null;
 			if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
@@ -719,11 +729,13 @@ public class V_NuevaFacturaController {
 			} else {
 				// Si está el cliente pero no tiene direccion, la guardo
 				if (c.getDireccionID() == 0) {
-					if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
-							|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
-						Direccion d = cpedv.getDireccion();
-						int id = (int) Inicio.CONEXION.guardarDireccion(d);
-						Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
+					if (cpedv.getDireccion() != null) {
+						if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+								|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+							Direccion d = cpedv.getDireccion();
+							int id = (int) Inicio.CONEXION.guardarDireccion(d);
+							Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
+						}
 					}
 				}
 			}
@@ -735,7 +747,8 @@ public class V_NuevaFacturaController {
 			v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
 			if (v == null) {
 				cpedv.getVehiculo().setClienteID(Inicio.CLIENTE_ID);
-				// v = new Vehiculo(1, Inicio.CLIENTE_ID, txtMarca.getText(),
+				// v = new Vehiculo(1, Inicio.CLIENTE_ID,
+				// txtMarca.getText(),
 				// txtModelo.getText(), txtVersion.getText(),
 				// txtMatricula.getText(), 0, "", "", "", "", tipoVehiculo,
 				// false);
@@ -778,6 +791,8 @@ public class V_NuevaFacturaController {
 		} else {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", mensaje);
 		}
+
+		// });
 	}
 
 	/**
@@ -842,6 +857,12 @@ public class V_NuevaFacturaController {
 		}
 	}
 
+	/**
+	 * Añade el golpe seleccionado a la factura / presupuesto
+	 * 
+	 * @param idGolpe
+	 *            seleccionado
+	 */
 	private void anadirGolpe(int idGolpe) {
 		ArrayList<ElementosGolpes> listaElementos = Inicio.CONEXION.buscarElementosPorGolpeID(idGolpe);
 		if (listaElementos.size() > 0) {
@@ -863,4 +884,22 @@ public class V_NuevaFacturaController {
 			}
 		}
 	}
+
+	/**
+	 * 
+	 */
+	@FXML
+	private void generarPDF() {
+		try {
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("reporte1.jasper");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, Inicio.CONEXION.getCon());
+			JRExporter exporter = new JRPdfExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reportePDF.pdf"));
+			exporter.exportReport();
+		} catch (Exception e) {
+			Utilidades.mostrarError(e);
+		}
+	}
+
 }

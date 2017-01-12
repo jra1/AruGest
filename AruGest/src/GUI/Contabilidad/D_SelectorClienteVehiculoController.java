@@ -2,6 +2,10 @@ package GUI.Contabilidad;
 
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
+import Modelo.Direccion;
+import Modelo.Empresa;
+import Modelo.Particular;
+import Modelo.Vehiculo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
@@ -105,35 +109,59 @@ public class D_SelectorClienteVehiculoController {
 			cpedv.getCliente().setTelf1(txtTel1.getText());
 
 			if (tipoCliente == 1) { // Particular
-				cpedv.getParticular().setNif(txtDni.getText());
-				cpedv.getParticular().setNombre(txtNombre.getText());
-				cpedv.getParticular().setApellidos(txtApellidos.getText());
+				if (cpedv.getParticular() == null) {
+					Particular p = new Particular(0, cpedv.getCliente().getIdcliente(), txtNombre.getText(),
+							txtApellidos.getText(), txtDni.getText());
+					cpedv.setParticular(p);
+				} else {
+					cpedv.getParticular().setNif(txtDni.getText());
+					cpedv.getParticular().setNombre(txtNombre.getText());
+					cpedv.getParticular().setApellidos(txtApellidos.getText());
+				}
 
-				cpedv.getEmpresa().setCif("");
-				cpedv.getEmpresa().setNombre("");
+				// cpedv.getEmpresa().setCif("");
+				// cpedv.getEmpresa().setNombre("");
 			} else if (tipoCliente == 2) { // Empresa
-				cpedv.getEmpresa().setCif(txtDni.getText());
-				cpedv.getEmpresa().setNombre(txtNombre.getText());
+				if (cpedv.getEmpresa() == null) {
+					Empresa e = new Empresa(0, cpedv.getCliente().getIdcliente(), txtNombre.getText(), txtDni.getText(),
+							false);
+					cpedv.setEmpresa(e);
+				} else {
+					cpedv.getEmpresa().setCif(txtDni.getText());
+					cpedv.getEmpresa().setNombre(txtNombre.getText());
+				}
 
-				cpedv.getParticular().setNif("");
-				cpedv.getParticular().setNombre("");
-				cpedv.getParticular().setApellidos("");
+				// cpedv.getParticular().setNif("");
+				// cpedv.getParticular().setNombre("");
+				// cpedv.getParticular().setApellidos("");
 			}
 
 			if (!txtCalle.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
-				cpedv.getDireccion().setCalle(txtCalle.getText());
-				cpedv.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
-				cpedv.getDireccion().setPiso(txtPiso.getText());
-				cpedv.getDireccion().setLetra(txtLetra.getText());
-				cpedv.getDireccion().setLocalidad(txtPoblacion.getText());
+				if (cpedv.getDireccion() == null) {
+					Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
+							txtPiso.getText(), txtLetra.getText(), txtPoblacion.getText());
+					cpedv.setDireccion(d);
+				} else {
+					cpedv.getDireccion().setCalle(txtCalle.getText());
+					cpedv.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
+					cpedv.getDireccion().setPiso(txtPiso.getText());
+					cpedv.getDireccion().setLetra(txtLetra.getText());
+					cpedv.getDireccion().setLocalidad(txtPoblacion.getText());
+				}
 			}
 
 			// Datos del vehiculo
-			cpedv.getVehiculo().setTipoID(tipoVehiculo);
-			cpedv.getVehiculo().setMatricula(txtMatricula.getText());
-			cpedv.getVehiculo().setMarca(txtMarca.getText());
-			cpedv.getVehiculo().setModelo(txtModelo.getText());
-			cpedv.getVehiculo().setVersion(txtVersion.getText());
+			if (cpedv.getVehiculo() == null) {
+				Vehiculo v = new Vehiculo(1, cpedv.getCliente().getIdcliente(), txtMarca.getText(), txtModelo.getText(),
+						txtVersion.getText(), txtMatricula.getText(), tipoVehiculo);
+				cpedv.setVehiculo(v);
+			} else {
+				cpedv.getVehiculo().setTipoID(tipoVehiculo);
+				cpedv.getVehiculo().setMatricula(txtMatricula.getText());
+				cpedv.getVehiculo().setMarca(txtMarca.getText());
+				cpedv.getVehiculo().setModelo(txtModelo.getText());
+				cpedv.getVehiculo().setVersion(txtVersion.getText());
+			}
 
 			okClicked = true;
 			dialogStage.close();

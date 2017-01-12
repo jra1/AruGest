@@ -43,17 +43,17 @@ public class Vehiculo {
 	public Vehiculo(Integer idvehiculo, Integer clienteID, String matricula) {
 		this.idvehiculo = new SimpleIntegerProperty(idvehiculo);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
-		this.marca = null;
-		this.modelo = null;
-		this.version = null;
+		this.marca = new SimpleStringProperty("");
+		this.modelo = new SimpleStringProperty("");
+		this.version = new SimpleStringProperty("");
 		this.matricula = new SimpleStringProperty(matricula);
-		this.anio = null;
-		this.bastidor = null;
-		this.letrasmotor = null;
-		this.color = null;
-		this.codradio = null;
-		this.tipoID = null;
-		this.esVehiculoSustitucion = null;
+		this.anio = new SimpleIntegerProperty(0);
+		this.bastidor = new SimpleStringProperty("");
+		this.letrasmotor = new SimpleStringProperty("");
+		this.color = new SimpleStringProperty("");
+		this.codradio = new SimpleStringProperty("");
+		this.tipoID = new SimpleIntegerProperty(0);
+		this.esVehiculoSustitucion = new SimpleBooleanProperty(false);
 	}
 
 	// Constructor para factura
@@ -65,29 +65,29 @@ public class Vehiculo {
 		this.modelo = new SimpleStringProperty(modelo);
 		this.version = new SimpleStringProperty(version);
 		this.matricula = new SimpleStringProperty(matricula);
-		this.anio = null;
-		this.bastidor = null;
-		this.letrasmotor = null;
-		this.color = null;
-		this.codradio = null;
+		this.anio = new SimpleIntegerProperty(0);
+		this.bastidor = new SimpleStringProperty("");
+		this.letrasmotor = new SimpleStringProperty("");
+		this.color = new SimpleStringProperty("");
+		this.codradio = new SimpleStringProperty("");
 		this.tipoID = new SimpleIntegerProperty(tipoID);
-		this.esVehiculoSustitucion = null;
+		this.esVehiculoSustitucion = new SimpleBooleanProperty(false);
 	}
 
 	public Vehiculo(String marca, String modelo, String version, String matricula) {
-		this.idvehiculo = null;
-		this.clienteID = null;
+		this.idvehiculo = new SimpleIntegerProperty(0);
+		this.clienteID = new SimpleIntegerProperty(0);
 		this.marca = new SimpleStringProperty(marca);
 		this.modelo = new SimpleStringProperty(modelo);
 		this.version = new SimpleStringProperty(version);
 		this.matricula = new SimpleStringProperty(matricula);
-		this.anio = null;
-		this.bastidor = null;
-		this.letrasmotor = null;
-		this.color = null;
-		this.codradio = null;
-		this.tipoID = null;
-		this.esVehiculoSustitucion = null;
+		this.anio = new SimpleIntegerProperty(0);
+		this.bastidor = new SimpleStringProperty("");
+		this.letrasmotor = new SimpleStringProperty("");
+		this.color = new SimpleStringProperty("");
+		this.codradio = new SimpleStringProperty("");
+		this.tipoID = new SimpleIntegerProperty(0);
+		this.esVehiculoSustitucion = new SimpleBooleanProperty(false);
 	}
 
 	public Vehiculo(Integer idvehiculo, Integer clienteID, String marca, String modelo, String version,
