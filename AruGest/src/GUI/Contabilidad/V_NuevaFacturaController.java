@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -38,13 +40,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.converter.NumberStringConverter;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * @author Joseba
@@ -891,12 +891,26 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void generarPDF() {
 		try {
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("reporte1.jasper");
-			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, Inicio.CONEXION.getCon());
-			JRExporter exporter = new JRPdfExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-			exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File("reportePDF.pdf"));
-			exporter.exportReport();
+			// JasperReport reporte = (JasperReport)
+			// JRLoader.loadObjectFromFile("reporte1.jasper");
+			// JasperPrint jasperPrint = JasperFillManager.fillReport(reporte,
+			// null, Inicio.CONEXION.getCon());
+			// JRExporter exporter = new JRPdfExporter();
+			// exporter.setParameter(JRExporterParameter.JASPER_PRINT,
+			// jasperPrint);
+			// exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new
+			// java.io.File("reportePDF.pdf"));
+			// exporter.exportReport();
+
+			// DataBeanList DataBeanList = new DataBeanList();
+			// ArrayList<DataBean> dataList = DataBeanList.getDataBeanList();
+			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(/* dataList */listaMaterial);
+			String sourceFileName = "reporte1.jasper";
+			String printFileName = null;
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			JasperReport jr = JasperCompileManager.compileReport(sourceFileName);
+			printFileName = JasperFillManager.fillReportToFile(sourceFileName, parameters, beanColDataSource);
+			JasperExportManager.exportReportToPdfFile(printFileName, "reportePDF.pdf");
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
 		}
