@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e3b71f7-3931-4e82-9741-24a89790d288">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     CLIENTE."NOMBRE" AS CLIENTE_NOMBRE,
+     CLIENTE."TELF1" AS CLIENTE_TELF1,
+     CLIENTE."TELF2" AS CLIENTE_TELF2,
+     CLIENTE."TELF3" AS CLIENTE_TELF3,
+     CLIENTE."DIRECCIONID" AS CLIENTE_DIRECCIONID
+FROM
+     "PUBLIC"."CLIENTE" CLIENTE]]>
+	</queryString>
+	<field name="CLIENTE_NOMBRE" class="java.lang.String"/>
+	<field name="CLIENTE_TELF1" class="java.lang.String"/>
+	<field name="CLIENTE_TELF2" class="java.lang.String"/>
+	<field name="CLIENTE_TELF3" class="java.lang.String"/>
+	<field name="CLIENTE_DIRECCIONID" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="100" y="6" width="333" height="33" forecolor="#333333" uuid="d84c1599-9b76-47be-a73b-412a0af714df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Carrocerías RUIZ ARANA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="100" y="39" width="333" height="22" forecolor="#000000" uuid="c0edc125-e37d-49f0-844b-97b5ae2c7efe"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="11"/>
+				</textElement>
+				<text><![CDATA[Jose Antonio Ruiz García]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="62e67feb-e728-42c9-b745-7c7f231dd564"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="197" height="15" uuid="8d7fbc7b-890c-4394-8522-9095b653ac75"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="197" y="19" width="86" height="15" uuid="e8ad6d82-d1c6-42eb-a227-85eb75436d68"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[TELF1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="288" y="19" width="87" height="15" forecolor="#FF0000" uuid="da37c958-baf0-4ab0-9bd3-b42d39e84473"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[TELF2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="375" y="19" width="100" height="15" uuid="27e54de6-6601-4283-bde1-0438b667bc29"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[TELF3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="475" y="19" width="80" height="15" uuid="9ad879a7-b954-46db-b260-061fbdefa9d5"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[DIRECCIONID]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="444f9794-6c28-44f3-bcb9-f4525df6f428"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="197" height="15" uuid="6e818e48-55f0-4641-a7fe-9506695d624c"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIENTE_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="197" y="0" width="86" height="15" uuid="3877ff85-973f-4d74-b032-27a9e5eee8ca"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIENTE_TELF1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="288" y="0" width="87" height="15" uuid="a685e295-8952-40f0-9d3b-e18b75b3f903"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIENTE_TELF2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="375" y="0" width="100" height="15" uuid="ba71f5fc-45b3-44bc-ab1a-e631610a6b85"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIENTE_TELF3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="475" y="0" width="80" height="15" uuid="5a63a83c-e4a6-4626-955e-e00e0697d6ca"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIENTE_DIRECCIONID}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="8b708cc2-66a8-40c6-b3ab-cc5282694ade"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="1a5290d7-e34e-4fbc-9d48-60014a183112"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="3443a605-8bd3-457e-a813-ee63a22cc1e8"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="124fdcfc-57ac-4640-80d2-5f7439fb1324"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
