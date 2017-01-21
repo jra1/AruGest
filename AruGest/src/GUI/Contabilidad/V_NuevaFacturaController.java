@@ -890,8 +890,9 @@ public class V_NuevaFacturaController {
 				Float.parseFloat(txtOtros.getText()), "ESTADO", chckbxRepararDefOcultos.isSelected(), 0,
 				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(),
 				Float.parseFloat(txtTotal.getText()));
-		FacturaDataSource fds = new FacturaDataSource(f, listaServicios, listaMaterial);
-		Hilo.hilo_GeneraPDF(fds);
+		// FacturaDataSource fds = new FacturaDataSource(f, listaServicios,
+		// listaMaterial);
+		Hilo.hilo_GeneraPDF(f);
 		/*
 		 * try { // JasperReport reporte = (JasperReport) //
 		 * JRLoader.loadObjectFromFile("reporte1.jasper"); // JasperPrint

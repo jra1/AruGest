@@ -82,6 +82,9 @@ public class Conexion {
 			// Pass: (No hay)
 			Class.forName("org.h2.Driver");
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
+			// con =
+			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
+			// "sa", "");
 			getCon().setAutoCommit(true);
 			// JOptionPane.showMessageDialog(null, "Servidor: "+
 			// con.getSchema().toString());
@@ -2696,6 +2699,9 @@ public class Conexion {
 		try {
 			Class.forName("org.h2.Driver");
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
+			// con =
+			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
+			// "sa", "");
 			con.setAutoCommit(true);
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);

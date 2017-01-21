@@ -24,8 +24,8 @@ ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (clienteID ) REFERENCES cliente(
 ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 ALTER TABLE vehiculoSustitucion ADD COLUMN (observaciones varchar(255));
 
-CREATE TABLE factura(idfactura int primary key auto_increment, clienteID int, vehiculoID int, numFactura int, numPresupuesto int, numOrdenRep int, numResguardo int, fecha datetime, fechaEntrega datetime, manoObra decimal, materiales decimal, grua decimal, estado varchar(255), rDefOcultos boolean, porcentajeDefOcul float, permisoPruebas boolean, noPiezas boolean, modificable boolean)
-ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL)
+CREATE TABLE factura(idfactura int primary key auto_increment, clienteID int, vehiculoID int, numFactura int, numPresupuesto int, numOrdenRep int, numResguardo int, fecha datetime, fechaEntrega datetime, manoObra decimal(6,2), materiales decimal(6,2), grua decimal(6,2), estado varchar(255), rDefOcultos boolean, porcentajeDefOcul float, permisoPruebas boolean, noPiezas boolean, modificable boolean)
+ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL(6,2))
 ALTER TABLE factura ADD COLUMN (pdf blob)
 ALTER TABLE factura ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE factura ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
@@ -33,14 +33,14 @@ ALTER TABLE factura ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo)
 CREATE TABLE servicio(idservicio int primary key auto_increment, servicio varchar(255), horas decimal, facturaID int, tipoServicio varchar(255));
 ALTER TABLE servicio ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) ;
 
-CREATE TABLE material(idmaterial int primary key auto_increment, nombre varchar(255), precioUnit decimal, facturaID int, cantidad int, precioTotal decimal);
+CREATE TABLE material(idmaterial int primary key auto_increment, nombre varchar(255), precioUnit decimal(6,2), facturaID int, cantidad int, precioTotal decimal(6,2));
 ALTER TABLE material ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura) ;
 
 CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int, vehiculoID int, titulo varchar(255), documento blob, extension varchar(50));
 ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 
-CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal, iva decimal, presupuesto int, factura int);
+CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal(6,2), iva decimal, presupuesto int, factura int);
 
 CREATE TABLE golpes(idgolpe int primary key auto_increment, nombreGolpe varchar(255));
 CREATE TABLE elementosGolpes(idelemento int primary key auto_increment, nombreElemento varchar(255), tipo varchar(30), golpeID int);

@@ -14,12 +14,13 @@ public class FacturaDataSource implements JRDataSource {
 	// private Factura factura;
 	// private List<Servicio> listaServicios = new ArrayList<Servicio>();
 	private ObservableList<Material> listaMaterial = FXCollections.observableArrayList();
+	private ObservableList<Servicio> listaServicio = FXCollections.observableArrayList();
 
 	private int indiceParticipanteActual = -1;
 
 	public FacturaDataSource(Factura f, ObservableList<Servicio> servicios, ObservableList<Material> materiales) {
 		// factura = f;
-		// listaServicios = servicios;
+		listaServicio = servicios;
 		listaMaterial = materiales;
 	}
 
@@ -29,9 +30,14 @@ public class FacturaDataSource implements JRDataSource {
 
 		if (jrField.getName().equals("material")) {
 			valor = listaMaterial.get(indiceParticipanteActual).getNombre();
-		} else if (jrField.getName().equals("precio")) {
+		} else if (jrField.getName().equals("horas")) {
 			valor = listaMaterial.get(indiceParticipanteActual).getPreciounit();
+		} else if (jrField.getName().equals("SERVICIO")) {
+			valor = listaServicio.get(indiceParticipanteActual).getServicio();
+		} else if (jrField.getName().equals("HORAS")) {
+			valor = listaServicio.get(indiceParticipanteActual).getHoras();
 		}
+
 		return valor;
 	}
 
@@ -46,6 +52,14 @@ public class FacturaDataSource implements JRDataSource {
 
 	public void setListaMaterial(ObservableList<Material> listaMaterial) {
 		this.listaMaterial = listaMaterial;
+	}
+
+	public ObservableList<Servicio> getListaServicio() {
+		return listaServicio;
+	}
+
+	public void setListaServicio(ObservableList<Servicio> listaServicio) {
+		this.listaServicio = listaServicio;
 	}
 
 }
