@@ -1,4 +1,4 @@
-CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int)
+CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int);
 ALTER TABLE cliente ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion) ;
 
 CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255))
@@ -17,7 +17,7 @@ ALTER TABLE vehiculo ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) 
 ALTER TABLE vehiculo ADD FOREIGN KEY (tipoID ) REFERENCES tipoVehiculo (idtipoVehiculo) ;
 ALTER TABLE vehiculo ADD COLUMN (ESVEHICULOSUSTITUCION boolean);
 
-CREATE TABLE tipoVehiculo(idtipoVehiculo int primary key auto_increment, tipo varchar(255))
+CREATE TABLE tipoVehiculo(idtipoVehiculo int primary key auto_increment, tipo varchar(255));
 
 CREATE TABLE vehiculoSustitucion(idvehiculosusti int primary key auto_increment, fechaCoge datetime, fechaDevuelve datetime, clienteID int, vehiculoID int)
 ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;

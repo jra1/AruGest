@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFactura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ab07a61-207e-48e4-9d39-b021c707e9f3">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="407"/>
+	<property name="ireport.y" value="23"/>
 	<style name="table">
 		<pen lineWidth="0.6"/>
 		<box>
@@ -133,10 +133,10 @@
 		</field>
 	</subDataset>
 	<parameter name="idfactura" class="java.lang.Integer"/>
-	<parameter name="numfactura" class="java.lang.String"/>
-	<parameter name="numpresupuesto" class="java.lang.String"/>
-	<parameter name="numorden" class="java.lang.String"/>
-	<parameter name="numresguardo" class="java.lang.String"/>
+	<parameter name="numfactura" class="java.lang.Integer"/>
+	<parameter name="numpresupuesto" class="java.lang.Integer"/>
+	<parameter name="numorden" class="java.lang.Integer"/>
+	<parameter name="numresguardo" class="java.lang.Integer"/>
 	<parameter name="autor" class="java.lang.String"/>
 	<parameter name="direccion" class="java.lang.String"/>
 	<parameter name="poblacion" class="java.lang.String"/>
@@ -151,10 +151,10 @@
 	<parameter name="grua" class="java.lang.String"/>
 	<parameter name="suma" class="java.lang.String"/>
 	<parameter name="iva" class="java.lang.String"/>
-	<parameter name="total" class="java.lang.String"/>
 	<parameter name="sumaiva" class="java.lang.String"/>
-	<parameter name="fechaentrega" class="java.util.Date"/>
+	<parameter name="total" class="java.lang.String"/>
 	<parameter name="fecha" class="java.util.Date"/>
+	<parameter name="fechaentrega" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select * from factura where idfactura = $P{idfactura}]]>
 	</queryString>
@@ -557,8 +557,7 @@ RUIZ ARANA]]></text>
 				<textElement textAlignment="Right" markup="styled">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[
-"<style isBold=\"true\">" + $P{total} + " € </style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style isBold=\"true\">" + $P{total} + " € </style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="294" y="1" width="125" height="15" uuid="c00e9983-b5c1-4366-9092-de58a86af53c"/>

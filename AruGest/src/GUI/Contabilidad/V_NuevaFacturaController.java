@@ -535,17 +535,23 @@ public class V_NuevaFacturaController {
 			} else {
 				String horasComa = txtCantidad.getText();
 				String horasPunto = horasComa.replace(",", ".");
-				servicio = new Servicio(0, comboTipo.getValue() + ": " + txtConcepto.getText(), horasPunto, 0,
-						comboTipo.getValue());
-				listaServicios.add(servicio);
-				columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
-				columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
-				tableServicio.setItems(listaServicios);
-				// Se actualizan los valores del precio
-				actualizarPrecio();
-				txtConcepto.setText("");
-				txtCantidad.setText("");
-				comboTipo.requestFocus();
+				try {
+					Float.parseFloat(horasPunto);
+					servicio = new Servicio(0, comboTipo.getValue() + ": " + txtConcepto.getText(), horasPunto, 0,
+							comboTipo.getValue());
+					listaServicios.add(servicio);
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
+					tableServicio.setItems(listaServicios);
+					// Se actualizan los valores del precio
+					actualizarPrecio();
+					txtConcepto.setText("");
+					txtCantidad.setText("");
+					comboTipo.requestFocus();
+				} catch (NumberFormatException e) {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos", "El valor de horas es incorrecto",
+							"El valor de horas debe contener únicamente números, separados por coma o punto, sin letras u otros símbolos");
+				}
 			}
 
 		} else {
@@ -556,20 +562,27 @@ public class V_NuevaFacturaController {
 			} else {
 				String precioComa = txtValor.getText();
 				String precioPunto = precioComa.replace(",", ".");
-				float precioTotal = Float.parseFloat(precioPunto) * Integer.parseInt(txtCantidad.getText());
-				material = new Material(0, txtConcepto.getText(), precioPunto, 0,
-						Integer.parseInt(txtCantidad.getText()), precioTotal);
-				listaMaterial.add(material);
-				columnaConceptoMat.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-				columnaCantidadMat.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
-				columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
-				tableMaterial.setItems(listaMaterial);
-				// Se actualizan los valores del precio
-				actualizarPrecio();
-				txtConcepto.setText("");
-				txtCantidad.setText("");
-				txtValor.setText("");
-				comboTipo.requestFocus();
+				float precioTotal;
+				try {
+					precioTotal = Float.parseFloat(precioPunto) * Integer.parseInt(txtCantidad.getText());
+					material = new Material(0, txtConcepto.getText(), precioPunto, 0,
+							Integer.parseInt(txtCantidad.getText()), precioTotal);
+					listaMaterial.add(material);
+					columnaConceptoMat.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+					columnaCantidadMat.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
+					columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
+					tableMaterial.setItems(listaMaterial);
+					// Se actualizan los valores del precio
+					actualizarPrecio();
+					txtConcepto.setText("");
+					txtCantidad.setText("");
+					txtValor.setText("");
+					comboTipo.requestFocus();
+				} catch (NumberFormatException e) {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos",
+							"El valor de la cantidad ó el precio es incorrecto",
+							"Tanto el valor de cantidad como el de precio unitario deben contener únicamente números, separados por coma o punto, sin letras u otros símbolos");
+				}
 			}
 		}
 	}
@@ -581,14 +594,21 @@ public class V_NuevaFacturaController {
 	private void actualizarPrecio() {
 		float valorMaterial = 0;
 		float valorServicio = 0;
-		float valorOtros = Float.parseFloat(txtOtros.getText());
+		float valorOtros = 0;
+		try {
+			valorOtros = Float.parseFloat(txtOtros.getText().replace(",", "."));
+		} catch (NumberFormatException e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Valor incorrecto",
+					"El valor de \"Otros cargos / Grua\" es incorrecto", "");
+		}
 		float valorSubtotal = 0;
 		float valorIva = 0;
 		float valorTotal = 0;
 
 		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
-		simbolos.setDecimalSeparator('.');
+		simbolos.setDecimalSeparator(',');
 		DecimalFormat dt = new DecimalFormat("##.##", simbolos);
+		dt.setMinimumFractionDigits(2);
 
 		if (listaServicios.size() > 0) {
 			for (Servicio serv : listaServicios) {
@@ -615,6 +635,8 @@ public class V_NuevaFacturaController {
 		} else {
 			txtMateriales.setText("" + dt.format(0));
 		}
+
+		txtOtros.setText("" + dt.format(valorOtros));
 
 		valorSubtotal = valorMaterial + valorServicio + valorOtros;
 		txtSubtotal.setText("" + dt.format(valorSubtotal));
@@ -664,30 +686,8 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void guardarFactura() {
 		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
-
-		String mensaje = "";
-		// Comprobar datos cliente
-		if (cpedv.getCliente().getNombre().equalsIgnoreCase("") || txtDni.getText().isEmpty()
-				|| cpedv.getCliente().getTelf1().equalsIgnoreCase("")) {
-			mensaje = "Debes indicar por lo menos el nombre, DNI y un teléfono del cliente.";
-		}
-		// Datos del vehiculo
-		if (cpedv.getVehiculo().getMatricula().equalsIgnoreCase("")
-				|| cpedv.getVehiculo().getMarca().equalsIgnoreCase("")
-				|| cpedv.getVehiculo().getModelo().equalsIgnoreCase("")) {
-			mensaje = "Debes indicar la marca, modelo y matrícula del vehículo.";
-		}
-		// Comprobar datos factura
-		if ((!chckbxFactura.isSelected() && !chckbxPresupuesto.isSelected() && !chckbxOrdenDeReparacion.isSelected()
-				&& !chckbxResguardoDeposito.isSelected())
-				|| (txtNumfactura.getText().equals("") && txtNumPresupuesto.getText().equals("")
-						&& txtNumOrden.getText().equals("") && txtNumResguardo.getText().equals(""))) {
-			mensaje = "Debes marcar si es factura, presupuesto, orden de reparación o resguardo de depósito e indicar su número.";
-		}
-		if (listaServicios.isEmpty() && listaMaterial.isEmpty()) {
-			mensaje = "Debes añadir algún servicio o material.";
-		}
-		if (mensaje.equals("")) {
+		String error = validarDatos();
+		if (error.equals("")) {
 			// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo
 			// si
 			// no lo está
@@ -759,7 +759,6 @@ public class V_NuevaFacturaController {
 			int numPresupuesto = 0;
 			int numOrden = 0;
 			int numResguardo = 0;
-			Float porcentajeOcultos = 0f;
 			if (!txtNumfactura.getText().isEmpty()) {
 				numFactura = Integer.parseInt(txtNumfactura.getText());
 			}
@@ -772,18 +771,45 @@ public class V_NuevaFacturaController {
 			if (!txtNumResguardo.getText().isEmpty()) {
 				numResguardo = Integer.parseInt(txtNumResguardo.getText());
 			}
-			if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
-				porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText());
+
+			Float manoObra = 0f;
+			Float materiales = 0f;
+			Float otros = 0f;
+			Float suma = 0f;
+			Float sumaIva = 0f;
+			Float total = 0f;
+			Float porcentajeOcultos = 0f;
+			if (!txtManoObra.getText().isEmpty()) {
+				manoObra = Float.parseFloat(txtManoObra.getText().replace(",", "."));
 			}
+			if (!txtMateriales.getText().isEmpty()) {
+				materiales = Float.parseFloat(txtMateriales.getText().replace(",", "."));
+			}
+			if (!txtOtros.getText().isEmpty()) {
+				otros = Float.parseFloat(txtOtros.getText().replace(",", "."));
+			}
+			if (!txtSubtotal.getText().isEmpty()) {
+				suma = Float.parseFloat(txtSubtotal.getText().replace(",", "."));
+			}
+			if (!txtIva.getText().isEmpty()) {
+				sumaIva = Float.parseFloat(txtIva.getText().replace(",", "."));
+			}
+			if (!txtTotal.getText().isEmpty()) {
+				Float.parseFloat(txtTotal.getText().replace(",", "."));
+			}
+
+			if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
+				porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", "."));
+			}
+
 			Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, numFactura, numPresupuesto, numOrden,
 					numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
-					Utilidades.LocalDateADate(txtFechaEntrega.getValue()), Float.parseFloat(txtManoObra.getText()),
-					Float.parseFloat(txtMateriales.getText()), Float.parseFloat(txtOtros.getText()), "ESTADO",
+					Utilidades.LocalDateADate(txtFechaEntrega.getValue()), manoObra, materiales, otros, "ESTADO",
 					chckbxRepararDefOcultos.isSelected(), porcentajeOcultos, chckbxPermisoPruebas.isSelected(),
-					chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), Float.parseFloat(txtTotal.getText()));
+					chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
 			Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 		} else {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", mensaje);
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
 		}
 
 		// });
@@ -880,19 +906,29 @@ public class V_NuevaFacturaController {
 	}
 
 	/**
-	 * 
+	 * Llama al hilo para generar el pdf de la factura/presupuesto
 	 */
 	@FXML
 	private void generarPDF() {
-		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, 0, 0, 0, 0,
-				Utilidades.LocalDateADate(txtFecha.getValue()), Utilidades.LocalDateADate(txtFechaEntrega.getValue()),
-				Float.parseFloat(txtManoObra.getText()), Float.parseFloat(txtMateriales.getText()),
-				Float.parseFloat(txtOtros.getText()), "ESTADO", chckbxRepararDefOcultos.isSelected(), 0,
-				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(),
-				Float.parseFloat(txtTotal.getText()));
+		String error = validarDatos();
+		if (error.equalsIgnoreCase("")) {
+			Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, 0, 0, 0, 0,
+					Utilidades.LocalDateADate(txtFecha.getValue()),
+					Utilidades.LocalDateADate(txtFechaEntrega.getValue()),
+					Float.parseFloat(txtManoObra.getText().replace(",", ".")),
+					Float.parseFloat(txtMateriales.getText().replace(",", ".")),
+					Float.parseFloat(txtOtros.getText().replace(",", ".")), "ESTADO",
+					chckbxRepararDefOcultos.isSelected(),
+					Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", ".")),
+					chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(),
+					Float.parseFloat(txtTotal.getText().replace(",", ".")));
+			Hilo.hilo_GeneraPDF(f);
+		} else {
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Error de validación",
+					"Algunos de los datos introducidos son incorrectos", error);
+		}
 		// FacturaDataSource fds = new FacturaDataSource(f, listaServicios,
 		// listaMaterial);
-		Hilo.hilo_GeneraPDF(f);
 		/*
 		 * try { // JasperReport reporte = (JasperReport) //
 		 * JRLoader.loadObjectFromFile("reporte1.jasper"); // JasperPrint
@@ -921,6 +957,58 @@ public class V_NuevaFacturaController {
 		 * JasperExportManager.exportReportToPdfFile(jpr, "reportePDF.pdf"); }
 		 * catch (Exception e) { Utilidades.mostrarError(e); }
 		 */
+	}
+
+	/**
+	 * Comprueba que los datos introducidos en la factura son correctos
+	 * 
+	 * @return cadena vacía si los datos son válidos o mensaje de error en caso
+	 *         contrario
+	 */
+	private String validarDatos() {
+		String mensaje = "";
+		// Comprobar datos cliente
+		if (cpedv.getCliente().getNombre().equalsIgnoreCase("") || txtDni.getText().isEmpty()
+				|| cpedv.getCliente().getTelf1().equalsIgnoreCase("")) {
+			mensaje = "Debes indicar por lo menos el nombre, DNI y un teléfono del cliente.";
+		}
+		// Datos del vehiculo
+		if (cpedv.getVehiculo().getMatricula().equalsIgnoreCase("")
+				|| cpedv.getVehiculo().getMarca().equalsIgnoreCase("")
+				|| cpedv.getVehiculo().getModelo().equalsIgnoreCase("")) {
+			mensaje = "Debes indicar la marca, modelo y matrícula del vehículo.";
+		}
+		// Comprobar datos factura
+		if ((!chckbxFactura.isSelected() && !chckbxPresupuesto.isSelected() && !chckbxOrdenDeReparacion.isSelected()
+				&& !chckbxResguardoDeposito.isSelected())
+				|| (txtNumfactura.getText().equals("") && txtNumPresupuesto.getText().equals("")
+						&& txtNumOrden.getText().equals("") && txtNumResguardo.getText().equals(""))) {
+			mensaje = "Debes marcar si es factura, presupuesto, orden de reparación o resguardo de depósito e indicar su número.";
+		}
+		if (listaServicios.isEmpty() && listaMaterial.isEmpty()) {
+			mensaje = "Debes añadir algún servicio o material.";
+		}
+		try {
+			if (!txtManoObra.getText().isEmpty()) {
+				Float.parseFloat(txtManoObra.getText().replace(",", "."));
+			}
+			if (!txtMateriales.getText().isEmpty()) {
+				Float.parseFloat(txtMateriales.getText().replace(",", "."));
+			}
+			if (!txtOtros.getText().isEmpty()) {
+				Float.parseFloat(txtOtros.getText().replace(",", "."));
+			}
+			if (!txtTotal.getText().isEmpty()) {
+				Float.parseFloat(txtTotal.getText().replace(",", "."));
+			}
+			if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
+				Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", "."));
+			}
+		} catch (Exception e) {
+			mensaje = "Los valores numéricos no son correctos, revíselos.";
+		}
+
+		return mensaje;
 	}
 
 }

@@ -534,6 +534,7 @@ public class V_ClienteController {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			try {
+				Inicio.VEHICULO_ID = tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo();
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
