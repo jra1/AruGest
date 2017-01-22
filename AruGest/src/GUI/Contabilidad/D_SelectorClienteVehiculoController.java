@@ -151,6 +151,11 @@ public class D_SelectorClienteVehiculoController {
 			}
 
 			// Datos del vehiculo
+			if (!txtKms.getText().isEmpty()) {
+				cpedv.setKms(Integer.parseInt(txtKms.getText()));
+			} else {
+				cpedv.setKms(0);
+			}
 			if (cpedv.getVehiculo() == null) {
 				Vehiculo v = new Vehiculo(1, cpedv.getCliente().getIdcliente(), txtMarca.getText(), txtModelo.getText(),
 						txtVersion.getText(), txtMatricula.getText(), tipoVehiculo);

@@ -1,5 +1,6 @@
 CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int);
 ALTER TABLE cliente ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion) ;
+ALTER TABLE CLIENTE ADD COLUMN (TIPO varchar(1));
 
 CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255))
 ALTER TABLE particular ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente ) ;
@@ -25,8 +26,11 @@ ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo
 ALTER TABLE vehiculoSustitucion ADD COLUMN (observaciones varchar(255));
 
 CREATE TABLE factura(idfactura int primary key auto_increment, clienteID int, vehiculoID int, numFactura int, numPresupuesto int, numOrdenRep int, numResguardo int, fecha datetime, fechaEntrega datetime, manoObra decimal(6,2), materiales decimal(6,2), grua decimal(6,2), estado varchar(255), rDefOcultos boolean, porcentajeDefOcul float, permisoPruebas boolean, noPiezas boolean, modificable boolean)
-ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL(6,2))
-ALTER TABLE factura ADD COLUMN (pdf blob)
+ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL(6,2));
+ALTER TABLE factura ADD COLUMN (SUMA DECIMAL(6,2));
+ALTER TABLE factura ADD COLUMN (SUMAIVA DECIMAL(6,2));
+ALTER TABLE factura ADD COLUMN (KMS int);
+ALTER TABLE factura ADD COLUMN (pdf blob);
 ALTER TABLE factura ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE factura ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 

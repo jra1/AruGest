@@ -6,6 +6,7 @@ public class ClienteParticularEmpresaDireccionVehiculo extends ClienteParticular
 	 * empresa; private Direccion direccion;
 	 */
 	private Vehiculo vehiculo;
+	private int kms;
 
 	public ClienteParticularEmpresaDireccionVehiculo() {
 		/*
@@ -16,16 +17,18 @@ public class ClienteParticularEmpresaDireccionVehiculo extends ClienteParticular
 		 */
 		super();
 		this.vehiculo = new Vehiculo(0, 0, "", "", "", "", 1);
+		this.kms = 0;
 	}
 
 	public ClienteParticularEmpresaDireccionVehiculo(Cliente cliente, Particular particular, Empresa empresa,
-			Direccion direccion, Vehiculo vehiculo) {
+			Direccion direccion, Vehiculo vehiculo, int kms) {
 		// setCliente(cliente);
 		// setParticular(particular);
 		// setEmpresa(empresa);
 		// setDireccion(direccion);
 		super(cliente, particular, empresa, direccion);
 		setVehiculo(vehiculo);
+		setKms(kms);
 	}
 
 	// public Cliente getCliente() {
@@ -66,6 +69,14 @@ public class ClienteParticularEmpresaDireccionVehiculo extends ClienteParticular
 
 	public void setVehiculo(Vehiculo vehiculo) {
 		this.vehiculo = vehiculo;
+	}
+
+	public int getKms() {
+		return kms;
+	}
+
+	public void setKms(int kms) {
+		this.kms = kms;
 	}
 
 }

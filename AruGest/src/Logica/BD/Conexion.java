@@ -92,7 +92,7 @@ public class Conexion {
 			// "");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return con;
 	}
@@ -135,16 +135,18 @@ public class Conexion {
 	 * Guarda en la base de datos la factura que se le pasa como parámetro
 	 * 
 	 * @param factura
-	 *            a guardar en la base de datos
+	 *
+	 * @return id de la factura guardada
 	 */
-	public void guardarFactura(Factura f, ObservableList<Servicio> servicios, ObservableList<Material> materiales) {
+	public int guardarFactura(Factura f, ObservableList<Servicio> servicios, ObservableList<Material> materiales) {
+		int id = 0;
 		try {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
 							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, ESTADO, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
-							+ "NOPIEZAS, MODIFICABLE, IMPORTETOTAL) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							+ "NOPIEZAS, MODIFICABLE, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -166,13 +168,17 @@ public class Conexion {
 			st.setBoolean(16, f.isNopiezas());
 			st.setBoolean(17, f.isModificable());
 			st.setFloat(18, f.getImporteTotal());
+			st.setFloat(19, f.getSuma());
+			st.setFloat(20, f.getSumaIva());
+			st.setFloat(21, f.getKms());
 
 			// Ejecutamos la sentencia
 			int i = st.executeUpdate();
 
 			ResultSet rs = st.getGeneratedKeys();
 			if (rs.next()) {
-				long idFactura = rs.getLong(1);
+				// long idFactura =
+				id = (int) rs.getLong(1);
 				// Guardar servicios
 				st = getCon().prepareStatement(
 						"INSERT INTO SERVICIO (SERVICIO, HORAS, FACTURAID, TIPOSERVICIO) VALUES (?,?,?,?)",
@@ -180,7 +186,7 @@ public class Conexion {
 				for (Servicio serv : servicios) {
 					st.setString(1, serv.getServicio());
 					st.setBigDecimal(2, new BigDecimal(serv.getHoras()));
-					st.setInt(3, (int) idFactura);
+					st.setInt(3, id);
 					st.setString(4, serv.getTiposervicio());
 					st.executeUpdate();
 				}
@@ -191,7 +197,7 @@ public class Conexion {
 				for (Material mat : materiales) {
 					st.setString(1, mat.getNombre());
 					st.setBigDecimal(2, new BigDecimal(mat.getPreciounit()));
-					st.setInt(3, (int) idFactura);
+					st.setInt(3, id);
 					st.setInt(4, mat.getCantidad());
 					st.setBigDecimal(5, new BigDecimal(mat.getPreciototal()));
 					st.executeUpdate();
@@ -203,8 +209,6 @@ public class Conexion {
 				actualizarNumPresuFactura();
 				// Actualizar los valores de próximos presupuestos/facturas
 				Inicio.CONEXION.getPrecioHoraIva();
-				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Factura guardada",
-						"La factura ha sido guardada en la base de datos");
 			}
 
 			// Se cierra la conexion
@@ -214,7 +218,9 @@ public class Conexion {
 			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar factura",
 					"Ocurrió un error al guardar la factura en la base de datos");
 			e.printStackTrace();
+			id = 0;
 		}
+		return id;
 	}
 
 	/**
@@ -1198,7 +1204,6 @@ public class Conexion {
 	 * Busca un cliente en la BD por su ID
 	 * 
 	 * @param id
-	 *            a buscar en la BD tipo de documento a buscar: 1-Dni, 2-Cif
 	 * 
 	 * @return el cliente encontrado o null si no existe ese ID
 	 */
@@ -1212,12 +1217,12 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 			}
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return c;
 	}
@@ -1247,7 +1252,7 @@ public class Conexion {
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return v;
 	}
@@ -1277,12 +1282,12 @@ public class Conexion {
 
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 			}
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return c;
 	}
@@ -1313,7 +1318,7 @@ public class Conexion {
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return v;
 	}
@@ -1341,7 +1346,7 @@ public class Conexion {
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return p;
 	}
@@ -1651,13 +1656,14 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
-						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
-						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
+						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
 						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"),
 						rs.getInt("TIPOID"));
@@ -1667,7 +1673,7 @@ public class Conexion {
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 		return listaFacturas;
 	}
@@ -1794,7 +1800,7 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
 						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
@@ -2003,9 +2009,10 @@ public class Conexion {
 
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
-						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
-						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
+						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
 						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2047,9 +2054,10 @@ public class Conexion {
 
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"), rs.getInt("NUMORDENREP"),
-						rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"), rs.getDate("FECHAENTREGA"),
-						rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"), rs.getFloat("GRUA"), rs.getString("ESTADO"),
+						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
+						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
 						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2655,7 +2663,7 @@ public class Conexion {
 					}
 				}
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
-						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"));
+						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				d = leerDireccionPorID(c.getDireccionID());
 				docu = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
 						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));

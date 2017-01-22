@@ -2,12 +2,19 @@ package Logica;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
 
 import Modelo.Cliente;
 import Modelo.Direccion;
+import Modelo.Empresa;
 import Modelo.Factura;
+import Modelo.Particular;
 import Modelo.Vehiculo;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -58,29 +65,151 @@ public class Hilo extends Thread {
 	}
 
 	public static void hilo_GeneraPDF(Factura f) {
+		try {
+
+			// Mostrar mensaje
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Generando factura");
+			alert.setHeaderText("Generando pdf de factura...");
+			alert.setContentText("");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+			dialogPane.getStyleClass().add("my-dialog");
+			alert.show();
+
+			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
+				@Override
+				public Integer call() throws Exception {
+					// Leer los parámetros desde la factura
+					Cliente c = Inicio.CONEXION.leerClientePorID(f.getClienteID());
+					Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
+					Vehiculo v = Inicio.CONEXION.leerVehiculoPorID(f.getVehiculoID());
+					Particular p = null;
+					Empresa e = null;
+					if (c.getTipo().equalsIgnoreCase("P")) {
+						p = Inicio.CONEXION.buscarParticularPorClienteID(c.getIdcliente());
+					} else {
+						e = Inicio.CONEXION.buscarEmpresaPorClienteID(c.getIdcliente());
+					}
+
+					try {
+						Map<String, Object> parameters = new HashMap<String, Object>();
+						parameters.put("idfactura", f.getIdfactura());
+						if (f.getNumfactura() > 0) {
+							parameters.put("cboxfactura", "file:images/selec.png");
+						} else {
+							parameters.put("cboxfactura", "file:images/selecNO.png");
+						}
+						parameters.put("numfactura", f.getNumfactura());
+						if (f.getNumpresupuesto() > 0) {
+							parameters.put("cboxpresupuesto", "file:images/selec.png");
+						} else {
+							parameters.put("cboxpresupuesto", "file:images/selecNO.png");
+						}
+						parameters.put("numpresupuesto", f.getNumpresupuesto());
+						if (f.getNumordenrep() > 0) {
+							parameters.put("cboxorden", "file:images/selec.png");
+						} else {
+							parameters.put("cboxorden", "file:images/selecNO.png");
+						}
+						parameters.put("numorden", f.getNumordenrep());
+						if (f.getNumresguardo() > 0) {
+							parameters.put("cboxresguardo", "file:images/selec.png");
+						} else {
+							parameters.put("cboxresguardo", "file:images/selecNO.png");
+						}
+						parameters.put("numresguardo", f.getNumresguardo());
+						parameters.put("autor", c.getNombre());
+						parameters.put("direccion", d.getDireccionCompleta());
+						parameters.put("poblacion", d.getLocalidad());
+						if (c.getTipo().equalsIgnoreCase("P")) {
+							parameters.put("dni", p.getNif());
+						} else {
+							parameters.put("dni", e.getCif());
+						}
+						parameters.put("telefono", c.getTelf1() + " " + c.getTelf2());
+						parameters.put("tipovehiculo", Utilidades.tipoIDtoString(v.getTipoID()));
+						parameters.put("marcamodelo", v.getMarcaModelo());
+						parameters.put("matricula", v.getMatricula());
+						parameters.put("kms", f.getKms());
+						parameters.put("manoobra", f.getManoobra());
+						parameters.put("materiales", f.getMateriales());
+						parameters.put("grua", f.getGrua());
+						parameters.put("suma", f.getSuma());
+						parameters.put("iva", Inicio.PRECIO_IVA);
+						parameters.put("sumaiva", f.getSumaIva());
+						parameters.put("total", f.getImporteTotal());
+						parameters.put("fecha", f.getFecha());
+						parameters.put("fechaentrega", f.getFechaentrega());
+						parameters.put("logoAdeada", "file:images/Logo_Adeada.png");
+						if (f.isRdefocultos()) {
+							parameters.put("cboxdef", "file:images/selec.png");
+						} else {
+							parameters.put("cboxdef", "file:images/selecNO.png");
+						}
+						if (f.isPermisopruebas()) {
+							parameters.put("cboxpermiso", "file:images/selec.png");
+						} else {
+							parameters.put("cboxpermiso", "file:images/selecNO.png");
+						}
+						if (f.isNopiezas()) {
+							parameters.put("cboxpiezas", "file:images/selec.png");
+						} else {
+							parameters.put("cboxpiezas", "file:images/selecNO.png");
+						}
+
+						// Esta linea es aparte del resto
+						JasperReport jr = JasperCompileManager.compileReport("reporteFactura.jrxml");
+						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters,
+								Inicio.CONEXION.getCon()/* fds */);
+						// Se puede cambiar el fds por
+						// new JRBeanCollectionDataSource(listaMaterial)
+						// y así no es necesario crear la clase
+						// FacturaDataSource
+						// **** PERO NO FUNCIONA CON ESTO *****
+
+						JasperExportManager.exportReportToPdfFile(jpr, "reporteFacturaPDF_AruGest.pdf");
+					} catch (Exception ex) {
+						System.out.println(ex.getMessage());
+						return 0;
+					}
+					return 1;
+				}
+			});
+			new Thread(task).start();
+
+			Integer result = task.get();
+			if (result == 1) {
+				alert.setHeaderText("¡Factura generada!");
+				// alert.close();
+				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
+				// " + "reporteFacturaPDF_AruGest.pdf");
+			} else {
+				alert.close();
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Ocurrió un error al generar el pdf de la factura",
+						"");
+			}
+		} catch (Exception e) {
+
+		}
+
+		// new Thread(new Runnable() {
+		// public void run() {
 		// try {
-		// // Mostrar mensaje
-		// Alert alert = new Alert(AlertType.INFORMATION);
-		// alert.setTitle("Generando factura");
-		// alert.setHeaderText("Generando pdf de factura...");
-		// alert.setContentText("");
-		// DialogPane dialogPane = alert.getDialogPane();
-		// dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
-		// dialogPane.getStyleClass().add("my-dialog");
-		// alert.show();
-		//
 		// // Leer los parámetros desde la factura
 		// Cliente c = Inicio.CONEXION.leerClientePorID(f.getClienteID());
 		// Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
 		// Vehiculo v = Inicio.CONEXION.leerVehiculoPorID(f.getVehiculoID());
+		// Particular p = null;
+		// Empresa e = null;
+		// if (c.getTipo().equalsIgnoreCase("P")) {
+		// p = Inicio.CONEXION.buscarParticularPorClienteID(c.getIdcliente());
+		// } else {
+		// e = Inicio.CONEXION.buscarEmpresaPorClienteID(c.getIdcliente());
+		// }
 		//
-		// FutureTask<Integer> task = new FutureTask<Integer>(new
-		// Callable<Integer>() {
-		// @Override
-		// public Integer call() throws Exception {
-		// try {
 		// Map<String, Object> parameters = new HashMap<String, Object>();
-		// parameters.put("idfactura", 2);
+		// parameters.put("idfactura", f.getIdfactura());
 		// parameters.put("numfactura", f.getNumfactura());
 		// parameters.put("numpresupuesto", f.getNumpresupuesto());
 		// parameters.put("numorden", f.getNumordenrep());
@@ -88,7 +217,11 @@ public class Hilo extends Thread {
 		// parameters.put("autor", c.getNombre());
 		// parameters.put("direccion", d.getDireccionCompleta());
 		// parameters.put("poblacion", d.getLocalidad());
-		// parameters.put("dni", "72755519X");
+		// if (c.getTipo().equalsIgnoreCase("P")) {
+		// parameters.put("dni", p.getNif());
+		// } else {
+		// parameters.put("dni", e.getCif());
+		// }
 		// parameters.put("telefono", c.getTelf1() + " " + c.getTelf2());
 		// parameters.put("tipovehiculo",
 		// Utilidades.tipoIDtoString(v.getTipoID()));
@@ -98,9 +231,9 @@ public class Hilo extends Thread {
 		// parameters.put("manoobra", f.getManoobra());
 		// parameters.put("materiales", f.getMateriales());
 		// parameters.put("grua", f.getGrua());
-		// parameters.put("suma", "Valor suma");
+		// parameters.put("suma", f.getSuma());
 		// parameters.put("iva", Inicio.PRECIO_IVA);
-		// parameters.put("sumaiva", "Valor suma IVA");
+		// parameters.put("sumaiva", f.getSumaIva());
 		// parameters.put("total", f.getImporteTotal());
 		// parameters.put("fecha", f.getFecha());
 		// parameters.put("fechaentrega", f.getFechaentrega());
@@ -119,74 +252,11 @@ public class Hilo extends Thread {
 		// JasperExportManager.exportReportToPdfFile(jpr,
 		// "reporteFacturaPDF_AruGest.pdf");
 		// } catch (Exception e) {
-		// Utilidades.mostrarError(e);
+		// System.out.println("ERROR: " + e.getMessage());
+		// // Utilidades.mostrarError(e);
 		// }
-		// return 1;
 		// }
-		// });
-		// new Thread(task).start();
-		//
-		// Integer result = task.get();
-		// if (result == 1) {
-		// alert.setHeaderText("¡Factura generada!");
-		// alert.close();
-		// // Runtime.getRuntime().exec("rundll32
-		// // url.dll,FileProtocolHandler " +
-		// // "reporteFacturaPDF_AruGest.pdf");
-		// }
-		// } catch (Exception e) {
-		//
-		// }
-
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					// Leer los parámetros desde la factura
-					Cliente c = Inicio.CONEXION.leerClientePorID(f.getClienteID());
-					Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
-					Vehiculo v = Inicio.CONEXION.leerVehiculoPorID(f.getVehiculoID());
-
-					Map<String, Object> parameters = new HashMap<String, Object>();
-					parameters.put("idfactura", 2);
-					parameters.put("numfactura", f.getNumfactura());
-					parameters.put("numpresupuesto", f.getNumpresupuesto());
-					parameters.put("numorden", f.getNumordenrep());
-					parameters.put("numresguardo", f.getNumresguardo());
-					parameters.put("autor", c.getNombre());
-					parameters.put("direccion", d.getDireccionCompleta());
-					parameters.put("poblacion", d.getLocalidad());
-					parameters.put("dni", "72755519X");
-					parameters.put("telefono", c.getTelf1() + " " + c.getTelf2());
-					parameters.put("tipovehiculo", Utilidades.tipoIDtoString(v.getTipoID()));
-					parameters.put("marcamodelo", v.getMarcaModelo());
-					parameters.put("matricula", v.getMatricula());
-					parameters.put("kms", "-");
-					parameters.put("manoobra", f.getManoobra());
-					parameters.put("materiales", f.getMateriales());
-					parameters.put("grua", f.getGrua());
-					parameters.put("suma", "Valor suma");
-					parameters.put("iva", Inicio.PRECIO_IVA);
-					parameters.put("sumaiva", "Valor suma IVA");
-					parameters.put("total", f.getImporteTotal());
-					parameters.put("fecha", f.getFecha());
-					parameters.put("fechaentrega", f.getFechaentrega());
-
-					// Esta linea es aparte del resto
-					JasperReport jr = JasperCompileManager.compileReport("reporteFactura.jrxml");
-					JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon()/* fds */);
-					// Se puede cambiar el fds por
-					// new JRBeanCollectionDataSource(listaMaterial)
-					// y así no es necesario crear la clase
-					// FacturaDataSource
-					// **** PERO NO FUNCIONA CON ESTO *****
-
-					JasperExportManager.exportReportToPdfFile(jpr, "reporteFacturaPDF_AruGest.pdf");
-				} catch (Exception e) {
-					System.out.println("ERROR: " + e.getMessage());
-					// Utilidades.mostrarError(e);
-				}
-			}
-		}).start();
+		// }).start();
 
 	}
 

@@ -7,7 +7,7 @@ public class ClienteParticularEmpresaDireccion {
 	private Direccion direccion;
 
 	public ClienteParticularEmpresaDireccion() {
-		this.cliente = new Cliente(0, "", "", "", "", 0);
+		this.cliente = new Cliente(0, "", "", "", "", 0, "");
 		this.particular = null;// new Particular(0, 0, "","","");
 		this.empresa = null;// new Empresa(0, 0, "","", false);
 		this.direccion = null;// new Direccion("", 0, "", "", 0, "", "");

@@ -338,7 +338,7 @@
             </GridPane>
             <Button fx:id="btnActualizarPrecio" layoutX="902.0" layoutY="291.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="31.0" prefWidth="179.0" styleClass="my-button" text="ACTUALIZAR PRECIO" />
             <CheckBox fx:id="chckbxModificable" layoutX="943.0" layoutY="334.0" mnemonicParsing="false" styleClass="my-label" text="Modificable" />
-            <Button layoutX="920.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
+            <Button layoutX="920.0" layoutY="361.0" mnemonicParsing="false" onAction="#llamaGuardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
             <Button fx:id="btnGenerarFactura" layoutX="920.0" layoutY="402.0" mnemonicParsing="false" onAction="#generarPDF" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GENERAR FACTURA">
                <font>
                   <Font name="System Bold" size="12.0" />

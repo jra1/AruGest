@@ -19,6 +19,7 @@ public class Factura {
 	private final IntegerProperty idfactura;
 	private final IntegerProperty clienteID;
 	private final IntegerProperty vehiculoID;
+	private final IntegerProperty kms;
 	private final IntegerProperty numfactura;
 	private final IntegerProperty numpresupuesto;
 	private final IntegerProperty numordenrep;
@@ -28,6 +29,8 @@ public class Factura {
 	private final FloatProperty manoobra;
 	private final FloatProperty materiales;
 	private final FloatProperty grua;
+	private final FloatProperty suma;
+	private final FloatProperty sumaIva;
 	private final FloatProperty importeTotal;
 	private final StringProperty estado;
 	private final FloatProperty porcentajedefocul;
@@ -38,35 +41,39 @@ public class Factura {
 	private final ObjectProperty<Blob> documento;
 
 	public Factura(Date fecha, Float importeTotal) {
-		this.idfactura = null;
-		this.clienteID = null;
-		this.vehiculoID = null;
-		this.numfactura = null;
-		this.numpresupuesto = null;
-		this.numordenrep = null;
-		this.numresguardo = null;
+		this.idfactura = new SimpleIntegerProperty(0);
+		this.clienteID = new SimpleIntegerProperty(0);
+		this.vehiculoID = new SimpleIntegerProperty(0);
+		this.kms = new SimpleIntegerProperty(0);
+		this.numfactura = new SimpleIntegerProperty(0);
+		this.numpresupuesto = new SimpleIntegerProperty(0);
+		this.numordenrep = new SimpleIntegerProperty(0);
+		this.numresguardo = new SimpleIntegerProperty(0);
 		this.fecha = new SimpleObjectProperty<Date>(fecha);
-		this.fechaentrega = null;
-		this.manoobra = null;
-		this.materiales = null;
-		this.grua = null;
-		this.estado = null;
-		this.porcentajedefocul = null;
-		this.rdefocultos = null;
-		this.permisopruebas = null;
-		this.nopiezas = null;
-		this.modificable = null;
-		this.documento = null;
+		this.fechaentrega = new SimpleObjectProperty<Date>(null);
+		this.manoobra = new SimpleFloatProperty(0);
+		this.materiales = new SimpleFloatProperty(0);
+		this.grua = new SimpleFloatProperty(0);
+		this.suma = new SimpleFloatProperty(0);
+		this.sumaIva = new SimpleFloatProperty(0);
 		this.importeTotal = new SimpleFloatProperty(importeTotal);
+		this.estado = new SimpleStringProperty("");
+		this.porcentajedefocul = new SimpleFloatProperty(0);
+		this.rdefocultos = new SimpleBooleanProperty(false);
+		this.permisopruebas = new SimpleBooleanProperty(false);
+		this.nopiezas = new SimpleBooleanProperty(false);
+		this.modificable = new SimpleBooleanProperty(false);
+		this.documento = new SimpleObjectProperty<Blob>(null);
 	}
 
-	public Factura(int idfactura, int clienteID, int vehiculoID, int numfactura, int numpresupuesto, int numordenrep,
-			int numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales, float grua,
-			String estado, boolean rdefocultos, float porcentajedefocul, boolean permisopruebas, boolean nopiezas,
-			boolean modificable, float importeTotal) {
+	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, int numfactura, int numpresupuesto,
+			int numordenrep, int numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
+			float grua, float suma, float sumaIva, String estado, boolean rdefocultos, float porcentajedefocul,
+			boolean permisopruebas, boolean nopiezas, boolean modificable, float importeTotal) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
+		this.kms = new SimpleIntegerProperty(kms);
 		this.numfactura = new SimpleIntegerProperty(numfactura);
 		this.numpresupuesto = new SimpleIntegerProperty(numpresupuesto);
 		this.numordenrep = new SimpleIntegerProperty(numordenrep);
@@ -76,6 +83,9 @@ public class Factura {
 		this.manoobra = new SimpleFloatProperty(manoobra);
 		this.materiales = new SimpleFloatProperty(materiales);
 		this.grua = new SimpleFloatProperty(grua);
+		this.suma = new SimpleFloatProperty(suma);
+		this.sumaIva = new SimpleFloatProperty(sumaIva);
+		this.importeTotal = new SimpleFloatProperty(importeTotal);
 		this.estado = new SimpleStringProperty(estado);
 		this.porcentajedefocul = new SimpleFloatProperty(porcentajedefocul);
 		this.rdefocultos = new SimpleBooleanProperty(rdefocultos);
@@ -83,20 +93,20 @@ public class Factura {
 		this.nopiezas = new SimpleBooleanProperty(nopiezas);
 		this.modificable = new SimpleBooleanProperty(modificable);
 		this.documento = null;
-		this.importeTotal = new SimpleFloatProperty(importeTotal);
 	}
 
 	public Factura(IntegerProperty idfactura, IntegerProperty clienteID, IntegerProperty vehiculoID,
-			IntegerProperty numfactura, IntegerProperty numpresupuesto, IntegerProperty numordenrep,
-			IntegerProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
-			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, StringProperty estado,
-			FloatProperty porcentajedefocul, BooleanProperty rdefocultos, BooleanProperty permisopruebas,
-			BooleanProperty nopiezas, BooleanProperty modificable, ObjectProperty<Blob> documento,
-			FloatProperty importeTotal) {
+			IntegerProperty kms, IntegerProperty numfactura, IntegerProperty numpresupuesto,
+			IntegerProperty numordenrep, IntegerProperty numresguardo, ObjectProperty<Date> fecha,
+			ObjectProperty<Date> fechaentrega, FloatProperty manoobra, FloatProperty materiales, FloatProperty grua,
+			FloatProperty suma, FloatProperty sumaIva, StringProperty estado, FloatProperty porcentajedefocul,
+			BooleanProperty rdefocultos, BooleanProperty permisopruebas, BooleanProperty nopiezas,
+			BooleanProperty modificable, ObjectProperty<Blob> documento, FloatProperty importeTotal) {
 		super();
 		this.idfactura = idfactura;
 		this.clienteID = clienteID;
 		this.vehiculoID = vehiculoID;
+		this.kms = kms;
 		this.numfactura = numfactura;
 		this.numpresupuesto = numpresupuesto;
 		this.numordenrep = numordenrep;
@@ -106,6 +116,9 @@ public class Factura {
 		this.manoobra = manoobra;
 		this.materiales = materiales;
 		this.grua = grua;
+		this.suma = suma;
+		this.sumaIva = sumaIva;
+		this.importeTotal = importeTotal;
 		this.estado = estado;
 		this.porcentajedefocul = porcentajedefocul;
 		this.rdefocultos = rdefocultos;
@@ -113,7 +126,6 @@ public class Factura {
 		this.nopiezas = nopiezas;
 		this.modificable = modificable;
 		this.documento = documento;
-		this.importeTotal = importeTotal;
 	}
 
 	public IntegerProperty idfacturaProperty() {
@@ -359,6 +371,42 @@ public class Factura {
 
 	public void setImporteTotal(final float importeTotal) {
 		this.importeTotalProperty().set(importeTotal);
+	}
+
+	public IntegerProperty kmsProperty() {
+		return this.kms;
+	}
+
+	public int getKms() {
+		return this.kmsProperty().get();
+	}
+
+	public void setKms(final int kms) {
+		this.kmsProperty().set(kms);
+	}
+
+	public FloatProperty sumaProperty() {
+		return this.suma;
+	}
+
+	public float getSuma() {
+		return this.sumaProperty().get();
+	}
+
+	public void setSuma(final float suma) {
+		this.sumaProperty().set(suma);
+	}
+
+	public FloatProperty sumaIvaProperty() {
+		return this.sumaIva;
+	}
+
+	public float getSumaIva() {
+		return this.sumaIvaProperty().get();
+	}
+
+	public void setSumaIva(final float sumaIva) {
+		this.sumaIvaProperty().set(sumaIva);
 	}
 
 }

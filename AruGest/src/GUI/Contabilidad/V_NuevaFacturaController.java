@@ -199,8 +199,8 @@ public class V_NuevaFacturaController {
 	public Button boton2;
 	public Button boton3;
 
-	private boolean esServicio = false; // Variable para controlar si es un
-										// servicio o un material
+	private boolean estaGuardada = false;
+	private boolean esServicio = false; // Controla si es servicio o material
 	// private int tipoCliente = 1; // 1-Particular, 2-Empresa
 
 	private Servicio servicio;
@@ -684,7 +684,18 @@ public class V_NuevaFacturaController {
 	 * Guarda en la base de datos el presupuesto / factura
 	 */
 	@FXML
-	private void guardarFactura() {
+	private void llamaGuardarFactura() {
+		guardarFactura(1);
+	}
+
+	/**
+	 * Guarda en la BD el presupuesto / factura
+	 * 
+	 * @param origen
+	 *            1-app, 2-pdf
+	 * @return idfactura generado
+	 */
+	private int guardarFactura(int origen) {
 		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
 		String error = validarDatos();
 		if (error.equals("")) {
@@ -755,61 +766,23 @@ public class V_NuevaFacturaController {
 			}
 			Inicio.VEHICULO_ID = v.getIdvehiculo();
 			// 4º Guardar la factura
-			int numFactura = 0;
-			int numPresupuesto = 0;
-			int numOrden = 0;
-			int numResguardo = 0;
-			if (!txtNumfactura.getText().isEmpty()) {
-				numFactura = Integer.parseInt(txtNumfactura.getText());
+			Factura f = crearFactura();
+			Inicio.FACTURA_ID = Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
+			if (Inicio.FACTURA_ID != 0) {
+				estaGuardada = true;
+				if (origen == 1) {
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
+							"La factura ha sido guardada en la base de datos");
+				}
+				return Inicio.FACTURA_ID;
+			} else {
+				estaGuardada = false;
+				return 0;
 			}
-			if (!txtNumPresupuesto.getText().isEmpty()) {
-				numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
-			}
-			if (!txtNumOrden.getText().isEmpty()) {
-				numOrden = Integer.parseInt(txtNumOrden.getText());
-			}
-			if (!txtNumResguardo.getText().isEmpty()) {
-				numResguardo = Integer.parseInt(txtNumResguardo.getText());
-			}
-
-			Float manoObra = 0f;
-			Float materiales = 0f;
-			Float otros = 0f;
-			Float suma = 0f;
-			Float sumaIva = 0f;
-			Float total = 0f;
-			Float porcentajeOcultos = 0f;
-			if (!txtManoObra.getText().isEmpty()) {
-				manoObra = Float.parseFloat(txtManoObra.getText().replace(",", "."));
-			}
-			if (!txtMateriales.getText().isEmpty()) {
-				materiales = Float.parseFloat(txtMateriales.getText().replace(",", "."));
-			}
-			if (!txtOtros.getText().isEmpty()) {
-				otros = Float.parseFloat(txtOtros.getText().replace(",", "."));
-			}
-			if (!txtSubtotal.getText().isEmpty()) {
-				suma = Float.parseFloat(txtSubtotal.getText().replace(",", "."));
-			}
-			if (!txtIva.getText().isEmpty()) {
-				sumaIva = Float.parseFloat(txtIva.getText().replace(",", "."));
-			}
-			if (!txtTotal.getText().isEmpty()) {
-				Float.parseFloat(txtTotal.getText().replace(",", "."));
-			}
-
-			if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
-				porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", "."));
-			}
-
-			Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, numFactura, numPresupuesto, numOrden,
-					numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
-					Utilidades.LocalDateADate(txtFechaEntrega.getValue()), manoObra, materiales, otros, "ESTADO",
-					chckbxRepararDefOcultos.isSelected(), porcentajeOcultos, chckbxPermisoPruebas.isSelected(),
-					chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
-			Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 		} else {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
+			estaGuardada = false;
+			return 0;
 		}
 
 		// });
@@ -912,16 +885,14 @@ public class V_NuevaFacturaController {
 	private void generarPDF() {
 		String error = validarDatos();
 		if (error.equalsIgnoreCase("")) {
-			Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, 0, 0, 0, 0,
-					Utilidades.LocalDateADate(txtFecha.getValue()),
-					Utilidades.LocalDateADate(txtFechaEntrega.getValue()),
-					Float.parseFloat(txtManoObra.getText().replace(",", ".")),
-					Float.parseFloat(txtMateriales.getText().replace(",", ".")),
-					Float.parseFloat(txtOtros.getText().replace(",", ".")), "ESTADO",
-					chckbxRepararDefOcultos.isSelected(),
-					Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", ".")),
-					chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(),
-					Float.parseFloat(txtTotal.getText().replace(",", ".")));
+			int idf = 0;
+			if (estaGuardada) {
+				idf = Inicio.FACTURA_ID;
+			} else {
+				idf = guardarFactura(2);
+			}
+			Factura f = crearFactura();
+			f.setIdfactura(idf);
 			Hilo.hilo_GeneraPDF(f);
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Error de validación",
@@ -998,6 +969,12 @@ public class V_NuevaFacturaController {
 			if (!txtOtros.getText().isEmpty()) {
 				Float.parseFloat(txtOtros.getText().replace(",", "."));
 			}
+			if (!txtSubtotal.getText().isEmpty()) {
+				Float.parseFloat(txtSubtotal.getText().replace(",", "."));
+			}
+			if (!txtIva.getText().isEmpty()) {
+				Float.parseFloat(txtIva.getText().replace(",", "."));
+			}
 			if (!txtTotal.getText().isEmpty()) {
 				Float.parseFloat(txtTotal.getText().replace(",", "."));
 			}
@@ -1009,6 +986,66 @@ public class V_NuevaFacturaController {
 		}
 
 		return mensaje;
+	}
+
+	/**
+	 * Crea el objeto de tipo Factura con los datos que hay en este momento
+	 * 
+	 * @return factura
+	 */
+	private Factura crearFactura() {
+		int numFactura = 0;
+		int numPresupuesto = 0;
+		int numOrden = 0;
+		int numResguardo = 0;
+		if (!txtNumfactura.getText().isEmpty()) {
+			numFactura = Integer.parseInt(txtNumfactura.getText());
+		}
+		if (!txtNumPresupuesto.getText().isEmpty()) {
+			numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
+		}
+		if (!txtNumOrden.getText().isEmpty()) {
+			numOrden = Integer.parseInt(txtNumOrden.getText());
+		}
+		if (!txtNumResguardo.getText().isEmpty()) {
+			numResguardo = Integer.parseInt(txtNumResguardo.getText());
+		}
+
+		Float manoObra = 0f;
+		Float materiales = 0f;
+		Float otros = 0f;
+		Float suma = 0f;
+		Float sumaIva = 0f;
+		Float total = 0f;
+		Float porcentajeOcultos = 0f;
+		if (!txtManoObra.getText().isEmpty()) {
+			manoObra = Float.parseFloat(txtManoObra.getText().replace(",", "."));
+		}
+		if (!txtMateriales.getText().isEmpty()) {
+			materiales = Float.parseFloat(txtMateriales.getText().replace(",", "."));
+		}
+		if (!txtOtros.getText().isEmpty()) {
+			otros = Float.parseFloat(txtOtros.getText().replace(",", "."));
+		}
+		if (!txtSubtotal.getText().isEmpty()) {
+			suma = Float.parseFloat(txtSubtotal.getText().replace(",", "."));
+		}
+		if (!txtIva.getText().isEmpty()) {
+			sumaIva = Float.parseFloat(txtIva.getText().replace(",", "."));
+		}
+		if (!txtTotal.getText().isEmpty()) {
+			total = Float.parseFloat(txtTotal.getText().replace(",", "."));
+		}
+
+		if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
+			porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", "."));
+		}
+		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
+				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
+				Utilidades.LocalDateADate(txtFechaEntrega.getValue()), manoObra, materiales, otros, suma, sumaIva,
+				"ESTADO", chckbxRepararDefOcultos.isSelected(), porcentajeOcultos, chckbxPermisoPruebas.isSelected(),
+				chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
+		return f;
 	}
 
 }
