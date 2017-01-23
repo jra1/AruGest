@@ -44,7 +44,14 @@ CREATE TABLE documento(iddocumento int primary key auto_increment, clienteID int
 ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente) ;
 ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo) ;
 
-CREATE TABLE auxiliar(idauxiliar int primary key auto_increment, precioHora decimal(6,2), iva decimal, presupuesto int, factura int);
+CREATE TABLE auxiliar(clave varchar(50) primary key, valor VARCHAR(255));
+INSERT INTO AUXILIAR(CLAVE) VALUES ('USUARIO');
+INSERT INTO AUXILIAR(CLAVE) VALUES ('PASS');
+INSERT INTO AUXILIAR(CLAVE) VALUES ('RUTAFACTURAS');
+INSERT INTO AUXILIAR VALUES ('PRECIOHORA', '46.0');
+INSERT INTO AUXILIAR VALUES ('IVA', '21.0');
+INSERT INTO AUXILIAR VALUES ('PRESUPUESTO', '5572');
+INSERT INTO AUXILIAR VALUES ('FACTURA', '15499');
 
 CREATE TABLE golpes(idgolpe int primary key auto_increment, nombreGolpe varchar(255));
 CREATE TABLE elementosGolpes(idelemento int primary key auto_increment, nombreElemento varchar(255), tipo varchar(30), golpeID int);

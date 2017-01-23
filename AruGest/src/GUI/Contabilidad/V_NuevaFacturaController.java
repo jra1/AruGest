@@ -229,6 +229,7 @@ public class V_NuevaFacturaController {
 		Inicio.CLIENTE_ID = fce.getCliente().getIdcliente();
 		Inicio.VEHICULO_ID = fce.getVehiculo().getIdvehiculo();
 		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
+		estaGuardada = true;
 		// Cargar datos factura
 		if (fce.getFactura().getNumfactura() != 0) {
 			chckbxFactura.setSelected(true);
@@ -261,7 +262,7 @@ public class V_NuevaFacturaController {
 
 		// Cargar servicios
 		listaServicios = Inicio.CONEXION.buscarServiciosPorFacturaID(Inicio.FACTURA_ID);
-		columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+		columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
 		columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 		tableServicio.setItems(listaServicios);
 
@@ -537,10 +538,9 @@ public class V_NuevaFacturaController {
 				String horasPunto = horasComa.replace(",", ".");
 				try {
 					Float.parseFloat(horasPunto);
-					servicio = new Servicio(0, comboTipo.getValue() + ": " + txtConcepto.getText(), horasPunto, 0,
-							comboTipo.getValue());
+					servicio = new Servicio(0, txtConcepto.getText(), horasPunto, 0, comboTipo.getValue());
 					listaServicios.add(servicio);
-					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
 					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 					tableServicio.setItems(listaServicios);
 					// Se actualizan los valores del precio
@@ -548,6 +548,8 @@ public class V_NuevaFacturaController {
 					txtConcepto.setText("");
 					txtCantidad.setText("");
 					comboTipo.requestFocus();
+					estaGuardada = false; // Si se añade algo se pone para que
+											// se guarde
 				} catch (NumberFormatException e) {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos", "El valor de horas es incorrecto",
 							"El valor de horas debe contener únicamente números, separados por coma o punto, sin letras u otros símbolos");
@@ -578,6 +580,7 @@ public class V_NuevaFacturaController {
 					txtCantidad.setText("");
 					txtValor.setText("");
 					comboTipo.requestFocus();
+					estaGuardada = false;
 				} catch (NumberFormatException e) {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos",
 							"El valor de la cantidad ó el precio es incorrecto",
@@ -697,92 +700,99 @@ public class V_NuevaFacturaController {
 	 */
 	private int guardarFactura(int origen) {
 		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
-		String error = validarDatos();
-		if (error.equals("")) {
-			// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo
-			// si
-			// no lo está
-			Cliente c = null;
-			if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
-				c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
-			} else if (!cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
-				c = Inicio.CONEXION.buscarClientePorDni(cpedv.getEmpresa().getCif(), 2);
-			}
-			if (c == null) {
-				Direccion d = null;
-				c = cpedv.getCliente();
-				Particular p = null;
-				Empresa e = null;
-				if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
-						|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
-					d = cpedv.getDireccion();
-				}
-				if (!cpedv.getParticular().getNombre().equalsIgnoreCase("")
-						|| !cpedv.getParticular().getNif().equalsIgnoreCase("")) {
-					p = cpedv.getParticular();
-				} else if (!cpedv.getEmpresa().getNombre().equalsIgnoreCase("")
-						|| !cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
-					e = cpedv.getEmpresa();
-				}
-				ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
-				Inicio.CONEXION.guardarCliente(cped);
+		if (estaGuardada) {
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
+					"La factura está guardada en la base de datos");
+			return 0;
+		} else {
+			String error = validarDatos();
+			if (error.equals("")) {
+				// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo
+				// si
+				// no lo está
+				Cliente c = null;
 				if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
 					c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
 				} else if (!cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
 					c = Inicio.CONEXION.buscarClientePorDni(cpedv.getEmpresa().getCif(), 2);
 				}
-			} else {
-				// Si está el cliente pero no tiene direccion, la guardo
-				if (c.getDireccionID() == 0) {
-					if (cpedv.getDireccion() != null) {
-						if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
-								|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
-							Direccion d = cpedv.getDireccion();
-							int id = (int) Inicio.CONEXION.guardarDireccion(d);
-							Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
+				if (c == null) {
+					Direccion d = null;
+					c = cpedv.getCliente();
+					Particular p = null;
+					Empresa e = null;
+					if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+							|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+						d = cpedv.getDireccion();
+					}
+					if (!cpedv.getParticular().getNombre().equalsIgnoreCase("")
+							|| !cpedv.getParticular().getNif().equalsIgnoreCase("")) {
+						p = cpedv.getParticular();
+					} else if (!cpedv.getEmpresa().getNombre().equalsIgnoreCase("")
+							|| !cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
+						e = cpedv.getEmpresa();
+					}
+					ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
+					Inicio.CONEXION.guardarCliente(cped);
+					if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
+						c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
+					} else if (!cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
+						c = Inicio.CONEXION.buscarClientePorDni(cpedv.getEmpresa().getCif(), 2);
+					}
+				} else {
+					// Si está el cliente pero no tiene direccion, la guardo
+					if (c.getDireccionID() == 0) {
+						if (cpedv.getDireccion() != null) {
+							if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+									|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+								Direccion d = cpedv.getDireccion();
+								int id = (int) Inicio.CONEXION.guardarDireccion(d);
+								Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
+							}
 						}
 					}
 				}
-			}
-			Inicio.CLIENTE_ID = c.getIdcliente();
+				Inicio.CLIENTE_ID = c.getIdcliente();
 
-			// 3º Comprobar si existe ese vehiculo en la BD (Matricula) y
-			// guardarlo si no lo está
-			Vehiculo v = null;
-			v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
-			if (v == null) {
-				cpedv.getVehiculo().setClienteID(Inicio.CLIENTE_ID);
-				// v = new Vehiculo(1, Inicio.CLIENTE_ID,
-				// txtMarca.getText(),
-				// txtModelo.getText(), txtVersion.getText(),
-				// txtMatricula.getText(), 0, "", "", "", "", tipoVehiculo,
-				// false);
-				if (Inicio.CONEXION.guardarVehiculo(cpedv.getVehiculo())) {
-					v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
+				// 3º Comprobar si existe ese vehiculo en la BD (Matricula) y
+				// guardarlo si no lo está
+				Vehiculo v = null;
+				v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
+				if (v == null) {
+					cpedv.getVehiculo().setClienteID(Inicio.CLIENTE_ID);
+					// v = new Vehiculo(1, Inicio.CLIENTE_ID,
+					// txtMarca.getText(),
+					// txtModelo.getText(), txtVersion.getText(),
+					// txtMatricula.getText(), 0, "", "", "", "", tipoVehiculo,
+					// false);
+					if (Inicio.CONEXION.guardarVehiculo(cpedv.getVehiculo())) {
+						v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
+					} else {
+						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
+								"Ocurrió un error al guardar el vehículo en la base de datos.");
+					}
+				}
+				Inicio.VEHICULO_ID = v.getIdvehiculo();
+				// 4º Guardar la factura
+				Factura f = crearFactura();
+				Inicio.FACTURA_ID = Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
+				if (Inicio.FACTURA_ID != 0) {
+					estaGuardada = true;
+					if (origen == 1) {
+						Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
+								"La factura ha sido guardada en la base de datos");
+					}
+					return Inicio.FACTURA_ID;
 				} else {
-					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
-							"Ocurrió un error al guardar el vehículo en la base de datos.");
+					estaGuardada = false;
+					return 0;
 				}
-			}
-			Inicio.VEHICULO_ID = v.getIdvehiculo();
-			// 4º Guardar la factura
-			Factura f = crearFactura();
-			Inicio.FACTURA_ID = Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
-			if (Inicio.FACTURA_ID != 0) {
-				estaGuardada = true;
-				if (origen == 1) {
-					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
-							"La factura ha sido guardada en la base de datos");
-				}
-				return Inicio.FACTURA_ID;
 			} else {
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
 				estaGuardada = false;
 				return 0;
 			}
-		} else {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
-			estaGuardada = false;
-			return 0;
+
 		}
 
 		// });
@@ -870,7 +880,7 @@ public class V_NuevaFacturaController {
 				} else {
 					servicio = new Servicio(0, e.getNombreElemento(), "", 0, "");
 					listaServicios.add(servicio);
-					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
 					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 					tableServicio.setItems(listaServicios);
 				}

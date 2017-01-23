@@ -174,11 +174,7 @@ public class D_AgregaDocumentoController implements Initializable {
 				fis.close();
 				b1.setBytes(1, bytes);
 
-				this.docu = new Documento(0, Inicio.CLIENTE_ID, 6, txtNombre.getText(), b1,
-						Utilidades.getExtension(path)); // Cambiar
-				// el
-				// 6
-				// *********************
+				this.docu = new Documento(0, Inicio.CLIENTE_ID, txtNombre.getText(), b1, Utilidades.getExtension(path));
 
 				// Utilidades.mostrarAlerta(AlertType.INFORMATION, "", path,
 				// "");

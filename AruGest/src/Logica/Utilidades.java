@@ -372,7 +372,6 @@ public class Utilidades {
 	 * Método para identificar la extensión de un fichero
 	 * 
 	 * @param ruta
-	 *            del fichero
 	 * @return extensión del fichero ó cadena vacía
 	 */
 	public static String getExtension(String ruta) {

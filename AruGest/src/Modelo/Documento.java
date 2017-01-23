@@ -12,27 +12,23 @@ import javafx.beans.property.StringProperty;
 public class Documento {
 	private final IntegerProperty iddocumento;
 	private final IntegerProperty clienteID;
-	private final IntegerProperty vehiculoID;
 	private final StringProperty titulo;
 	private final ObjectProperty<Blob> documento;
 	private final StringProperty extension;
 
-	public Documento(IntegerProperty iddocumento, IntegerProperty clienteID, IntegerProperty vehiculoID,
-			StringProperty titulo, ObjectProperty<Blob> documento, StringProperty extension) {
+	public Documento(IntegerProperty iddocumento, IntegerProperty clienteID, StringProperty titulo,
+			ObjectProperty<Blob> documento, StringProperty extension) {
 		super();
 		this.iddocumento = iddocumento;
 		this.clienteID = clienteID;
-		this.vehiculoID = vehiculoID;
 		this.titulo = titulo;
 		this.documento = documento;
 		this.extension = extension;
 	}
 
-	public Documento(Integer iddocumento, Integer clienteID, Integer vehiculoID, String titulo, Blob documento,
-			String extension) {
+	public Documento(Integer iddocumento, Integer clienteID, String titulo, Blob documento, String extension) {
 		this.iddocumento = new SimpleIntegerProperty(iddocumento);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
-		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
 		this.titulo = new SimpleStringProperty(titulo);
 		this.documento = new SimpleObjectProperty<Blob>(documento);
 		this.extension = new SimpleStringProperty(extension);
@@ -61,18 +57,6 @@ public class Documento {
 
 	public void setClienteID(final int clienteID) {
 		this.clienteIDProperty().set(clienteID);
-	}
-
-	public IntegerProperty vehiculoIDProperty() {
-		return this.vehiculoID;
-	}
-
-	public int getVehiculoID() {
-		return this.vehiculoIDProperty().get();
-	}
-
-	public void setVehiculoID(final int vehiculoID) {
-		this.vehiculoIDProperty().set(vehiculoID);
 	}
 
 	public StringProperty tituloProperty() {

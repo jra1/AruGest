@@ -231,13 +231,13 @@ public class Conexion {
 		PreparedStatement st;
 		try {
 			// Actualizar nº presupuesto
-			sql = "UPDATE AUXILIAR SET PRESUPUESTO = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE IDAUXILIAR = 0";
+			sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE CLAVE = 'PRESUPUESTO'";
 			st = getCon().prepareStatement(sql);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
 			// Actualizar nº factura
-			sql = "UPDATE AUXILIAR SET FACTURA = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE IDAUXILIAR = 0";
+			sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE CLAVE = 'FACTURA'";
 			st = getCon().prepareStatement(sql);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -255,7 +255,7 @@ public class Conexion {
 		PreparedStatement st;
 		try {
 			// Actualizar nº presupuesto
-			sql = "UPDATE AUXILIAR SET PRECIOHORA = ?, IVA = ?, PRESUPUESTO = ?, FACTURA = ? WHERE IDAUXILIAR = 0";
+			ql = "UPDATE AUXILIAR SET PRECIOHORA = ?, IVA = ?, PRESUPUESTO = ?, FACTURA = ? WHERE IDAUXILIAR = 0";
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
 			st.setFloat(1, precioHora);
@@ -2440,15 +2440,14 @@ public class Conexion {
 		String sql = "";
 		try {
 			// Se prepara la sentencia para introducir los datos del golpe
-			sql = "INSERT INTO DOCUMENTO (CLIENTEID, VEHICULOID, TITULO, DOCUMENTO, EXTENSION) VALUES (?,?,?,?,?)";
+			sql = "INSERT INTO DOCUMENTO (CLIENTEID, TITULO, DOCUMENTO, EXTENSION) VALUES (?,?,?,?)";
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
 			st.setInt(1, d.getClienteID());
-			st.setInt(2, d.getVehiculoID());
-			st.setString(3, d.getTitulo());
-			st.setBlob(4, (Blob) d.getDocumento());
-			st.setString(5, d.getExtension());
+			st.setString(2, d.getTitulo());
+			st.setBlob(3, (Blob) d.getDocumento());
+			st.setString(4, d.getExtension());
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -2482,8 +2481,8 @@ public class Conexion {
 			sql = "SELECT * FROM DOCUMENTO WHERE DOCUMENTO.IDDOCUMENTO = " + id;
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getString("TITULO"),
+						rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
 
 				is = rs.getBinaryStream("DOCUMENTO");
 				// InputStream initialStream = is;
@@ -2532,8 +2531,8 @@ public class Conexion {
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+				d = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getString("TITULO"),
+						rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
 				lista.add(d);
 			}
 			// Se cierra la conexion
@@ -2665,8 +2664,8 @@ public class Conexion {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				d = leerDireccionPorID(c.getDireccionID());
-				docu = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getString("TITULO"), rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
+				docu = new Documento(rs.getInt("IDDOCUMENTO"), rs.getInt("CLIENTEID"), rs.getString("TITULO"),
+						rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
 				cpedd = new ClienteParticularEmpresaDireccionDocumento(c, p, e, d, docu);
 				listaDocumentos.add(cpedd);
 			}

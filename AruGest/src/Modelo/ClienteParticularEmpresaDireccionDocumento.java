@@ -6,7 +6,7 @@ public class ClienteParticularEmpresaDireccionDocumento extends ClienteParticula
 
 	public ClienteParticularEmpresaDireccionDocumento() {
 		super();
-		this.documento = new Documento(0, 0, 0, "", null, "");
+		this.documento = new Documento(0, 0, "", null, "");
 	}
 
 	public ClienteParticularEmpresaDireccionDocumento(Cliente cliente, Particular particular, Empresa empresa,

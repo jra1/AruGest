@@ -15,9 +15,9 @@ public class Servicio {
 	/**
 	 * Default constructor.
 	 */
-	public Servicio() {
-		this(null, null, null, null, null);
-	}
+	// public Servicio() {
+	// this(0, null, null, null, null);
+	// }
 
 	public Servicio(Integer idservicio, String servicio, String horas, Integer facturaID, String tiposervicio) {
 		super();
@@ -42,6 +42,10 @@ public class Servicio {
 
 	public StringProperty servicioProperty() {
 		return this.servicio;
+	}
+
+	public StringProperty tipoConServicioProperty() {
+		return new SimpleStringProperty(getTiposervicio() + ": " + getServicio());
 	}
 
 	public String getServicio() {

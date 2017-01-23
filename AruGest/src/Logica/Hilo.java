@@ -181,9 +181,8 @@ public class Hilo extends Thread {
 			Integer result = task.get();
 			if (result == 1) {
 				alert.setHeaderText("¡Factura generada!");
-				// alert.close();
-				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
-				// " + "reporteFacturaPDF_AruGest.pdf");
+				alert.close();
+				Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler " + "reporteFacturaPDF_AruGest.pdf");
 			} else {
 				alert.close();
 				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Ocurrió un error al generar el pdf de la factura",
