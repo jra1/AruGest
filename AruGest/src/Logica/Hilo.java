@@ -1,5 +1,11 @@
 package Logica;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -29,8 +35,7 @@ public class Hilo extends Thread {
 	/**
 	 * Constructor
 	 * 
-	 * @param str
-	 *            nombre del hilo
+	 * @param nombre
 	 */
 	public Hilo(String str) {
 		super(str);
@@ -158,17 +163,13 @@ public class Hilo extends Thread {
 							parameters.put("cboxpiezas", "file:images/selecNO.png");
 						}
 
+						String nombreFactura = c.getNombre() + "-" + v.getMarcaModelo() + ".pdf";
+						String ruta = Inicio.RUTA_FACTURAS + "\\" + nombreFactura;
+
 						// Esta linea es aparte del resto
 						JasperReport jr = JasperCompileManager.compileReport("reporteFactura.jrxml");
-						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters,
-								Inicio.CONEXION.getCon()/* fds */);
-						// Se puede cambiar el fds por
-						// new JRBeanCollectionDataSource(listaMaterial)
-						// y así no es necesario crear la clase
-						// FacturaDataSource
-						// **** PERO NO FUNCIONA CON ESTO *****
-
-						JasperExportManager.exportReportToPdfFile(jpr, "reporteFacturaPDF_AruGest.pdf");
+						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon());
+						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {
 						System.out.println(ex.getMessage());
 						return 0;
@@ -257,6 +258,77 @@ public class Hilo extends Thread {
 		// }
 		// }).start();
 
+	}
+
+	/**
+	 * Hilo para crear la BD desde el script
+	 */
+	public static void hilo_CreaBD(String url) {
+		try {
+			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
+				@Override
+				public Integer call() throws Exception {
+					System.out.println("Empieza");
+					BufferedReader br = new BufferedReader(new FileReader("ScriptSQL"));
+					System.out.println("Empezando a leer fichero...");
+					Connection connection = null;
+					try {
+						connection = openConnection(url);
+						String line = br.readLine();
+						StringBuilder statement = new StringBuilder();
+						while (line != null) {
+							line = line.trim();
+							if (!line.startsWith("--") && !line.startsWith("#") && !line.startsWith("//")) {
+								statement.append(line);
+								if (line.endsWith(";")) {
+									executeLine(connection, statement.toString());
+									statement = new StringBuilder();
+								}
+							}
+							line = br.readLine();
+						}
+						if (statement.length() > 0) {
+							executeLine(connection, statement.toString());
+						}
+					} finally {
+						try {
+							br.close();
+						} catch (Exception e) {
+							;
+						}
+						try {
+							if (connection != null)
+								connection.close();
+						} catch (Exception e) {
+							;
+						}
+					}
+					return 1;
+				}
+			});
+
+			new Thread(task).start();
+			Integer result = task.get();
+			if (result == 1) {
+				System.out.println("Base de datos creada");
+				// Inicio.abreVentanaPrincipal();
+			} else {
+				System.out.println("Ocurrió un error al crear la base de datos");
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	private static void executeLine(Connection connection, String statement) throws SQLException {
+		PreparedStatement pstmt = connection.prepareStatement(statement);
+		pstmt.execute();
+		pstmt.close();
+		System.out.println("Ejecutando " + statement);
+	}
+
+	public static Connection openConnection(String pUrl) throws SQLException {
+		return DriverManager.getConnection(pUrl, "sa", "");
 	}
 
 }

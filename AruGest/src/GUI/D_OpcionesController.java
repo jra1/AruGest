@@ -1,10 +1,13 @@
 package GUI;
 
+import java.io.File;
+
 import Logica.Inicio;
 import Logica.Utilidades;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class D_OpcionesController {
@@ -16,11 +19,14 @@ public class D_OpcionesController {
 	private TextField txtNumPresupuesto;
 	@FXML
 	private TextField txtNumFactura;
+	@FXML
+	private TextField txtRutaFacturas;
 
 	private float precioHora;
 	private float iva;
 	private int numPresupuesto;
 	private int numFactura;
+	private String ruta;
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
@@ -36,6 +42,7 @@ public class D_OpcionesController {
 		txtIva.setText(Inicio.PRECIO_IVA + "");
 		txtNumPresupuesto.setText(Inicio.NUM_PRESUPUESTO + "");
 		txtNumFactura.setText(Inicio.NUM_FACTURA + "");
+		txtRutaFacturas.setText(Inicio.RUTA_FACTURAS);
 	}
 
 	/**
@@ -57,17 +64,35 @@ public class D_OpcionesController {
 	}
 
 	/**
+	 * Abre el diálogo para que seleccione la carpeta donde se guardarán las
+	 * facturas generadas
+	 */
+	@FXML
+	private void abrirSelectorRuta() {
+		DirectoryChooser chooser = new DirectoryChooser();
+		chooser.setTitle("Seleccionar carpeta");
+
+		// Obtener la imagen seleccionada
+		File f = chooser.showDialog(dialogStage);
+		if (f != null) {
+			ruta = f.getAbsolutePath();
+			txtRutaFacturas.setText(ruta);
+		}
+	}
+
+	/**
 	 * Called when the user clicks ok.
 	 */
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
 			// Cambiar las opciones en la BD
-			if (Inicio.CONEXION.actualizarOpciones(precioHora, iva, numPresupuesto, numFactura)) {
+			if (Inicio.CONEXION.actualizarOpciones(precioHora, iva, numPresupuesto, numFactura, ruta)) {
 				Inicio.PRECIO_HORA = precioHora;
 				Inicio.PRECIO_IVA = iva;
 				Inicio.NUM_PRESUPUESTO = numPresupuesto;
 				Inicio.NUM_FACTURA = numFactura;
+				Inicio.RUTA_FACTURAS = ruta;
 				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Las opciones han sido cambiadas", "");
 			}
 
@@ -110,6 +135,9 @@ public class D_OpcionesController {
 			numFactura = Integer.parseInt(txtNumFactura.getText());
 		} catch (NumberFormatException e) {
 			mensaje = "Formato del número de factura incorrecto. Introduce un valor numérico.";
+		}
+		if (txtRutaFacturas.getText().isEmpty()) {
+			mensaje = "La ruta donde se guardarán las facturas generadas no puede estar vacía.";
 		}
 		if (mensaje.equalsIgnoreCase("")) {
 			return true;

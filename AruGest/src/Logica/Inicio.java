@@ -55,6 +55,8 @@ public class Inicio extends Application {
 	public static float PRECIO_IVA;
 	public static int NUM_PRESUPUESTO;
 	public static int NUM_FACTURA;
+	public static String USUARIO;
+	public static String RUTA_FACTURAS;
 	public static double ANCHO_PANTALLA;
 	public static double ALTO_PANTALLA;
 	public static ArrayList<GestorVentana> LISTA_VENTANAS = new ArrayList<GestorVentana>();
@@ -72,18 +74,6 @@ public class Inicio extends Application {
 
 	public void init() throws Exception {
 		comprobacionesIniciales();
-		CONEXION.crearConexion();
-		// Obtener los precios de Hora e IVA
-		Inicio.CONEXION.getPrecioHoraIva();
-		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-		// if (primaryScreenBounds.getWidth() < 1680 ||
-		// primaryScreenBounds.getHeight() < 1010) {
-		ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-		ALTO_PANTALLA = primaryScreenBounds.getHeight();
-		CAMBIAR_RESOLUCION = true;
-		// Utilidades.ajustarEscena(escenario,
-		// primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
-		// }
 	}
 
 	/**
@@ -91,21 +81,59 @@ public class Inicio extends Application {
 	 */
 	public void comprobacionesIniciales() {
 		// Leemos el parametro del contexto
-		String spath = System.getProperty("user.home");// C:\Users\Joseba
-		spath += "\\AruGest";// C:\Users\Joseba\AruGest
-		// Comprobamos si no existe la base de datos
+		File f = new File(".");
+		String ruta = f.getAbsolutePath();
+		f.delete();
+		int index = ruta.lastIndexOf(':');
+		ruta = ruta.replace(ruta.substring(index + 1), "");
+
+		String spath = ruta + "\\AruGest";
+		// Se comprueba si existe la base de datos
 		// Esto devuelve true o false si existe ese archivo en esa ruta
 		boolean exists = new File(spath, DBFILENAME + ".h2.db").exists();
-		// System.out.println(spath);
 		if (!exists) {
-
+			spath += "\\" + DBFILENAME;
+			String urlDB = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+			// System.out.println(urlDB);
+			Hilo.hilo_CreaBD(urlDB);
+		} else {
+			System.out.println("La Base de Datos ya existe");
+			CONEXION.crearConexion();
+			// Obtener las opciones
+			Inicio.CONEXION.getPrecioHoraIva();
+			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+			ALTO_PANTALLA = primaryScreenBounds.getHeight();
+			CAMBIAR_RESOLUCION = true;
 		}
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		escenario = primaryStage;
+		abreVentanaPrincipal();
+	}
 
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	public BorderPane getRoot() {
+		return root;
+	}
+
+	public static String getOpcionNueva() {
+		return OPCION_NUEVA;
+	}
+
+	public static void setOpcionNueva(String opcionNueva) {
+		Inicio.OPCION_NUEVA = opcionNueva;
+	}
+
+	/**
+	 * Abre la ventana principal de la aplicación
+	 */
+	public void abreVentanaPrincipal() {
 		escenario.setTitle("AruGest Software");
 
 		// Ponemos nuestro propio icono de la aplicación
@@ -138,23 +166,6 @@ public class Inicio extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	public BorderPane getRoot() {
-		return root;
-	}
-
-	public static String getOpcionNueva() {
-		return OPCION_NUEVA;
-	}
-
-	public static void setOpcionNueva(String opcionNueva) {
-		Inicio.OPCION_NUEVA = opcionNueva;
 	}
 
 	/**

@@ -67,30 +67,16 @@ public class Conexion {
 	public Connection crearConexion() {
 
 		try {
-			/*
-			 * Con Base de datos MySql // Se carga el driver (tipo 4)
-			 * Class.forName("com.mysql.jdbc.Driver");
-			 * 
-			 * // Se abre la conexion a la base de datos String url =
-			 * "jdbc:mysql://localhost:3306/movedb"; String login = "root";
-			 * String pass = "root"; con = DriverManager.getConnection(url,
-			 * login, pass);
-			 */
-
 			// Con base de datos H2 (PRUEBA)
 			// Usuario: sa
 			// Pass: (No hay)
 			Class.forName("org.h2.Driver");
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
-			// con =
-			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
-			// "sa", "");
+			/**
+			 * con = DriverManager.getConnection(
+			 * "jdbc:h2:C:/AruGest/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
+			 */
 			getCon().setAutoCommit(true);
-			// JOptionPane.showMessageDialog(null, "Servidor: "+
-			// con.getSchema().toString());
-			// DriverManager.getConnection("jdbc:h2:C:/H2DB/BD_Ruara", "sa",
-			// "");
-
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
 		}
@@ -250,18 +236,48 @@ public class Conexion {
 
 	}
 
-	public boolean actualizarOpciones(float precioHora, float iva, int numPresupuesto, int numFactura) {
+	public boolean actualizarOpciones(float precioHora, float iva, int numPresupuesto, int numFactura,
+			String rutaFacturas) {
 		String sql = "";
 		PreparedStatement st;
 		try {
 			// Actualizar nº presupuesto
-			ql = "UPDATE AUXILIAR SET PRECIOHORA = ?, IVA = ?, PRESUPUESTO = ?, FACTURA = ? WHERE IDAUXILIAR = 0";
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'PRECIOHORA'";
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
 			st.setFloat(1, precioHora);
-			st.setFloat(2, iva);
-			st.setInt(3, numPresupuesto);
-			st.setInt(4, numFactura);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar nº presupuesto
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'IVA'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setFloat(1, iva);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar nº presupuesto
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'PRESUPUESTO'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setInt(1, numPresupuesto);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar nº presupuesto
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'FACTURA'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setInt(1, numFactura);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar ruta
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'RUTAFACTURAS'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setString(1, rutaFacturas);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			return true;
@@ -2685,16 +2701,49 @@ public class Conexion {
 		try {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();
-			sql = "SELECT * FROM AUXILIAR";
-
+			// Se coge el precio hora
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'PRECIOHORA'";
 			ResultSet rs = st.executeQuery(sql);
-
 			while (rs.next()) {
-				Inicio.PRECIO_HORA = rs.getFloat("PRECIOHORA");
-				Inicio.PRECIO_IVA = rs.getFloat("IVA");
-				Inicio.NUM_PRESUPUESTO = rs.getInt("PRESUPUESTO");
-				Inicio.NUM_FACTURA = rs.getInt("FACTURA");
+				Inicio.PRECIO_HORA = rs.getFloat("VALOR");
+				// Inicio.PRECIO_IVA = rs.getFloat("IVA");
+				// Inicio.NUM_PRESUPUESTO = rs.getInt("PRESUPUESTO");
+				// Inicio.NUM_FACTURA = rs.getInt("FACTURA");
 			}
+			// Se coge el iva
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'IVA'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.PRECIO_IVA = rs.getFloat("VALOR");
+				// Inicio.NUM_PRESUPUESTO = rs.getInt("PRESUPUESTO");
+				// Inicio.NUM_FACTURA = rs.getInt("FACTURA");
+			}
+			// Se coge el numpresupuesto
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'PRESUPUESTO'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.NUM_PRESUPUESTO = rs.getInt("VALOR");
+				// Inicio.NUM_FACTURA = rs.getInt("FACTURA");
+			}
+			// Se coge el numfactura
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'FACTURA'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.NUM_FACTURA = rs.getInt("VALOR");
+			}
+			// Se coge el usuario
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'USUARIO'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.USUARIO = rs.getString("VALOR");
+			}
+			// Se coge la ruta donde se guardan las facturas generadas
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'RUTAFACTURAS'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.RUTA_FACTURAS = rs.getString("VALOR");
+			}
+
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception ex) {
