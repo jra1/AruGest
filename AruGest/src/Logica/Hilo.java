@@ -182,8 +182,9 @@ public class Hilo extends Thread {
 			Integer result = task.get();
 			if (result == 1) {
 				alert.setHeaderText("¡Factura generada!");
-				alert.close();
-				Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler " + "reporteFacturaPDF_AruGest.pdf");
+				// alert.close();
+				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
+				// " + "reporteFacturaPDF_AruGest.pdf");
 			} else {
 				alert.close();
 				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Ocurrió un error al generar el pdf de la factura",
@@ -265,6 +266,16 @@ public class Hilo extends Thread {
 	 */
 	public static void hilo_CreaBD(String url) {
 		try {
+			// Mostrar mensaje
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Creando Base de datos");
+			alert.setHeaderText("Creando base de datos...");
+			alert.setContentText("");
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+			dialogPane.getStyleClass().add("my-dialog");
+			alert.show();
+
 			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
 				@Override
 				public Integer call() throws Exception {
@@ -311,6 +322,7 @@ public class Hilo extends Thread {
 			Integer result = task.get();
 			if (result == 1) {
 				System.out.println("Base de datos creada");
+				alert.close();
 				// Inicio.abreVentanaPrincipal();
 			} else {
 				System.out.println("Ocurrió un error al crear la base de datos");

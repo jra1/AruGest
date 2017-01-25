@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.guigarage.responsive.ResponsiveHandler;
 
+import GUI.D_LoginController;
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_AgregaDocumentoController;
@@ -30,6 +31,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -56,6 +58,8 @@ public class Inicio extends Application {
 	public static int NUM_PRESUPUESTO;
 	public static int NUM_FACTURA;
 	public static String USUARIO;
+	public static String PASS;
+	public static boolean AUTOLOGIN;
 	public static String RUTA_FACTURAS;
 	public static double ANCHO_PANTALLA;
 	public static double ALTO_PANTALLA;
@@ -73,14 +77,15 @@ public class Inicio extends Application {
 	// public static boolean ESINICIO = true;
 
 	public void init() throws Exception {
-		comprobacionesIniciales();
+		// comprobacionesIniciales();
 	}
 
 	/**
 	 * Se comprueba si existe la BD y si no existe se crea
 	 */
 	public void comprobacionesIniciales() {
-		// Leemos el parametro del contexto
+		// Se obtiene la ruta de AruGest que es:
+		// C:/AruGest/AruGestDB.h2.db
 		File f = new File(".");
 		String ruta = f.getAbsolutePath();
 		f.delete();
@@ -92,26 +97,42 @@ public class Inicio extends Application {
 		// Esto devuelve true o false si existe ese archivo en esa ruta
 		boolean exists = new File(spath, DBFILENAME + ".h2.db").exists();
 		if (!exists) {
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Bienvenido a AruGest", "Enhorabuena por utilizar AruGest!",
+					"No se ha detectado ninguna base de datos así que cuando cierres este mensaje se creará una nueva. Espero que AruGest cumpla tus espectativas! =D");
 			spath += "\\" + DBFILENAME;
 			String urlDB = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
 			// System.out.println(urlDB);
 			Hilo.hilo_CreaBD(urlDB);
 		} else {
-			System.out.println("La Base de Datos ya existe");
-			CONEXION.crearConexion();
-			// Obtener las opciones
-			Inicio.CONEXION.getPrecioHoraIva();
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-			ALTO_PANTALLA = primaryScreenBounds.getHeight();
-			CAMBIAR_RESOLUCION = true;
+			// System.out.println("La Base de Datos ya existe");
 		}
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		escenario = primaryStage;
-		abreVentanaPrincipal();
+
+		// Comprobar si existe la BD y sino crearla
+		comprobacionesIniciales();
+
+		// Se crea la conexión con la BD
+		CONEXION.crearConexion();
+
+		// Obtener las opciones
+		Inicio.CONEXION.getPrecioHoraIva();
+
+		// Se obtienen los datos de la pantalla
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+		ALTO_PANTALLA = primaryScreenBounds.getHeight();
+		CAMBIAR_RESOLUCION = true;
+
+		// Abre login
+		if (abreLogin()) {
+			// Abre la ventana principal de la aplicación
+			abreVentanaPrincipal();
+		}
+
 	}
 
 	public static void main(String[] args) {
@@ -128,6 +149,41 @@ public class Inicio extends Application {
 
 	public static void setOpcionNueva(String opcionNueva) {
 		Inicio.OPCION_NUEVA = opcionNueva;
+	}
+
+	/**
+	 * Abre el diálogo del login
+	 * 
+	 * @return true si OK, false en los demás casos.
+	 */
+	public static boolean abreLogin() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_Login.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entrar");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_LoginController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			return false;
+		}
 	}
 
 	/**
@@ -172,7 +228,6 @@ public class Inicio extends Application {
 	 * Abre un diálogo para añadir un nuevo vehículo o editar uno
 	 * 
 	 * @param vehiculo
-	 *            a ser editado
 	 * @return true si el usuario a pulsado OK, false en los demás casos.
 	 */
 	public static boolean mostrarEditorVehiculo(Vehiculo v) {

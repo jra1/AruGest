@@ -14,22 +14,23 @@ CREATE TABLE auxiliar(clave varchar(50) primary key, valor VARCHAR(255));
 CREATE TABLE golpes(idgolpe int primary key auto_increment, nombreGolpe varchar(255));
 CREATE TABLE elementosGolpes(idelemento int primary key auto_increment, nombreElemento varchar(255), tipo varchar(30), golpeID int);
 
-ALTER TABLE cliente ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion);
 ALTER TABLE CLIENTE ADD COLUMN (TIPO varchar(1));
-ALTER TABLE particular ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente ) ;
-ALTER TABLE empresa ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente );
-ALTER TABLE proveedorCompania ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion);
-ALTER TABLE vehiculo ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente);
-ALTER TABLE vehiculo ADD FOREIGN KEY (tipoID ) REFERENCES tipoVehiculo (idtipoVehiculo);
-ALTER TABLE vehiculo ADD COLUMN (ESVEHICULOSUSTITUCION boolean);
-ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente);
-ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo);
 ALTER TABLE vehiculoSustitucion ADD COLUMN (observaciones varchar(255));
 ALTER TABLE factura ADD COLUMN (IMPORTETOTAL DECIMAL(6,2));
 ALTER TABLE factura ADD COLUMN (SUMA DECIMAL(6,2));
 ALTER TABLE factura ADD COLUMN (SUMAIVA DECIMAL(6,2));
 ALTER TABLE factura ADD COLUMN (KMS int);
 ALTER TABLE factura ADD COLUMN (pdf blob);
+ALTER TABLE vehiculo ADD COLUMN (ESVEHICULOSUSTITUCION boolean);
+
+ALTER TABLE cliente ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion);
+ALTER TABLE particular ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente ) ;
+ALTER TABLE empresa ADD FOREIGN KEY ( clienteID ) REFERENCES cliente(idcliente );
+ALTER TABLE proveedorCompania ADD FOREIGN KEY (direccionID ) REFERENCES direccion(iddireccion);
+ALTER TABLE vehiculo ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente);
+ALTER TABLE vehiculo ADD FOREIGN KEY (tipoID ) REFERENCES tipoVehiculo (idtipoVehiculo);
+ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente);
+ALTER TABLE vehiculoSustitucion ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo);
 ALTER TABLE factura ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente);
 ALTER TABLE factura ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo);
 ALTER TABLE servicio ADD FOREIGN KEY (facturaID ) REFERENCES factura(idfactura);
@@ -38,9 +39,10 @@ ALTER TABLE documento ADD FOREIGN KEY (clienteID ) REFERENCES cliente(idcliente)
 ALTER TABLE documento ADD FOREIGN KEY (vehiculoID) REFERENCES vehiculo(idvehiculo);
 ALTER TABLE elementosGolpes ADD FOREIGN KEY (golpeID ) REFERENCES golpes(idgolpe);
 
-INSERT INTO AUXILIAR(CLAVE) VALUES ('USUARIO');
-INSERT INTO AUXILIAR(CLAVE) VALUES ('PASS');
-INSERT INTO AUXILIAR(CLAVE) VALUES ('RUTAFACTURAS');
+INSERT INTO AUXILIAR VALUES ('USUARIO','');
+INSERT INTO AUXILIAR VALUES ('PASS','');
+INSERT INTO AUXILIAR VALUES ('AUTOLOGIN', FALSE);
+INSERT INTO AUXILIAR VALUES ('RUTAFACTURAS','');
 INSERT INTO AUXILIAR VALUES ('PRECIOHORA', '46.0');
 INSERT INTO AUXILIAR VALUES ('IVA', '21.0');
 INSERT INTO AUXILIAR VALUES ('PRESUPUESTO', '5572');

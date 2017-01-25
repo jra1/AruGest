@@ -93,10 +93,7 @@ public class Conexion {
 																												// icono
 																												// por
 																												// defecto.
-					new Object[] { "Aceptar", "Parar servidor" }, // null para
-																	// YES, NO y
-																	// CANCEL
-					"Aceptar");
+					new Object[] { "Aceptar", "Parar servidor" }, "Aceptar");
 
 			if (seleccion == 1) {
 				server.stop();
@@ -236,6 +233,16 @@ public class Conexion {
 
 	}
 
+	/**
+	 * Actualiza las opciones de la tabla auxiliar en la BD
+	 * 
+	 * @param precioHora
+	 * @param iva
+	 * @param numPresupuesto
+	 * @param numFactura
+	 * @param rutaFacturas
+	 * @return
+	 */
 	public boolean actualizarOpciones(float precioHora, float iva, int numPresupuesto, int numFactura,
 			String rutaFacturas) {
 		String sql = "";
@@ -285,6 +292,28 @@ public class Conexion {
 			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar las opciones",
 					"Ocurrió un error al actualizar las opciones en la base de datos");
 			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public boolean setAutologin(boolean login) {
+		String sql = "";
+		PreparedStatement st;
+		try {
+			// Actualizar autologin
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'AUTOLOGIN'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setBoolean(1, login);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al recordar",
+					"Puede que la preferencia de recordar o no el usuario y contraseña no se haya guardado correctamente");
 			return false;
 		}
 	}
@@ -2736,6 +2765,18 @@ public class Conexion {
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				Inicio.USUARIO = rs.getString("VALOR");
+			}
+			// Se coge el pass
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'PASS'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.PASS = rs.getString("VALOR");
+			}
+			// Se coge si tiene puesto el autologin
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'AUTOLOGIN'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.AUTOLOGIN = rs.getBoolean("VALOR");
 			}
 			// Se coge la ruta donde se guardan las facturas generadas
 			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'RUTAFACTURAS'";
