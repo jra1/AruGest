@@ -149,6 +149,9 @@ public class V_BuscarClienteController {
 						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
 				columnaTelf.setCellValueFactory(cellData -> cellData.getValue().getCliente().telf1Property());
 				tableClientes.setItems(listaClientes);
+				if (listaClientes.size() > 0) {
+					btnVerCliente.setDisable(false);
+				}
 			}
 		}
 	}

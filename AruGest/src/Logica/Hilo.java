@@ -21,6 +21,7 @@ import Modelo.Vehiculo;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.ProgressBar;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -264,17 +265,17 @@ public class Hilo extends Thread {
 	/**
 	 * Hilo para crear la BD desde el script
 	 */
-	public static void hilo_CreaBD(String url) {
+	public static boolean hilo_CreaBD(ProgressBar pb) {
 		try {
 			// Mostrar mensaje
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Creando Base de datos");
-			alert.setHeaderText("Creando base de datos...");
-			alert.setContentText("");
-			DialogPane dialogPane = alert.getDialogPane();
-			dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
-			dialogPane.getStyleClass().add("my-dialog");
-			alert.show();
+			// Alert alert = new Alert(AlertType.INFORMATION);
+			// alert.setTitle("Creando Base de datos");
+			// alert.setHeaderText("Creando base de datos...");
+			// alert.setContentText("");
+			// DialogPane dialogPane = alert.getDialogPane();
+			// dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+			// dialogPane.getStyleClass().add("my-dialog");
+			// alert.show();
 
 			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
 				@Override
@@ -284,11 +285,16 @@ public class Hilo extends Thread {
 					System.out.println("Empezando a leer fichero...");
 					Connection connection = null;
 					try {
-						connection = openConnection(url);
+						System.out.println(Inicio.DBPATHNAME);
+						connection = openConnection(Inicio.DBPATHNAME);
 						String line = br.readLine();
 						StringBuilder statement = new StringBuilder();
+						int contador = 0;
 						while (line != null) {
+							contador++;
 							line = line.trim();
+							pb.setProgress(contador / 10);
+							Thread.sleep(100);
 							if (!line.startsWith("--") && !line.startsWith("#") && !line.startsWith("//")) {
 								statement.append(line);
 								if (line.endsWith(";")) {
@@ -322,13 +328,15 @@ public class Hilo extends Thread {
 			Integer result = task.get();
 			if (result == 1) {
 				System.out.println("Base de datos creada");
-				alert.close();
+				return true;
+				// alert.close();
 				// Inicio.abreVentanaPrincipal();
 			} else {
 				System.out.println("Ocurrió un error al crear la base de datos");
+				return false;
 			}
 		} catch (Exception e) {
-
+			return false;
 		}
 	}
 

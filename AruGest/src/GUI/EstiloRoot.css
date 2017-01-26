@@ -72,6 +72,16 @@
     -fx-font-size: 18px;
 }
 
+/*Titulo AruGest Software */
+#tituloAruGest{
+	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-font-weight: bold;
+    -fx-font-size: 40px;
+    -fx-text-fill: white;
+    -fx-underline: true;
+    
+}
+
 /*Labels generales*/
 .my-label{
 	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/

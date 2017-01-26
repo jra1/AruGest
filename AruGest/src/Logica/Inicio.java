@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.guigarage.responsive.ResponsiveHandler;
 
+import GUI.D_BienvenidaControllerD;
 import GUI.D_LoginController;
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
@@ -31,7 +32,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -47,6 +47,7 @@ public class Inicio extends Application {
 
 	// Variables globales para todo el proyecto
 	private final static String DBFILENAME = "AruGestDB";
+	public static String DBPATHNAME = "AruGestDB";
 	public static Conexion CONEXION = new Conexion();
 	public static String OPCION_NUEVA = ""; // Para saber si se ha pulsado en
 											// Nueva Factura o Nuevo Presupuesto
@@ -97,12 +98,18 @@ public class Inicio extends Application {
 		// Esto devuelve true o false si existe ese archivo en esa ruta
 		boolean exists = new File(spath, DBFILENAME + ".h2.db").exists();
 		if (!exists) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Bienvenido a AruGest", "Enhorabuena por utilizar AruGest!",
-					"No se ha detectado ninguna base de datos así que cuando cierres este mensaje se creará una nueva. Espero que AruGest cumpla tus espectativas! =D");
 			spath += "\\" + DBFILENAME;
-			String urlDB = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
-			// System.out.println(urlDB);
-			Hilo.hilo_CreaBD(urlDB);
+			DBPATHNAME = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+			if (abreBienvenida()) {
+				// Abre login
+				if (abreLogin()) {
+					// Abre la ventana principal de la aplicación
+					abreVentanaPrincipal();
+				}
+				// spath += "\\" + DBFILENAME;
+				// DBPATHNAME = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+				// Hilo.hilo_CreaBD();
+			}
 		} else {
 			// System.out.println("La Base de Datos ya existe");
 		}
@@ -127,12 +134,6 @@ public class Inicio extends Application {
 		ALTO_PANTALLA = primaryScreenBounds.getHeight();
 		CAMBIAR_RESOLUCION = true;
 
-		// Abre login
-		if (abreLogin()) {
-			// Abre la ventana principal de la aplicación
-			abreVentanaPrincipal();
-		}
-
 	}
 
 	public static void main(String[] args) {
@@ -149,6 +150,41 @@ public class Inicio extends Application {
 
 	public static void setOpcionNueva(String opcionNueva) {
 		Inicio.OPCION_NUEVA = opcionNueva;
+	}
+
+	/**
+	 * Abre el diálogo de bienvenida
+	 * 
+	 * @return true si OK, false en los demás casos.
+	 */
+	public static boolean abreBienvenida() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_Bienvenida.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("AruGest Software");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_BienvenidaControllerD controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			return false;
+		}
 	}
 
 	/**
@@ -218,6 +254,7 @@ public class Inicio extends Application {
 			// 3.- Poner el controlador de la escena
 			V_RootController controlador = loader.getController();
 			controlador.setMainAPP(this);
+			controlador.ocultarBotonesGestor();
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -16,22 +16,22 @@
             <Label layoutX="19.0" layoutY="19.0" styleClass="my-label" text="Tipo cliente" />
             <ComboBox fx:id="comboTipoCliente" layoutX="135.0" layoutY="5.0" styleClass="my-text-field" />
             <Label layoutX="16.0" layoutY="67.0" styleClass="my-label" text="Modelo vehículo" />
-            <TextField fx:id="txtModelo" layoutX="135.0" layoutY="57.0" prefHeight="25.0" promptText="Modelo vehiculo" styleClass="my-text-field" />
+            <TextField fx:id="txtModelo" layoutX="135.0" layoutY="57.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Modelo vehiculo" styleClass="my-text-field" />
             <Label layoutX="21.0" layoutY="108.0" styleClass="my-label" text="Nombre " />
-            <TextField fx:id="txtNombre" layoutX="135.0" layoutY="98.0" prefHeight="25.0" promptText="Nombre cliente" styleClass="my-text-field" />
+            <TextField fx:id="txtNombre" layoutX="135.0" layoutY="98.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Nombre cliente" styleClass="my-text-field" />
             <Label layoutX="23.0" layoutY="149.0" styleClass="my-label" text="N.I.F/C.I.F." />
-            <TextField fx:id="txtDni" layoutX="135.0" layoutY="139.0" prefHeight="25.0" promptText="N.I.F/C.I.F. cliente" styleClass="my-text-field" />
+            <TextField fx:id="txtDni" layoutX="135.0" layoutY="139.0" onAction="#buscarCliente" prefHeight="25.0" promptText="N.I.F/C.I.F. cliente" styleClass="my-text-field" />
             <Label layoutX="373.0" layoutY="141.0" styleClass="my-label" text="Domicilio" />
-            <TextField fx:id="txtFijo" layoutX="135.0" layoutY="178.0" prefHeight="25.0" promptText="Tlf. 1" styleClass="my-text-field" />
-            <TextField fx:id="txtMatricula" layoutX="530.0" layoutY="44.0" prefHeight="25.0" promptText="Matrícula vehículo" styleClass="my-text-field" />
-            <TextField fx:id="txtMovil" layoutX="530.0" layoutY="87.0" prefHeight="25.0" promptText="Tlf. 2" styleClass="my-text-field" />
-            <TextField fx:id="txtDomicilio" layoutX="530.0" layoutY="130.0" prefHeight="25.0" promptText="Domicilio cliente" styleClass="my-text-field" />
+            <TextField fx:id="txtFijo" layoutX="135.0" layoutY="178.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Tlf. 1" styleClass="my-text-field" />
+            <TextField fx:id="txtMatricula" layoutX="530.0" layoutY="44.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Matrícula vehículo" styleClass="my-text-field" />
+            <TextField fx:id="txtMovil" layoutX="530.0" layoutY="87.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Tlf. 2" styleClass="my-text-field" />
+            <TextField fx:id="txtDomicilio" layoutX="530.0" layoutY="130.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Domicilio cliente" styleClass="my-text-field" />
             <Label layoutX="372.0" layoutY="48.0" styleClass="my-label" text="Matrícula vehículo" />
             <Label layoutX="372.0" layoutY="183.0" styleClass="my-label" text="Población" />
-            <TextField fx:id="txtPoblacion" layoutX="530.0" layoutY="172.0" prefHeight="25.0" promptText="Población cliente" styleClass="my-text-field" />
+            <TextField fx:id="txtPoblacion" layoutX="530.0" layoutY="172.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Población cliente" styleClass="my-text-field" />
             <Label layoutX="23.0" layoutY="183.0" styleClass="my-label" text="Tlf. 1" />
             <Label layoutX="372.0" layoutY="98.0" styleClass="my-label" text="Tlf. 2" />
-            <Button fx:id="btnBuscar" layoutX="803.0" layoutY="72.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="46.0" prefWidth="173.0" styleClass="my-button" text="BUSCAR (F12)">
+            <Button fx:id="btnBuscar" layoutX="812.0" layoutY="95.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="46.0" prefWidth="173.0" styleClass="my-button" text="BUSCAR (F12)">
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,7 +57,7 @@
                   <TableColumn fx:id="columnaTelf" maxWidth="519.0" prefWidth="141.0" text="Teléfono" />
               </columns>
             </TableView>
-            <Button fx:id="btnVerCliente" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#cargarCliente" styleClass="my-button" text="Ver cliente" />
+            <Button fx:id="btnVerCliente" disable="true" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#cargarCliente" styleClass="my-button" text="Ver cliente" />
          </children>
       </Pane>
    </children>

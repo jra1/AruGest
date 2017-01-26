@@ -2,11 +2,15 @@ package GUI;
 
 import Logica.Inicio;
 import Logica.Utilidades;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class D_LoginController {
@@ -17,6 +21,8 @@ public class D_LoginController {
 	private PasswordField txtPass;
 	@FXML
 	private CheckBox chkAutologin;
+	@FXML
+	private Button btnAceptar;
 
 	// Resto de variables
 	private Stage dialogStage;
@@ -33,6 +39,14 @@ public class D_LoginController {
 			txtUsuario.setText(Inicio.USUARIO);
 			txtPass.setText(Inicio.PASS);
 		}
+
+		btnAceptar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode() == KeyCode.F12 || ke.getCode() == KeyCode.ENTER) {
+					handleOk();
+				}
+			}
+		});
 	}
 
 	/**

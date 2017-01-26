@@ -584,6 +584,12 @@ public class V_RootController {
 		}
 	}
 
+	public void ocultarBotonesGestor() {
+		getBtnPantalla1().setVisible(false);
+		getBtnPantalla2().setVisible(false);
+		getBtnPantalla3().setVisible(false);
+	}
+
 	public ScrollPane getScrollPane() {
 		return sp;
 	}
