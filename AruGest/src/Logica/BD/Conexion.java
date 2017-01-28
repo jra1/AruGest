@@ -64,14 +64,14 @@ public class Conexion {
 	 * 
 	 * @return - Connection a la base de datos
 	 */
-	public Connection crearConexion() {
+	public Connection crearConexion(String url) {
 
 		try {
 			// Con base de datos H2 (PRUEBA)
 			// Usuario: sa
 			// Pass: (No hay)
 			Class.forName("org.h2.Driver");
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
+			con = DriverManager.getConnection(url + ";AUTO_SERVER=TRUE", "sa", "");
 			/**
 			 * con = DriverManager.getConnection(
 			 * "jdbc:h2:C:/AruGest/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
@@ -230,7 +230,6 @@ public class Conexion {
 					"Ocurrió un error al actualizar el número de presupuesto/factura en la base de datos");
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -2792,10 +2791,38 @@ public class Conexion {
 		}
 	}
 
+	/**
+	 * Guarda en la BD el usuario y la contraseña
+	 * 
+	 * @param user
+	 * @param pass
+	 */
+	public void guardarUserPass(String user, String pass) {
+		String sql = "";
+		PreparedStatement st;
+		try {
+			// Actualizar usuario
+			sql = "UPDATE AUXILIAR SET VALOR = '" + user + "' WHERE CLAVE = 'USUARIO'";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Actualizar pass
+			sql = "UPDATE AUXILIAR SET VALOR = '" + pass + "' WHERE CLAVE = 'PASS'";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar usuario y contraseña",
+					"Ocurrió un error al guardar el usuario y contraseña en la base de datos");
+			e.printStackTrace();
+		}
+	}
+
 	public Connection getCon() {
 		try {
 			Class.forName("org.h2.Driver");
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
+			con = DriverManager.getConnection(Inicio.DBURL + ";AUTO_SERVER=TRUE", "sa", "");
 			// con =
 			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
 			// "sa", "");

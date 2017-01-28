@@ -285,8 +285,8 @@ public class Hilo extends Thread {
 					System.out.println("Empezando a leer fichero...");
 					Connection connection = null;
 					try {
-						System.out.println(Inicio.DBPATHNAME);
-						connection = openConnection(Inicio.DBPATHNAME);
+						System.out.println(Inicio.DBURL);
+						connection = openConnection(Inicio.DBURL);
 						String line = br.readLine();
 						StringBuilder statement = new StringBuilder();
 						int contador = 0;

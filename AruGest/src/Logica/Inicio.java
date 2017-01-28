@@ -41,16 +41,12 @@ import javafx.stage.Stage;
 
 public class Inicio extends Application {
 
-	private static Stage escenario; // Donde se cargan las escenas (interfaces)
-	public Scene scene;
-	private BorderPane root;
-
-	// Variables globales para todo el proyecto
+	// VARIABLES GLOBALES DEL PROYECTO
 	private final static String DBFILENAME = "AruGestDB";
 	public static String DBPATHNAME = "AruGestDB";
+	public static String DBURL;
 	public static Conexion CONEXION = new Conexion();
-	public static String OPCION_NUEVA = ""; // Para saber si se ha pulsado en
-											// Nueva Factura o Nuevo Presupuesto
+	public static String OPCION_NUEVA = ""; // Nueva Factura o Nuevo Presupuesto
 	public static int CLIENTE_ID;
 	public static int VEHICULO_ID;
 	public static int FACTURA_ID;
@@ -68,14 +64,15 @@ public class Inicio extends Application {
 	public static BotonVentana BOTON1 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON2 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON3 = new BotonVentana(0, false, "");
-	public static boolean CAMBIAR_RESOLUCION = false; // Se pondrá a true cuando
-														// sea necesario
-														// sea necesario
-														// cambiar
-	// la resolucion porque
-	// la pantalla es más
-	// pequeña de 1680*1010
-	// public static boolean ESINICIO = true;
+	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea
+														// necesario cambiar
+
+	// VARIABLES LOCALES DE INICIO
+	private static Stage escenario; // Donde se cargan las escenas (interfaces)
+	public Scene scene;
+	private BorderPane root;
+	private boolean existe;
+	// private boolean MODO_PRUEBAS = true;
 
 	public void init() throws Exception {
 		// comprobacionesIniciales();
@@ -84,7 +81,7 @@ public class Inicio extends Application {
 	/**
 	 * Se comprueba si existe la BD y si no existe se crea
 	 */
-	public void comprobacionesIniciales() {
+	public boolean compruebaExisteBD() {
 		// Se obtiene la ruta de AruGest que es:
 		// C:/AruGest/AruGestDB.h2.db
 		File f = new File(".");
@@ -96,44 +93,45 @@ public class Inicio extends Application {
 		String spath = ruta + "\\AruGest";
 		// Se comprueba si existe la base de datos
 		// Esto devuelve true o false si existe ese archivo en esa ruta
-		boolean exists = new File(spath, DBFILENAME + ".h2.db").exists();
-		if (!exists) {
-			spath += "\\" + DBFILENAME;
-			DBPATHNAME = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
-			if (abreBienvenida()) {
-				// Abre login
-				if (abreLogin()) {
-					// Abre la ventana principal de la aplicación
-					abreVentanaPrincipal();
-				}
-				// spath += "\\" + DBFILENAME;
-				// DBPATHNAME = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
-				// Hilo.hilo_CreaBD();
-			}
-		} else {
-			// System.out.println("La Base de Datos ya existe");
-		}
+		boolean esta = new File(spath, DBFILENAME + ".h2.db").exists();
+		spath += "\\" + DBFILENAME;
+		DBPATHNAME = spath.replaceAll("\\\\", "/");
+		DBURL = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+		return esta;
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		escenario = primaryStage;
 
-		// Comprobar si existe la BD y sino crearla
-		comprobacionesIniciales();
+		// Comprobar si existe la BD
+		existe = compruebaExisteBD();
 
 		// Se crea la conexión con la BD
-		CONEXION.crearConexion();
+		// if (MODO_PRUEBAS) {
+		// DBURL = "jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB";
+		// }
+		CONEXION.crearConexion(DBURL);
+
+		// Si no existe la BD se llama al diálogo de Bienvenida
+		if (!existe) {
+			abreBienvenida();
+		}
 
 		// Obtener las opciones
 		Inicio.CONEXION.getPrecioHoraIva();
 
-		// Se obtienen los datos de la pantalla
-		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-		ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-		ALTO_PANTALLA = primaryScreenBounds.getHeight();
-		CAMBIAR_RESOLUCION = true;
+		// Abre login
+		if (abreLogin()) {
+			// Abre la ventana principal de la aplicación
+			abreVentanaPrincipal();
 
+			// Se obtienen los datos de la pantalla
+			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+			ALTO_PANTALLA = primaryScreenBounds.getHeight();
+			CAMBIAR_RESOLUCION = true;
+		}
 	}
 
 	public static void main(String[] args) {

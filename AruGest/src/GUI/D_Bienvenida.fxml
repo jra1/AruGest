@@ -10,12 +10,17 @@
    <children>
       <Pane layoutX="6.0" layoutY="4.0" prefHeight="270.0" prefWidth="411.0" styleClass="background">
          <children>
-            <Button defaultButton="true" layoutX="96.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
-            <Button cancelButton="true" layoutX="257.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+            <Button fx:id="btnAceptar" defaultButton="true" layoutX="96.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
+            <Button fx:id="btnCancelar" cancelButton="true" layoutX="257.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
             <Label id="tituloAruGest" alignment="CENTER" layoutX="14.0" layoutY="5.0" prefHeight="75.0" prefWidth="379.0" text="AruGest Software" />
-            <Label fx:id="lblBienvenida" layoutX="14.0" layoutY="80.0" prefHeight="140.0" prefWidth="385.0" styleClass="titulo" text="¡Bienvenid@ a AruGest Software! No se ha detectado ninguna base de datos en este equipo, así que se va a crear una nueva. Recuerde hacer copias de seguridad de ésta regularmente." textAlignment="JUSTIFY" wrapText="true" />
-            <ProgressBar fx:id="pb" layoutX="15.0" layoutY="101.0" prefHeight="18.0" prefWidth="385.0" progress="0.0" visible="false" />
-            <Label fx:id="lblCargando" layoutX="110.0" layoutY="139.0" styleClass="titulo" text="Creando base de datos..." visible="false" />
+            <Label fx:id="lblBienvenida" layoutX="14.0" layoutY="80.0" prefHeight="140.0" prefWidth="385.0" styleClass="titulo" text="¡Bienvenid@ a AruGest Software! No se ha detectado ninguna base de datos en este equipo, así que se va a crear una nueva. Recuerde hacer copias de seguridad de ésta regularmente." textAlignment="JUSTIFY" visible="false" wrapText="true" />
+            <Label fx:id="lblCargando" layoutX="105.0" layoutY="150.0" prefHeight="22.0" prefWidth="204.0" styleClass="titulo" text="Creando base de datos..." visible="false" />
+            <ProgressBar fx:id="pbar" layoutX="14.0" layoutY="106.0" prefHeight="18.0" prefWidth="385.0" visible="false" />
+            <Label fx:id="lblCreaUsuario" layoutX="15.0" layoutY="68.0" prefHeight="62.0" prefWidth="379.0" styleClass="titulo" text="Para empezar a trabajar con AruGest, crea un usuario y contraseña:" visible="false" wrapText="true" />
+            <TextField fx:id="txtUsuario" layoutX="133.0" layoutY="134.0" styleClass="my-text-field" visible="false" />
+            <PasswordField fx:id="txtPass" layoutX="133.0" layoutY="174.0" styleClass="my-text-field" visible="false" />
+            <Label fx:id="lblUsuario" layoutX="39.0" layoutY="141.0" prefHeight="22.0" prefWidth="85.0" styleClass="my-label" text="Usuario" visible="false" />
+            <Label fx:id="lblPass" layoutX="39.0" layoutY="181.0" prefHeight="22.0" prefWidth="85.0" styleClass="my-label" text="Contraseña" visible="false" />
          </children>
       </Pane>
    </children>
