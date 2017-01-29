@@ -109,13 +109,13 @@ public class Inicio extends Application {
 		// Comprobar si existe la BD
 		existe = compruebaExisteBD();
 
-		// Se crea la conexión con la BD
+		// Se crea la conexiÃ³n con la BD
 		if (MODO_PRUEBAS) {
 			DBURL = "jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB";
 		}
 		CONEXION.crearConexion(DBURL);
 
-		// Si no existe la BD se llama al diálogo de Bienvenida
+		// Si no existe la BD se llama al diÃ¡logo de Bienvenida
 		if (!existe) {
 			abreBienvenida();
 		}
@@ -125,7 +125,7 @@ public class Inicio extends Application {
 
 		// Abre login
 		if (abreLogin()) {
-			// Abre la ventana principal de la aplicación
+			// Abre la ventana principal de la aplicaciÃ³n
 			abreVentanaPrincipal();
 
 			// Se obtienen los datos de la pantalla
@@ -153,9 +153,9 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre el diálogo de bienvenida
+	 * Abre el diÃ¡logo de bienvenida
 	 * 
-	 * @return true si OK, false en los demás casos.
+	 * @return true si OK, false en los demÃ¡s casos.
 	 */
 	public static boolean abreBienvenida() {
 		try {
@@ -188,9 +188,9 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre el diálogo del login
+	 * Abre el diÃ¡logo del login
 	 * 
-	 * @return true si OK, false en los demás casos.
+	 * @return true si OK, false en los demÃ¡s casos.
 	 */
 	public static boolean abreLogin() {
 		try {
@@ -224,18 +224,21 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre la ventana principal de la aplicación
+	 * Abre la ventana principal de la aplicaciÃ³n
 	 */
 	public void abreVentanaPrincipal() {
 		escenario.setTitle("AruGest Software");
 
-		// Ponemos nuestro propio icono de la aplicación
+		// Ponemos nuestro propio icono de la aplicaciÃ³n
 		escenario.getIcons().add(new Image("file:images/logo_coche.png"));
 
 		FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("/GUI/V_Root.fxml"));
+
 		try {
 			// 1.- Crear la escena desde el AnchorPane
 			root = (BorderPane) loader.load();
+			root.getStylesheets().add(getClass().getResource("EstiloRoot.css").toExternalForm());
+
 			scene = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
 				Utilidades.ajustarResolucionEscenario(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
@@ -263,10 +266,10 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre un diálogo para añadir un nuevo vehículo o editar uno
+	 * Abre un diÃ¡logo para aÃ±adir un nuevo vehÃ­culo o editar uno
 	 * 
 	 * @param vehiculo
-	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 * @return true si el usuario a pulsado OK, false en los demÃ¡s casos.
 	 */
 	public static boolean mostrarEditorVehiculo(Vehiculo v) {
 		try {
@@ -277,7 +280,7 @@ public class Inicio extends Application {
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Vehículo");
+			dialogStage.setTitle("VehÃ­culo");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
@@ -302,11 +305,11 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre un diálogo para añadir un nuevo cliente o editar uno
+	 * Abre un diÃ¡logo para aÃ±adir un nuevo cliente o editar uno
 	 * 
 	 * @param cliente
 	 *            a ser editado
-	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 * @return true si el usuario a pulsado OK, false en los demÃ¡s casos.
 	 */
 	public static boolean mostrarEditorCliente(ClienteParticularEmpresaDireccion cped) {
 		try {
@@ -352,7 +355,7 @@ public class Inicio extends Application {
 			Stage dialogStage = new Stage();
 			switch (tipo) {
 			case 0: // 0 = Cia
-				dialogStage.setTitle("Compañía");
+				dialogStage.setTitle("CompaÃ±Ã­a");
 				break;
 			case 1: // 1 = Proveedor
 				dialogStage.setTitle("Proveedor");
@@ -393,8 +396,8 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Muestra el diálogo para preguntar la fecha y las observaciones de un
-	 * vehículo de sustitución
+	 * Muestra el diÃ¡logo para preguntar la fecha y las observaciones de un
+	 * vehÃ­culo de sustituciÃ³n
 	 * 
 	 * @param
 	 * @return
@@ -408,7 +411,7 @@ public class Inicio extends Application {
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Vehículo sustitución");
+			dialogStage.setTitle("VehÃ­culo sustituciÃ³n");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
@@ -431,7 +434,7 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Muestra el diálogo para la entrega de un vehículo de sustitución
+	 * Muestra el diÃ¡logo para la entrega de un vehÃ­culo de sustituciÃ³n
 	 * 
 	 * @param vscv
 	 * @return
@@ -445,7 +448,7 @@ public class Inicio extends Application {
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Vehículo sustitución");
+			dialogStage.setTitle("VehÃ­culo sustituciÃ³n");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
@@ -467,10 +470,10 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre un diálogo para las opciones
+	 * Abre un diÃ¡logo para las opciones
 	 * 
 	 * @param
-	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 * @return true si el usuario a pulsado OK, false en los demÃ¡s casos.
 	 */
 	public static boolean mostrarDialogoOpciones() {
 		try {
@@ -503,7 +506,7 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre el selector de cliente y vehículo desde una factura
+	 * Abre el selector de cliente y vehÃ­culo desde una factura
 	 * 
 	 * @return
 	 */
@@ -516,7 +519,7 @@ public class Inicio extends Application {
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Datos cliente / vehículo");
+			dialogStage.setTitle("Datos cliente / vehÃ­culo");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
@@ -580,9 +583,9 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre el diálogo para agregar un documento
+	 * Abre el diÃ¡logo para agregar un documento
 	 * 
-	 * @return Documento a añadir
+	 * @return Documento a aÃ±adir
 	 */
 	public static Documento abrirAgregaDocumento() {
 		try {
