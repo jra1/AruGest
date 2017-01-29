@@ -144,7 +144,7 @@ public class D_EditCiaController {
 			} else {
 				if (!txtCalle.getText().isEmpty() || !txtCodPostal.getText().isEmpty()
 						|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
-					Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
+					Direccion d = new Direccion(0, txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
 							txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
 							txtLocalidad.getText(), txtProvincia.getText());
 					pcd.setDireccion(d);

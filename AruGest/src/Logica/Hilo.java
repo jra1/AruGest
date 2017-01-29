@@ -86,6 +86,20 @@ public class Hilo extends Thread {
 			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
 				@Override
 				public Integer call() throws Exception {
+					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
+						alert.setAlertType(AlertType.WARNING);
+						alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
+						alert.setContentText(
+								"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
+						// Utilidades.mostrarAlerta(AlertType.WARNING,
+						// "Atención",
+						// "Debe introducir una carpeta donde guardar las
+						// facturas",
+						// "Vaya a 'Opciones' y seleccione la ruta donde se van
+						// a guardar las facturas generadas.");
+						return 0;
+					}
+
 					// Leer los parámetros desde la factura
 					Cliente c = Inicio.CONEXION.leerClientePorID(f.getClienteID());
 					Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
@@ -173,7 +187,7 @@ public class Hilo extends Thread {
 						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {
 						System.out.println(ex.getMessage());
-						return 0;
+						return -1;
 					}
 					return 1;
 				}
@@ -186,6 +200,8 @@ public class Hilo extends Thread {
 				// alert.close();
 				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
 				// " + "reporteFacturaPDF_AruGest.pdf");
+			} else if (result == 0) {
+
 			} else {
 				alert.close();
 				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Ocurrió un error al generar el pdf de la factura",

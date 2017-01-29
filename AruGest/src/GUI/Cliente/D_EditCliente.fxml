@@ -16,7 +16,6 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="202.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -24,9 +23,10 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -56,7 +56,7 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <CheckBox fx:id="chckboxEsProveedor" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" text="Es proveedor" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="chckboxEsProveedor" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" styleClass="my-label" text="Es proveedor" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label layoutX="14.0" layoutY="133.0" styleClass="my-label" text="TELF. 1" GridPane.rowIndex="4" />
                   <TextField fx:id="txtTel1" layoutX="87.0" layoutY="128.0" prefHeight="23.0" prefWidth="161.0" promptText="Telf 1" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>

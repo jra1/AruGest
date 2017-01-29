@@ -78,8 +78,8 @@ public class V_ClienteController {
 	private TableColumn<Vehiculo, String> columnaMarca;
 	@FXML
 	private TableColumn<Vehiculo, String> columnaMatricula;
-	@FXML
-	private Label lblSI;
+	// @FXML
+	// private Label lblSI;
 
 	@FXML
 	private Label lblTipoVehiculo;
@@ -122,8 +122,8 @@ public class V_ClienteController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImportePresupuesto;
 	@FXML
 	private Button btnEliminarPresupuesto;
-	@FXML
-	private Label lblSIP;
+	// @FXML
+	// private Label lblSIP;
 
 	// Datos facturas
 	@FXML
@@ -143,8 +143,8 @@ public class V_ClienteController {
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporteFactura;
 	@FXML
 	private Button btnEliminarFactura;
-	@FXML
-	private Label lblSIF;
+	// @FXML
+	// private Label lblSIF;
 
 	// Datos Vehiculo sustitución
 	@FXML
@@ -159,8 +159,8 @@ public class V_ClienteController {
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaFDevolucionSustitucion;
 	@FXML
 	private TableColumn<VehiculoSustitucionClienteVehiculo, String> columnaObservacionesSustitucion;
-	@FXML
-	private Label lblSIVS;
+	// @FXML
+	// private Label lblSIVS;
 
 	// Datos Documentos
 	@FXML
@@ -277,12 +277,12 @@ public class V_ClienteController {
 		if (okClicked) {
 			if (Inicio.CONEXION.editarCliente(cped)) {
 				Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Cliente modificado con éxito", "");
+				cargaCliente(cped);
 			} else {
 				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar el cliente",
 						"Ocurrió un error al modificar el cliente en la base de datos.");
 			}
 
-			cargaCliente(cped);
 		}
 	}
 
@@ -480,13 +480,13 @@ public class V_ClienteController {
 					if (Inicio.CONEXION.eliminarFacturaPorID(
 							tableFacturas.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
 						tableFacturas.getItems().remove(selectedIndex);
-						if (tableFacturas.getItems().isEmpty()) {
-							tableFacturas.setVisible(false);
-							lblSIF.setVisible(true);
-						} else {
-							tableFacturas.setVisible(true);
-							lblSIF.setVisible(false);
-						}
+						// if (tableFacturas.getItems().isEmpty()) {
+						// tableFacturas.setVisible(false);
+						// lblSIF.setVisible(true);
+						// } else {
+						// tableFacturas.setVisible(true);
+						// lblSIF.setVisible(false);
+						// }
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar la factura",
 								"Ocurrió un error al eliminar la factura de la base de datos.");
@@ -505,13 +505,13 @@ public class V_ClienteController {
 					if (Inicio.CONEXION.eliminarFacturaPorID(
 							tablePresupuestos.getSelectionModel().getSelectedItem().getFactura().getIdfactura())) {
 						tablePresupuestos.getItems().remove(selectedIndex);
-						if (tablePresupuestos.getItems().isEmpty()) {
-							tablePresupuestos.setVisible(false);
-							lblSIP.setVisible(true);
-						} else {
-							tablePresupuestos.setVisible(true);
-							lblSIP.setVisible(false);
-						}
+						// if (tablePresupuestos.getItems().isEmpty()) {
+						// tablePresupuestos.setVisible(false);
+						// lblSIP.setVisible(true);
+						// } else {
+						// tablePresupuestos.setVisible(true);
+						// lblSIP.setVisible(false);
+						// }
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el presupuesto",
 								"Ocurrió un error al eliminar el presupuesto de la base de datos.");
@@ -650,13 +650,13 @@ public class V_ClienteController {
 		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
 		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
 		tableVehiculo.setItems(listaVehiculos);
-		if (tableVehiculo.getItems().isEmpty()) {
-			tableVehiculo.setVisible(false);
-			lblSI.setVisible(true);
-		} else {
-			tableVehiculo.setVisible(true);
-			lblSI.setVisible(false);
-		}
+		// if (tableVehiculo.getItems().isEmpty()) {
+		// tableVehiculo.setVisible(false);
+		// lblSI.setVisible(true);
+		// } else {
+		// tableVehiculo.setVisible(true);
+		// lblSI.setVisible(false);
+		// }
 	}
 
 	/**
@@ -676,15 +676,15 @@ public class V_ClienteController {
 		columnaImportePresupuesto
 				.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 		tablePresupuestos.setItems(listaPresupuestos);
-		if (tablePresupuestos.getItems().isEmpty()) {
-			tablePresupuestos.setVisible(false);
-			btnEliminarPresupuesto.setVisible(false);
-			lblSIP.setVisible(true);
-		} else {
-			tablePresupuestos.setVisible(true);
-			btnEliminarPresupuesto.setVisible(true);
-			lblSIP.setVisible(false);
-		}
+		// if (tablePresupuestos.getItems().isEmpty()) {
+		// tablePresupuestos.setVisible(false);
+		// btnEliminarPresupuesto.setVisible(false);
+		// lblSIP.setVisible(true);
+		// } else {
+		// tablePresupuestos.setVisible(true);
+		// btnEliminarPresupuesto.setVisible(true);
+		// lblSIP.setVisible(false);
+		// }
 	}
 
 	/**
@@ -700,15 +700,15 @@ public class V_ClienteController {
 		// cellData.getValue().getFactura().);
 		columnaImporteFactura.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 		tableFacturas.setItems(listaFacturas);
-		if (tableFacturas.getItems().isEmpty()) {
-			tableFacturas.setVisible(false);
-			btnEliminarFactura.setVisible(false);
-			lblSIF.setVisible(true);
-		} else {
-			tableFacturas.setVisible(true);
-			btnEliminarFactura.setVisible(true);
-			lblSIF.setVisible(false);
-		}
+		// if (tableFacturas.getItems().isEmpty()) {
+		// tableFacturas.setVisible(false);
+		// btnEliminarFactura.setVisible(false);
+		// lblSIF.setVisible(true);
+		// } else {
+		// tableFacturas.setVisible(true);
+		// btnEliminarFactura.setVisible(true);
+		// lblSIF.setVisible(false);
+		// }
 	}
 
 	/**
@@ -726,13 +726,13 @@ public class V_ClienteController {
 				.setCellValueFactory(cellData -> cellData.getValue().fechadevuelvePropertyFormat());
 		columnaObservacionesSustitucion.setCellValueFactory(cellData -> cellData.getValue().observacionesProperty());
 		tableSustitucion.setItems(listaSustitucion);
-		if (tableSustitucion.getItems().isEmpty()) {
-			tableSustitucion.setVisible(false);
-			lblSIVS.setVisible(true);
-		} else {
-			tableSustitucion.setVisible(true);
-			lblSIVS.setVisible(false);
-		}
+		// if (tableSustitucion.getItems().isEmpty()) {
+		// tableSustitucion.setVisible(false);
+		// lblSIVS.setVisible(true);
+		// } else {
+		// tableSustitucion.setVisible(true);
+		// lblSIVS.setVisible(false);
+		// }
 	}
 
 	@FXML

@@ -389,4 +389,18 @@ public class Utilidades {
 			return "";
 		}
 	}
+
+	/**
+	 * Comprueba que el texto que se le pasa puede convertirse a número
+	 * 
+	 * @param pNum
+	 * @return número convertido ó -1 si no se puede convertir
+	 */
+	public static int validaNumero(String pNum) {
+		try {
+			return Integer.parseInt(pNum);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
 }

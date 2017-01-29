@@ -142,6 +142,7 @@ public class D_EditClienteController {
 					p = new Particular(txtNombre.getText(), txtApellidos.getText(), txtNif.getText());
 				}
 				cped.setParticular(p);
+				cped.getCliente().setTipo("P");
 			} else {
 				Empresa e;
 				if (cped.getEmpresa() != null) {
@@ -151,21 +152,61 @@ public class D_EditClienteController {
 					e = new Empresa(txtNombre.getText(), txtNif.getText(), chckboxEsProveedor.isSelected());
 				}
 				cped.setEmpresa(e);
+				cped.getCliente().setTipo("E");
 			}
 			// Dirección
 			if (!txtCalle.getText().isEmpty()
 					|| (!txtCodPostal.getText().isEmpty() && Integer.parseInt(txtCodPostal.getText()) != 0)
 					|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
 				if (cped.getDireccion() == null || cped.getDireccion().getIddireccion() == 0) {
-					cped.setDireccion(new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
-							txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
-							txtLocalidad.getText(), txtProvincia.getText()));
+					int numero = 0;
+					if (!txtNumero.getText().isEmpty()) {
+						if (Utilidades.validaNumero(txtNumero.getText()) != -1) {
+							numero = Utilidades.validaNumero(txtNumero.getText());
+						} else {
+							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
+									"El número sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
+							numero = 0;
+						}
+					}
+					int cpostal = 0;
+					if (!txtCodPostal.getText().isEmpty()) {
+						if (Utilidades.validaNumero(txtCodPostal.getText()) != -1) {
+							cpostal = Utilidades.validaNumero(txtCodPostal.getText());
+						} else {
+							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
+									"El código postal sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
+							cpostal = 0;
+						}
+					}
+					cped.setDireccion(new Direccion(0, txtCalle.getText(), numero, txtPiso.getText(),
+							txtLetra.getText(), cpostal, txtLocalidad.getText(), txtProvincia.getText()));
 				} else {
 					cped.getDireccion().setCalle(txtCalle.getText());
-					cped.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
+					if (!txtNumero.getText().isEmpty()) {
+						if (Utilidades.validaNumero(txtNumero.getText()) != -1) {
+							cped.getDireccion().setNumero(Utilidades.validaNumero(txtNumero.getText()));
+						} else {
+							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
+									"El número sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
+							cped.getDireccion().setNumero(0);
+						}
+					} else {
+						cped.getDireccion().setNumero(0);
+					}
 					cped.getDireccion().setPiso(txtPiso.getText());
 					cped.getDireccion().setLetra(txtLetra.getText());
-					cped.getDireccion().setCpostal(Integer.parseInt(txtCodPostal.getText()));
+					if (!txtCodPostal.getText().isEmpty()) {
+						if (Utilidades.validaNumero(txtCodPostal.getText()) != -1) {
+							cped.getDireccion().setCpostal(Utilidades.validaNumero(txtCodPostal.getText()));
+						} else {
+							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
+									"El código postal sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
+							cped.getDireccion().setCpostal(0);
+						}
+					} else {
+						cped.getDireccion().setCpostal(0);
+					}
 					cped.getDireccion().setLocalidad(txtLocalidad.getText());
 					cped.getDireccion().setProvincia(txtProvincia.getText());
 				}
@@ -193,6 +234,7 @@ public class D_EditClienteController {
 			okClicked = true;
 			dialogStage.close();
 		}
+
 	}
 
 	/**

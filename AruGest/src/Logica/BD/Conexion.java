@@ -451,7 +451,7 @@ public class Conexion {
 			}
 
 			// 2º Guardar Cliente
-			sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID) VALUES (?,?,?,?,?)";
+			sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID, TIPO) VALUES (?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
 			st.setString(1, cped.getCliente().getNombre());
@@ -463,6 +463,7 @@ public class Conexion {
 			} else {
 				st.setInt(5, 0);
 			}
+			st.setString(6, cped.getCliente().getTipo());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			rs = st.getGeneratedKeys();
@@ -595,6 +596,7 @@ public class Conexion {
 			st.executeUpdate();
 			res = true;
 		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
 			ex.printStackTrace();
 			res = false;
 		}
@@ -740,6 +742,10 @@ public class Conexion {
 						// guardar
 						// la direccion
 						res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
+						if (res == false) {
+							return res;
+						}
+						cped.getCliente().setDireccionID((int) idGenerado);
 						// Acabar aquí la funcion si res = false
 					}
 				}
@@ -783,6 +789,7 @@ public class Conexion {
 			getCon().close();
 			res = true;
 		} catch (Exception ex) {
+			Utilidades.mostrarError(ex);
 			ex.printStackTrace();
 			res = false;
 		}
@@ -820,7 +827,7 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
-				if (!pcd.getDireccion().getCalle().equalsIgnoreCase("Sin información")) {
+				if (!pcd.getDireccion().getCalle().equalsIgnoreCase("No informado")) {
 					// Guardar direccion y asignarle su iddireccion al cliente
 					idGenerado = guardarDireccion(pcd.getDireccion());
 					if (idGenerado > 0) { // Si es 0 es que hubo un error al
@@ -1441,8 +1448,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
-						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
+						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 			}
 			// Se cierra la conexion
@@ -1845,8 +1852,8 @@ public class Conexion {
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
-				d = new Direccion(rs.getString("CALLE"), rs.getInt("NUMERO"), rs.getString("PISO"),
-						rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
+						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
 					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"),

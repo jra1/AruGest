@@ -8,7 +8,7 @@ public class ProveedorCompaniaDireccion extends ProveedorCompania {
 		super(esCia);
 		// setPc(new ProveedorCompania(0, "", "", 0, "", "", null, false,
 		// esCia));
-		setDireccion(new Direccion("", 0, "", "", 0, "", ""));
+		setDireccion(new Direccion(0, "", 0, "", "", 0, "", ""));
 	}
 
 	public ProveedorCompaniaDireccion(ProveedorCompania pc, Direccion d) {

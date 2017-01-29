@@ -721,9 +721,11 @@ public class V_NuevaFacturaController {
 					c = cpedv.getCliente();
 					Particular p = null;
 					Empresa e = null;
-					if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
-							|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
-						d = cpedv.getDireccion();
+					if (cpedv.getDireccion() != null) {
+						if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+								|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+							d = cpedv.getDireccion();
+						}
 					}
 					if (!cpedv.getParticular().getNombre().equalsIgnoreCase("")
 							|| !cpedv.getParticular().getNif().equalsIgnoreCase("")) {

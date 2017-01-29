@@ -28,7 +28,7 @@
                   <Label layoutX="14.0" layoutY="14.0" styleClass="my-label" text="USUARIO" />
                </children>
             </GridPane>
-            <CheckBox fx:id="chkAutologin" layoutX="88.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleOk" styleClass="my-label" text="Recordar" />
+            <CheckBox fx:id="chkAutologin" layoutX="88.0" layoutY="96.0" mnemonicParsing="false" styleClass="my-label" text="Recordar" />
          </children>
       </Pane>
    </children>

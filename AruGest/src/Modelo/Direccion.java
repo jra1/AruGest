@@ -37,9 +37,9 @@ public class Direccion {
 		this.cpostal = new SimpleIntegerProperty(0);
 	}
 
-	public Direccion(String calle, Integer numero, String piso, String letra, Integer cpostal, String localidad,
-			String provincia) {
-		this.iddireccion = new SimpleIntegerProperty(0);
+	public Direccion(Integer iddireccion, String calle, Integer numero, String piso, String letra, Integer cpostal,
+			String localidad, String provincia) {
+		this.iddireccion = new SimpleIntegerProperty(iddireccion);
 		this.calle = new SimpleStringProperty(calle);
 		this.numero = new SimpleIntegerProperty(numero);
 		this.piso = new SimpleStringProperty(piso);
