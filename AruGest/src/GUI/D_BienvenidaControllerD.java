@@ -152,8 +152,18 @@ public class D_BienvenidaControllerD {
 				"Esto cancelará el proceso y eliminará la base de datos creada. ¿Confirma que quiere cancelar el proceso?");
 		if (result.get() == ButtonType.OK) {
 			line = null;
-			File fichero = new File(Inicio.DBPATHNAME + ".h2.db");
-			fichero.delete();
+			// File fichero = new File(Inicio.DBPATHNAME + ".h2.db");
+			// fichero.delete();
+
+			File file = new File("C:\\AruGest");
+			File[] contents = file.listFiles();
+			if (contents != null) {
+				for (File f : contents) {
+					f.delete();
+				}
+			}
+			file.delete();
+
 			Platform.exit();
 			System.exit(0);
 			// dialogStage.close();

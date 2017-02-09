@@ -29,6 +29,7 @@ import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -117,7 +118,10 @@ public class Inicio extends Application {
 
 		// Si no existe la BD se llama al diálogo de Bienvenida
 		if (!existe) {
-			abreBienvenida();
+			if (abreBienvenida() == false) {
+				Platform.exit();
+				System.exit(0);
+			}
 		}
 
 		// Obtener las opciones
@@ -153,41 +157,6 @@ public class Inicio extends Application {
 	}
 
 	/**
-	 * Abre el diálogo de bienvenida
-	 * 
-	 * @return true si OK, false en los demás casos.
-	 */
-	public static boolean abreBienvenida() {
-		try {
-			// Load the fxml file and create a new stage for the popup dialog.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Inicio.class.getResource("/GUI/D_Bienvenida.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("AruGest Software");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(escenario);
-			dialogStage.setResizable(false);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-			// Set the person into the controller.
-			D_BienvenidaControllerD controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-			return controller.isOkClicked();
-		} catch (IOException e) {
-			Utilidades.mostrarError(e);
-			return false;
-		}
-	}
-
-	/**
 	 * Abre el diálogo del login
 	 * 
 	 * @return true si OK, false en los demás casos.
@@ -206,12 +175,49 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
 			D_LoginController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setFocus();
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			Utilidades.mostrarError(e);
+			return false;
+		}
+	}
+
+	/**
+	 * Abre el diálogo de bienvenida
+	 * 
+	 * @return true si OK, false en los demás casos.
+	 */
+	public static boolean abreBienvenida() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_Bienvenida.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("AruGest Software");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_BienvenidaControllerD controller = loader.getController();
+			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -285,6 +291,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -325,6 +332,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -368,6 +376,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -416,6 +425,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -453,6 +463,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			D_SustitucionEntregaController controller = loader.getController();
@@ -489,6 +500,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -524,6 +536,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -564,6 +577,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
@@ -601,6 +615,7 @@ public class Inicio extends Application {
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
 			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
 
 			// Poner el controlador.

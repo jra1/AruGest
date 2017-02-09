@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="243.0" prefWidth="292.0" styleClass="back" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.D_BienvenidaControllerD">
+<AnchorPane prefHeight="243.0" prefWidth="292.0" styleClass="back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.D_BienvenidaControllerD">
    <children>
       <Pane layoutX="6.0" layoutY="4.0" prefHeight="270.0" prefWidth="411.0" styleClass="background">
          <children>

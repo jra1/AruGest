@@ -318,7 +318,8 @@ public class Utilidades {
 		alert.setHeaderText(header);
 		alert.setContentText(texto);
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+		// dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+		dialogPane.getStylesheets().add("GUI/EstiloRoot.css");
 		dialogPane.getStyleClass().add("my-dialog");
 		return alert.showAndWait();
 	}
