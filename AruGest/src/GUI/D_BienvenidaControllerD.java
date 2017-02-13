@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -166,7 +169,6 @@ public class D_BienvenidaControllerD {
 
 			Platform.exit();
 			System.exit(0);
-			// dialogStage.close();
 		}
 	}
 
@@ -174,6 +176,7 @@ public class D_BienvenidaControllerD {
 	 * Llama al hilo para crear la BD
 	 */
 	private void empiezaCrearBD() throws InterruptedException {
+		System.out.println("Se comienza a crear la BD");
 		lblBienvenida.setVisible(false);
 		pbar.setVisible(true);
 		lblCargando.setVisible(true);
@@ -184,18 +187,76 @@ public class D_BienvenidaControllerD {
 		txtUsuario.setVisible(false);
 		txtPass.setVisible(false);
 
-		// Create new Task and Thread - Bind Progress Property to
-		// Task Progress
-		Task<?> task = taskCreator();
-		pbar.progressProperty().unbind();
-		pbar.progressProperty().bind(task.progressProperty());
+		// Hilo crea BD
+		// Task<Object> task = taskCreator();
+		// pbar.progressProperty().unbind();
+		// pbar.progressProperty().bind(task.progressProperty());
+		// new Thread(task).start();
+		// System.out.println("Después del hilo");
+
+		FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
+			@Override
+			public Integer call() throws Exception {
+				String sql = ClassLoader.getSystemResource("/recursos/ScriptSQL.txt").toString();
+				BufferedReader br = new BufferedReader(new FileReader(sql));
+				System.out.println("Empezando a leer fichero...");
+				Connection connection = null;
+				try {
+					System.out.println(Inicio.DBPATHNAME);
+					connection = Inicio.CONEXION.getCon();// openConnection(Inicio.DBURL);
+					System.out.println("Se comienza a crear la BD");
+					line = br.readLine();
+					StringBuilder statement = new StringBuilder();
+					while (line != null) {
+						line = line.trim();
+						if (!line.startsWith("--") && !line.startsWith("#") && !line.startsWith("//")) {
+							statement.append(line);
+							if (line.endsWith(";")) {
+								executeLine(connection, statement.toString());
+								statement = new StringBuilder();
+							}
+						}
+						line = br.readLine();
+					}
+					if (statement.length() > 0) {
+						executeLine(connection, statement.toString());
+					}
+				} finally {
+					try {
+						br.close();
+						btnAceptar.setDisable(false);
+					} catch (Exception e) {
+						;
+					}
+					try {
+						if (connection != null)
+							connection.close();
+					} catch (Exception e) {
+						;
+					}
+				}
+				return 1;
+			}
+		});
 		new Thread(task).start();
 
-		// llamaHilo();
+		Integer result;
+		try {
+			result = task.get();
+			if (result == 1) {
+				System.out.println("BD creada");
+			}
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("Después del hilo");
+
 	}
 
 	// Create a New Task
-	private Task<?> taskCreator() {
+	private Task<Object> taskCreator() {
 		return new Task<Object>() {
 			@Override
 			protected Object call() throws Exception {
@@ -205,6 +266,7 @@ public class D_BienvenidaControllerD {
 				try {
 					System.out.println(Inicio.DBPATHNAME);
 					connection = Inicio.CONEXION.getCon();// openConnection(Inicio.DBURL);
+					System.out.println("Se comienza a crear la BD");
 					line = br.readLine();
 					StringBuilder statement = new StringBuilder();
 					int contador = 0;

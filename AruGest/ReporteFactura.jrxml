@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFactura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="20" uuid="4ab07a61-207e-48e4-9d39-b021c707e9f3">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="1"/>
-	<property name="ireport.y" value="576"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="375"/>
 	<style name="table">
 		<pen lineWidth="0.6"/>
 		<box>
@@ -163,6 +163,7 @@
 	<parameter name="cboxdef" class="java.lang.String"/>
 	<parameter name="cboxpermiso" class="java.lang.String"/>
 	<parameter name="cboxpiezas" class="java.lang.String"/>
+	<parameter name="porcentaje" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from factura where idfactura = $P{idfactura}]]>
 	</queryString>
@@ -651,14 +652,6 @@ ruizarana@hotmail.com - 01013 VITORIA]]></text>
 				<text><![CDATA[ESTE PRESUPUESTO ES VÁLIDO HASTA 20 DÍAS DESPUÉS DE SU EXPEDICIÓN.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="164" width="253" height="22" uuid="365277d5-087b-48b9-ab2b-0e347086f808"/>
-				<textElement>
-					<font size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[REPARAR DEFECTOS OCULTOS
-(HASTA UN .... % MÁS DE LO PRESUPUESTADO)]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="298" y="190" width="253" height="12" uuid="cee79052-cee6-4d19-b6a2-187cc5d91b12"/>
 				<textElement>
 					<font size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
@@ -754,6 +747,14 @@ Compra y venta de vehículos - Ocasión]]></text>
 				</textElement>
 				<text><![CDATA[SERVICIOS]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="298" y="164" width="253" height="20" uuid="5f8e82c9-6843-4f09-b5a4-d49a5f45530e"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REPARAR DEFECTOS OCULTOS "
+"(HASTA UN " + $P{porcentaje} + "% MÁS DE LO PRESUPUESTADO)"]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 	<summary>
