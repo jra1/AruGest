@@ -87,6 +87,7 @@ public class Hilo extends Thread {
 				@Override
 				public Integer call() throws Exception {
 					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
+						System.out.println("NO HAY RUTA DE FACTURAS!");
 						alert.setAlertType(AlertType.WARNING);
 						alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
 						alert.setContentText(
@@ -182,7 +183,7 @@ public class Hilo extends Thread {
 						String ruta = Inicio.RUTA_FACTURAS + "\\" + nombreFactura;
 
 						// Esta linea es aparte del resto
-						JasperReport jr = JasperCompileManager.compileReport("reporteFactura.jrxml");
+						JasperReport jr = JasperCompileManager.compileReport("ReporteFactura.jrxml");
 						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon());
 						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {
