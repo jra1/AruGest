@@ -174,6 +174,8 @@ public class Inicio extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
+			// Ponemos nuestro propio icono de la aplicación
+			dialogStage.getIcons().add(new Image("recursos/images/logo_coche.png"));
 			Scene scene = new Scene(page);
 			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
@@ -211,6 +213,8 @@ public class Inicio extends Application {
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(escenario);
 			dialogStage.setResizable(false);
+			// Ponemos nuestro propio icono de la aplicación
+			dialogStage.getIcons().add(new Image("recursos/images/logo_coche.png"));
 			Scene scene = new Scene(page);
 			scene.getStylesheets().add("GUI/EstiloRoot.css");
 			dialogStage.setScene(scene);
@@ -236,7 +240,7 @@ public class Inicio extends Application {
 		escenario.setTitle("AruGest Software");
 
 		// Ponemos nuestro propio icono de la aplicación
-		escenario.getIcons().add(new Image("file:images/logo_coche.png"));
+		escenario.getIcons().add(new Image("recursos/images/logo_coche.png"));
 
 		FXMLLoader loader = new FXMLLoader(Inicio.class.getResource("/GUI/V_Root.fxml"));
 

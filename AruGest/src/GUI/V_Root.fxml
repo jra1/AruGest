@@ -215,7 +215,7 @@
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../images/logo_cargando.gif" />
+                              <Image url="@images/logo_cargando.gif" />
                            </image>
                         </ImageView>
                      </graphic>
