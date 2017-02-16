@@ -24,7 +24,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class D_BienvenidaControllerD extends Thread {
@@ -107,8 +106,6 @@ public class D_BienvenidaControllerD extends Thread {
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
-		// Se pone nuestro propio icono de la aplicación
-		this.dialogStage.getIcons().add(new Image("file:images/logo_coche.png"));
 	}
 
 	/**

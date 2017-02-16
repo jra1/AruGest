@@ -44,7 +44,7 @@
                   <TextField fx:id="txtNumResguardo" layoutX="416.0" layoutY="71.0" prefHeight="25.0" prefWidth="139.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Label layoutX="14.0" layoutY="136.0" styleClass="my-label" text="Matrícula vehículo" GridPane.rowIndex="4" />
                   <CheckBox fx:id="chckbxOrdenDeReparacion" layoutX="194.0" layoutY="14.0" mnemonicParsing="false" styleClass="my-label" text="Ordenes de reparación" GridPane.columnIndex="2" />
-                  <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#buscarFacturas" styleClass="my-button" text="Buscar" GridPane.rowIndex="5" />
+                  <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#buscarFacturas" prefHeight="27.0" prefWidth="76.0" styleClass="my-button" text="BUSCAR" GridPane.rowIndex="5" />
                   <TextField fx:id="txtNombreCliente" layoutX="675.0" layoutY="37.0" prefHeight="25.0" prefWidth="308.0" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Label layoutX="14.0" layoutY="104.0" styleClass="my-label" text="Modelo vehículo" GridPane.rowIndex="3" />
                   <TextField fx:id="txtDni" disable="true" editable="false" layoutX="675.0" layoutY="100.0" prefHeight="25.0" prefWidth="139.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />

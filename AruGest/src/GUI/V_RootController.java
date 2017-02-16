@@ -28,6 +28,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class V_RootController {
@@ -41,6 +43,16 @@ public class V_RootController {
 	public Button btnPantalla3;
 
 	@FXML
+	private ImageView imgClientes;
+	@FXML
+	private ImageView imgVehi;
+	@FXML
+	private ImageView imgConta;
+	@FXML
+	private ImageView imgCias;
+	@FXML
+	private ImageView imgDocu;
+	@FXML
 	private Accordion acor;
 	@FXML
 	private TitledPane tPane;
@@ -49,9 +61,10 @@ public class V_RootController {
 	@FXML
 	private Button btnNuevoPresupuesto;
 
-	private Inicio main;
 	@FXML
 	private ScrollPane sp;
+
+	private Inicio main;
 
 	GestorVentana gv;
 	private AnchorPane ap;
@@ -89,6 +102,11 @@ public class V_RootController {
 				nuevoPresupuesto();
 			}
 		});
+		imgClientes.setImage(new Image("recursos/images/clients.png"));
+		imgVehi.setImage(new Image("recursos/images/vehiculo.png"));
+		imgConta.setImage(new Image("recursos/images/conta.png"));
+		imgCias.setImage(new Image("recursos/images/agency.png"));
+		imgDocu.setImage(new Image("recursos/images/docus.png"));
 	}
 
 	/**

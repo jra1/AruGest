@@ -31,14 +31,7 @@
             <TextField fx:id="txtPoblacion" layoutX="510.0" layoutY="144.0" onAction="#buscarCliente" prefHeight="25.0" promptText="Población cliente" styleClass="my-text-field" />
             <Label layoutX="23.0" layoutY="183.0" styleClass="my-label" text="Teléfono 1" />
             <Label layoutX="369.0" layoutY="65.0" styleClass="my-label" text="Teléfono 2" />
-            <Button fx:id="btnBuscar" layoutX="743.0" layoutY="69.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="58.0" prefWidth="122.0" styleClass="my-button" text="BUSCAR">
-               <graphic>
-                  <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../images/buscar2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="btnBuscar" layoutX="368.0" layoutY="175.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="31.0" prefWidth="110.0" styleClass="my-button" text="BUSCAR">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>

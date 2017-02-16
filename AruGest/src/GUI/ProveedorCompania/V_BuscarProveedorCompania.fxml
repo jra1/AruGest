@@ -38,13 +38,6 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/buscar.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                   </Button>
                </children>
             </GridPane>
@@ -126,13 +119,6 @@
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
-                     <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/buscar.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                   </Button>
                </children>
                <columnConstraints>
@@ -196,8 +182,8 @@
                </rowConstraints>
             </GridPane>
             <ImageView fx:id="logoProve" fitHeight="78.0" fitWidth="90.0" layoutX="708.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="btnEliminarProve" cancelButton="true" layoutX="520.0" layoutY="135.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="my-button" text="Eliminar" />
-            <Button cancelButton="true" layoutX="442.0" layoutY="135.0" mnemonicParsing="false" onAction="#editarProve" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Editar" />
+            <Button fx:id="btnEliminarProve" cancelButton="true" layoutX="520.0" layoutY="132.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="my-button" text="Eliminar" />
+            <Button cancelButton="true" layoutX="442.0" layoutY="132.0" mnemonicParsing="false" onAction="#editarProve" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Editar" />
          </children>
       </Pane>
    </children>

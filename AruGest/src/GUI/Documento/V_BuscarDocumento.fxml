@@ -36,9 +36,9 @@
                       <TableColumn fx:id="columnaCliente" prefWidth="298.0" text="Cliente" />
                     </columns>
                   </TableView>
-                  <Button layoutX="463.0" layoutY="35.0" mnemonicParsing="false" onAction="#buscarDocumento" prefHeight="31.0" prefWidth="71.0" styleClass="my-button" text="Buscar" />
+                  <Button layoutX="463.0" layoutY="35.0" mnemonicParsing="false" onAction="#buscarDocumento" prefHeight="31.0" prefWidth="81.0" styleClass="my-button" text="BUSCAR" />
                   <ImageView fx:id="imgPrevio" fitHeight="353.0" fitWidth="483.0" layoutX="572.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button layoutX="572.0" layoutY="35.0" mnemonicParsing="false" onAction="#abrirDocumento" prefHeight="31.0" prefWidth="133.0" styleClass="my-button" text="Abrir documento" />
+                  <Button layoutX="609.0" layoutY="35.0" mnemonicParsing="false" onAction="#abrirDocumento" prefHeight="31.0" prefWidth="133.0" styleClass="my-button" text="Abrir documento" />
                   <Button layoutX="755.0" layoutY="35.0" mnemonicParsing="false" onAction="#abrirCliente" prefHeight="31.0" prefWidth="182.0" styleClass="my-button" text="Abrir ficha de cliente" />
                </children></Pane>
          </children>

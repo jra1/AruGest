@@ -117,27 +117,27 @@ public class Hilo extends Thread {
 						Map<String, Object> parameters = new HashMap<String, Object>();
 						parameters.put("idfactura", f.getIdfactura());
 						if (f.getNumfactura() > 0) {
-							parameters.put("cboxfactura", "file:images/selec.png");
+							parameters.put("cboxfactura", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxfactura", "file:images/selecNO.png");
+							parameters.put("cboxfactura", "recursos/images/selecNO.png");
 						}
 						parameters.put("numfactura", f.getNumfactura());
 						if (f.getNumpresupuesto() > 0) {
-							parameters.put("cboxpresupuesto", "file:images/selec.png");
+							parameters.put("cboxpresupuesto", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxpresupuesto", "file:images/selecNO.png");
+							parameters.put("cboxpresupuesto", "recursos/images/selecNO.png");
 						}
 						parameters.put("numpresupuesto", f.getNumpresupuesto());
 						if (f.getNumordenrep() > 0) {
-							parameters.put("cboxorden", "file:images/selec.png");
+							parameters.put("cboxorden", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxorden", "file:images/selecNO.png");
+							parameters.put("cboxorden", "recursos/images/selecNO.png");
 						}
 						parameters.put("numorden", f.getNumordenrep());
 						if (f.getNumresguardo() > 0) {
-							parameters.put("cboxresguardo", "file:images/selec.png");
+							parameters.put("cboxresguardo", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxresguardo", "file:images/selecNO.png");
+							parameters.put("cboxresguardo", "recursos/images/selecNO.png");
 						}
 						parameters.put("numresguardo", f.getNumresguardo());
 						parameters.put("autor", c.getNombre());
@@ -162,21 +162,21 @@ public class Hilo extends Thread {
 						parameters.put("total", f.getImporteTotal());
 						parameters.put("fecha", f.getFecha());
 						parameters.put("fechaentrega", f.getFechaentrega());
-						parameters.put("logoAdeada", "file:images/Logo_Adeada.png");
+						parameters.put("logoAdeada", "recursos/images/Logo_Adeada.png");
 						if (f.isRdefocultos()) {
-							parameters.put("cboxdef", "file:images/selec.png");
+							parameters.put("cboxdef", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxdef", "file:images/selecNO.png");
+							parameters.put("cboxdef", "recursos/images/selecNO.png");
 						}
 						if (f.isPermisopruebas()) {
-							parameters.put("cboxpermiso", "file:images/selec.png");
+							parameters.put("cboxpermiso", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxpermiso", "file:images/selecNO.png");
+							parameters.put("cboxpermiso", "recursos/images/selecNO.png");
 						}
 						if (f.isNopiezas()) {
-							parameters.put("cboxpiezas", "file:images/selec.png");
+							parameters.put("cboxpiezas", "recursos/images/selec.png");
 						} else {
-							parameters.put("cboxpiezas", "file:images/selecNO.png");
+							parameters.put("cboxpiezas", "recursos/images/selecNO.png");
 						}
 
 						String nombreFactura = c.getNombre() + "-" + v.getMarcaModelo() + ".pdf";

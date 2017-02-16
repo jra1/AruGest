@@ -38,14 +38,7 @@
                   <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="139.0" promptText="Ej. 12345678D" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-            <Button fx:id="btnBuscar" layoutX="467.0" layoutY="75.0" mnemonicParsing="false" onAction="#buscarVehiculo" prefHeight="45.0" prefWidth="122.0" styleClass="my-button" text="BUSCAR">
-               <graphic>
-                  <ImageView fitHeight="38.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../images/buscar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="btnBuscar" layoutX="471.0" layoutY="143.0" mnemonicParsing="false" onAction="#buscarVehiculo" prefHeight="31.0" prefWidth="122.0" styleClass="my-button" text="BUSCAR">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

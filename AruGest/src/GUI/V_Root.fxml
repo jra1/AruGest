@@ -39,11 +39,7 @@
                         </AnchorPane>
                   </content>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/clients.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="imgClientes" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -75,7 +71,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgVehi" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/vehiculo.png" />
                            </image>
@@ -105,7 +101,7 @@
                         </AnchorPane>
                   </content>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgConta" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/conta.png" />
                            </image>
@@ -141,7 +137,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgCias" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/agency.png" />
                            </image>
@@ -167,7 +163,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgDocu" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/docus.png" />
                            </image>

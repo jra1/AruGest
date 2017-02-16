@@ -880,7 +880,7 @@ public class V_NuevaFacturaController {
 					columnaPrecioMat.setCellValueFactory(cellData -> cellData.getValue().preciounitProperty());
 					tableMaterial.setItems(listaMaterial);
 				} else {
-					servicio = new Servicio(0, e.getNombreElemento(), "", 0, "");
+					servicio = new Servicio(0, e.getNombreElemento(), "", 0, e.getTipo());
 					listaServicios.add(servicio);
 					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
 					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());

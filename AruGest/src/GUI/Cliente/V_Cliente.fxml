@@ -269,16 +269,8 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" prefWidth="1071.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="27.0" prefWidth="29.0">
-                                 <graphic>
-                                    <ImageView fitHeight="24.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../images/add_icon.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button layoutX="53.0" layoutY="7.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="27.0" prefWidth="259.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
+                              <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="27.0" prefWidth="206.0" styleClass="my-button" text="Añadir vehículo de sustitución" />
+                              <Button layoutX="222.0" layoutY="7.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="27.0" prefWidth="259.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
                               <TableView fx:id="tableSustitucion" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0">
                                  <columns>
                                     <TableColumn fx:id="columnaMarcaSustitucion" prefWidth="126.0" text="Vehículo sustitución" />

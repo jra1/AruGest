@@ -122,23 +122,23 @@ public class V_BuscarDocumentoController {
 			}
 		} else if (cpedd.getDocumento().getExtension().equalsIgnoreCase("DOC")
 				|| cpedd.getDocumento().getExtension().equalsIgnoreCase("DOCX")) {
-			i = new Image("file:images/doc_icon.png");
+			i = new Image("recursos/images/doc_icon.png");
 			imgPrevio.setImage(i);
 			imgPrevio.setFitWidth(128);
 			imgPrevio.setFitHeight(128);
 		} else if (cpedd.getDocumento().getExtension().equalsIgnoreCase("PDF")) {
-			i = new Image("file:images/pdf_icon.png");
+			i = new Image("recursos/images/pdf_icon.png");
 			imgPrevio.setImage(i);
 			imgPrevio.setFitWidth(128);
 			imgPrevio.setFitHeight(128);
 		} else if (cpedd.getDocumento().getExtension().equalsIgnoreCase("XLS")
 				|| cpedd.getDocumento().getExtension().equalsIgnoreCase("XLSX")) {
-			i = new Image("file:images/xls_icon.png");
+			i = new Image("recursos/images/xls_icon.png");
 			imgPrevio.setImage(i);
 			imgPrevio.setFitWidth(128);
 			imgPrevio.setFitHeight(128);
 		} else {
-			i = new Image("file:images/document_icon.png");
+			i = new Image("recursos/images/document_icon.png");
 			imgPrevio.setImage(i);
 			imgPrevio.setFitWidth(128);
 			imgPrevio.setFitHeight(128);
