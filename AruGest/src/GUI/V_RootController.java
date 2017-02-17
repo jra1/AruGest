@@ -1,6 +1,7 @@
 package GUI;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.guigarage.responsive.ResponsiveHandler;
 
@@ -557,6 +558,20 @@ public class V_RootController {
 	@FXML
 	private void mostrarOpciones() {
 		Inicio.mostrarDialogoOpciones();
+	}
+
+	/**
+	 * Crea una copia de seguridad
+	 */
+	@FXML
+	private void crearCopiaSeguridad() {
+		try {
+			Inicio.CONEXION.getCon().prepareStatement("BACKUP TO 'C:\\AruGestDB_Copia.zip'").executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Error al crear copia de seguridad");
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

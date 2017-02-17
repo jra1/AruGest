@@ -190,6 +190,7 @@
           <Menu mnemonicParsing="false" text="Opciones">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#mostrarOpciones" text="Cambiar opciones" />
+                  <MenuItem mnemonicParsing="false" onAction="#crearCopiaSeguridad" text="Hacer copia de seguridad" />
                </items></Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
