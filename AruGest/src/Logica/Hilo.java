@@ -87,17 +87,10 @@ public class Hilo extends Thread {
 				@Override
 				public Integer call() throws Exception {
 					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
-						System.out.println("NO HAY RUTA DE FACTURAS!");
 						alert.setAlertType(AlertType.WARNING);
 						alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
 						alert.setContentText(
 								"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
-						// Utilidades.mostrarAlerta(AlertType.WARNING,
-						// "Atención",
-						// "Debe introducir una carpeta donde guardar las
-						// facturas",
-						// "Vaya a 'Opciones' y seleccione la ruta donde se van
-						// a guardar las facturas generadas.");
 						return 0;
 					}
 
@@ -179,15 +172,26 @@ public class Hilo extends Thread {
 							parameters.put("cboxpiezas", "recursos/images/selecNO.png");
 						}
 
-						String nombreFactura = c.getNombre() + "-" + v.getMarcaModelo() + ".pdf";
+						String nombreFactura = "";
+						if (f.getNumfactura() != 0) {
+							nombreFactura += "Factura " + f.getNumfactura();
+						} else if (f.getNumpresupuesto() != 0) {
+							nombreFactura += "Presupuesto " + f.getNumpresupuesto();
+						} else if (f.getNumordenrep() != 0) {
+							nombreFactura += "Orden rep " + f.getNumordenrep();
+						} else if (f.getNumresguardo() != 0) {
+							nombreFactura += "Resguardo dep " + f.getNumresguardo();
+						} else {
+							nombreFactura += v.getMarcaModelo();
+						}
+						nombreFactura += "-" + c.getNombre() + ".pdf";
 						String ruta = Inicio.RUTA_FACTURAS + "\\" + nombreFactura;
-
 						// Esta linea es aparte del resto
-						JasperReport jr = JasperCompileManager.compileReport("ReporteFactura.jrxml");
+						JasperReport jr = JasperCompileManager.compileReport("recursos/ReporteFactura.jrxml");
 						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon());
 						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {
-						System.out.println(ex.getMessage());
+						ex.printStackTrace();
 						return -1;
 					}
 					return 1;

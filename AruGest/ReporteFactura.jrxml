@@ -752,7 +752,7 @@ Compra y venta de vehículos - Ocasión]]></text>
 				<textElement>
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA["REPARAR DEFECTOS OCULTOS "
+				<textFieldExpression><![CDATA["REPARAR DEFECTOS OCULTOS " +
 "(HASTA UN " + $P{porcentaje} + "% MÁS DE LO PRESUPUESTADO)"]]></textFieldExpression>
 			</textField>
 		</band>

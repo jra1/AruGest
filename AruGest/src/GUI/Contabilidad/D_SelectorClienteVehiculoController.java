@@ -109,6 +109,7 @@ public class D_SelectorClienteVehiculoController {
 			cpedv.getCliente().setTelf1(txtTel1.getText());
 
 			if (tipoCliente == 1) { // Particular
+				cpedv.getCliente().setTipo("P");
 				if (cpedv.getParticular() == null) {
 					Particular p = new Particular(0, cpedv.getCliente().getIdcliente(), txtNombre.getText(),
 							txtApellidos.getText(), txtDni.getText());
@@ -122,6 +123,7 @@ public class D_SelectorClienteVehiculoController {
 				// cpedv.getEmpresa().setCif("");
 				// cpedv.getEmpresa().setNombre("");
 			} else if (tipoCliente == 2) { // Empresa
+				cpedv.getCliente().setTipo("E");
 				if (cpedv.getEmpresa() == null) {
 					Empresa e = new Empresa(0, cpedv.getCliente().getIdcliente(), txtNombre.getText(), txtDni.getText(),
 							false);

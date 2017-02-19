@@ -1,7 +1,7 @@
 CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int);
 CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255));
 CREATE TABLE empresa (idempresa int primary key auto_increment, clienteID int, nombre varchar(255), cif varchar(255), esProveedor boolean);
-CREATE TABLE direccion (iddireccion int primary key auto_increment, calle varchar(255), numero int, piso varchar(255), letra varchar(255), cpostal int, localidad varchar(255), provincia varchar(255));
+CREATE TABLE direccion (iddireccion int primary key auto_increment, calle varchar(255) default '', numero int default 0, piso varchar(255) default '', letra varchar(255) default '', cpostal int default 0, localidad varchar(255) default '', provincia varchar(255) default '');
 CREATE TABLE proveedorCompania(idproveCompa int primary key auto_increment, cif varchar(255), nombre varchar(255), direccionID int, telf1 varchar(255), telf2 varchar(255), logo blob, esDesguace boolean, esCompania boolean);
 CREATE TABLE vehiculo(idvehiculo int primary key auto_increment, clienteID int, marca varchar(255), modelo varchar(255), version varchar(255), matricula varchar(255), anio int, bastidor varchar(255), letrasMotor varchar(255), color varchar(255), codradio varchar(255), tipoID int);
 CREATE TABLE tipoVehiculo(idtipoVehiculo int primary key auto_increment, tipo varchar(255));
