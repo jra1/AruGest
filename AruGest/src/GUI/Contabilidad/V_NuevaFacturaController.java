@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Logica.Hilo;
 import Logica.Inicio;
@@ -1030,6 +1031,7 @@ public class V_NuevaFacturaController {
 		Float sumaIva = 0f;
 		Float total = 0f;
 		Float porcentajeOcultos = 0f;
+		Date fechaEntrega;
 		if (!txtManoObra.getText().isEmpty()) {
 			manoObra = Float.parseFloat(txtManoObra.getText().replace(",", "."));
 		}
@@ -1052,11 +1054,16 @@ public class V_NuevaFacturaController {
 		if (!txtPorcentajeDefOcultos.getText().isEmpty()) {
 			porcentajeOcultos = Float.parseFloat(txtPorcentajeDefOcultos.getText().replace(",", "."));
 		}
+
+		if (txtFechaEntrega.getValue() != null) {
+			fechaEntrega = Utilidades.LocalDateADate(txtFechaEntrega.getValue());
+		} else {
+			fechaEntrega = null;
+		}
 		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
-				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()),
-				Utilidades.LocalDateADate(txtFechaEntrega.getValue()), manoObra, materiales, otros, suma, sumaIva,
-				"ESTADO", chckbxRepararDefOcultos.isSelected(), porcentajeOcultos, chckbxPermisoPruebas.isSelected(),
-				chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
+				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
+				materiales, otros, suma, sumaIva, "ESTADO", chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
+				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
 		return f;
 	}
 

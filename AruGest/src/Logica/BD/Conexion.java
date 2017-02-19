@@ -2536,15 +2536,9 @@ public class Conexion {
 						rs.getBlob("DOCUMENTO"), rs.getString("EXTENSION"));
 
 				is = rs.getBinaryStream("DOCUMENTO");
-				// InputStream initialStream = is;
-				byte[] buffer = new byte[is.available()];
-				is.read(buffer);
 				String ext = "." + d.getExtension();
 				f = File.createTempFile("Archivo_TEMP", ext);
 				f.deleteOnExit();
-				// OutputStream outStream = new FileOutputStream(f);
-				// outStream.write(buffer);
-				// outStream.close();
 
 				OutputStream out = new FileOutputStream(f);
 				byte buf[] = new byte[1024];

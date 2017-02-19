@@ -2,6 +2,7 @@ package Logica;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -72,14 +73,14 @@ public class Hilo extends Thread {
 
 	public static void hilo_GeneraPDF(Factura f) {
 		try {
-
+			System.out.println("Dentro de hilo_GeneraPDF");
 			// Mostrar mensaje
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Generando factura");
 			alert.setHeaderText("Generando pdf de factura...");
 			alert.setContentText("");
 			DialogPane dialogPane = alert.getDialogPane();
-			dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
+			dialogPane.getStylesheets().add(Inicio.class.getResource("/GUI/EstiloRoot.css").toExternalForm());
 			dialogPane.getStyleClass().add("my-dialog");
 			alert.show();
 
@@ -171,6 +172,7 @@ public class Hilo extends Thread {
 						} else {
 							parameters.put("cboxpiezas", "recursos/images/selecNO.png");
 						}
+						parameters.put("porcentaje", f.getPorcentajedefocul());
 
 						String nombreFactura = "";
 						if (f.getNumfactura() != 0) {
@@ -187,7 +189,10 @@ public class Hilo extends Thread {
 						nombreFactura += "-" + c.getNombre() + ".pdf";
 						String ruta = Inicio.RUTA_FACTURAS + "\\" + nombreFactura;
 						// Esta linea es aparte del resto
-						JasperReport jr = JasperCompileManager.compileReport("recursos/ReporteFactura.jrxml");
+						// String rutaReport =
+						// getClass().getResource("/recursos/ReporteFactura.jrxml").getPath();
+						InputStream is = Inicio.class.getResourceAsStream("/recursos/ReporteFactura.jrxml");
+						JasperReport jr = JasperCompileManager.compileReport(is);
 						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon());
 						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {
@@ -213,7 +218,7 @@ public class Hilo extends Thread {
 						"");
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		// new Thread(new Runnable() {

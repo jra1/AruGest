@@ -911,8 +911,9 @@ public class V_ClienteController {
 								tableDocumentos.getSelectionModel().getSelectedItem().getIddocumento(),
 								txtNombreDocumento.getText())) {
 							Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Documento modificado",
-									"El documento se ha modificado en la BD");
+									"El documento se ha modificado en la base de datos");
 							cargarDocumentos();
+							txtNombreDocumento.setText("");
 						} else {
 							Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar el documento",
 									"Ocurrió un error al modificar el documento en la BD. Puede que no haya sido modificado correctamente");
