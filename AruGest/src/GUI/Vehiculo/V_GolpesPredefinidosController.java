@@ -134,6 +134,7 @@ public class V_GolpesPredefinidosController {
 		if (selectedIndex >= 0) {
 			modo = "EDITAR";
 			camposDeshabilitados(false);
+			txtNombreGolpe.requestFocus();
 		} else {
 			// Nada seleccionado.
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún golpe seleccionado",
@@ -152,6 +153,7 @@ public class V_GolpesPredefinidosController {
 		txtNombreElemento.setText("");
 		listaElementos.clear();
 		tableElementos.getItems().clear();
+		txtNombreGolpe.requestFocus();
 	}
 
 	/**
@@ -253,7 +255,7 @@ public class V_GolpesPredefinidosController {
 		int selectedIndex = tableGolpes.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar golpe",
-					"¿Estáa seguro que quiere eliminar este golpe?", "");
+					"¿Está seguro que quiere eliminar este golpe?", "");
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION.eliminarGolpe(getGOLPEID())) {
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Golpe eliminado de la base de datos.",
