@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.guigarage.responsive.ResponsiveHandler;
+
 import GUI.Contabilidad.V_NuevaFacturaController;
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -246,11 +248,17 @@ public class V_BuscarVehiculoController {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+				Inicio.setOpcionNueva("A");
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
+				// **************************************************************************************************
+				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+				// **************************************************************************************************
 				sp.setContent(nuevaFactura);
-				nombre = "Factura: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
+				// Esta línea es para que se ejecute la pseudoclase del CSS ya
+				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+				nombre = "Presupuesto: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
 				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 				gv = new GestorVentana(ap, nombre);
 				Utilidades.gestionarPantallas(gv);
@@ -261,10 +269,7 @@ public class V_BuscarVehiculoController {
 				boton3.setVisible(Inicio.BOTON3.isVisible());
 				boton3.setText(Inicio.BOTON3.getNombre());
 
-				// main.getRoot().setCenter(nuevaFactura);
-
 				// Poner el controlador de la nueva vista.
-				Inicio.setOpcionNueva("A");
 				V_NuevaFacturaController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),

@@ -260,7 +260,7 @@ public class V_GolpesPredefinidosController {
 				if (Inicio.CONEXION.eliminarGolpe(getGOLPEID())) {
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Golpe eliminado de la base de datos.",
 							"");
-					cargarGolpes();
+					listaGolpes.remove(selectedIndex);
 				} else {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Error",
 							"Ocurrió un error al eliminar el golpe de la base de datos.", "");
@@ -270,6 +270,29 @@ public class V_GolpesPredefinidosController {
 			// Nada seleccionado.
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún golpe seleccionado",
 					"Selecciona en la tabla el golpe que quieras eliminar.");
+		}
+	}
+
+	/**
+	 * Elimina el elemento seleccionado
+	 */
+	@FXML
+	private void eliminarElemento() {
+		int selectedIndex = tableElementos.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			if (Inicio.CONEXION
+					.eliminarElementoGolpe(tableElementos.getSelectionModel().getSelectedItem().getNombreElemento())) {
+				// Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito",
+				// "Golpe eliminado de la base de datos.", "");
+				listaElementos.remove(selectedIndex);
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error",
+						"Ocurrió un error al eliminar el elemento de la base de datos.", "");
+			}
+		} else {
+			// Nada seleccionado.
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún elemento seleccionado",
+					"Selecciona en la tabla el elemento que quieras eliminar.");
 		}
 	}
 

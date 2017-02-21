@@ -41,9 +41,13 @@ public class D_BienvenidaControllerD extends Thread {
 	@FXML
 	private Label lblPass;
 	@FXML
+	private Label lblPass2;
+	@FXML
 	private TextField txtUsuario;
 	@FXML
 	private PasswordField txtPass;
+	@FXML
+	private PasswordField txtPass2;
 
 	@FXML
 	private Button btnAceptar;
@@ -67,8 +71,10 @@ public class D_BienvenidaControllerD extends Thread {
 		lblCreaUsuario.setVisible(false);
 		lblUsuario.setVisible(false);
 		lblPass.setVisible(false);
+		lblPass2.setVisible(false);
 		txtUsuario.setVisible(false);
 		txtPass.setVisible(false);
+		txtPass2.setVisible(false);
 
 		// ProgressBar
 		// ProgressBar pbar = new ProgressBar(0);
@@ -129,10 +135,15 @@ public class D_BienvenidaControllerD extends Thread {
 		} else if (lblCargando.isVisible()) {
 			pideUserPass();
 		} else {
-			if (!txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty()) {
-				Inicio.CONEXION.guardarUserPass(txtUsuario.getText(), txtPass.getText());
-				okClicked = true;
-				dialogStage.close();
+			if (!txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPass2.getText().isEmpty()) {
+				if (txtPass.getText().equals(txtPass2.getText())) {
+					Inicio.CONEXION.guardarUserPass(txtUsuario.getText(), txtPass.getText());
+					okClicked = true;
+					dialogStage.close();
+				} else {
+					Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "La contraseña no coincide",
+							"Debe introducir dos veces la contraseña para asegurarse que la ha escrito bien");
+				}
 			} else {
 				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Debe introducir un usuario y una contraseña",
 						"");
@@ -179,8 +190,10 @@ public class D_BienvenidaControllerD extends Thread {
 		lblCreaUsuario.setVisible(false);
 		lblUsuario.setVisible(false);
 		lblPass.setVisible(false);
+		lblPass2.setVisible(false);
 		txtUsuario.setVisible(false);
 		txtPass.setVisible(false);
+		txtPass2.setVisible(false);
 
 		// Hilo crea BD
 		Task<Object> task = taskCreator();
@@ -303,7 +316,9 @@ public class D_BienvenidaControllerD extends Thread {
 		lblCreaUsuario.setVisible(true);
 		lblUsuario.setVisible(true);
 		lblPass.setVisible(true);
+		lblPass2.setVisible(true);
 		txtUsuario.setVisible(true);
 		txtPass.setVisible(true);
+		txtPass2.setVisible(true);
 	}
 }

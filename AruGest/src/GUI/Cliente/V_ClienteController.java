@@ -538,19 +538,33 @@ public class V_ClienteController {
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
-				Inicio.setOpcionNueva("A"); // Para que marque presupuesto y
-											// factura
+				Inicio.setOpcionNueva("A"); // Marca presupuesto y factura
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();
 
 				// Poner la nueva vista en el centro del root
+				// **************************************************************************************************
+				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+				// **************************************************************************************************
 				sp.setContent(nuevaFactura);
-				// main.getRoot().setCenter(nuevaFactura);
+				// Esta línea es para que se ejecute la pseudoclase del CSS ya
+				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+				nombre = "Presupuesto: " + listaPresupuestos.get(selectedIndex).getCliente().getNombre();
+				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+				gv = new GestorVentana(ap, nombre);
+				Utilidades.gestionarPantallas(gv);
+				boton1.setVisible(Inicio.BOTON1.isVisible());
+				boton1.setText(Inicio.BOTON1.getNombre());
+				boton2.setVisible(Inicio.BOTON2.isVisible());
+				boton2.setText(Inicio.BOTON2.getNombre());
+				boton3.setVisible(Inicio.BOTON3.isVisible());
+				boton3.setText(Inicio.BOTON3.getNombre());
 
 				// Poner el controlador de la nueva vista.
 				V_NuevaFacturaController controller = loader.getController();
 				controller.setMainAPP(main);
 				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
 						tableVehiculo.getSelectionModel().getSelectedItem());
+
 			} catch (IOException e) {
 				e.printStackTrace();
 				Utilidades.mostrarError(e);
@@ -862,7 +876,7 @@ public class V_ClienteController {
 						tableDocumentos.getSelectionModel().getSelectedItem().getIddocumento())) {
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Documento eliminado",
 							"El documento ha sido eliminado de la BD");
-					cargarDocumentos();
+					listaDocumentos.remove(selectedIndex);
 				} else {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al eliminar el documento",
 							"Ocurrió un error al eliminar el documento de la BD. Puede que no haya sido eliminado correctamente");

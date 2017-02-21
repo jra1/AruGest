@@ -48,6 +48,7 @@
             <Button fx:id="btnEditarGolpe" layoutX="85.0" layoutY="40.0" mnemonicParsing="false" onAction="#editarGolpe" styleClass="my-button" text="Editar" />
             <Button fx:id="btnNuevoGolpe" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#nuevoGolpe" styleClass="my-button" text="Nuevo" />
             <Button fx:id="btnNuevoGolpe1" layoutX="153.0" layoutY="40.0" mnemonicParsing="false" onAction="#eliminarGolpe" styleClass="my-button" text="Eliminar" />
+            <Button fx:id="btnNuevoGolpe11" layoutX="792.0" layoutY="34.0" mnemonicParsing="false" onAction="#eliminarElemento" styleClass="my-button" text="Eliminar elemento" />
          </children>
       </Pane>
    </children>

@@ -28,6 +28,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRStyledText;
 
 public class Hilo extends Thread {
 
@@ -193,6 +194,7 @@ public class Hilo extends Thread {
 						// getClass().getResource("/recursos/ReporteFactura.jrxml").getPath();
 						InputStream is = Inicio.class.getResourceAsStream("/recursos/ReporteFactura.jrxml");
 						JasperReport jr = JasperCompileManager.compileReport(is);
+						jr.setProperty(JRStyledText.PROPERTY_AWT_IGNORE_MISSING_FONT, "true");
 						JasperPrint jpr = JasperFillManager.fillReport(jr, parameters, Inicio.CONEXION.getCon());
 						JasperExportManager.exportReportToPdfFile(jpr, ruta);
 					} catch (Exception ex) {

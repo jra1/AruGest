@@ -2480,6 +2480,33 @@ public class Conexion {
 	}
 
 	/**
+	 * Elimina de la BD el elemento cuyo id se pasa como parámetro
+	 * 
+	 * @param nombreelemento
+	 * @return true si fue ok, false si no
+	 */
+	public boolean eliminarElementoGolpe(String nombreelemento) {
+		boolean res = true;
+		String sql = "";
+		try {
+			// Eliminar elemento
+			sql = "DELETE FROM ELEMENTOSGOLPES WHERE ELEMENTOSGOLPES.NOMBREELEMENTO = '" + nombreelemento + "'";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			// Se cierra la conexion
+			getCon().close();
+
+			res = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
+			res = false;
+		}
+		return res;
+	}
+
+	/**
 	 * Guarda en la BD el documento que se pasa por parámetro
 	 * 
 	 * @param documento
