@@ -164,7 +164,7 @@ public class V_BuscarProveedorCompaniaController {
 		listaCias.clear();
 		tableCompania.getItems().clear();
 		ArrayList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(true, false, txtNombreCompa.getText(),
-				txtTelfCompa.getText());
+				txtTelfCompa.getText(), "", "");
 		if (lista.isEmpty()) {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
 					"No hay compañías con los parámetros de búsqueda introducidos.");
@@ -194,7 +194,8 @@ public class V_BuscarProveedorCompaniaController {
 		listaProveedores.clear();
 		tableProveedor.getItems().clear();
 		ArrayList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(false, esDesguace.isSelected(),
-				txtNombreProve.getText(), txtTelfProve.getText());
+				txtNombreProve.getText(), txtTelfProve.getText(), txtLocalidadProve.getText(),
+				txtProvinciaProve.getText());
 		if (lista.isEmpty()) {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
 					"No hay proveedores/desguaces con los parámetros de búsqueda introducidos.");

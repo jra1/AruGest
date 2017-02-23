@@ -521,7 +521,7 @@ public class Conexion {
 			String sql = "";
 			// Se prepara la sentencia para introducir los datos de la direccion
 			// SI NO ES NULL
-			if (pcd.getDireccion() != null) {
+			if (pcd.getDireccion() != null && pcd.getDireccionID() != 0) {
 				idGenerado = guardarDireccion(pcd.getDireccion());
 			}
 
@@ -827,7 +827,9 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
-				if (!pcd.getDireccion().getCalle().equalsIgnoreCase("No informado")) {
+				// Si llega aquí: iddireccion = 0
+				if (pcd.getDireccion().getCalle() != "" || pcd.getDireccion().getLocalidad() != ""
+						|| pcd.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignarle su iddireccion al cliente
 					idGenerado = guardarDireccion(pcd.getDireccion());
 					if (idGenerado > 0) { // Si es 0 es que hubo un error al
@@ -1882,7 +1884,7 @@ public class Conexion {
 	 * @return ArrayList con los resultados obtenidos
 	 */
 	public ArrayList<ProveedorCompaniaDireccion> buscarCias(boolean esCia, boolean esDesguace, String nombre,
-			String telf) {
+			String telf, String poblacion, String provincia) {
 		String sql = "";
 		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion(esCia);
 		ProveedorCompania pc;
@@ -1891,19 +1893,28 @@ public class Conexion {
 		try {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM PROVEEDORCOMPANIA INNER JOIN DIRECCION ON PROVEEDORCOMPANIA.DIRECCIONID = DIRECCION.IDDIRECCION";
 			if (esCia) {
-				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESCOMPANIA = TRUE ";
+				sql += " WHERE PROVEEDORCOMPANIA.ESCOMPANIA = TRUE ";
 			} else if (esDesguace) {
-				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESDESGUACE = TRUE ";
+				sql += " WHERE PROVEEDORCOMPANIA.ESDESGUACE = TRUE ";
 			} else {
-				sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.ESCOMPANIA = FALSE AND PROVEEDORCOMPANIA.ESDESGUACE = FALSE ";
+				sql += " WHERE PROVEEDORCOMPANIA.ESCOMPANIA = FALSE AND PROVEEDORCOMPANIA.ESDESGUACE = FALSE ";
 			}
 			if (!nombre.equalsIgnoreCase("")) {
-				sql += "AND UPPER(PROVEEDORCOMPANIA.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+				sql += " AND UPPER(PROVEEDORCOMPANIA.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 			}
 
 			if (!telf.equalsIgnoreCase("")) {
-				sql += "AND UPPER(VEHICULO.TELEFONO1) LIKE UPPER('%" + telf + "%') ";
+				sql += " AND UPPER(PROVEEDORCOMPANIA.TELF1) LIKE UPPER('%" + telf + "%') ";
+			}
+
+			if (!poblacion.isEmpty()) {
+				sql += " AND UPPER(DIRECCION.LOCALIDAD) LIKE UPPER('%" + poblacion + "%') ";
+			}
+
+			if (!provincia.isEmpty()) {
+				sql += " AND UPPER(DIRECCION.PROVINCIA) LIKE UPPER('%" + provincia + "%') ";
 			}
 
 			ResultSet rs = st.executeQuery(sql);

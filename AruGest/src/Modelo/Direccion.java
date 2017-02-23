@@ -79,9 +79,14 @@ public class Direccion {
 	}
 
 	public StringProperty direccionCompletaProperty() {
-		return new SimpleStringProperty(
-				this.getCalle() + " " + this.getNumero() + " " + this.getPiso() + " " + this.getLetra() + " "
-						+ Integer.toString(this.getCpostal()) + " " + this.getLocalidad() + " " + this.getProvincia());
+		String respuesta = "";
+		if (!this.getCalle().equalsIgnoreCase("")) {
+			respuesta = this.getCalle() + " " + this.getNumero() + " " + this.getPiso() + " " + this.getLetra() + " "
+					+ Integer.toString(this.getCpostal()) + " " + this.getLocalidad() + ", " + this.getProvincia();
+		} else {
+			respuesta = this.getLocalidad() + " - " + this.getProvincia();
+		}
+		return new SimpleStringProperty(respuesta);
 	}
 
 	public String getCalle() {

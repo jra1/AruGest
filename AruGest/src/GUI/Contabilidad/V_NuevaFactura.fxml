@@ -38,31 +38,31 @@
               </rowConstraints>
                <children>
                   <CheckBox fx:id="chckbxFactura" mnemonicParsing="false" styleClass="my-label" text="FACTURA Nº." />
-                  <TextField fx:id="txtNumfactura" prefHeight="23.0" prefWidth="118.0" promptText="Nº FACTURA" styleClass="my-text-field" GridPane.columnIndex="1">
+                  <TextField fx:id="txtNumfactura" prefHeight="23.0" prefWidth="118.0" promptText="Nº Factura" styleClass="my-text-field" GridPane.columnIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <CheckBox fx:id="chckbxPresupuesto" mnemonicParsing="false" prefHeight="22.0" prefWidth="184.0" styleClass="my-label" text="PRESUPUESTO Nº." GridPane.rowIndex="1" />
-                  <TextField fx:id="txtNumPresupuesto" prefHeight="23.0" prefWidth="118.0" promptText="Nº PRESUPUESTO" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="txtNumPresupuesto" prefHeight="23.0" prefWidth="118.0" promptText="Nº Presupuesto" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <CheckBox fx:id="chckbxOrdenDeReparacion" mnemonicParsing="false" styleClass="my-label" text="ORDEN DE REPARACIÓN Nº." GridPane.columnIndex="2" />
-                  <TextField fx:id="txtNumOrden" prefHeight="23.0" prefWidth="174.0" promptText="Nº ORDEN DE REPARACIÓN" styleClass="my-text-field" GridPane.columnIndex="3">
+                  <TextField fx:id="txtNumOrden" prefHeight="23.0" prefWidth="174.0" promptText="Nº Orden de reparación" styleClass="my-text-field" GridPane.columnIndex="3">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <CheckBox fx:id="chckbxResguardoDeposito" mnemonicParsing="false" styleClass="my-label" text="RESGUARDO DE DEPÓSITO Nº." GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtNumResguardo" prefHeight="23.0" prefWidth="174.0" promptText="Nº RESGUARDO DE DEPÓSITO" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <TextField fx:id="txtNumResguardo" prefHeight="23.0" prefWidth="174.0" promptText="Nº Resguardo de depósito" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <Label styleClass="my-label" text="FECHA" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                  <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="FECHA" styleClass="my-text-field" GridPane.columnIndex="5" />
+                  <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="Fecha" styleClass="my-text-field" GridPane.columnIndex="5" />
                </children>
             </GridPane>
          </children>
@@ -356,7 +356,7 @@
       <CheckBox fx:id="chckbxPermisoPruebas" layoutX="19.0" layoutY="644.0" mnemonicParsing="false" styleClass="my-label" text="Permiso para realizar pruebas para diagnóstico y reparación" />
       <CheckBox fx:id="chckbxNoPiezas" layoutX="526.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="No deseo recoger las piezas sustituidas a mi vehículo" />
       <Label layoutX="530.0" layoutY="645.0" styleClass="my-label" text="Fecha de entrega en caso de aprobación de presupuesto:" />
-      <DatePicker id="fecha" fx:id="txtFechaEntrega" layoutX="913.0" layoutY="634.0" prefHeight="25.0" prefWidth="150.0" promptText="FECHA" styleClass="my-text-field" />
+      <DatePicker id="fecha" fx:id="txtFechaEntrega" layoutX="913.0" layoutY="634.0" prefHeight="25.0" prefWidth="150.0" promptText="Fecha entrega" styleClass="my-text-field" />
       <Label disable="true" layoutX="887.0" layoutY="-64.0" styleClass="my-label" text="TELF. 2" />
       <TextField fx:id="txtMovil" disable="true" layoutX="940.0" layoutY="-70.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249" styleClass="my-text-field">
          <font>
