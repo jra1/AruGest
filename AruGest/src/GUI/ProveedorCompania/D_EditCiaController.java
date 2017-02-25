@@ -136,16 +136,16 @@ public class D_EditCiaController {
 					|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
 				if (pcd.getDireccion() != null || pcd.getDireccion().getIddireccion() != 0) {
 					pcd.getDireccion().setCalle(txtCalle.getText());
-					pcd.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
+					pcd.getDireccion().setNumero(Utilidades.validaNumero(txtNumero.getText()));
 					pcd.getDireccion().setPiso(txtPiso.getText());
 					pcd.getDireccion().setLetra(txtLetra.getText());
-					pcd.getDireccion().setCpostal(Integer.parseInt(txtCodPostal.getText()));
+					pcd.getDireccion().setCpostal(Utilidades.validaNumero(txtCodPostal.getText()));
 					pcd.getDireccion().setLocalidad(txtLocalidad.getText());
 					pcd.getDireccion().setProvincia(txtProvincia.getText());
 
 				} else {
-					pcd.setDireccion(new Direccion(0, txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
-							txtPiso.getText(), txtLetra.getText(), Integer.parseInt(txtCodPostal.getText()),
+					pcd.setDireccion(new Direccion(0, txtCalle.getText(), Utilidades.validaNumero(txtNumero.getText()),
+							txtPiso.getText(), txtLetra.getText(), Utilidades.validaNumero(txtCodPostal.getText()),
 							txtLocalidad.getText(), txtProvincia.getText()));
 				}
 			} else {

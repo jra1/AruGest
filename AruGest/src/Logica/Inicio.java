@@ -57,6 +57,7 @@ public class Inicio extends Application {
 	public static int NUM_FACTURA;
 	public static String USUARIO;
 	public static String PASS;
+	public static String SAL;
 	public static boolean AUTOLOGIN;
 	public static String RUTA_FACTURAS = "";
 	public static double ANCHO_PANTALLA;

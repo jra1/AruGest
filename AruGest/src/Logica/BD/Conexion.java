@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,9 +16,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.h2.tools.Server;
 
 import Logica.Inicio;
@@ -2810,6 +2813,12 @@ public class Conexion {
 			while (rs.next()) {
 				Inicio.PASS = rs.getString("VALOR");
 			}
+			// Se coge la sal
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'SAL'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.SAL = rs.getString("VALOR");
+			}
 			// Se coge si tiene puesto el autologin
 			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'AUTOLOGIN'";
 			rs = st.executeQuery(sql);
@@ -2846,8 +2855,19 @@ public class Conexion {
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Actualizar pass
-			sql = "UPDATE AUXILIAR SET VALOR = '" + pass + "' WHERE CLAVE = 'PASS'";
+			// Añadir sal, encriptar pass y actualizarlo en la BD
+			Random r = new SecureRandom();
+			byte[] sal = new byte[20];
+			r.nextBytes(sal);
+			pass += sal;
+			String passEncriptado = DigestUtils.sha512Hex(pass);
+
+			sql = "UPDATE AUXILIAR SET VALOR = '" + passEncriptado + "' WHERE CLAVE = 'PASS'";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			sql = "UPDATE AUXILIAR SET VALOR = '" + sal + "' WHERE CLAVE = 'SAL'";
 			st = getCon().prepareStatement(sql);
 			// Ejecutamos la sentencia
 			st.executeUpdate();

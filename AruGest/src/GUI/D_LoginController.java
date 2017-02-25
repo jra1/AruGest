@@ -1,5 +1,7 @@
 package GUI;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import Logica.Inicio;
 import Logica.Utilidades;
 import javafx.event.EventHandler;
@@ -37,7 +39,10 @@ public class D_LoginController {
 		chkAutologin.setSelected(Inicio.AUTOLOGIN);
 		if (Inicio.AUTOLOGIN) {
 			txtUsuario.setText(Inicio.USUARIO);
-			txtPass.setText(Inicio.PASS);
+			// Pongo la sal en el campo del pass
+			// Da igual porque si está el autologin
+			// No se va a comprobar el pass de aquí
+			txtPass.setText(Inicio.SAL);
 		}
 
 		btnAceptar.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -94,16 +99,25 @@ public class D_LoginController {
 	 * @return true si los campos son correctos
 	 */
 	private boolean isInputValid() {
-		if (Inicio.USUARIO.equals(txtUsuario.getText())) {
-			if (Inicio.PASS.equals(txtPass.getText())) {
-				return true;
-			} else {
-				Utilidades.mostrarAlerta(AlertType.ERROR, "Error de autenticación", "Contraseña incorrecta",
-						"Comprueba que has introducido bien la contraseña");
-			}
+		if (Inicio.AUTOLOGIN) {
+			return true;
 		} else {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Error de autenticación", "Usuario incorrecto",
-					"Comprueba que has introducido bien el usuario");
+			if (Inicio.USUARIO.equals(txtUsuario.getText())) {
+				// Encriptar el pass que ha introducido el usuario
+				String passIntroducido = txtPass.getText();
+				passIntroducido += Inicio.SAL;
+				passIntroducido = DigestUtils.sha512Hex(passIntroducido);
+
+				if (Inicio.PASS.equals(passIntroducido)) {
+					return true;
+				} else {
+					Utilidades.mostrarAlerta(AlertType.ERROR, "Error de autenticación", "Contraseña incorrecta",
+							"Comprueba que has introducido bien la contraseña");
+				}
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error de autenticación", "Usuario incorrecto",
+						"Comprueba que has introducido bien el usuario");
+			}
 		}
 		return false;
 	}
