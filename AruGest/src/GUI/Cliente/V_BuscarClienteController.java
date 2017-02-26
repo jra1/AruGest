@@ -19,8 +19,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class V_BuscarClienteController {
@@ -102,6 +105,23 @@ public class V_BuscarClienteController {
 		comboTipoCliente.setValue("Particular");
 		comboTipoCliente.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarComboTipoCliente(newValue));
+
+		// Para abrir cliente con doble click
+		tableClientes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						int selectedIndex = tableClientes.getSelectionModel().getSelectedIndex();
+						if (selectedIndex >= 0) {
+							Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
+							abrirFichaCliente(selectedIndex);
+						}
+					}
+				}
+			}
+		});
+		tableClientes.setTooltip(new Tooltip("Doble click para abrir ficha de cliente"));
 	}
 
 	public void setFocus() {
@@ -164,44 +184,54 @@ public class V_BuscarClienteController {
 		int selectedIndex = tableClientes.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Inicio.CLIENTE_ID = listaClientes.get(selectedIndex).getCliente().getIdcliente();
-			try {
-				// Cargar la vista de Cliente
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_Cliente.fxml"));
-				AnchorPane cliente = (AnchorPane) loader.load();
-
-				// Poner la nueva vista en el centro del root
-				Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
-				sp.setContent(cliente);
-				nombre = "Cliente: " + listaClientes.get(selectedIndex).getCliente().getNombre();
-				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
-				gv = new GestorVentana(ap, nombre);
-				Utilidades.gestionarPantallas(gv);
-				boton1.setVisible(Inicio.BOTON1.isVisible());
-				boton1.setText(Inicio.BOTON1.getNombre());
-				boton2.setVisible(Inicio.BOTON2.isVisible());
-				boton2.setText(Inicio.BOTON2.getNombre());
-				boton3.setVisible(Inicio.BOTON3.isVisible());
-				boton3.setText(Inicio.BOTON3.getNombre());
-
-				// main.getRoot().setCenter(cliente);
-
-				// Poner el controlador de la nueva vista.
-				V_ClienteController controller = loader.getController();
-				controller.setMainAPP(main);
-				controller.setScrollPane(sp);
-				controller.boton1 = boton1;
-				controller.boton2 = boton2;
-				controller.boton3 = boton3;
-				controller.cargaCliente(listaClientes.get(selectedIndex));
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			abrirFichaCliente(selectedIndex);
 		} else {
 			// Nada seleccionado.
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Ningún cliente seleccionado",
 					"Selecciona el cliente que quieras cargar.");
+		}
+	}
+
+	/**
+	 * Abre la ficha del cliente cuyo índice se pasa como parámetro
+	 * 
+	 * @param indice
+	 *            seleccionado en la tabla
+	 */
+	private void abrirFichaCliente(int indice) {
+		try {
+			// Cargar la vista de Cliente
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_Cliente.fxml"));
+			AnchorPane cliente = (AnchorPane) loader.load();
+
+			// Poner la nueva vista en el centro del root
+			Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			sp.setContent(cliente);
+			nombre = "Cliente: " + listaClientes.get(indice).getCliente().getNombre();
+			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+			gv = new GestorVentana(ap, nombre);
+			Utilidades.gestionarPantallas(gv);
+			boton1.setVisible(Inicio.BOTON1.isVisible());
+			boton1.setText(Inicio.BOTON1.getNombre());
+			boton2.setVisible(Inicio.BOTON2.isVisible());
+			boton2.setText(Inicio.BOTON2.getNombre());
+			boton3.setVisible(Inicio.BOTON3.isVisible());
+			boton3.setText(Inicio.BOTON3.getNombre());
+
+			// main.getRoot().setCenter(cliente);
+
+			// Poner el controlador de la nueva vista.
+			V_ClienteController controller = loader.getController();
+			controller.setMainAPP(main);
+			controller.setScrollPane(sp);
+			controller.boton1 = boton1;
+			controller.boton2 = boton2;
+			controller.boton3 = boton3;
+			controller.cargaCliente(listaClientes.get(indice));
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

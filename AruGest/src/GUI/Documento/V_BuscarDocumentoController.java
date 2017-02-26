@@ -14,6 +14,7 @@ import Modelo.Documento;
 import Modelo.GestorVentana;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
@@ -22,8 +23,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class V_BuscarDocumentoController {
@@ -71,6 +75,22 @@ public class V_BuscarDocumentoController {
 	private void initialize() {
 		tableDocumentos.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarPrevio(newValue));
+
+		// Para abrir documento con doble click
+		tableDocumentos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						int selectedIndex = tableDocumentos.getSelectionModel().getSelectedIndex();
+						if (selectedIndex >= 0) {
+							abrirDocumento();
+						}
+					}
+				}
+			}
+		});
+		tableDocumentos.setTooltip(new Tooltip("Doble click para abrir el documento"));
 	}
 
 	/**

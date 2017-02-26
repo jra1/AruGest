@@ -30,6 +30,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class V_ClienteController {
@@ -257,15 +260,53 @@ public class V_ClienteController {
 		tableDocumentos.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarNombreDocumento(newValue));
 
-		/*
-		 * comboTipoCliente.getSelectionModel().selectedItemProperty()
-		 * .addListener((observable, oldValue, newValue) ->
-		 * comprobarComboTipoCliente(newValue));
-		 * 
-		 * comboTipoVehiculo.getSelectionModel().selectedItemProperty()
-		 * .addListener((observable, oldValue, newValue) ->
-		 * comprobarComboTipoVehiculo(newValue));
-		 */
+		// Para abrir factura con doble click
+		tableFacturas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
+						if (selectedIndex >= 0) {
+							cargarFactura();
+						}
+					}
+				}
+			}
+		});
+		tableFacturas.setTooltip(new Tooltip("Doble click para abrir la factura"));
+
+		// Para abrir presupuesto con doble click
+		tablePresupuestos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						int selectedIndex = tablePresupuestos.getSelectionModel().getSelectedIndex();
+						if (selectedIndex >= 0) {
+							cargarPresupuesto();
+						}
+					}
+				}
+			}
+		});
+		tablePresupuestos.setTooltip(new Tooltip("Doble click para abrir el presupuesto"));
+
+		// Para abrir documento con doble click
+		tableDocumentos.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+					if (mouseEvent.getClickCount() == 2) {
+						int selectedIndex = tableDocumentos.getSelectionModel().getSelectedIndex();
+						if (selectedIndex >= 0) {
+							verDocumento();
+						}
+					}
+				}
+			}
+		});
+		tableDocumentos.setTooltip(new Tooltip("Doble click para abrir el documento"));
 	}
 
 	/**

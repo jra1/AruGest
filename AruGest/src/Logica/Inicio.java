@@ -9,6 +9,7 @@ import com.guigarage.responsive.ResponsiveHandler;
 
 import GUI.D_BienvenidaControllerD;
 import GUI.D_LoginController;
+import GUI.D_OpcionesBackupController;
 import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_AgregaDocumentoController;
@@ -60,6 +61,7 @@ public class Inicio extends Application {
 	public static String SAL;
 	public static boolean AUTOLOGIN;
 	public static String RUTA_FACTURAS = "";
+	public static String RUTA_BACKUP = "";
 	public static double ANCHO_PANTALLA;
 	public static double ALTO_PANTALLA;
 	public static ArrayList<GestorVentana> LISTA_VENTANAS = new ArrayList<GestorVentana>();
@@ -510,6 +512,43 @@ public class Inicio extends Application {
 
 			// Set the person into the controller.
 			D_OpcionesController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Abre un diálogo para las opciones de los backup
+	 * 
+	 * @param
+	 * @return true si el usuario a pulsado OK, false en los demás casos.
+	 */
+	public static boolean mostrarDialogoOpcionesBackup() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_OpcionesBackup.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Opciones copia de seguridad");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_OpcionesBackupController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it

@@ -216,6 +216,10 @@
 	-fx-pref-width: 350px;
 }
 
+#textField_RutaBackup{
+	-fx-pref-width: 400px;
+}
+
 /*TextFields que no cambian de tamaño */
 .my-text-field-fijo{
 	-fx-background-color:

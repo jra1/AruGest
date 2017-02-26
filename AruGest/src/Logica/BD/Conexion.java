@@ -299,7 +299,7 @@ public class Conexion {
 	}
 
 	/**
-	 * 
+	 * Guarda en la BD el autologin como el parámetro que se pasa
 	 */
 	public boolean setAutologin(boolean login) {
 		String sql = "";
@@ -316,6 +316,28 @@ public class Conexion {
 		} catch (Exception e) {
 			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al recordar",
 					"Puede que la preferencia de recordar o no el usuario y contraseña no se haya guardado correctamente");
+			return false;
+		}
+	}
+
+	/**
+	 * Guarda en la BD la ruta para las copias de seguridad
+	 */
+	public boolean setRutaBackup(String ruta) {
+		String sql = "";
+		PreparedStatement st;
+		try {
+			// Actualizar autologin
+			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'RUTABACKUP'";
+			st = getCon().prepareStatement(sql);
+			// Añadimos los parametros
+			st.setString(1, ruta);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar la ruta",
+					"Ocurrió un problema al guardar la ruta para las copias de seguridad en la base de datos");
 			return false;
 		}
 	}
@@ -2830,6 +2852,12 @@ public class Conexion {
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				Inicio.RUTA_FACTURAS = rs.getString("VALOR");
+			}
+			// Se coge la ruta donde se guardan las copias de seguridad
+			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'RUTABACKUP'";
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Inicio.RUTA_BACKUP = rs.getString("VALOR");
 			}
 
 			// Se cierra la conexion
