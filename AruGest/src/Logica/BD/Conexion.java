@@ -210,6 +210,98 @@ public class Conexion {
 	}
 
 	/**
+	 * Modifica en la base de datos la factura que se le pasa como parámetro
+	 * 
+	 * @param factura
+	 *
+	 * @return id de la factura modificada
+	 */
+	public int modificarFactura(int idFactura, Factura f, ObservableList<Servicio> servicios,
+			ObservableList<Material> materiales) {
+		String sql = "";
+		try {
+			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
+			// Se prepara la sentencia para introducir los datos de la factura
+			sql = "UPDATE FACTURA SET CLIENTEID = ?, VEHICULOID = ?, NUMFACTURA = ?, NUMPRESUPUESTO = ?, NUMORDENREP = ?, NUMRESGUARDO = ?, FECHA = ?, "
+					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, ESTADO = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
+					+ "NOPIEZAS = ?, MODIFICABLE = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
+					+ idFactura;
+			java.sql.PreparedStatement st = getCon().prepareStatement(sql);
+
+			// Añadimos los parametros
+			st.setInt(1, f.getClienteID());
+			st.setInt(2, f.getVehiculoID());
+			st.setInt(3, f.getNumfactura());
+			st.setInt(4, f.getNumpresupuesto());
+			st.setInt(5, f.getNumordenrep());
+			st.setInt(6, f.getNumresguardo());
+			st.setDate(7, new java.sql.Date(f.getFecha().getTime()));
+			st.setDate(8, new java.sql.Date(f.getFechaentrega().getTime()));
+			st.setFloat(9, f.getManoobra());
+			st.setFloat(10, f.getMateriales());
+			st.setFloat(11, f.getGrua());
+			st.setString(12, f.getEstado());
+			st.setBoolean(13, f.isRdefocultos());
+			st.setFloat(14, f.getPorcentajedefocul());
+			st.setBoolean(15, f.isPermisopruebas());
+			st.setBoolean(16, f.isNopiezas());
+			st.setBoolean(17, f.isModificable());
+			st.setFloat(18, f.getImporteTotal());
+			st.setFloat(19, f.getSuma());
+			st.setFloat(20, f.getSumaIva());
+			st.setFloat(21, f.getKms());
+
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+
+			// Borrar servicios y guardar los nuevos
+			sql = "DELETE FROM SERVICIO WHERE FACTURAID = " + idFactura;
+			st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			sql = "INSERT INTO SERVICIO (SERVICIO, HORAS, FACTURAID, TIPOSERVICIO) VALUES (?,?,?,?)";
+			st = getCon().prepareStatement(sql);
+			for (Servicio serv : servicios) {
+				st.setString(1, serv.getServicio());
+				st.setBigDecimal(2, new BigDecimal(serv.getHoras()));
+				st.setInt(3, idFactura);
+				st.setString(4, serv.getTiposervicio());
+				st.executeUpdate();
+			}
+
+			// Borrar materiales y guadar los nuevos
+			sql = "DELETE FROM MATERIAL WHERE FACTURAID = " + idFactura;
+			st = getCon().prepareStatement(sql);
+			st.executeUpdate();
+
+			sql = "INSERT INTO MATERIAL (NOMBRE, PRECIOUNIT, FACTURAID, CANTIDAD, PRECIOTOTAL) VALUES (?,?,?,?,?)";
+			st = getCon().prepareStatement(sql);
+			for (Material mat : materiales) {
+				st.setString(1, mat.getNombre());
+				st.setBigDecimal(2, new BigDecimal(mat.getPreciounit()));
+				st.setInt(3, idFactura);
+				st.setInt(4, mat.getCantidad());
+				st.setBigDecimal(5, new BigDecimal(mat.getPreciototal()));
+				st.executeUpdate();
+			}
+
+			// Actualizar próximo número de presupuesto y factura
+			actualizarNumPresuFactura();
+			// Actualizar los valores de próximos presupuestos/facturas
+			Inicio.CONEXION.getPrecioHoraIva();
+
+			// Se cierra la conexion
+			getCon().close();
+
+		} catch (Exception e) {
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar factura",
+					"Ocurrió un error al guardar la factura en la base de datos");
+			e.printStackTrace();
+		}
+		return idFactura;
+	}
+
+	/**
 	 * Se actualiza en la BD el nº siguiente de presupuesto/factura
 	 */
 	public void actualizarNumPresuFactura() {

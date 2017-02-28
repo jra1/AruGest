@@ -74,7 +74,6 @@ public class Hilo extends Thread {
 
 	public static void hilo_GeneraPDF(Factura f) {
 		try {
-			System.out.println("Dentro de hilo_GeneraPDF");
 			// Mostrar mensaje
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Generando factura");
@@ -188,10 +187,7 @@ public class Hilo extends Thread {
 							nombreFactura += v.getMarcaModelo();
 						}
 						nombreFactura += "-" + c.getNombre() + ".pdf";
-						String ruta = Inicio.RUTA_FACTURAS + "\\" + nombreFactura;
-						// Esta linea es aparte del resto
-						// String rutaReport =
-						// getClass().getResource("/recursos/ReporteFactura.jrxml").getPath();
+						String ruta = Utilidades.dameRuta(f.getFecha(), nombreFactura);
 						InputStream is = Inicio.class.getResourceAsStream("/recursos/ReporteFactura.jrxml");
 						JasperReport jr = JasperCompileManager.compileReport(is);
 						jr.setProperty(JRStyledText.PROPERTY_AWT_IGNORE_MISSING_FONT, "true");
@@ -209,9 +205,6 @@ public class Hilo extends Thread {
 			Integer result = task.get();
 			if (result == 1) {
 				alert.setHeaderText("¡Factura generada!");
-				// alert.close();
-				// Runtime.getRuntime().exec("rundll32url.dll,FileProtocolHandler
-				// " + "reporteFacturaPDF_AruGest.pdf");
 			} else if (result == 0) {
 
 			} else {

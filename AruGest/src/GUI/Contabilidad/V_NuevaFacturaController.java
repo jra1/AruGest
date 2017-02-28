@@ -200,7 +200,7 @@ public class V_NuevaFacturaController {
 	public Button boton2;
 	public Button boton3;
 
-	private boolean estaGuardada = false;
+	private boolean modificar = false;
 	private boolean esServicio = false; // Controla si es servicio o material
 	// private int tipoCliente = 1; // 1-Particular, 2-Empresa
 
@@ -230,7 +230,7 @@ public class V_NuevaFacturaController {
 		Inicio.CLIENTE_ID = fce.getCliente().getIdcliente();
 		Inicio.VEHICULO_ID = fce.getVehiculo().getIdvehiculo();
 		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
-		estaGuardada = true;
+		modificar = true;
 		// Cargar datos factura
 		if (fce.getFactura().getNumfactura() != 0) {
 			chckbxFactura.setSelected(true);
@@ -549,8 +549,7 @@ public class V_NuevaFacturaController {
 					txtConcepto.setText("");
 					txtCantidad.setText("");
 					comboTipo.requestFocus();
-					estaGuardada = false; // Si se añade algo se pone para que
-											// se guarde
+
 				} catch (NumberFormatException e) {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos", "El valor de horas es incorrecto",
 							"El valor de horas debe contener únicamente números, separados por coma o punto, sin letras u otros símbolos");
@@ -581,7 +580,6 @@ public class V_NuevaFacturaController {
 					txtCantidad.setText("");
 					txtValor.setText("");
 					comboTipo.requestFocus();
-					estaGuardada = false;
 				} catch (NumberFormatException e) {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Valores incorrectos",
 							"El valor de la cantidad ó el precio es incorrecto",
@@ -701,14 +699,20 @@ public class V_NuevaFacturaController {
 	 */
 	private int guardarFactura(int origen) {
 		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
-		if (estaGuardada) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
-					"La factura está guardada en la base de datos");
-			return 0;
-		} else {
-			String error = validarDatos();
-			if (error.equals("")) {
-				// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo
+		String error = validarDatos();
+		if (error.equals("")) {
+			if (modificar) {
+				// 4º Modificar la factura
+				Factura fa = crearFactura();
+				Inicio.CONEXION.modificarFactura(Inicio.FACTURA_ID, fa, listaServicios, listaMaterial);
+				if (origen == 1) {
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura modificada",
+							"La factura ha sido modificada en la base de datos");
+				}
+				return Inicio.FACTURA_ID;
+			} else {
+				// 2º Comprobar si existe ese cliente en la BD (DNI) y
+				// guardarlo
 				// si
 				// no lo está
 				Cliente c = null;
@@ -757,17 +761,13 @@ public class V_NuevaFacturaController {
 				}
 				Inicio.CLIENTE_ID = c.getIdcliente();
 
-				// 3º Comprobar si existe ese vehiculo en la BD (Matricula) y
+				// 3º Comprobar si existe ese vehiculo en la BD (Matricula)
+				// y
 				// guardarlo si no lo está
 				Vehiculo v = null;
 				v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
 				if (v == null) {
 					cpedv.getVehiculo().setClienteID(Inicio.CLIENTE_ID);
-					// v = new Vehiculo(1, Inicio.CLIENTE_ID,
-					// txtMarca.getText(),
-					// txtModelo.getText(), txtVersion.getText(),
-					// txtMatricula.getText(), 0, "", "", "", "", tipoVehiculo,
-					// false);
 					if (Inicio.CONEXION.guardarVehiculo(cpedv.getVehiculo())) {
 						v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
 					} else {
@@ -776,29 +776,26 @@ public class V_NuevaFacturaController {
 					}
 				}
 				Inicio.VEHICULO_ID = v.getIdvehiculo();
+
 				// 4º Guardar la factura
 				Factura f = crearFactura();
 				Inicio.FACTURA_ID = Inicio.CONEXION.guardarFactura(f, listaServicios, listaMaterial);
 				if (Inicio.FACTURA_ID != 0) {
-					estaGuardada = true;
+					modificar = true;
 					if (origen == 1) {
 						Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Factura guardada",
 								"La factura ha sido guardada en la base de datos");
 					}
 					return Inicio.FACTURA_ID;
 				} else {
-					estaGuardada = false;
+					modificar = false;
 					return 0;
 				}
-			} else {
-				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
-				estaGuardada = false;
-				return 0;
 			}
-
+		} else {
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Faltan datos", error);
+			return 0;
 		}
-
-		// });
 	}
 
 	/**
@@ -899,7 +896,7 @@ public class V_NuevaFacturaController {
 		String error = validarDatos();
 		if (error.equalsIgnoreCase("")) {
 			int idf = 0;
-			if (estaGuardada) {
+			if (modificar) {
 				idf = Inicio.FACTURA_ID;
 			} else {
 				idf = guardarFactura(2);
