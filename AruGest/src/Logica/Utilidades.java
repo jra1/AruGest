@@ -480,4 +480,11 @@ public class Utilidades {
 		}
 		return nombre;
 	}
+
+	public static int formateaNumFactura(int num) {
+		System.out.println(String.format("%05d", num));
+		int n = Integer.parseInt(String.format("%05d", num));
+		System.out.println(n);
+		return 2;
+	}
 }

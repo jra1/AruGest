@@ -86,6 +86,7 @@ public class D_OpcionesController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
+			Utilidades.formateaNumFactura(Integer.parseInt(txtNumPresupuesto.getText()));
 			// Cambiar las opciones en la BD
 			if (Inicio.CONEXION.actualizarOpciones(precioHora, iva, numPresupuesto, numFactura, ruta)) {
 				Inicio.PRECIO_HORA = precioHora;
