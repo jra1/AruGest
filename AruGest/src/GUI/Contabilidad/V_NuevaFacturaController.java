@@ -232,25 +232,25 @@ public class V_NuevaFacturaController {
 		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
 		modificar = true;
 		// Cargar datos factura
-		if (fce.getFactura().getNumfactura() != 0) {
+		if (!fce.getFactura().getNumfactura().equalsIgnoreCase("0")) {
 			chckbxFactura.setSelected(true);
 			txtNumfactura.setText("" + fce.getFactura().getNumfactura());
 		} else {
 			chckbxFactura.setSelected(false);
 		}
-		if (fce.getFactura().getNumpresupuesto() != 0) {
+		if (!fce.getFactura().getNumpresupuesto().equalsIgnoreCase("0")) {
 			chckbxPresupuesto.setSelected(true);
 			txtNumPresupuesto.setText("" + fce.getFactura().getNumpresupuesto());
 		} else {
 			chckbxPresupuesto.setSelected(false);
 		}
-		if (fce.getFactura().getNumordenrep() != 0) {
+		if (!fce.getFactura().getNumordenrep().equalsIgnoreCase("0")) {
 			chckbxOrdenDeReparacion.setSelected(true);
 			txtNumOrden.setText("" + fce.getFactura().getNumordenrep());
 		} else {
 			chckbxOrdenDeReparacion.setSelected(false);
 		}
-		if (fce.getFactura().getNumresguardo() != 0) {
+		if (!fce.getFactura().getNumresguardo().equalsIgnoreCase("0")) {
 			chckbxResguardoDeposito.setSelected(true);
 			txtNumResguardo.setText("" + fce.getFactura().getNumresguardo());
 		} else {
@@ -1004,21 +1004,21 @@ public class V_NuevaFacturaController {
 	 * @return factura
 	 */
 	private Factura crearFactura() {
-		int numFactura = 0;
-		int numPresupuesto = 0;
-		int numOrden = 0;
-		int numResguardo = 0;
+		String numFactura = "";
+		String numPresupuesto = "";
+		String numOrden = "";
+		String numResguardo = "";
 		if (!txtNumfactura.getText().isEmpty()) {
-			numFactura = Integer.parseInt(txtNumfactura.getText());
+			numFactura = Utilidades.formateaNumFactura(txtNumfactura.getText());
 		}
 		if (!txtNumPresupuesto.getText().isEmpty()) {
-			numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
+			numPresupuesto = Utilidades.formateaNumFactura(txtNumPresupuesto.getText());
 		}
 		if (!txtNumOrden.getText().isEmpty()) {
-			numOrden = Integer.parseInt(txtNumOrden.getText());
+			numOrden = Utilidades.formateaNumFactura(txtNumOrden.getText());
 		}
 		if (!txtNumResguardo.getText().isEmpty()) {
-			numResguardo = Integer.parseInt(txtNumResguardo.getText());
+			numResguardo = Utilidades.formateaNumFactura(txtNumResguardo.getText());
 		}
 
 		Float manoObra = 0f;

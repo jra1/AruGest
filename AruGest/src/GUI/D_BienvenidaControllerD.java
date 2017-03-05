@@ -248,26 +248,20 @@ public class D_BienvenidaControllerD extends Thread {
 		return new Task<Object>() {
 			@Override
 			protected Object call() throws Exception {
-				BufferedReader br = null;// new BufferedReader(new
-											// FileReader("ScriptSQL"));
+				BufferedReader br = null;
 				InputStream is = Inicio.class.getResourceAsStream("/recursos/ScriptSQL.txt");
-				System.out.println("SQL: " + is);
 				br = new BufferedReader(new InputStreamReader(is));
 
-				System.out.println("Empezando a leer fichero...");
 				Connection connection = null;
 				try {
-					System.out.println(Inicio.DBPATHNAME);
-					connection = Inicio.CONEXION.getCon();// openConnection(Inicio.DBURL);
-					System.out.println("Se comienza a crear la BD");
+					connection = Inicio.CONEXION.getCon();
 					line = br.readLine();
 					StringBuilder statement = new StringBuilder();
 					int contador = 0;
 					while (line != null) {
 						contador++;
 						line = line.trim();
-						// Thread.sleep(200);
-						updateProgress(contador + 1, 46); // 46 lineas script
+						updateProgress(contador + 1, 108); // Script 108 lineas
 						if (!line.startsWith("--") && !line.startsWith("#") && !line.startsWith("//")) {
 							statement.append(line);
 							if (line.endsWith(";")) {

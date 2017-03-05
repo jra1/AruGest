@@ -110,25 +110,25 @@ public class Hilo extends Thread {
 					try {
 						Map<String, Object> parameters = new HashMap<String, Object>();
 						parameters.put("idfactura", f.getIdfactura());
-						if (f.getNumfactura() > 0) {
+						if (!f.getNumfactura().equalsIgnoreCase("0")) {
 							parameters.put("cboxfactura", "recursos/images/selec.png");
 						} else {
 							parameters.put("cboxfactura", "recursos/images/selecNO.png");
 						}
 						parameters.put("numfactura", f.getNumfactura());
-						if (f.getNumpresupuesto() > 0) {
+						if (!f.getNumpresupuesto().equalsIgnoreCase("0")) {
 							parameters.put("cboxpresupuesto", "recursos/images/selec.png");
 						} else {
 							parameters.put("cboxpresupuesto", "recursos/images/selecNO.png");
 						}
 						parameters.put("numpresupuesto", f.getNumpresupuesto());
-						if (f.getNumordenrep() > 0) {
+						if (!f.getNumordenrep().equalsIgnoreCase("0")) {
 							parameters.put("cboxorden", "recursos/images/selec.png");
 						} else {
 							parameters.put("cboxorden", "recursos/images/selecNO.png");
 						}
 						parameters.put("numorden", f.getNumordenrep());
-						if (f.getNumresguardo() > 0) {
+						if (!f.getNumresguardo().equalsIgnoreCase("0")) {
 							parameters.put("cboxresguardo", "recursos/images/selec.png");
 						} else {
 							parameters.put("cboxresguardo", "recursos/images/selecNO.png");
@@ -175,13 +175,13 @@ public class Hilo extends Thread {
 						parameters.put("porcentaje", f.getPorcentajedefocul());
 
 						String nombreFactura = "";
-						if (f.getNumfactura() != 0) {
+						if (!f.getNumfactura().equalsIgnoreCase("0")) {
 							nombreFactura += "Factura " + f.getNumfactura();
-						} else if (f.getNumpresupuesto() != 0) {
+						} else if (!f.getNumpresupuesto().equalsIgnoreCase("0")) {
 							nombreFactura += "Presupuesto " + f.getNumpresupuesto();
-						} else if (f.getNumordenrep() != 0) {
+						} else if (!f.getNumordenrep().equalsIgnoreCase("0")) {
 							nombreFactura += "Orden rep " + f.getNumordenrep();
-						} else if (f.getNumresguardo() != 0) {
+						} else if (!f.getNumresguardo().equalsIgnoreCase("0")) {
 							nombreFactura += "Resguardo dep " + f.getNumresguardo();
 						} else {
 							nombreFactura += v.getMarcaModelo();

@@ -20,10 +20,10 @@ public class Factura {
 	private final IntegerProperty clienteID;
 	private final IntegerProperty vehiculoID;
 	private final IntegerProperty kms;
-	private final IntegerProperty numfactura;
-	private final IntegerProperty numpresupuesto;
-	private final IntegerProperty numordenrep;
-	private final IntegerProperty numresguardo;
+	private final StringProperty numfactura;
+	private final StringProperty numpresupuesto;
+	private final StringProperty numordenrep;
+	private final StringProperty numresguardo;
 	private final ObjectProperty<Date> fecha;
 	private final ObjectProperty<Date> fechaentrega;
 	private final FloatProperty manoobra;
@@ -45,10 +45,10 @@ public class Factura {
 		this.clienteID = new SimpleIntegerProperty(0);
 		this.vehiculoID = new SimpleIntegerProperty(0);
 		this.kms = new SimpleIntegerProperty(0);
-		this.numfactura = new SimpleIntegerProperty(0);
-		this.numpresupuesto = new SimpleIntegerProperty(0);
-		this.numordenrep = new SimpleIntegerProperty(0);
-		this.numresguardo = new SimpleIntegerProperty(0);
+		this.numfactura = new SimpleStringProperty("0");
+		this.numpresupuesto = new SimpleStringProperty("0");
+		this.numordenrep = new SimpleStringProperty("0");
+		this.numresguardo = new SimpleStringProperty("0");
 		this.fecha = new SimpleObjectProperty<Date>(fecha);
 		this.fechaentrega = new SimpleObjectProperty<Date>(null);
 		this.manoobra = new SimpleFloatProperty(0);
@@ -66,18 +66,18 @@ public class Factura {
 		this.documento = new SimpleObjectProperty<Blob>(null);
 	}
 
-	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, int numfactura, int numpresupuesto,
-			int numordenrep, int numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
+	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, String numfactura, String numpresupuesto,
+			String numordenrep, String numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
 			float grua, float suma, float sumaIva, String estado, boolean rdefocultos, float porcentajedefocul,
 			boolean permisopruebas, boolean nopiezas, boolean modificable, float importeTotal) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
 		this.kms = new SimpleIntegerProperty(kms);
-		this.numfactura = new SimpleIntegerProperty(numfactura);
-		this.numpresupuesto = new SimpleIntegerProperty(numpresupuesto);
-		this.numordenrep = new SimpleIntegerProperty(numordenrep);
-		this.numresguardo = new SimpleIntegerProperty(numresguardo);
+		this.numfactura = new SimpleStringProperty(numfactura);
+		this.numpresupuesto = new SimpleStringProperty(numpresupuesto);
+		this.numordenrep = new SimpleStringProperty(numordenrep);
+		this.numresguardo = new SimpleStringProperty(numresguardo);
 		this.fecha = new SimpleObjectProperty<Date>(fecha);
 		this.fechaentrega = new SimpleObjectProperty<Date>(fechaentrega);
 		this.manoobra = new SimpleFloatProperty(manoobra);
@@ -96,12 +96,12 @@ public class Factura {
 	}
 
 	public Factura(IntegerProperty idfactura, IntegerProperty clienteID, IntegerProperty vehiculoID,
-			IntegerProperty kms, IntegerProperty numfactura, IntegerProperty numpresupuesto,
-			IntegerProperty numordenrep, IntegerProperty numresguardo, ObjectProperty<Date> fecha,
-			ObjectProperty<Date> fechaentrega, FloatProperty manoobra, FloatProperty materiales, FloatProperty grua,
-			FloatProperty suma, FloatProperty sumaIva, StringProperty estado, FloatProperty porcentajedefocul,
-			BooleanProperty rdefocultos, BooleanProperty permisopruebas, BooleanProperty nopiezas,
-			BooleanProperty modificable, ObjectProperty<Blob> documento, FloatProperty importeTotal) {
+			IntegerProperty kms, StringProperty numfactura, StringProperty numpresupuesto, StringProperty numordenrep,
+			StringProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
+			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, FloatProperty suma,
+			FloatProperty sumaIva, StringProperty estado, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
+			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty modificable,
+			ObjectProperty<Blob> documento, FloatProperty importeTotal) {
 		super();
 		this.idfactura = idfactura;
 		this.clienteID = clienteID;
@@ -164,51 +164,51 @@ public class Factura {
 		this.vehiculoIDProperty().set(vehiculoID);
 	}
 
-	public IntegerProperty numfacturaProperty() {
+	public StringProperty numfacturaProperty() {
 		return this.numfactura;
 	}
 
-	public int getNumfactura() {
+	public String getNumfactura() {
 		return this.numfacturaProperty().get();
 	}
 
-	public void setNumfactura(final int numfactura) {
+	public void setNumfactura(final String numfactura) {
 		this.numfacturaProperty().set(numfactura);
 	}
 
-	public IntegerProperty numpresupuestoProperty() {
+	public StringProperty numpresupuestoProperty() {
 		return this.numpresupuesto;
 	}
 
-	public int getNumpresupuesto() {
+	public String getNumpresupuesto() {
 		return this.numpresupuestoProperty().get();
 	}
 
-	public void setNumpresupuesto(final int numpresupuesto) {
+	public void setNumpresupuesto(final String numpresupuesto) {
 		this.numpresupuestoProperty().set(numpresupuesto);
 	}
 
-	public IntegerProperty numordenrepProperty() {
+	public StringProperty numordenrepProperty() {
 		return this.numordenrep;
 	}
 
-	public int getNumordenrep() {
+	public String getNumordenrep() {
 		return this.numordenrepProperty().get();
 	}
 
-	public void setNumordenrep(final int numordenrep) {
+	public void setNumordenrep(final String numordenrep) {
 		this.numordenrepProperty().set(numordenrep);
 	}
 
-	public IntegerProperty numresguardoProperty() {
+	public StringProperty numresguardoProperty() {
 		return this.numresguardo;
 	}
 
-	public int getNumresguardo() {
+	public String getNumresguardo() {
 		return this.numresguardoProperty().get();
 	}
 
-	public void setNumresguardo(final int numresguardo) {
+	public void setNumresguardo(final String numresguardo) {
 		this.numresguardoProperty().set(numresguardo);
 	}
 

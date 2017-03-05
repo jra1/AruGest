@@ -24,8 +24,8 @@ public class D_OpcionesController {
 
 	private float precioHora;
 	private float iva;
-	private int numPresupuesto;
-	private int numFactura;
+	private String numPresupuesto;
+	private String numFactura;
 	private String ruta;
 
 	private Stage dialogStage;
@@ -86,7 +86,6 @@ public class D_OpcionesController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			Utilidades.formateaNumFactura(Integer.parseInt(txtNumPresupuesto.getText()));
 			// Cambiar las opciones en la BD
 			if (Inicio.CONEXION.actualizarOpciones(precioHora, iva, numPresupuesto, numFactura, ruta)) {
 				Inicio.PRECIO_HORA = precioHora;
@@ -127,14 +126,12 @@ public class D_OpcionesController {
 		} catch (NumberFormatException e) {
 			mensaje = "Formato de iva incorrecto. Introduce un valor numérico.";
 		}
-		try {
-			numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
-		} catch (NumberFormatException e) {
+		numPresupuesto = Utilidades.formateaNumFactura(txtNumPresupuesto.getText());
+		if (numPresupuesto.startsWith("#ERROR")) {
 			mensaje = "Formato del número de presupuesto incorrecto. Introduce un valor numérico.";
 		}
-		try {
-			numFactura = Integer.parseInt(txtNumFactura.getText());
-		} catch (NumberFormatException e) {
+		numFactura = Utilidades.formateaNumFactura(txtNumFactura.getText());
+		if (numFactura.startsWith("#ERROR")) {
 			mensaje = "Formato del número de factura incorrecto. Introduce un valor numérico.";
 		}
 		if (txtRutaFacturas.getText().isEmpty()) {

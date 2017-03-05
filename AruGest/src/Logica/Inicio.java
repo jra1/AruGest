@@ -54,8 +54,8 @@ public class Inicio extends Application {
 	public static int FACTURA_ID;
 	public static float PRECIO_HORA;
 	public static float PRECIO_IVA;
-	public static int NUM_PRESUPUESTO;
-	public static int NUM_FACTURA;
+	public static String NUM_PRESUPUESTO;
+	public static String NUM_FACTURA;
 	public static String USUARIO;
 	public static String PASS;
 	public static String SAL;

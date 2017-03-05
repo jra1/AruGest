@@ -138,10 +138,10 @@ public class Conexion {
 			// Añadimos los parametros
 			st.setInt(1, f.getClienteID());
 			st.setInt(2, f.getVehiculoID());
-			st.setInt(3, f.getNumfactura());
-			st.setInt(4, f.getNumpresupuesto());
-			st.setInt(5, f.getNumordenrep());
-			st.setInt(6, f.getNumresguardo());
+			st.setString(3, f.getNumfactura());
+			st.setString(4, f.getNumpresupuesto());
+			st.setString(5, f.getNumordenrep());
+			st.setString(6, f.getNumresguardo());
 			st.setDate(7, new java.sql.Date(f.getFecha().getTime()));
 			st.setDate(8, new java.sql.Date(f.getFechaentrega().getTime()));
 			st.setFloat(9, f.getManoobra());
@@ -231,10 +231,10 @@ public class Conexion {
 			// Añadimos los parametros
 			st.setInt(1, f.getClienteID());
 			st.setInt(2, f.getVehiculoID());
-			st.setInt(3, f.getNumfactura());
-			st.setInt(4, f.getNumpresupuesto());
-			st.setInt(5, f.getNumordenrep());
-			st.setInt(6, f.getNumresguardo());
+			st.setString(3, f.getNumfactura());
+			st.setString(4, f.getNumpresupuesto());
+			st.setString(5, f.getNumordenrep());
+			st.setString(6, f.getNumresguardo());
 			st.setDate(7, new java.sql.Date(f.getFecha().getTime()));
 			st.setDate(8, new java.sql.Date(f.getFechaentrega().getTime()));
 			st.setFloat(9, f.getManoobra());
@@ -337,7 +337,7 @@ public class Conexion {
 	 * @param rutaFacturas
 	 * @return
 	 */
-	public boolean actualizarOpciones(float precioHora, float iva, int numPresupuesto, int numFactura,
+	public boolean actualizarOpciones(float precioHora, float iva, String numPresupuesto, String numFactura,
 			String rutaFacturas) {
 		String sql = "";
 		PreparedStatement st;
@@ -362,7 +362,7 @@ public class Conexion {
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'PRESUPUESTO'";
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
-			st.setInt(1, numPresupuesto);
+			st.setString(1, numPresupuesto);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
@@ -370,7 +370,7 @@ public class Conexion {
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'FACTURA'";
 			st = getCon().prepareStatement(sql);
 			// Añadimos los parametros
-			st.setInt(1, numFactura);
+			st.setString(1, numFactura);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
@@ -1828,8 +1828,8 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
-						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
+						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
@@ -2190,8 +2190,8 @@ public class Conexion {
 
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
-						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
+						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
@@ -2235,8 +2235,8 @@ public class Conexion {
 
 			while (rs.next()) {
 				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
-						rs.getInt("KMS"), rs.getInt("NUMFACTURA"), rs.getInt("NUMPRESUPUESTO"),
-						rs.getInt("NUMORDENREP"), rs.getInt("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
+						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
@@ -2908,14 +2908,14 @@ public class Conexion {
 			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'PRESUPUESTO'";
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				Inicio.NUM_PRESUPUESTO = rs.getInt("VALOR");
+				Inicio.NUM_PRESUPUESTO = rs.getString("VALOR");
 				// Inicio.NUM_FACTURA = rs.getInt("FACTURA");
 			}
 			// Se coge el numfactura
 			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'FACTURA'";
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				Inicio.NUM_FACTURA = rs.getInt("VALOR");
+				Inicio.NUM_FACTURA = rs.getString("VALOR");
 			}
 			// Se coge el usuario
 			sql = "SELECT VALOR FROM AUXILIAR WHERE CLAVE = 'USUARIO'";

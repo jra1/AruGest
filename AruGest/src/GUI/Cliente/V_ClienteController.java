@@ -111,7 +111,7 @@ public class V_ClienteController {
 	@FXML
 	private TableView<FacturaClienteVehiculo> tablePresupuestos;
 	@FXML
-	private TableColumn<FacturaClienteVehiculo, Number> columnaNumPresupuesto;
+	private TableColumn<FacturaClienteVehiculo, String> columnaNumPresupuesto;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, String> columnaVehiculoPresupuesto;
 	@FXML
@@ -132,7 +132,7 @@ public class V_ClienteController {
 	@FXML
 	private TableView<FacturaClienteVehiculo> tableFacturas;
 	@FXML
-	private TableColumn<FacturaClienteVehiculo, Number> columnaNumFactura;
+	private TableColumn<FacturaClienteVehiculo, String> columnaNumFactura;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, String> columnaVehiculoFactura;
 	@FXML
