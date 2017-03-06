@@ -597,11 +597,15 @@ public class V_NuevaFacturaController {
 		float valorMaterial = 0;
 		float valorServicio = 0;
 		float valorOtros = 0;
-		try {
-			valorOtros = Float.parseFloat(txtOtros.getText().replace(",", "."));
-		} catch (NumberFormatException e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Valor incorrecto",
-					"El valor de \"Otros cargos / Grua\" es incorrecto", "");
+		if (!txtOtros.getText().isEmpty()) {
+			try {
+				valorOtros = Float.parseFloat(txtOtros.getText().replace(",", "."));
+			} catch (NumberFormatException e) {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Valor incorrecto",
+						"El valor de \"Otros cargos / Grua\" es incorrecto", "");
+			}
+		} else {
+			valorOtros = 0;
 		}
 		float valorSubtotal = 0;
 		float valorIva = 0;

@@ -307,18 +307,36 @@ public class Conexion {
 	public void actualizarNumPresuFactura() {
 		String sql = "";
 		PreparedStatement st;
+		ResultSet rs;
 		try {
 			// Actualizar nº presupuesto
-			sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE CLAVE = 'PRESUPUESTO'";
+			sql = "SELECT MAX(NUMPRESUPUESTO) FROM FACTURA";
 			st = getCon().prepareStatement(sql);
-			// Ejecutamos la sentencia
-			st.executeUpdate();
+			rs = st.executeQuery();
+			while (rs.next()) {
+				if (!rs.getString("MAX(NUMPRESUPUESTO)").equalsIgnoreCase("")) {
+					sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE CLAVE = 'PRESUPUESTO'";
+				} else {
+					sql = "UPDATE AUXILIAR SET VALOR = '" + Inicio.NUM_PRESUPUESTO + "' WHERE CLAVE = 'PRESUPUESTO'";
+				}
+				st = getCon().prepareStatement(sql);
+				st.executeUpdate();
+			}
 
 			// Actualizar nº factura
-			sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE CLAVE = 'FACTURA'";
+			sql = "SELECT MAX(NUMFACTURA) FROM FACTURA";
 			st = getCon().prepareStatement(sql);
-			// Ejecutamos la sentencia
-			st.executeUpdate();
+			rs = st.executeQuery();
+			while (rs.next()) {
+				if (!rs.getString("MAX(NUMFACTURA)").equalsIgnoreCase("")) {
+					sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE CLAVE = 'FACTURA'";
+				} else {
+					sql = "UPDATE AUXILIAR SET VALOR = '" + Inicio.NUM_FACTURA + "' WHERE CLAVE = 'FACTURA'";
+				}
+				st = getCon().prepareStatement(sql);
+				st.executeUpdate();
+			}
+
 		} catch (Exception e) {
 			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención",
 					"Error al actualizar el número de presupuesto/factura",
