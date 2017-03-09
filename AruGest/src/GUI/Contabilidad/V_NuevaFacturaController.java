@@ -541,7 +541,7 @@ public class V_NuevaFacturaController {
 					Float.parseFloat(horasPunto);
 					servicio = new Servicio(0, txtConcepto.getText(), horasPunto, 0, comboTipo.getValue());
 					listaServicios.add(servicio);
-					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
 					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 					tableServicio.setItems(listaServicios);
 					// Se actualizan los valores del precio

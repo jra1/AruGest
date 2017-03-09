@@ -45,7 +45,8 @@ public class Servicio {
 	}
 
 	public StringProperty tipoConServicioProperty() {
-		return new SimpleStringProperty(getTiposervicio() + ": " + getServicio());
+		StringProperty sp = new SimpleStringProperty(getTiposervicio() + ": " + getServicio());
+		return sp;
 	}
 
 	public String getServicio() {
