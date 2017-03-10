@@ -232,25 +232,29 @@ public class V_NuevaFacturaController {
 		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
 		modificar = true;
 		// Cargar datos factura
-		if (!fce.getFactura().getNumfactura().equalsIgnoreCase("0")) {
+		if (!fce.getFactura().getNumfactura().equalsIgnoreCase("0")
+				&& !fce.getFactura().getNumfactura().equalsIgnoreCase("")) {
 			chckbxFactura.setSelected(true);
 			txtNumfactura.setText("" + fce.getFactura().getNumfactura());
 		} else {
 			chckbxFactura.setSelected(false);
 		}
-		if (!fce.getFactura().getNumpresupuesto().equalsIgnoreCase("0")) {
+		if (!fce.getFactura().getNumpresupuesto().equalsIgnoreCase("0")
+				&& !fce.getFactura().getNumpresupuesto().equalsIgnoreCase("")) {
 			chckbxPresupuesto.setSelected(true);
 			txtNumPresupuesto.setText("" + fce.getFactura().getNumpresupuesto());
 		} else {
 			chckbxPresupuesto.setSelected(false);
 		}
-		if (!fce.getFactura().getNumordenrep().equalsIgnoreCase("0")) {
+		if (!fce.getFactura().getNumordenrep().equalsIgnoreCase("0")
+				&& !fce.getFactura().getNumordenrep().equalsIgnoreCase("")) {
 			chckbxOrdenDeReparacion.setSelected(true);
 			txtNumOrden.setText("" + fce.getFactura().getNumordenrep());
 		} else {
 			chckbxOrdenDeReparacion.setSelected(false);
 		}
-		if (!fce.getFactura().getNumresguardo().equalsIgnoreCase("0")) {
+		if (!fce.getFactura().getNumresguardo().equalsIgnoreCase("0")
+				&& !fce.getFactura().getNumresguardo().equalsIgnoreCase("")) {
 			chckbxResguardoDeposito.setSelected(true);
 			txtNumResguardo.setText("" + fce.getFactura().getNumresguardo());
 		} else {
@@ -541,7 +545,7 @@ public class V_NuevaFacturaController {
 					Float.parseFloat(horasPunto);
 					servicio = new Servicio(0, txtConcepto.getText(), horasPunto, 0, comboTipo.getValue());
 					listaServicios.add(servicio);
-					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().servicioProperty());
+					columnaConceptoServ.setCellValueFactory(cellData -> cellData.getValue().tipoConServicioProperty());
 					columnaHorasServ.setCellValueFactory(cellData -> cellData.getValue().horasProperty());
 					tableServicio.setItems(listaServicios);
 					// Se actualizan los valores del precio
@@ -1014,15 +1018,23 @@ public class V_NuevaFacturaController {
 		String numResguardo = "";
 		if (!txtNumfactura.getText().isEmpty()) {
 			numFactura = Utilidades.formateaNumFactura(txtNumfactura.getText());
+		} else {
+			numFactura = "0";
 		}
 		if (!txtNumPresupuesto.getText().isEmpty()) {
 			numPresupuesto = Utilidades.formateaNumFactura(txtNumPresupuesto.getText());
+		} else {
+			numPresupuesto = "0";
 		}
 		if (!txtNumOrden.getText().isEmpty()) {
 			numOrden = Utilidades.formateaNumFactura(txtNumOrden.getText());
+		} else {
+			numOrden = "0";
 		}
 		if (!txtNumResguardo.getText().isEmpty()) {
 			numResguardo = Utilidades.formateaNumFactura(txtNumResguardo.getText());
+		} else {
+			numResguardo = "0";
 		}
 
 		Float manoObra = 0f;

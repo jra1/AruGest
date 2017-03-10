@@ -1744,9 +1744,9 @@ public class Conexion {
 	 * @param fechaHasta
 	 * @return ArrayList con las facturas encontradas
 	 */
-	public ArrayList<FacturaClienteVehiculo> buscarFacturas(int numFactura, int numPresu, int numOrden, int numResgu,
-			String nombre, String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde,
-			LocalDate fechaHasta) {
+	public ArrayList<FacturaClienteVehiculo> buscarFacturas(boolean esFactura, boolean esPresu, boolean esOrden,
+			boolean esResgu, String numFactura, String numPresu, String numOrden, String numResgu, String nombre,
+			String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde, LocalDate fechaHasta) {
 
 		String sql = "";
 		Factura f;
@@ -1759,36 +1759,71 @@ public class Conexion {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();
 			sql = "SELECT * FROM FACTURA INNER JOIN CLIENTE ON FACTURA.CLIENTEID = CLIENTE.IDCLIENTE INNER JOIN VEHICULO ON FACTURA.VEHICULOID = VEHICULO.IDVEHICULO ";
-			if (numFactura != 0) {
+			if (esFactura) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMFACTURA = " + numFactura + " ";
+					sql += "WHERE FACTURA.NUMFACTURA > 0";
 					esPrimero = false;
 				} else {
-					sql += "AND FACTURA.NUMFACTURA = " + numFactura + " ";
+					sql += "OR FACTURA.NUMFACTURA > 0";
 				}
 			}
-			if (numPresu != 0) {
+			if (!numFactura.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMPRESUPUESTO = " + numPresu + " ";
+					sql += "WHERE FACTURA.NUMFACTURA = '" + Utilidades.formateaNumFactura(numFactura) + "' ";
 					esPrimero = false;
 				} else {
-					sql += "AND FACTURA.NUMPRESUPUESTO = " + numPresu + " ";
+					sql += "AND FACTURA.NUMFACTURA = '" + Utilidades.formateaNumFactura(numFactura) + "' ";
 				}
 			}
-			if (numOrden != 0) {
+			if (esPresu) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMORDENREP = " + numOrden + " ";
+					sql += "WHERE FACTURA.NUMPRESUPUESTO > 0";
 					esPrimero = false;
 				} else {
-					sql += "AND FACTURA.NUMORDENREP = " + numOrden + " ";
+					sql += "OR FACTURA.NUMPRESUPUESTO > 0";
+				}
+
+			}
+			if (!numPresu.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
+					esPrimero = false;
+				} else {
+					sql += "AND FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
 				}
 			}
-			if (numResgu != 0) {
+			if (esOrden) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMRESGUARDO = " + numResgu + " ";
+					sql += "WHERE FACTURA.NUMORDENREP > 0";
 					esPrimero = false;
 				} else {
-					sql += "AND FACTURA.NUMRESGUARDO = " + numResgu + " ";
+					sql += "OR FACTURA.NUMORDENREP > 0";
+				}
+
+			}
+			if (!numOrden.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE FACTURA.NUMORDENREP = '" + Utilidades.formateaNumFactura(numOrden) + "' ";
+					esPrimero = false;
+				} else {
+					sql += "AND FACTURA.NUMORDENREP = '" + Utilidades.formateaNumFactura(numOrden) + "' ";
+				}
+			}
+			if (esResgu) {
+				if (esPrimero) {
+					sql += "WHERE FACTURA.NUMRESGUARDO > 0";
+					esPrimero = false;
+				} else {
+					sql += "OR FACTURA.NUMRESGUARDO > 0";
+				}
+
+			}
+			if (!numResgu.equalsIgnoreCase("")) {
+				if (esPrimero) {
+					sql += "WHERE FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "' ";
+					esPrimero = false;
+				} else {
+					sql += "AND FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "' ";
 				}
 			}
 			if (!nombre.equalsIgnoreCase("")) {

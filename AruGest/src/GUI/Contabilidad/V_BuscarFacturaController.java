@@ -144,25 +144,27 @@ public class V_BuscarFacturaController {
 	private void buscarFacturas() {
 		listaFacturas.clear();
 		tableFacturas.getItems().clear();
-		int numFactura = 0;
-		int numPresupuesto = 0;
-		int numOrden = 0;
-		int numResguardo = 0;
+		String numFactura = "";
+		String numPresupuesto = "";
+		String numOrden = "";
+		String numResguardo = "";
 		if (!txtNumfactura.getText().isEmpty()) {
-			numFactura = Integer.parseInt(txtNumfactura.getText());
+			numFactura = txtNumfactura.getText();
 		}
 		if (!txtNumPresupuesto.getText().isEmpty()) {
-			numPresupuesto = Integer.parseInt(txtNumPresupuesto.getText());
+			numPresupuesto = txtNumPresupuesto.getText();
 		}
 		if (!txtNumOrden.getText().isEmpty()) {
-			numOrden = Integer.parseInt(txtNumOrden.getText());
+			numOrden = txtNumOrden.getText();
 		}
 		if (!txtNumResguardo.getText().isEmpty()) {
-			numResguardo = Integer.parseInt(txtNumResguardo.getText());
+			numResguardo = txtNumResguardo.getText();
 		}
-		ArrayList<FacturaClienteVehiculo> lista = Inicio.CONEXION.buscarFacturas(numFactura, numPresupuesto, numOrden,
-				numResguardo, txtNombreCliente.getText(), txtModelo.getText(), txtMatricula.getText(),
-				txtFijo.getText(), txtMovil.getText(), txtFechaDesde.getValue(), txtFechaHasta.getValue());
+		ArrayList<FacturaClienteVehiculo> lista = Inicio.CONEXION.buscarFacturas(chckbxFacturas.isSelected(),
+				chckbxPresupuestos.isSelected(), chckbxOrdenDeReparacion.isSelected(),
+				chckbxResguardoDeposito.isSelected(), numFactura, numPresupuesto, numOrden, numResguardo,
+				txtNombreCliente.getText(), txtModelo.getText(), txtMatricula.getText(), txtFijo.getText(),
+				txtMovil.getText(), txtFechaDesde.getValue(), txtFechaHasta.getValue());
 		if (lista.isEmpty()) {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
 					"No hay facturas con los parámetros de búsqueda introducidos.");

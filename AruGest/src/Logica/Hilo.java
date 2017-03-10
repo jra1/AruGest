@@ -110,32 +110,42 @@ public class Hilo extends Thread {
 					try {
 						Map<String, Object> parameters = new HashMap<String, Object>();
 						parameters.put("idfactura", f.getIdfactura());
-						if (!f.getNumfactura().equalsIgnoreCase("0")) {
+						if (!f.getNumfactura().equalsIgnoreCase("") && !f.getNumfactura().equalsIgnoreCase("0")) {
 							parameters.put("cboxfactura", "recursos/images/selec.png");
+							parameters.put("numfactura", f.getNumfactura());
 						} else {
 							parameters.put("cboxfactura", "recursos/images/selecNO.png");
+							parameters.put("numfactura", "");
 						}
-						parameters.put("numfactura", f.getNumfactura());
-						if (!f.getNumpresupuesto().equalsIgnoreCase("0")) {
+						if (!f.getNumpresupuesto().equalsIgnoreCase("")
+								&& !f.getNumpresupuesto().equalsIgnoreCase("0")) {
 							parameters.put("cboxpresupuesto", "recursos/images/selec.png");
+							parameters.put("numpresupuesto", f.getNumpresupuesto());
 						} else {
 							parameters.put("cboxpresupuesto", "recursos/images/selecNO.png");
+							parameters.put("numpresupuesto", "");
 						}
-						parameters.put("numpresupuesto", f.getNumpresupuesto());
-						if (!f.getNumordenrep().equalsIgnoreCase("0")) {
+						if (!f.getNumordenrep().equalsIgnoreCase("") && !f.getNumordenrep().equalsIgnoreCase("0")) {
 							parameters.put("cboxorden", "recursos/images/selec.png");
+							parameters.put("numorden", f.getNumordenrep());
 						} else {
 							parameters.put("cboxorden", "recursos/images/selecNO.png");
+							parameters.put("numorden", "");
 						}
-						parameters.put("numorden", f.getNumordenrep());
-						if (!f.getNumresguardo().equalsIgnoreCase("0")) {
+
+						if (!f.getNumresguardo().equalsIgnoreCase("") && !f.getNumresguardo().equalsIgnoreCase("0")) {
 							parameters.put("cboxresguardo", "recursos/images/selec.png");
+							parameters.put("numresguardo", f.getNumresguardo());
 						} else {
 							parameters.put("cboxresguardo", "recursos/images/selecNO.png");
+							parameters.put("numresguardo", "");
 						}
-						parameters.put("numresguardo", f.getNumresguardo());
 						parameters.put("autor", c.getNombre());
-						parameters.put("direccion", d.getDireccionCompleta());
+						if (d.getIddireccion() != 0) {
+							parameters.put("direccion", d.getDireccionCompleta());
+						} else {
+							parameters.put("direccion", "");
+						}
 						parameters.put("poblacion", d.getLocalidad());
 						if (c.getTipo().equalsIgnoreCase("P")) {
 							parameters.put("dni", p.getNif());

@@ -45,7 +45,14 @@ public class Servicio {
 	}
 
 	public StringProperty tipoConServicioProperty() {
-		StringProperty sp = new SimpleStringProperty(getTiposervicio() + ": " + getServicio());
+		StringProperty sp;
+		// Lo hago así porque sino duplica el tipoServicio
+		if (getServicio().lastIndexOf("Chapa:") == -1 && getServicio().lastIndexOf("Pintura:") == -1
+				&& getServicio().lastIndexOf("Electrónica / mecánica:") == -1) {
+			sp = new SimpleStringProperty(getTiposervicio() + ": " + getServicio());
+		} else {
+			sp = servicioProperty();
+		}
 		return sp;
 	}
 
