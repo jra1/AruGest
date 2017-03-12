@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="326.0" prefWidth="652.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.D_UltimasFacturasController">
+   <children>
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="314.0" prefWidth="639.0" styleClass="background">
+         <children>
+            <Button cancelButton="true" layoutX="282.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
+            <Label alignment="CENTER" layoutX="7.0" layoutY="9.0" prefHeight="22.0" prefWidth="624.0" styleClass="titulo" text="Últimas facturas guardadas" />
+            <Separator layoutX="6.0" layoutY="42.0" prefHeight="1.0" prefWidth="624.0" />
+            <TableView fx:id="tableFacturas" layoutX="6.0" layoutY="51.0" prefHeight="212.0" prefWidth="624.0">
+              <columns>
+                <TableColumn fx:id="columnaNumFactura" prefWidth="75.0" text="Nº Factura" />
+                <TableColumn fx:id="columnaFecha" prefWidth="87.0" text="Fecha" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="204.0" text="Cliente" />
+                  <TableColumn fx:id="columnaVehiculo" prefWidth="161.0" text="Vehículo" />
+                  <TableColumn fx:id="columnaMatricula" prefWidth="96.0" text="Matricula" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

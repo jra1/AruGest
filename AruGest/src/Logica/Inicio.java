@@ -16,6 +16,7 @@ import GUI.Cliente.D_AgregaDocumentoController;
 import GUI.Cliente.D_EditClienteController;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.Contabilidad.D_SelectorGolpesController;
+import GUI.Contabilidad.D_UltimasFacturasController;
 import GUI.ProveedorCompania.D_EditCiaController;
 import GUI.Vehiculo.D_EditVehiculoController;
 import GUI.Vehiculo.D_SustitucionDevolucionController;
@@ -312,6 +313,37 @@ public class Inicio extends Application {
 			dialogStage.showAndWait();
 
 			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean mostrarD_UltimasFacturas() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/D_UltimasFacturas.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Últimas facturas");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_UltimasFacturasController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;

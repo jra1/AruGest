@@ -47,6 +47,8 @@ public class V_RootController {
 
 	@FXML
 	private Menu btnMenuInicio;
+	@FXML
+	private Menu btnMenuVerUltimas;
 
 	@FXML
 	private ImageView imgClientes;
@@ -118,6 +120,11 @@ public class V_RootController {
 		btnMenuInicio.getItems().add(menuItem);
 		btnMenuInicio.addEventHandler(Menu.ON_SHOWN, event -> btnMenuInicio.hide());
 		btnMenuInicio.addEventHandler(Menu.ON_SHOWING, event -> btnMenuInicio.fire());
+
+		final MenuItem menuItem2 = new MenuItem();
+		btnMenuVerUltimas.getItems().add(menuItem2);
+		btnMenuVerUltimas.addEventHandler(Menu.ON_SHOWN, event -> btnMenuVerUltimas.hide());
+		btnMenuVerUltimas.addEventHandler(Menu.ON_SHOWING, event -> btnMenuVerUltimas.fire());
 	}
 
 	/**
@@ -173,11 +180,6 @@ public class V_RootController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 			AnchorPane nuevaFactura = (AnchorPane) loader.load();
-			// if (Inicio.CAMBIAR_RESOLUCION) {
-			// nuevaFactura.setPrefWidth(Inicio.ANCHO_PANTALLA - 260);
-			// nuevaFactura.setPrefHeight(Inicio.ALTO_PANTALLA - 40);
-			// nuevaFactura.getStylesheets().add("GUI/EstiloPequenio.css");
-			// }
 
 			nombre = "Nueva Factura";
 
@@ -603,6 +605,14 @@ public class V_RootController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Muestra la ventana de últimas facturas
+	 */
+	@FXML
+	private void menuVerUltimas() {
+		Inicio.mostrarD_UltimasFacturas();
 	}
 
 	/**

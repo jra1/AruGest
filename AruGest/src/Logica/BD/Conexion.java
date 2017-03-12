@@ -2311,6 +2311,44 @@ public class Conexion {
 	}
 
 	/**
+	 * Busca las últimas facturas añadidas a la BD
+	 * 
+	 * @return
+	 */
+	public ObservableList<FacturaClienteVehiculo> buscarUltimasFacturas() {
+		String sql = "";
+		Factura f = null;
+		Cliente c = null;
+		Vehiculo v = null;
+		FacturaClienteVehiculo fcv;
+		ObservableList<FacturaClienteVehiculo> l = FXCollections.observableArrayList();
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT TOP 20 * FROM FACTURA WHERE NUMFACTURA>0 AND NUMFACTURA<>'' ORDER BY NUMFACTURA DESC";
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				f = new Factura(rs.getInt("IDFACTURA"), rs.getInt("CLIENTEID"), rs.getInt("VEHICULOID"),
+						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
+						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
+						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
+						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+				v = leerVehiculoPorID(rs.getInt("VEHICULOID"));
+				c = leerClientePorID(rs.getInt("CLIENTEID"));
+				fcv = new FacturaClienteVehiculo(f, c, v);
+				l.add(fcv);
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return l;
+	}
+
+	/**
 	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
 	 * disponibles
 	 * 

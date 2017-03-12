@@ -192,6 +192,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#mostrarOpciones" text="Cambiar opciones" />
                   <MenuItem mnemonicParsing="false" onAction="#crearCopiaSeguridad" text="Hacer copia de seguridad" />
                </items></Menu>
+            <Menu fx:id="btnMenuVerUltimas" mnemonicParsing="false" onAction="#menuVerUltimas" text="Ver últimas facturas">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
               <MenuItem mnemonicParsing="false" text="Sobre AruGest Software" />
