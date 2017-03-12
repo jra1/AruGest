@@ -624,6 +624,14 @@ public class V_RootController {
 	}
 
 	/**
+	 * Muestra la ayuda
+	 */
+	@FXML
+	private void ayuda() {
+		Inicio.mostrarD_Ayuda();
+	}
+
+	/**
 	 * Va a la página 1
 	 */
 	@FXML

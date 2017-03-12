@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.guigarage.responsive.ResponsiveHandler;
 
+import GUI.D_AyudaController;
 import GUI.D_BienvenidaControllerD;
 import GUI.D_LoginController;
 import GUI.D_OpcionesBackupController;
@@ -251,7 +252,7 @@ public class Inicio extends Application {
 		try {
 			// 1.- Crear la escena desde el AnchorPane
 			root = (BorderPane) loader.load();
-			root.getStylesheets().add(getClass().getResource("EstiloRoot.css").toExternalForm());
+			root.getStylesheets().add(getClass().getResource("/GUI/EstiloRoot.css").toExternalForm());
 
 			scene = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
@@ -319,6 +320,11 @@ public class Inicio extends Application {
 		}
 	}
 
+	/**
+	 * Muestra la ventana con las últimas facturas guardadas
+	 * 
+	 * @return
+	 */
 	public static boolean mostrarD_UltimasFacturas() {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
@@ -338,6 +344,42 @@ public class Inicio extends Application {
 
 			// Set the person into the controller.
 			D_UltimasFacturasController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Muestra la ventana de ayuda
+	 * 
+	 * @return
+	 */
+	public static boolean mostrarD_Ayuda() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/D_Ayuda.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Ayuda");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_AyudaController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it

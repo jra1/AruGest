@@ -199,7 +199,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" text="Sobre AruGest Software" />
+              <MenuItem mnemonicParsing="false" onAction="#ayuda" text="Sobre AruGest Software" />
             </items>
           </Menu>
         </menus>

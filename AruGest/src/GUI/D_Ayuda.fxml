@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="235.0" prefWidth="446.0" styleClass="back" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.D_AyudaController">
+   <children>
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="225.0" prefWidth="432.0" styleClass="background">
+         <children>
+            <Button cancelButton="true" layoutX="173.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
+            <Label alignment="CENTER" layoutX="7.0" layoutY="9.0" prefHeight="22.0" prefWidth="406.0" styleClass="titulo" text="AruGest Software" />
+            <Separator layoutX="6.0" layoutY="45.0" prefHeight="0.0" prefWidth="406.0" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="53.0" prefHeight="119.0" prefWidth="406.0" styleClass="my-label-detalles" text="AruGest Software es un proyecto creado por Joseba Ruiz Arana como trabajo de fin de grado en Ingeniría Informática de Gestión y Sistemas de Información en la Universidad del País Vasco. Si tiene algún problema con la aplicación puede ponerse en contacto en el email: jruiz061@iksale.ehu.es" textAlignment="JUSTIFY" wrapText="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
