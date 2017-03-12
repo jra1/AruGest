@@ -26,6 +26,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -41,6 +44,9 @@ public class V_RootController {
 	public Button btnPantalla2;
 	@FXML
 	public Button btnPantalla3;
+
+	@FXML
+	private Menu btnMenuInicio;
 
 	@FXML
 	private ImageView imgClientes;
@@ -107,6 +113,11 @@ public class V_RootController {
 		imgConta.setImage(new Image("recursos/images/conta.png"));
 		imgCias.setImage(new Image("recursos/images/agency.png"));
 		imgDocu.setImage(new Image("recursos/images/docus.png"));
+
+		final MenuItem menuItem = new MenuItem();
+		btnMenuInicio.getItems().add(menuItem);
+		btnMenuInicio.addEventHandler(Menu.ON_SHOWN, event -> btnMenuInicio.hide());
+		btnMenuInicio.addEventHandler(Menu.ON_SHOWING, event -> btnMenuInicio.fire());
 	}
 
 	/**
@@ -557,6 +568,41 @@ public class V_RootController {
 	@FXML
 	private void mostrarOpciones() {
 		Inicio.mostrarDialogoOpciones();
+	}
+
+	/**
+	 * Llama al método para abrir el diálogo de opciones
+	 */
+	@FXML
+	private void menuInicio() {
+		try {
+			// Cargar la vista de buscar documento
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Documento/V_BuscarDocumento.fxml"));
+			AnchorPane vs = new AnchorPane();
+			Label l = new Label("AruGest Software");
+			l.setId("lblInicio");
+			vs.getChildren().add(l);
+			// Poner la nueva vista en el centro del root
+			sp.setVisible(false);
+			// **************************************************************************************************
+			Utilidades.ajustarResolucionAnchorPane(vs, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+			// **************************************************************************************************
+			sp.setContent(vs);
+			// Esta línea es para que se ejecute la pseudoclase del CSS ya
+			ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+			sp.setVisible(true);
+			Utilidades.eliminaBotones();
+			btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+			btnPantalla1.setText(Inicio.BOTON1.getNombre());
+			btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+			btnPantalla2.setText(Inicio.BOTON2.getNombre());
+			btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+			btnPantalla3.setText(Inicio.BOTON3.getNombre());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

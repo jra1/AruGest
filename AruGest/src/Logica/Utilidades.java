@@ -185,6 +185,16 @@ public class Utilidades {
 
 	}
 
+	/**
+	 * Limpia la lista de ventanas recientes abiertas
+	 */
+	public static void eliminaBotones() {
+		Inicio.LISTA_VENTANAS.clear();
+		Inicio.BOTON1.setVisible(false);
+		Inicio.BOTON2.setVisible(false);
+		Inicio.BOTON3.setVisible(false);
+	}
+
 	public static Date LocalDateADate(LocalDate localDate) {
 		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 	}

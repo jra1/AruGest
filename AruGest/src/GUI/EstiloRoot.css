@@ -409,3 +409,12 @@
 	-fx-opacity: 1;
 }
 
+#lblInicio{
+	-fx-font-family: "Dekar"; 
+	-fx-font-size: 70px;
+	-fx-text-alignment: center ;
+	-fx-alignment: center;
+	-fx-pref-width: 1106px;
+	-fx-pref-height: 680px;
+}
+
