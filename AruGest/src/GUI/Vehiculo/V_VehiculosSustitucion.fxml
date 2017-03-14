@@ -23,7 +23,7 @@
       <Pane layoutX="6.0" layoutY="26.0" prefHeight="242.0" prefWidth="238.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="25.0">
          <children>
             <CheckBox fx:id="chkboxEsProveedor" disable="true" layoutX="5.0" layoutY="62.0" mnemonicParsing="false" text="Es proveedor" visible="false" />
-            <TableView fx:id="tableDisponibles" editable="true" layoutX="7.0" layoutY="11.0" prefHeight="220.0" prefWidth="224.0">
+            <TableView fx:id="tableDisponibles" editable="true" layoutX="7.0" layoutY="11.0" prefHeight="220.0" prefWidth="224.0" styleClass="tabla">
                <columns>
                   <TableColumn fx:id="columnaVehiculoDisponibles" prefWidth="126.0" text="Vehículo sustitución" />
                   <TableColumn fx:id="columnaMatriculaDisponibles" minWidth="50.0" prefWidth="96.0" text="Matrícula" />
@@ -36,7 +36,7 @@
       </Pane>
       <Pane layoutX="6.0" layoutY="290.0" prefHeight="384.0" prefWidth="1088.0" styleClass="background" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="289.0">
          <children>
-            <TableView fx:id="tableHistorico" editable="true" layoutX="7.0" layoutY="130.0" prefHeight="242.0" prefWidth="1068.0">
+            <TableView fx:id="tableHistorico" editable="true" layoutX="7.0" layoutY="130.0" prefHeight="242.0" prefWidth="1068.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaVehiculoHistorico" prefWidth="151.0" text="Vehículo sustitución" />
                 <TableColumn fx:id="columnaMatriculaHistorico" minWidth="50.0" prefWidth="95.0" text="Matrícula" />
@@ -101,7 +101,7 @@
       </Label>
       <Pane layoutX="252.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tablePrestados" editable="true" layoutX="9.0" layoutY="41.0" prefHeight="194.0" prefWidth="817.0">
+            <TableView fx:id="tablePrestados" editable="true" layoutX="9.0" layoutY="41.0" prefHeight="194.0" prefWidth="817.0" styleClass="tabla">
                <columns>
                   <TableColumn fx:id="columnaVehiculoPrestados" prefWidth="126.0" text="Vehículo sustitución" />
                   <TableColumn fx:id="columnaMatriculaPrestados" minWidth="50.0" prefWidth="84.0" text="Matrícula" />

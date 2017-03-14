@@ -639,7 +639,6 @@ public class V_RootController {
 		try {
 			// Poner la nueva vista en el centro del root
 			sp.setContent(Inicio.LISTA_VENTANAS.get(0).getAp());
-			// main.getRoot().setCenter(lista.get(0).getAp());
 
 		} catch (Exception e) {
 			e.printStackTrace();

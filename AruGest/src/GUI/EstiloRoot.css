@@ -1,8 +1,8 @@
 /*AnchorPane general */
 .back{
-	-fx-background-color: #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);/*rgb(192,192,192);*/ 
-     -fx-border-style: solid ;
+	-fx-background-color: rgb(238,238,238);/* #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);rgb(192,192,192);*/ 
+    -fx-border-style: solid ;
     -fx-font-family: "Trebuchet MT";/*"Linux Biolinum G"; "Asimov NarOu Mediana" */
     /*-fx-font-weight: bold;*/
         
@@ -23,12 +23,21 @@
 	-fx-font-size: 14px;
 }
 
+/*Paneles */
+.background {
+    /*-fx-background-color: rgb(139,248,164);*/
+    -fx-border-style: solid;
+    -fx-border-color: black /*rgb(209,209,211) rgb(171,27,48)rgb(236,145,53) darkorange */; 
+    -fx-border-radius: 10px;
+    -fx-border-width: 2px; /* Grosor del borde */
+}
+
 /*Titulos (Datos cliente, Datos vehiculo, etc) lo que está fuera de los pane */
 .titulo{
-	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
-    -fx-font-weight: bold;
+	-fx-font-family: "Trebuchet MT";/*"Linux Biolinum G"; "Asimov NarOu Mediana" */
+    /*-fx-font-weight: bold;*/
     -fx-font-size: 18px;
-    -fx-text-fill: white;
+    -fx-text-fill: black;/*white;*/
 }
 .titulo:extreme-small-device{
     -fx-font-size: 11px;
@@ -49,16 +58,17 @@
 	-fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
     -fx-font-weight: bold;
     -fx-font-size: 40px;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-underline: true;
     
 }
 
 /*Labels generales*/
 .my-label{
-	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/
-	-fx-font-weight: bold;
+	-fx-text-fill: black;/*rgb(45,236,126);/*rgb(64,128,128);	*/
+	/*-fx-font-weight: bold;*/
 	-fx-font-size: 14px;
+	-fx-font-family: "Trebuchet MT";/*"Linux Biolinum G"; "Asimov NarOu Mediana" */
 }
 
 .my-label:extreme-small-device{
@@ -79,7 +89,7 @@
 
 /*Labels Nombre cliente y Vehículo en NuevaFactura*/
 .my-label-sub{
-	-fx-text-fill: rgb(45,236,126);/*rgb(64,128,128);	*/
+	-fx-text-fill: black;/*rgb(45,236,126);/*rgb(64,128,128);	*/
 	-fx-font-weight: bold;
 	-fx-font-size: 14px;
 	-fx-underline: true;
@@ -104,7 +114,7 @@
 
 /*Labels detalles informacion*/
 .my-label-detalles{
-	-fx-text-fill: white;/*rgb(64,128,128);	*/
+	-fx-text-fill: black;/*rgb(64,128,128);	*/
 	-fx-font-weight: bold;
 	-fx-font-size: 14px;
 	-fx-font-family: "Trebuchet MT"; /*"Asimov NarOu Mediana" */
@@ -156,7 +166,7 @@
  }
 
 .my-text-field:focused {
-    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
+    -fx-background-color: rgb(189,190,251);/* #ED9121;rgb(133,197,158);  #0093EF;*/
 }
 
 #concepto{
@@ -206,7 +216,7 @@
 }
 
 .my-text-field-fijo:focused {
-    -fx-background-color: #ED9121;/*rgb(133,197,158);  #0093EF;*/
+    -fx-background-color: rgb(189,190,251);/*#ED9121;rgb(133,197,158);  #0093EF;*/
 }
 
 /*Tablas */
@@ -217,21 +227,21 @@
 
 /*Alerts */
 .my-dialog{
-    -fx-background-color: rgb(192,192,192);
-    -fx-font-family: "Linux Biolinum G"; /*"Asimov NarOu Mediana" */
+    -fx-background-color: rgb(207,205,205);
+    -fx-font-family: "Trebuchet MT"; /*"Asimov NarOu Mediana" */
     -fx-text-fill: rgb(64,128,128);
 }
 .my-dialog > *.button-bar > *.container{
-    -fx-background-color: rgb(192,192,192);
+    -fx-background-color: rgb(207,205,205);
 }
 .my-dialog > *.label.content{
     -fx-font-size: 16px;
-    -fx-font-weight: bold;
+    /*-fx-font-weight: bold;*/
 }
 .my-dialog:header *.header-panel{
-    -fx-background-color: rgb(192,192,192);
+    -fx-background-color: rgb(207,205,205);
     -fx-border-style: solid;
-    -fx-border-color: darkorange ; 
+    -fx-border-color: rgb(189,190,251); 
     -fx-border-radius: 10px;
     -fx-border-width: 2px; /* Grosor del borde */
 }
@@ -258,7 +268,7 @@
 
 /*Botones de la aplicación */
 .my-button{
-	-fx-text-fill: rgb(64,128,128);	
+	-fx-text-fill: black;	
 	-fx-font-weight: bold;
     /*
 	-fx-background-color: rgb(255,128,0);
@@ -274,18 +284,8 @@
 }
 
 .my-button:hover{
-	-fx-text-fill: black;	
+	/*-fx-text-fill: rgb(189,190,251);*/	
 }
-
-/*Paneles */
-.background {
-    /*-fx-background-color: rgb(139,248,164);*/
-    -fx-border-style: solid;
-    -fx-border-color: rgb(171,27,48)/*rgb(236,145,53) darkorange */; 
-    -fx-border-radius: 10px;
-    -fx-border-width: 2px; /* Grosor del borde */
-}
-
 
 /*Botones del root */
 .dark-blue {
@@ -308,30 +308,36 @@
 }
 
 .green {
-    -fx-background-color:
-        linear-gradient(#f0ff35, #a9ff00),
-        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
-    -fx-background-radius: 6, 5;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: rgb(238,238,238);/*rgb(207,205,205);*/
+        /*linear-gradient(#f0ff35, #a9ff00);
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);*/
+    /*-fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;*/
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
-    -fx-text-fill: #395306;
+    -fx-text-fill: black;/* #395306;*/
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-pref-width: 220px;
+    -fx-alignment: center-left ;
 }
 
 .green:hover {
-    -fx-background-color:
-        linear-gradient(#f0ff80, #a9ff70),
-        radial-gradient(center 50% -40%, radius 200%, #b8ee46 45%, #80c810 50%);
+    -fx-background-color: rgb(189,190,251);
+        /*linear-gradient(#f0ff35, #a9ff00);
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
     -fx-text-fill: white;	
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 5, 0.0 , 0 , 1 );*/
 }
 
 /*CheckBox vehículo de sustitución */
 #chckbox-vehi-susti{
 	-fx-opacity: 1;
+}
+
+.tabla .label{
+	-fx-alignment: baseline-left;
 }
 
 #lblInicio{

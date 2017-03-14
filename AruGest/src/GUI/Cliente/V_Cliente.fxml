@@ -137,7 +137,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="636.0">
+                              <TableView fx:id="tableVehiculo" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="636.0" styleClass="tabla">
                                 <columns>
                                   <TableColumn fx:id="columnaMarca" prefWidth="811.0" text="Marca y modelo" />
                                   <TableColumn fx:id="columnaMatricula" minWidth="50.0" prefWidth="179.0" text="Matrícula" />
@@ -219,7 +219,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <TableView fx:id="tablePresupuestos" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0">
+                              <TableView fx:id="tablePresupuestos" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0" styleClass="tabla">
                                 <columns>
                                   <TableColumn fx:id="columnaNumPresupuesto" prefWidth="105.0" text="Nº Presupuesto" />
                                   <TableColumn fx:id="columnaVehiculoPresupuesto" prefWidth="202.66668701171875" text="Vehículo" />
@@ -244,7 +244,7 @@
                      <children>
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
-                              <TableView fx:id="tableFacturas" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0">
+                              <TableView fx:id="tableFacturas" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0" styleClass="tabla">
                                  <columns>
                                     <TableColumn fx:id="columnaNumFactura" prefWidth="105.0" text="Nº Factura" />
                                     <TableColumn fx:id="columnaVehiculoFactura" prefWidth="494.0" text="Vehículo" />
@@ -271,7 +271,7 @@
                            <children>
                               <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#addVehiculoSustitucion" prefHeight="27.0" prefWidth="222.0" styleClass="my-button" text="Añadir vehículo de sustitución" />
                               <Button layoutX="233.0" layoutY="7.0" mnemonicParsing="false" onAction="#marcarDevuelto" prefHeight="27.0" prefWidth="259.0" styleClass="my-button" text="Marcar vehículo como devuelto" />
-                              <TableView fx:id="tableSustitucion" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0">
+                              <TableView fx:id="tableSustitucion" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="322.0" prefWidth="1046.0" styleClass="tabla">
                                  <columns>
                                     <TableColumn fx:id="columnaMarcaSustitucion" prefWidth="126.0" text="Vehículo sustitución" />
                                     <TableColumn fx:id="columnaMatriculaSustitucion" minWidth="50.0" prefWidth="96.0" text="Matrícula" />
@@ -297,7 +297,7 @@
                         <Pane layoutX="3.0" layoutY="3.0" prefHeight="380.0" prefWidth="1071.0" styleClass="background" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0">
                            <children>
                               <Button layoutX="8.0" layoutY="7.0" mnemonicParsing="false" onAction="#agregaDocumento" prefHeight="27.0" prefWidth="160.0" styleClass="my-button" text="Añadir documento" />
-                              <TableView fx:id="tableDocumentos" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="320.0" prefWidth="350.0">
+                              <TableView fx:id="tableDocumentos" editable="true" layoutX="8.0" layoutY="45.0" prefHeight="320.0" prefWidth="350.0" styleClass="tabla">
                                  <columns>
                                     <TableColumn fx:id="columnaNombreDocumento" prefWidth="343.0" text="Nombre" />
                                  </columns>

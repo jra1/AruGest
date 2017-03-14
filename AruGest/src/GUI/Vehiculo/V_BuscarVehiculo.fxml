@@ -48,7 +48,7 @@
       <Label layoutX="14.0" layoutY="208.0" styleClass="titulo" text="Resultados de la búsqueda" />
       <Pane layoutX="25.0" layoutY="233.0" prefHeight="441.0" prefWidth="1087.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tableVehiculos" layoutX="5.0" layoutY="43.0" prefHeight="388.0" prefWidth="752.0">
+            <TableView fx:id="tableVehiculos" layoutX="5.0" layoutY="43.0" prefHeight="388.0" prefWidth="752.0" styleClass="tabla">
               <columns>
                   <TableColumn fx:id="columnaTipo" minWidth="0.0" prefWidth="95.0" text="Tipo" />
                 <TableColumn fx:id="columnaMatricula" prefWidth="95.0" text="Matrícula" />
@@ -57,7 +57,7 @@
                   <TableColumn fx:id="columnaCliente" maxWidth="623.0" prefWidth="230.0" text="Cliente" />
               </columns>
             </TableView>
-            <GridPane layoutX="764.0" layoutY="21.0" prefHeight="410.0" prefWidth="316.0">
+            <GridPane fx:id="datos" layoutX="764.0" layoutY="21.0" prefHeight="410.0" prefWidth="316.0">
                <children>
                   <Label styleClass="my-label" text="MARCA" GridPane.rowIndex="2" />
                   <Label styleClass="my-label" text="MODELO" GridPane.rowIndex="3" />

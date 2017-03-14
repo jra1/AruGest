@@ -134,6 +134,8 @@ public class V_BuscarVehiculoController {
 			}
 		});
 		tableVehiculos.setTooltip(new Tooltip("Doble click para hacer factura / presupuesto"));
+
+		// mostrarDatos(false);
 	}
 
 	public void setFocus() {
@@ -180,6 +182,7 @@ public class V_BuscarVehiculoController {
 	private void mostrarDetallesVehiculo(Vehiculo v) {
 		if (v != null) {
 			Inicio.CLIENTE_ID = v.getClienteID();
+			// mostrarDatos(true);
 			lblTipoVehiculo.setText(Utilidades.tipoIDtoString(v.getTipoID()));
 			lblMatricula.setText(v.getMatricula());
 			lblMarca.setText(v.getMarca());
@@ -204,8 +207,23 @@ public class V_BuscarVehiculoController {
 			lblColor.setText("-");
 			lblCodRadio.setText("-");
 			esVehiculoSusti.setSelected(false);
+			// mostrarDatos(false);
 		}
 	}
+
+	// private void mostrarDatos(boolean mostrar) {
+	// lblTipoVehiculo.setVisible(mostrar);
+	// lblMatricula.setVisible(mostrar);
+	// lblMarca.setVisible(mostrar);
+	// lblModelo.setVisible(mostrar);
+	// lblVersion.setVisible(mostrar);
+	// lblAnio.setVisible(mostrar);
+	// lblBastidor.setVisible(mostrar);
+	// lblLetrasMotor.setVisible(mostrar);
+	// lblColor.setVisible(mostrar);
+	// lblCodRadio.setVisible(mostrar);
+	// esVehiculoSusti.setVisible(mostrar);
+	// }
 
 	/**
 	 * Edita el vehículo seleccionado

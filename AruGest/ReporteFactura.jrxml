@@ -271,15 +271,15 @@ RUIZ ARANA]]></text>
 ruizarana@hotmail.com - 01013 VITORIA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="498" y="10" width="57" height="15" uuid="43ea20d6-49fb-4a03-9f08-565b0622e240"/>
+				<reportElement x="437" y="10" width="57" height="15" uuid="43ea20d6-49fb-4a03-9f08-565b0622e240"/>
 				<textFieldExpression><![CDATA[($P{numfactura} == 0 ? ("") : ($P{numfactura}) )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="498" y="37" width="57" height="15" uuid="e286856e-2bd7-4c0f-affd-f2d7dc8bb670"/>
+				<reportElement x="459" y="37" width="57" height="15" uuid="e286856e-2bd7-4c0f-affd-f2d7dc8bb670"/>
 				<textFieldExpression><![CDATA[($P{numpresupuesto} == 0 ? ("") : ($P{numpresupuesto}))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="498" y="64" width="57" height="15" uuid="fec985f0-9ffb-4675-af23-ebced1680024"/>
+				<reportElement x="490" y="64" width="57" height="15" uuid="fec985f0-9ffb-4675-af23-ebced1680024"/>
 				<textFieldExpression><![CDATA[($P{numorden} == 0 ? ("") : ($P{numorden}))]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -329,35 +329,35 @@ ruizarana@hotmail.com - 01013 VITORIA]]></text>
 				<textFieldExpression><![CDATA["Kms: " + $P{kms}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="440" y="10" width="56" height="15" uuid="b5cd325f-d5a8-41c2-a129-f866ed94f979"/>
+				<reportElement x="376" y="10" width="56" height="15" uuid="b5cd325f-d5a8-41c2-a129-f866ed94f979"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Factura N.º]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="418" y="37" width="78" height="15" uuid="ab62ad7f-3345-42d3-a0e5-e8073b12606d"/>
+				<reportElement x="376" y="37" width="78" height="15" uuid="ab62ad7f-3345-42d3-a0e5-e8073b12606d"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Presupuesto N.º]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="387" y="64" width="109" height="15" uuid="8a70f40b-9fb8-4d03-9407-487cdbedb206"/>
+				<reportElement x="376" y="64" width="109" height="15" uuid="8a70f40b-9fb8-4d03-9407-487cdbedb206"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Orden de reparación N.º]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="91" width="129" height="15" uuid="bd2b0791-7aaa-4979-8941-915d04a6ffb5"/>
+				<reportElement x="376" y="91" width="120" height="15" uuid="bd2b0791-7aaa-4979-8941-915d04a6ffb5"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Resguardo de depósito N.º]]></text>
 			</staticText>
 			<image>
-				<reportElement x="428" y="11" width="12" height="12" uuid="fff54283-caf4-40ef-a3a2-49eafbb0c21e"/>
+				<reportElement x="354" y="11" width="12" height="12" uuid="fff54283-caf4-40ef-a3a2-49eafbb0c21e"/>
 				<imageExpression><![CDATA[$P{cboxfactura}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="404" y="38" width="12" height="12" uuid="8280be7c-1867-4b19-beeb-5e3895f646bc"/>
+				<reportElement x="354" y="38" width="12" height="12" uuid="8280be7c-1867-4b19-beeb-5e3895f646bc"/>
 				<imageExpression><![CDATA[$P{cboxpresupuesto}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="372" y="65" width="12" height="12" uuid="01408914-75d0-4d18-99a3-37cb9ea7856c"/>
+				<reportElement x="354" y="65" width="12" height="12" uuid="01408914-75d0-4d18-99a3-37cb9ea7856c"/>
 				<imageExpression><![CDATA[$P{cboxorden}]]></imageExpression>
 			</image>
 			<image>

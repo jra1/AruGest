@@ -41,7 +41,7 @@
       <Label layoutX="11.0" layoutY="254.0" styleClass="titulo" text="Resultados de la búsqueda" />
       <Pane layoutX="11.0" layoutY="279.0" prefHeight="391.0" prefWidth="1084.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
-            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="46.0" prefHeight="336.0" prefWidth="1054.0">
+            <TableView fx:id="tableClientes" layoutX="14.0" layoutY="46.0" prefHeight="336.0" prefWidth="1054.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaNombre" prefWidth="287.0" text="Nombre cliente" />
                 <TableColumn fx:id="columnaDni" prefWidth="133.0" text="NIF / CIF" />

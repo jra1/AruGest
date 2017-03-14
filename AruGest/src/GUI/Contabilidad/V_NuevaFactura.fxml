@@ -236,7 +236,7 @@
                </font>
             </TextField>
             <Button fx:id="btnAdd" layoutX="860.0" layoutY="26.0" mnemonicParsing="false" onAction="#add" prefHeight="27.0" prefWidth="92.0" styleClass="my-button" text="AÑADIR" />
-            <TableView fx:id="tableServicio" editable="true" layoutX="14.0" layoutY="64.0" prefHeight="328.0" prefWidth="375.0">
+            <TableView fx:id="tableServicio" editable="true" layoutX="14.0" layoutY="64.0" prefHeight="328.0" prefWidth="375.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaConceptoServ" prefWidth="325.6666564941406" text="SERVICIOS A REALIZAR" />
                 <TableColumn fx:id="columnaHorasServ" prefWidth="47.333343505859375" text="H" />
@@ -249,7 +249,7 @@
                </cursor>
             </TableView>
             <Button fx:id="btnQuitarServ" layoutX="61.0" layoutY="398.0" mnemonicParsing="false" onAction="#eliminarServicio" prefHeight="27.0" prefWidth="177.0" styleClass="my-button" text="ELIMINAR SERVICIO" />
-            <TableView fx:id="tableMaterial" editable="true" layoutX="401.0" layoutY="64.0" prefHeight="328.0" prefWidth="449.0">
+            <TableView fx:id="tableMaterial" editable="true" layoutX="401.0" layoutY="64.0" prefHeight="328.0" prefWidth="449.0" styleClass="tabla">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

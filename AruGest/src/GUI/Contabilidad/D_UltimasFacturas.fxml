@@ -13,7 +13,7 @@
             <Button cancelButton="true" layoutX="282.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
             <Label alignment="CENTER" layoutX="7.0" layoutY="9.0" prefHeight="22.0" prefWidth="624.0" styleClass="titulo" text="Últimas facturas guardadas" />
             <Separator layoutX="6.0" layoutY="42.0" prefHeight="1.0" prefWidth="624.0" />
-            <TableView fx:id="tableFacturas" layoutX="6.0" layoutY="51.0" prefHeight="212.0" prefWidth="624.0">
+            <TableView fx:id="tableFacturas" layoutX="6.0" layoutY="51.0" prefHeight="212.0" prefWidth="624.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaNumFactura" prefWidth="75.0" text="Nº Factura" />
                 <TableColumn fx:id="columnaFecha" prefWidth="87.0" text="Fecha" />

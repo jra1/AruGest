@@ -25,13 +25,13 @@
          <children>
             <Label layoutX="14.0" layoutY="14.0" styleClass="my-label" text="Golpes guardados" />
             <Label layoutX="283.0" layoutY="14.0" styleClass="my-label" text="Elementos del golpe seleccionado" />
-            <TableView fx:id="tableGolpes" layoutX="14.0" layoutY="78.0" prefHeight="248.0" prefWidth="237.0">
+            <TableView fx:id="tableGolpes" layoutX="14.0" layoutY="78.0" prefHeight="248.0" prefWidth="237.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaIDGolpe" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="columnaNombreGolpe" prefWidth="157.0" text="Nombre del golpe" />
               </columns>
             </TableView>
-            <TableView fx:id="tableElementos" layoutX="283.0" layoutY="34.0" prefHeight="586.0" prefWidth="494.0">
+            <TableView fx:id="tableElementos" layoutX="283.0" layoutY="34.0" prefHeight="586.0" prefWidth="494.0" styleClass="tabla">
               <columns>
                 <TableColumn fx:id="columnaNombreElemento" prefWidth="300.0" text="Nombre elemento" />
                 <TableColumn fx:id="columnaTipoElemento" prefWidth="193.0" text="Tipo elemento" />

@@ -29,7 +29,7 @@
             </GridPane>
             <Button defaultButton="true" layoutX="14.0" layoutY="463.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="124.0" styleClass="my-button" text="Guardar cambios" />
             <Button cancelButton="true" layoutX="208.0" layoutY="463.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
-            <TableView fx:id="tableDisponibles" editable="true" layoutX="10.0" layoutY="26.0" prefHeight="222.0" prefWidth="274.0">
+            <TableView fx:id="tableDisponibles" editable="true" layoutX="10.0" layoutY="26.0" prefHeight="222.0" prefWidth="274.0" styleClass="tabla">
                <columns>
                   <TableColumn fx:id="columnaVehiculoDisponibles" prefWidth="170.0" text="Vehículo sustitución" />
                   <TableColumn fx:id="columnaMatriculaDisponibles" minWidth="50.0" prefWidth="102.0" text="Matrícula" />

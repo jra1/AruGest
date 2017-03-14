@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="186.0" prefWidth="312.0" styleClass="back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.D_LoginController">
    <children>
-      <Pane layoutX="6.0" layoutY="4.0" prefHeight="173.0" prefWidth="297.0" styleClass="background">
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="173.0" prefWidth="297.0">
          <children>
             <Button fx:id="btnAceptar" defaultButton="true" layoutX="28.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
             <Button cancelButton="true" layoutX="189.0" layoutY="133.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
