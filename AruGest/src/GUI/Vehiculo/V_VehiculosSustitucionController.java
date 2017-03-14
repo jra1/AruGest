@@ -123,41 +123,89 @@ public class V_VehiculosSustitucionController {
 		// Cargar histórico
 		cargarHistorico();
 
-		// FILTRO AL ESCRIBIR EN EL TEXTO DEL NOMBRE EL NOMBRE DEL CLIENTE O LA
-		// MATRÍCULA DEL VEHÍCULO
-		// 1. Wrap the ObservableList in a FilteredList (initially display all
-		// data).
-		FilteredList<VehiculoSustitucionClienteVehiculo> filteredData = new FilteredList<>(listaHistorico, p -> true);
+		ponerFiltros();
+	}
 
-		// 2. Set the filter Predicate whenever the filter changes.
+	/**
+	 * Pone los filtros correspondientes en la tabla de histórico
+	 */
+	private void ponerFiltros() {
+		// Filtro al ir escribiendo en los campos
+		FilteredList<VehiculoSustitucionClienteVehiculo> filteredData = new FilteredList<>(listaHistorico, p -> true);
+		// Filtro nombre cliente
 		txtNombre.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(person -> {
-				// If filter text is empty, display all persons.
+			filteredData.setPredicate(vehiculo -> {
 				if (newValue == null || newValue.isEmpty()) {
 					return true;
 				}
-
-				// Compare first name and last name of every person with filter
-				// text.
 				String lowerCaseFilter = newValue.toLowerCase();
 
-				if (person.getCliente().getNombre().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches first name.
-				} else if (person.getVehiculo().getMatricula().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches last name.
+				if (vehiculo.getCliente().getNombre().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
 				}
-				return false; // Does not match.
+				return false;
+			});
+		});
+		// Filtro matrícula
+		txtMatricula.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(vehiculo -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (vehiculo.getVehiculo().getMatricula().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				return false;
+			});
+		});
+		// Filtro vehículo
+		txtVehiculo.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(vehiculo -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (vehiculo.getVehiculo().getMarcaModelo().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				return false;
+			});
+		});
+		// Filtro fecha entrega
+		txtFechaEntrega.valueProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(vehiculo -> {
+				if (newValue == null) {
+					return true;
+				}
+
+				if (vehiculo.getFechacoge().compareTo(Utilidades.LocalDateADate(newValue)) == 0) {
+					return true;
+				}
+				return false;
+			});
+		});
+		// Filtro fecha devolución
+		txtFechaDevolucion.valueProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(vehiculo -> {
+				if (newValue == null) {
+					return true;
+				}
+
+				if (vehiculo.getFechadevuelve().compareTo(Utilidades.LocalDateADate(newValue)) == 0) {
+					return true;
+				}
+				return false;
 			});
 		});
 
-		// 3. Wrap the FilteredList in a SortedList.
+		// Poner en la tabla la lista filtrada
 		SortedList<VehiculoSustitucionClienteVehiculo> sortedData = new SortedList<>(filteredData);
-
-		// 4. Bind the SortedList comparator to the TableView comparator.
 		sortedData.comparatorProperty().bind(tableHistorico.comparatorProperty());
-
-		// 5. Add sorted (and filtered) data to the table.
 		tableHistorico.setItems(sortedData);
+
 	}
 
 	/**
@@ -261,6 +309,7 @@ public class V_VehiculosSustitucionController {
 					// cargar las tablas de nuevo hasta que resuelva el error:
 					cargarDisponibles();
 					cargarHistorico();
+					ponerFiltros();
 					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Éxito", "Vehículo marcado como devuelto", "");
 				} else {
 					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al marcar el vehículo",

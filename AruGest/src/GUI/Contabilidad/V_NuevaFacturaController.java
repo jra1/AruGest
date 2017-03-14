@@ -372,19 +372,19 @@ public class V_NuevaFacturaController {
 		// Marcar algunos checkbox que son habituales
 		if (Inicio.OPCION_NUEVA.equalsIgnoreCase("P")) {
 			chckbxPresupuesto.setSelected(true);
-			txtNumPresupuesto.setText("" + Inicio.NUM_PRESUPUESTO);
+			txtNumPresupuesto.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_PRESUPUESTO));
 			chckbxFactura.setSelected(false);
 		} else if (Inicio.OPCION_NUEVA.equalsIgnoreCase("F")) {
 			chckbxPresupuesto.setSelected(false);
 			chckbxFactura.setSelected(true);
-			txtNumfactura.setText("" + Inicio.NUM_FACTURA);
+			txtNumfactura.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_FACTURA));
 		} else if (Inicio.OPCION_NUEVA.equalsIgnoreCase("A")) { // A se ponen
 																// los dos
 			chckbxFactura.setSelected(true);
-			txtNumfactura.setText("" + Inicio.NUM_FACTURA);
+			txtNumfactura.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_FACTURA));
 
 			chckbxPresupuesto.setSelected(true);
-			txtNumPresupuesto.setText("" + Inicio.NUM_PRESUPUESTO);
+			txtNumPresupuesto.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_PRESUPUESTO));
 		}
 		chckbxPermisoPruebas.setSelected(true);
 		chckbxNoPiezas.setSelected(true);
@@ -426,6 +426,22 @@ public class V_NuevaFacturaController {
 			((Material) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPreciounit(t.getNewValue());
 			// Se actualizan los valores del precio
 			actualizarPrecio();
+		});
+
+		chckbxFactura.selectedProperty().addListener((observable, wasSelected, isSelected) -> {
+			if (isSelected) {
+				txtNumfactura.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_FACTURA));
+			} else {
+				txtNumfactura.setText("");
+			}
+		});
+
+		chckbxPresupuesto.selectedProperty().addListener((observable, wasSelected, isSelected) -> {
+			if (isSelected) {
+				txtNumPresupuesto.setText("" + Utilidades.formateaNumFactura(Inicio.NUM_PRESUPUESTO));
+			} else {
+				txtNumPresupuesto.setText("");
+			}
 		});
 	}
 

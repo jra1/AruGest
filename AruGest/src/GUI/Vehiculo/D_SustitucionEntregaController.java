@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.Vehiculo;
-import Modelo.VehiculoSustitucion;
 import Modelo.VehiculoSustitucionClienteVehiculo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,10 +100,13 @@ public class D_SustitucionEntregaController {
 	private void handleOk() {
 		if (isInputValid()) {
 			v = tableDisponibles.getSelectionModel().getSelectedItem();
-			new VehiculoSustitucion(0, Utilidades.LocalDateADate(txtFecha.getValue()), null, Inicio.CLIENTE_ID,
-					v.getIdvehiculo(), txtObservaciones.getText());
+
+			vscv.setFechacoge(Utilidades.LocalDateADate(txtFecha.getValue()));
+			vscv.setFechadevuelve(null);
+			vscv.setClienteID(Inicio.CLIENTE_ID);
+			vscv.setVehiculoID(v.getIdvehiculo());
+			vscv.setObservaciones(txtObservaciones.getText());
 			vscv.setVehiculo(v);
-			// vscv.setVehiculoSustitucion(vs);
 
 			okClicked = true;
 			dialogStage.close();

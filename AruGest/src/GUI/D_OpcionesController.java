@@ -40,8 +40,8 @@ public class D_OpcionesController {
 		// Cargar los datos
 		txtPrecioHora.setText(Inicio.PRECIO_HORA + "");
 		txtIva.setText(Inicio.PRECIO_IVA + "");
-		txtNumPresupuesto.setText(Inicio.NUM_PRESUPUESTO + "");
-		txtNumFactura.setText(Inicio.NUM_FACTURA + "");
+		txtNumPresupuesto.setText(Utilidades.formateaNumFactura(Inicio.NUM_PRESUPUESTO) + "");
+		txtNumFactura.setText(Utilidades.formateaNumFactura(Inicio.NUM_FACTURA) + "");
 		txtRutaFacturas.setText(Inicio.RUTA_FACTURAS);
 	}
 

@@ -208,7 +208,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="sp" prefHeight="940.0" prefWidth="1410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane fx:id="sp" prefHeight="680.0" prefWidth="1106.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <Label id="lblInicio" alignment="CENTER" contentDisplay="CENTER" prefHeight="680.0" prefWidth="1106.0" text="AruGest Software" textAlignment="CENTER">
                      <font>

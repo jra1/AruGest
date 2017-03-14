@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.V_BuscarVehiculoController">
    <children>
-      <Label layoutX="26.0" styleClass="titulo" text="Buscar vehículo" />
+      <Label layoutX="14.0" styleClass="titulo" text="Buscar vehículo" />
       <Pane layoutX="26.0" layoutY="21.0" prefHeight="184.0" prefWidth="1083.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="21.0">
          <children>
             <GridPane layoutX="7.0" layoutY="4.0" prefHeight="173.0" prefWidth="447.0">
@@ -26,15 +26,15 @@
                   <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="my-label" text="TIPO VEHÍCULO" />
+                  <Label styleClass="my-label" text="Tipo vehículo" />
                   <ComboBox fx:id="comboTipoVehiculo" prefWidth="150.0" styleClass="my-text-field" GridPane.columnIndex="1" />
-                  <Label styleClass="my-label" text="MATRÍCULA" GridPane.rowIndex="1" />
+                  <Label styleClass="my-label" text="Matrícula" GridPane.rowIndex="1" />
                   <TextField fx:id="txtMatricula" prefHeight="25.0" prefWidth="139.0" promptText="Ej. 1947FFY" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label styleClass="my-label" text="MARCA" GridPane.rowIndex="2" />
+                  <Label styleClass="my-label" text="Marca" GridPane.rowIndex="2" />
                   <TextField fx:id="txtMarca" prefHeight="25.0" prefWidth="308.0" promptText="Ej. Renault" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label styleClass="my-label" text="MODELO" GridPane.rowIndex="3" />
+                  <Label styleClass="my-label" text="Modelo" GridPane.rowIndex="3" />
                   <TextField fx:id="txtModelo" prefHeight="25.0" prefWidth="308.0" promptText="Ej. Megane" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label styleClass="my-label" text="NOMBRE CLIENTE" GridPane.rowIndex="4" />
+                  <Label styleClass="my-label" text="Nombre cliente" GridPane.rowIndex="4" />
                   <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="139.0" promptText="Ej. 12345678D" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
@@ -45,7 +45,7 @@
             </Button>
          </children>
       </Pane>
-      <Label layoutX="26.0" layoutY="208.0" styleClass="titulo" text="Resultados de la búsqueda" />
+      <Label layoutX="14.0" layoutY="208.0" styleClass="titulo" text="Resultados de la búsqueda" />
       <Pane layoutX="25.0" layoutY="233.0" prefHeight="441.0" prefWidth="1087.0" styleClass="background" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0">
          <children>
             <TableView fx:id="tableVehiculos" layoutX="5.0" layoutY="43.0" prefHeight="388.0" prefWidth="752.0">

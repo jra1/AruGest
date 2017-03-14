@@ -813,8 +813,8 @@ public class Conexion {
 		String sql = "";
 		try {
 			sql = "UPDATE VEHICULO SET MARCA = ?, MODELO = ?, VERSION = ?, ANIO = ?,"
-					+ "BASTIDOR = ?, LETRASMOTOR = ?, COLOR = ?, CODRADIO = ?, TIPOID = ?" + "WHERE IDVEHICULO = "
-					+ v.getIdvehiculo();
+					+ "BASTIDOR = ?, LETRASMOTOR = ?, COLOR = ?, CODRADIO = ?, TIPOID = ?, ESVEHICULOSUSTITUCION = ? "
+					+ "WHERE IDVEHICULO = " + v.getIdvehiculo();
 			PreparedStatement st = getCon().prepareStatement(sql);
 			st.setString(1, v.getMarca());
 			st.setString(2, v.getModelo());
@@ -825,6 +825,7 @@ public class Conexion {
 			st.setString(7, v.getColor());
 			st.setString(8, v.getCodradio());
 			st.setInt(9, v.getTipoID());
+			st.setBoolean(10, v.isEsVehiculoSustitucion());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 

@@ -348,7 +348,7 @@
          </children>
       </Pane>
       <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="19.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
-      <TextField id="porcentaje" fx:id="txtPorcentajeDefOcultos" layoutX="273.0" layoutY="609.0" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field">
+      <TextField id="porcentaje" fx:id="txtPorcentajeDefOcultos" layoutX="242.0" layoutY="609.0" prefHeight="31.0" prefWidth="41.0" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>

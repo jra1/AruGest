@@ -58,7 +58,6 @@
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="243.0" minWidth="5.66015625" prefWidth="243.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -69,22 +68,22 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="lblTelf1Cia" layoutX="916.0" layoutY="123.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label layoutX="756.0" layoutY="123.0" styleClass="my-label" text="TELÉFONO 1" GridPane.rowIndex="3" />
-                  <Label fx:id="lblNombreCia" layoutX="907.0" layoutY="58.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="lblDireccionCia" layoutX="916.0" layoutY="168.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label layoutX="756.0" layoutY="58.0" styleClass="my-label" text="NOMBRE CÍA" GridPane.rowIndex="1" />
-                  <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="5" />
-                  <Label layoutX="756.0" layoutY="85.0" styleClass="my-label" text="CIF" GridPane.rowIndex="2" />
-                  <Label fx:id="lblCifCia" layoutX="913.0" layoutY="85.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label styleClass="my-label" text="TELÉFONO 2" GridPane.rowIndex="4" />
-                  <Label fx:id="lblTelf2Cia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label styleClass="my-label" text="COD. POSTAL" GridPane.rowIndex="6" />
-                  <Label styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="7" />
-                  <Label styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="8" />
-                  <Label fx:id="lblCPostalCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label fx:id="lblLocalidadCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label fx:id="lblProvinciaCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label fx:id="lblTelf1Cia" layoutX="916.0" layoutY="123.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label layoutX="756.0" layoutY="123.0" styleClass="my-label" text="TELÉFONO 1" GridPane.rowIndex="2" />
+                  <Label fx:id="lblNombreCia" layoutX="907.0" layoutY="58.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" />
+                  <Label fx:id="lblDireccionCia" layoutX="916.0" layoutY="168.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label layoutX="756.0" layoutY="58.0" styleClass="my-label" text="NOMBRE CÍA" />
+                  <Label layoutX="756.0" layoutY="168.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="4" />
+                  <Label layoutX="756.0" layoutY="85.0" styleClass="my-label" text="CIF" GridPane.rowIndex="1" />
+                  <Label fx:id="lblCifCia" layoutX="913.0" layoutY="85.0" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label styleClass="my-label" text="TELÉFONO 2" GridPane.rowIndex="3" />
+                  <Label fx:id="lblTelf2Cia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label styleClass="my-label" text="COD. POSTAL" GridPane.rowIndex="5" />
+                  <Label styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="6" />
+                  <Label styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="7" />
+                  <Label fx:id="lblCPostalCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="lblLocalidadCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="lblProvinciaCia" styleClass="my-label-detalles" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
             </GridPane>
             <Button cancelButton="true" layoutX="580.0" layoutY="192.0" mnemonicParsing="false" onAction="#editarCia" prefHeight="25.0" prefWidth="107.0" styleClass="my-button" text="Editar cía" />
