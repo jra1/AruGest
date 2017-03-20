@@ -63,6 +63,7 @@
                   </TextField>
                   <Label styleClass="my-label" text="FECHA" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
                   <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="Fecha" styleClass="my-text-field" GridPane.columnIndex="5" />
+                  <CheckBox fx:id="chckbxCobrado" mnemonicParsing="false" styleClass="my-label" text="COBRADO" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
@@ -336,10 +337,8 @@
                   </TextField>
                </children>
             </GridPane>
-            <Button fx:id="btnActualizarPrecio" layoutX="902.0" layoutY="291.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="31.0" prefWidth="179.0" styleClass="my-button" text="ACTUALIZAR PRECIO" />
-            <CheckBox fx:id="chckbxModificable" layoutX="943.0" layoutY="334.0" mnemonicParsing="false" styleClass="my-label" text="Modificable" />
-            <Button layoutX="920.0" layoutY="361.0" mnemonicParsing="false" onAction="#llamaGuardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
-            <Button fx:id="btnGenerarFactura" layoutX="920.0" layoutY="402.0" mnemonicParsing="false" onAction="#generarPDF" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GENERAR FACTURA">
+            <Button layoutX="926.0" layoutY="320.0" mnemonicParsing="false" onAction="#llamaGuardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
+            <Button fx:id="btnGenerarFactura" layoutX="926.0" layoutY="361.0" mnemonicParsing="false" onAction="#generarPDF" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GENERAR FACTURA">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -357,8 +356,8 @@
       <CheckBox fx:id="chckbxNoPiezas" layoutX="526.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="No deseo recoger las piezas sustituidas a mi vehículo" />
       <Label layoutX="530.0" layoutY="645.0" styleClass="my-label" text="Fecha de entrega en caso de aprobación de presupuesto:" />
       <DatePicker id="fecha" fx:id="txtFechaEntrega" layoutX="913.0" layoutY="634.0" prefHeight="25.0" prefWidth="150.0" promptText="Fecha entrega" styleClass="my-text-field" />
-      <Label disable="true" layoutX="887.0" layoutY="-64.0" styleClass="my-label" text="TELF. 2" />
-      <TextField fx:id="txtMovil" disable="true" layoutX="940.0" layoutY="-70.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249" styleClass="my-text-field">
+      <Label disable="true" layoutX="884.0" layoutY="-141.0" styleClass="my-label" text="TELF. 2" />
+      <TextField fx:id="txtMovil" disable="true" layoutX="937.0" layoutY="-147.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>
@@ -383,5 +382,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
+      <Button fx:id="btnActualizarPrecio" layoutX="925.0" layoutY="-59.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="31.0" prefWidth="179.0" styleClass="my-button" text="ACTUALIZAR PRECIO" />
    </children>
 </AnchorPane>

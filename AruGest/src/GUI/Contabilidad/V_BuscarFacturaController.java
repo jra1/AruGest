@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
@@ -71,6 +72,8 @@ public class V_BuscarFacturaController {
 	private DatePicker txtFechaDesde;
 	@FXML
 	private DatePicker txtFechaHasta;
+	@FXML
+	private ComboBox<String> comboEstado;
 
 	@FXML
 	private TableView<FacturaClienteVehiculo> tableFacturas;
@@ -84,6 +87,8 @@ public class V_BuscarFacturaController {
 	private TableColumn<FacturaClienteVehiculo, String> columnaFecha;
 	@FXML
 	private TableColumn<FacturaClienteVehiculo, Number> columnaImporte;
+	@FXML
+	private TableColumn<FacturaClienteVehiculo, String> columnaEstado;
 
 	private ObservableList<FacturaClienteVehiculo> listaFacturas = FXCollections.observableArrayList();
 
@@ -92,6 +97,7 @@ public class V_BuscarFacturaController {
 	private AnchorPane ap;
 	private GestorVentana gv;
 	private String nombre = "";
+	private String estado = "T";
 
 	public Button boton1;
 	public Button boton2;
@@ -117,7 +123,12 @@ public class V_BuscarFacturaController {
 		chckbxOrdenDeReparacion.setSelected(true);
 		chckbxResguardoDeposito.setSelected(true);
 		txtFechaHasta.setValue(LocalDate.now());
-		txtFechaDesde.setValue(txtFechaHasta.getValue().minusDays(7));
+		txtFechaDesde.setValue(txtFechaHasta.getValue().minusMonths(1));
+
+		comboEstado.getItems().addAll("Todos", "Pendiente", "Cobrado");
+		comboEstado.setValue("Todos");
+		comboEstado.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> comprobarComboEstado(newValue));
 
 		// Para abrir factura con doble click
 		tableFacturas.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -137,6 +148,21 @@ public class V_BuscarFacturaController {
 	}
 
 	/**
+	 * Se comprueba el valor elegido en el combo de estado
+	 * 
+	 * @param valor
+	 */
+	private void comprobarComboEstado(String valor) {
+		if (valor.equalsIgnoreCase("Todos")) {
+			estado = "T";
+		} else if (valor.equalsIgnoreCase("Pendiente")) {
+			estado = "P";
+		} else {
+			estado = "C";
+		}
+	}
+
+	/**
 	 * Busca las facturas, presupuestos, órdenes o resguardos que coincidan con
 	 * los parámetros de búsqueda y pone las encontradas en la tabla
 	 */
@@ -148,6 +174,10 @@ public class V_BuscarFacturaController {
 		String numPresupuesto = "";
 		String numOrden = "";
 		String numResguardo = "";
+		String matricula = txtMatricula.getText();
+		matricula.replaceAll("-", "");
+		matricula.replaceAll(" ", "");
+		matricula.replaceAll("/", "");
 		if (!txtNumfactura.getText().isEmpty()) {
 			numFactura = txtNumfactura.getText();
 		}
@@ -163,8 +193,8 @@ public class V_BuscarFacturaController {
 		ArrayList<FacturaClienteVehiculo> lista = Inicio.CONEXION.buscarFacturas(chckbxFacturas.isSelected(),
 				chckbxPresupuestos.isSelected(), chckbxOrdenDeReparacion.isSelected(),
 				chckbxResguardoDeposito.isSelected(), numFactura, numPresupuesto, numOrden, numResguardo,
-				txtNombreCliente.getText(), txtModelo.getText(), txtMatricula.getText(), txtFijo.getText(),
-				txtMovil.getText(), txtFechaDesde.getValue(), txtFechaHasta.getValue());
+				txtNombreCliente.getText(), txtModelo.getText(), matricula, txtFijo.getText(), txtMovil.getText(),
+				txtFechaDesde.getValue(), txtFechaHasta.getValue(), estado);
 		if (lista.isEmpty()) {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
 					"No hay facturas con los parámetros de búsqueda introducidos.");
@@ -177,6 +207,7 @@ public class V_BuscarFacturaController {
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 				columnaFecha.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
 				columnaImporte.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
+				columnaEstado.setCellValueFactory(cellData -> cellData.getValue().getFactura().cobradoLetra());
 				tableFacturas.setItems(listaFacturas);
 			}
 		}

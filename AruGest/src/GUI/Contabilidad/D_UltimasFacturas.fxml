@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="326.0" prefWidth="652.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.D_UltimasFacturasController">
    <children>
-      <Pane layoutX="6.0" layoutY="4.0" prefHeight="314.0" prefWidth="639.0" styleClass="background">
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="314.0" prefWidth="639.0">
          <children>
             <Button cancelButton="true" layoutX="282.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
             <Label alignment="CENTER" layoutX="7.0" layoutY="9.0" prefHeight="22.0" prefWidth="624.0" styleClass="titulo" text="Últimas facturas guardadas" />

@@ -132,7 +132,7 @@ public class Conexion {
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
 							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, ESTADO, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
-							+ "NOPIEZAS, MODIFICABLE, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							+ "NOPIEZAS, COBRADO, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -152,7 +152,7 @@ public class Conexion {
 			st.setFloat(14, f.getPorcentajedefocul());
 			st.setBoolean(15, f.isPermisopruebas());
 			st.setBoolean(16, f.isNopiezas());
-			st.setBoolean(17, f.isModificable());
+			st.setBoolean(17, f.isCobrado());
 			st.setFloat(18, f.getImporteTotal());
 			st.setFloat(19, f.getSuma());
 			st.setFloat(20, f.getSumaIva());
@@ -224,7 +224,7 @@ public class Conexion {
 			// Se prepara la sentencia para introducir los datos de la factura
 			sql = "UPDATE FACTURA SET CLIENTEID = ?, VEHICULOID = ?, NUMFACTURA = ?, NUMPRESUPUESTO = ?, NUMORDENREP = ?, NUMRESGUARDO = ?, FECHA = ?, "
 					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, ESTADO = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
-					+ "NOPIEZAS = ?, MODIFICABLE = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
+					+ "NOPIEZAS = ?, COBRADO = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
 					+ idFactura;
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql);
 
@@ -245,7 +245,7 @@ public class Conexion {
 			st.setFloat(14, f.getPorcentajedefocul());
 			st.setBoolean(15, f.isPermisopruebas());
 			st.setBoolean(16, f.isNopiezas());
-			st.setBoolean(17, f.isModificable());
+			st.setBoolean(17, f.isCobrado());
 			st.setFloat(18, f.getImporteTotal());
 			st.setFloat(19, f.getSuma());
 			st.setFloat(20, f.getSumaIva());
@@ -708,6 +708,10 @@ public class Conexion {
 	 */
 	public boolean guardarVehiculo(Vehiculo v) {
 		boolean res = true;
+		String matricula = v.getMatricula();
+		matricula.replaceAll("-", "");
+		matricula.replaceAll(" ", "");
+		matricula.replaceAll("/", "");
 		try {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
@@ -720,7 +724,7 @@ public class Conexion {
 			st.setString(2, v.getMarca());
 			st.setString(3, v.getModelo());
 			st.setString(4, v.getVersion());
-			st.setString(5, v.getMatricula());
+			st.setString(5, matricula);
 			st.setInt(6, v.getAnio());
 			st.setString(7, v.getBastidor());
 			st.setString(8, v.getLetrasmotor());
@@ -1747,7 +1751,8 @@ public class Conexion {
 	 */
 	public ArrayList<FacturaClienteVehiculo> buscarFacturas(boolean esFactura, boolean esPresu, boolean esOrden,
 			boolean esResgu, String numFactura, String numPresu, String numOrden, String numResgu, String nombre,
-			String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde, LocalDate fechaHasta) {
+			String modelo, String matricula, String fijo, String movil, LocalDate fechaDesde, LocalDate fechaHasta,
+			String estado) {
 
 		String sql = "";
 		Factura f;
@@ -1762,11 +1767,41 @@ public class Conexion {
 			sql = "SELECT * FROM FACTURA INNER JOIN CLIENTE ON FACTURA.CLIENTEID = CLIENTE.IDCLIENTE INNER JOIN VEHICULO ON FACTURA.VEHICULOID = VEHICULO.IDVEHICULO ";
 			if (esFactura) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMFACTURA > 0";
+					sql += "WHERE (FACTURA.NUMFACTURA > 0 ";
 					esPrimero = false;
 				} else {
-					sql += "OR FACTURA.NUMFACTURA > 0";
+					sql += "OR FACTURA.NUMFACTURA > 0 ";
 				}
+			}
+			if (esPresu) {
+				if (esPrimero) {
+					sql += "WHERE (FACTURA.NUMPRESUPUESTO > 0 ";
+					esPrimero = false;
+				} else {
+					sql += "OR FACTURA.NUMPRESUPUESTO > 0 ";
+				}
+
+			}
+			if (esOrden) {
+				if (esPrimero) {
+					sql += "WHERE (FACTURA.NUMORDENREP > 0 ";
+					esPrimero = false;
+				} else {
+					sql += "OR FACTURA.NUMORDENREP > 0 ";
+				}
+
+			}
+			if (esResgu) {
+				if (esPrimero) {
+					sql += "WHERE (FACTURA.NUMRESGUARDO > 0 ";
+					esPrimero = false;
+				} else {
+					sql += "OR FACTURA.NUMRESGUARDO > 0 ";
+				}
+
+			}
+			if (!esPrimero) {
+				sql += ") ";
 			}
 			if (!numFactura.equalsIgnoreCase("")) {
 				if (esPrimero) {
@@ -1776,15 +1811,6 @@ public class Conexion {
 					sql += "AND FACTURA.NUMFACTURA = '" + Utilidades.formateaNumFactura(numFactura) + "' ";
 				}
 			}
-			if (esPresu) {
-				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMPRESUPUESTO > 0";
-					esPrimero = false;
-				} else {
-					sql += "OR FACTURA.NUMPRESUPUESTO > 0";
-				}
-
-			}
 			if (!numPresu.equalsIgnoreCase("")) {
 				if (esPrimero) {
 					sql += "WHERE FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
@@ -1792,15 +1818,6 @@ public class Conexion {
 				} else {
 					sql += "AND FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
 				}
-			}
-			if (esOrden) {
-				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMORDENREP > 0";
-					esPrimero = false;
-				} else {
-					sql += "OR FACTURA.NUMORDENREP > 0";
-				}
-
 			}
 			if (!numOrden.equalsIgnoreCase("")) {
 				if (esPrimero) {
@@ -1810,74 +1827,82 @@ public class Conexion {
 					sql += "AND FACTURA.NUMORDENREP = '" + Utilidades.formateaNumFactura(numOrden) + "' ";
 				}
 			}
-			if (esResgu) {
-				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMRESGUARDO > 0";
-					esPrimero = false;
-				} else {
-					sql += "OR FACTURA.NUMRESGUARDO > 0";
-				}
-
-			}
 			if (!numResgu.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "' ";
+					sql += "WHERE (FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "') ";
 					esPrimero = false;
 				} else {
-					sql += "AND FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "' ";
+					sql += "AND (FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "') ";
 				}
 			}
 			if (!nombre.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+					sql += "WHERE (UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%')) ";
 					esPrimero = false;
 				} else {
-					sql += "AND UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
+					sql += "AND (UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%')) ";
 				}
 			}
 			if (!modelo.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
+					sql += "WHERE (UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%')) ";
 					esPrimero = false;
 				} else {
-					sql += "AND UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
+					sql += "AND (UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%')) ";
 				}
 			}
 			if (!matricula.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+					sql += "WHERE (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 					esPrimero = false;
 				} else {
-					sql += "AND UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+					sql += "AND (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 				}
 			}
 			if (!fijo.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE CLIENTE.TELF1 = '" + fijo + "' ";
+					sql += "WHERE (CLIENTE.TELF1 = '" + fijo + "') ";
 					esPrimero = false;
 				} else {
-					sql += "AND CLIENTE.TELF1 = '" + fijo + "' ";
+					sql += "AND (CLIENTE.TELF1 = '" + fijo + "') ";
 				}
 			}
 			if (!movil.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE CLIENTE.TELF2 = '" + movil + "' ";
+					sql += "WHERE (CLIENTE.TELF2 = '" + movil + "') ";
 					esPrimero = false;
 				} else {
-					sql += "AND CLIENTE.TELF2 = '" + movil + "' ";
+					sql += "AND (CLIENTE.TELF2 = '" + movil + "') ";
 				}
 			}
 			if (!matricula.equalsIgnoreCase("")) {
 				if (esPrimero) {
-					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+					sql += "WHERE (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 					esPrimero = false;
 				} else {
-					sql += "AND UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
+					sql += "AND (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 				}
 			}
 
 			// Para comparar fechas, hay que ponerlas en el formato aaaa-mm-dd
-			sql += "AND FACTURA.FECHA BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'";
+			sql += "AND (FACTURA.FECHA BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "') ";
+
+			if (!estado.equalsIgnoreCase("T")) {
+				if (esPrimero) {
+					if (estado.equalsIgnoreCase("C")) {
+						sql += "WHERE (FACTURA.COBRADO = 'TRUE') ";
+					} else {
+						sql += "WHERE (FACTURA.COBRADO = 'FALSE') ";
+					}
+					esPrimero = false;
+				} else {
+					if (estado.equalsIgnoreCase("C")) {
+						sql += "AND (FACTURA.COBRADO = 'TRUE') ";
+					} else {
+						sql += "AND (FACTURA.COBRADO = 'FALSE') ";
+					}
+				}
+			}
 
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -1887,7 +1912,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2249,7 +2274,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2294,7 +2319,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2335,7 +2360,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
 						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("MODIFICABLE"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = leerVehiculoPorID(rs.getInt("VEHICULOID"));
 				c = leerClientePorID(rs.getInt("CLIENTEID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);

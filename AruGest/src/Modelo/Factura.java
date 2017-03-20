@@ -37,7 +37,7 @@ public class Factura {
 	private final BooleanProperty rdefocultos;
 	private final BooleanProperty permisopruebas;
 	private final BooleanProperty nopiezas;
-	private final BooleanProperty modificable;
+	private final BooleanProperty cobrado;
 	private final ObjectProperty<Blob> documento;
 
 	public Factura(Date fecha, Float importeTotal) {
@@ -62,14 +62,14 @@ public class Factura {
 		this.rdefocultos = new SimpleBooleanProperty(false);
 		this.permisopruebas = new SimpleBooleanProperty(false);
 		this.nopiezas = new SimpleBooleanProperty(false);
-		this.modificable = new SimpleBooleanProperty(false);
+		this.cobrado = new SimpleBooleanProperty(false);
 		this.documento = new SimpleObjectProperty<Blob>(null);
 	}
 
 	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, String numfactura, String numpresupuesto,
 			String numordenrep, String numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
 			float grua, float suma, float sumaIva, String estado, boolean rdefocultos, float porcentajedefocul,
-			boolean permisopruebas, boolean nopiezas, boolean modificable, float importeTotal) {
+			boolean permisopruebas, boolean nopiezas, boolean cobrado, float importeTotal) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
@@ -91,7 +91,7 @@ public class Factura {
 		this.rdefocultos = new SimpleBooleanProperty(rdefocultos);
 		this.permisopruebas = new SimpleBooleanProperty(permisopruebas);
 		this.nopiezas = new SimpleBooleanProperty(nopiezas);
-		this.modificable = new SimpleBooleanProperty(modificable);
+		this.cobrado = new SimpleBooleanProperty(cobrado);
 		this.documento = null;
 	}
 
@@ -100,7 +100,7 @@ public class Factura {
 			StringProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, FloatProperty suma,
 			FloatProperty sumaIva, StringProperty estado, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
-			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty modificable,
+			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty cobrado,
 			ObjectProperty<Blob> documento, FloatProperty importeTotal) {
 		super();
 		this.idfactura = idfactura;
@@ -124,7 +124,7 @@ public class Factura {
 		this.rdefocultos = rdefocultos;
 		this.permisopruebas = permisopruebas;
 		this.nopiezas = nopiezas;
-		this.modificable = modificable;
+		this.cobrado = cobrado;
 		this.documento = documento;
 	}
 
@@ -337,16 +337,26 @@ public class Factura {
 		this.nopiezasProperty().set(nopiezas);
 	}
 
-	public BooleanProperty modificableProperty() {
-		return this.modificable;
+	public BooleanProperty cobradoProperty() {
+		return this.cobrado;
 	}
 
-	public boolean isModificable() {
-		return this.modificableProperty().get();
+	public StringProperty cobradoLetra() {
+		SimpleStringProperty res;
+		if (isCobrado()) {
+			res = new SimpleStringProperty("COBRADO");
+		} else {
+			res = new SimpleStringProperty("PENDIENTE");
+		}
+		return res;
 	}
 
-	public void setModificable(final boolean modificable) {
-		this.modificableProperty().set(modificable);
+	public boolean isCobrado() {
+		return this.cobradoProperty().get();
+	}
+
+	public void setCobrado(final boolean cobrado) {
+		this.cobradoProperty().set(cobrado);
 	}
 
 	public ObjectProperty<Blob> documentoProperty() {

@@ -174,7 +174,7 @@ public class V_NuevaFacturaController {
 	@FXML
 	private Button btnActualizarPrecio;
 	@FXML
-	private CheckBox chckbxModificable;
+	private CheckBox chckbxCobrado;
 	@FXML
 	private Button btnGenerarFactura;
 
@@ -279,10 +279,7 @@ public class V_NuevaFacturaController {
 		tableMaterial.setItems(listaMaterial);
 
 		// Recoger piezas, modificable, fechaentrega...
-		chckbxModificable.setSelected(fce.getFactura().isModificable());
-		if (!fce.getFactura().isModificable()) {
-			facturaNoModificable();
-		}
+		chckbxCobrado.setSelected(fce.getFactura().isCobrado());
 		chckbxNoPiezas.setSelected(fce.getFactura().isNopiezas());
 		chckbxPermisoPruebas.setSelected(fce.getFactura().isPermisopruebas());
 		chckbxRepararDefOcultos.setSelected(fce.getFactura().isRdefocultos());
@@ -388,7 +385,7 @@ public class V_NuevaFacturaController {
 		}
 		chckbxPermisoPruebas.setSelected(true);
 		chckbxNoPiezas.setSelected(true);
-		chckbxModificable.setSelected(true);
+		chckbxCobrado.setSelected(false);
 
 		// Editar columna Concepto de la tabla Servicios
 		columnaConceptoServ.setCellFactory(TextFieldTableCell.<Servicio> forTableColumn());
@@ -450,55 +447,6 @@ public class V_NuevaFacturaController {
 	}
 
 	/**
-	 * Función que pone los campos de la factura deshabilitados para que no se
-	 * pueda modificar
-	 */
-	private void facturaNoModificable() {
-		chckbxFactura.setDisable(true);
-		chckbxModificable.setDisable(true);
-		chckbxNoPiezas.setDisable(true);
-		chckbxOrdenDeReparacion.setDisable(true);
-		chckbxPermisoPruebas.setDisable(true);
-		chckbxPresupuesto.setDisable(true);
-		chckbxRepararDefOcultos.setDisable(true);
-		chckbxResguardoDeposito.setDisable(true);
-		btnAdd.setDisable(true);
-		btnQuitarMat.setDisable(true);
-		btnQuitarServ.setDisable(true);
-		txtNumfactura.setDisable(true);
-		txtNumPresupuesto.setDisable(true);
-		txtNumOrden.setDisable(true);
-		txtNumResguardo.setDisable(true);
-		txtFecha.setDisable(true);
-		// txtNombre.setDisable(true);
-		// txtApellidos.setDisable(true);
-		// txtCalle.setDisable(true);
-		// txtNumero.setDisable(true);
-		// txtPiso.setDisable(true);
-		// txtLetra.setDisable(true);
-		// txtPoblacion.setDisable(true);
-		txtDni.setDisable(true);
-		// txtTel1.setDisable(true);
-		// txtMovil.setDisable(true);
-		// txtMarca.setDisable(true);
-		// txtModelo.setDisable(true);
-		// txtVersion.setDisable(true);
-		txtMatricula.setDisable(true);
-		// txtKms.setDisable(true);
-		txtConcepto.setDisable(true);
-		txtCantidad.setDisable(true);
-		txtValor.setDisable(true);
-		txtManoObra.setDisable(true);
-		txtMateriales.setDisable(true);
-		txtOtros.setDisable(true);
-		txtSubtotal.setDisable(true);
-		txtIva.setDisable(true);
-		txtTotal.setDisable(true);
-		txtPorcentajeDefOcultos.setDisable(true);
-		txtFechaEntrega.setDisable(true);
-	}
-
-	/**
 	 * Se comprueba el valor elegido en el combo para ocultar o no el TextField
 	 * de "Cantidad"
 	 * 
@@ -519,30 +467,6 @@ public class V_NuevaFacturaController {
 			esServicio = true;
 		}
 	}
-
-	/**
-	 * Se comprueba el valor elegido en el combo de tipo cliente para ocultar o
-	 * no el TextField de "Apellidos"
-	 * 
-	 * @param valor
-	 */
-	// private void comprobarComboTipoCliente(String valor) {
-	// if (valor.equalsIgnoreCase("Empresa")) {
-	// lblApellidos.setVisible(false);
-	// txtApellidos.setVisible(false);
-	// txtNombre.setPrefWidth(300);
-	// tipoCliente = 2;
-	// } else {
-	// lblApellidos.setVisible(true);
-	// txtApellidos.setVisible(true);
-	// txtNombre.setPrefWidth(100);
-	// tipoCliente = 1;
-	// }
-	// }
-	//
-	// private void comprobarComboTipoVehiculo(String valor) {
-	// tipoVehiculo = Utilidades.StringToTipoID(valor);
-	// }
 
 	/**
 	 * Se añade el servicio o material a la tabla correspondiente
@@ -1092,7 +1016,7 @@ public class V_NuevaFacturaController {
 		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
 				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
 				materiales, otros, suma, sumaIva, "ESTADO", chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
-				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxModificable.isSelected(), total);
+				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total);
 		return f;
 	}
 

@@ -27,7 +27,7 @@
 .background {
     /*-fx-background-color: rgb(139,248,164);*/
     -fx-border-style: solid;
-    -fx-border-color: black /*rgb(209,209,211) rgb(171,27,48)rgb(236,145,53) darkorange */; 
+    -fx-border-color: rgb(128,128,128) /*rgb(209,209,211) rgb(171,27,48)rgb(236,145,53) darkorange */; 
     -fx-border-radius: 10px;
     -fx-border-width: 2px; /* Grosor del borde */
 }

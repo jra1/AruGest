@@ -21,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public class V_BuscarProveedorCompaniaController {
 
@@ -104,6 +105,11 @@ public class V_BuscarProveedorCompaniaController {
 	@FXML
 	private Button btnEliminarProve;
 
+	@FXML
+	private Pane panelDetallesProve;
+	@FXML
+	private Pane panelDetallesCia;
+
 	// Resto de variables
 	private Inicio main;
 	public Button boton1;
@@ -154,6 +160,9 @@ public class V_BuscarProveedorCompaniaController {
 				eliminarCia(1);
 			}
 		});
+
+		panelDetallesProve.setVisible(false);
+		panelDetallesCia.setVisible(false);
 	}
 
 	/**
@@ -235,6 +244,7 @@ public class V_BuscarProveedorCompaniaController {
 			lblCPostalCia.setText("" + pcd.getDireccion().getCpostal());
 			lblLocalidadCia.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaCia.setText(pcd.getDireccion().getProvincia());
+			panelDetallesCia.setVisible(true);
 			try {
 				Image i = Inicio.CONEXION.cargarLogo(pcd.getIdprovecompa());
 				if (i != null) {
@@ -256,6 +266,7 @@ public class V_BuscarProveedorCompaniaController {
 			lblCPostalCia.setText("-");
 			lblLocalidadCia.setText("-");
 			lblProvinciaCia.setText("-");
+			panelDetallesCia.setVisible(false);
 		}
 	}
 
@@ -286,6 +297,7 @@ public class V_BuscarProveedorCompaniaController {
 				e.printStackTrace();
 				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", e.getMessage());
 			}
+			panelDetallesProve.setVisible(true);
 		} else {
 			lblNombreProve.setText("Selecciona un proveedor/desguace");
 			lblCifProve.setText("-");
@@ -295,6 +307,7 @@ public class V_BuscarProveedorCompaniaController {
 			lblCPostalProve.setText("-");
 			lblLocalidadProve.setText("-");
 			lblProvinciaProve.setText("-");
+			panelDetallesProve.setVisible(false);
 		}
 	}
 
