@@ -446,7 +446,7 @@ public class V_ClienteController {
 	@FXML
 	private void nuevoVehiculo() {
 		Vehiculo v = new Vehiculo(Inicio.CLIENTE_ID);
-		boolean okClicked = Inicio.mostrarEditorVehiculo(v);
+		boolean okClicked = Inicio.mostrarEditorVehiculo(v, false);
 		if (okClicked) {
 			// Cuando llega aqui son correctos los datos introducidos
 			if (Inicio.CONEXION.guardarVehiculo(v)) {
@@ -465,7 +465,7 @@ public class V_ClienteController {
 	private void editarVehiculo() {
 		Vehiculo v = tableVehiculo.getSelectionModel().getSelectedItem();
 		if (v != null) {
-			boolean okClicked = Inicio.mostrarEditorVehiculo(v);
+			boolean okClicked = Inicio.mostrarEditorVehiculo(v, false);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarVehiculo(v)) {
 					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Error", "Vehículo modificado con éxito", "");

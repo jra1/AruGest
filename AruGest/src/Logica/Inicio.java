@@ -286,7 +286,7 @@ public class Inicio extends Application {
 	 * @param vehiculo
 	 * @return true si el usuario a pulsado OK, false en los demás casos.
 	 */
-	public static boolean mostrarEditorVehiculo(Vehiculo v) {
+	public static boolean mostrarEditorVehiculo(Vehiculo v, boolean esSusti) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -306,9 +306,10 @@ public class Inicio extends Application {
 			// Set the person into the controller.
 			D_EditVehiculoController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			// if(v != null){
 			controller.setVehiculo(v);
-			// }
+			if (esSusti) {
+				controller.esVehiculoSustitucion();
+			}
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();

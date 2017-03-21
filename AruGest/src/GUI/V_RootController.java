@@ -19,6 +19,7 @@ import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.GestorVentana;
 import Modelo.ProveedorCompaniaDireccion;
+import Modelo.Vehiculo;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -167,6 +168,25 @@ public class V_RootController {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Se llama cuando el usuario pulsa en Añadir vehículo de sustitución
+	 */
+	@FXML
+	private void nuevoVehiculoSustitucion() {
+		Vehiculo v = new Vehiculo(0);
+		boolean okClicked = Inicio.mostrarEditorVehiculo(v, true);
+		if (okClicked) {
+			// Cuando llega aqui son correctos los datos introducidos
+			if (Inicio.CONEXION.guardarVehiculo(v)) {
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Vehículo de sustitución guardado",
+						"Se ha guardado el vehículo en la base de datos.");
+			} else {
+				Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
+						"Ocurrió un error al guardar el vehículo en la base de datos.");
+			}
 		}
 	}
 

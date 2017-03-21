@@ -1,13 +1,13 @@
 package GUI.Vehiculo;
 
+import Logica.Utilidades;
+import Modelo.Vehiculo;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import Logica.Utilidades;
-import Modelo.Vehiculo;
 
 /**
  * Dialog to edit details of a person.
@@ -66,6 +66,10 @@ public class D_EditVehiculoController {
 		this.dialogStage = dialogStage;
 	}
 
+	public void esVehiculoSustitucion() {
+		chckboxVehiculoSusti.setSelected(true);
+	}
+
 	/**
 	 * Coloca el vehículo a ser editado
 	 * 
@@ -74,14 +78,14 @@ public class D_EditVehiculoController {
 	 */
 	public void setVehiculo(Vehiculo v) {
 		this.v = v;
-		
-		if(v.getTipoID() > 0){
-			comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(v.getTipoID()));			
+
+		if (v.getTipoID() > 0) {
+			comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(v.getTipoID()));
 		}
 		txtMatricula.setText(v.getMatricula());
-		if(v.getMatricula().isEmpty()){
-			txtMatricula.setEditable(true);			
-		}else{
+		if (v.getMatricula().isEmpty()) {
+			txtMatricula.setEditable(true);
+		} else {
 			txtMatricula.setEditable(false);
 		}
 		txtMarca.setText(v.getMarca());
@@ -121,7 +125,7 @@ public class D_EditVehiculoController {
 			v.setColor(txtColor.getText());
 			v.setCodradio(txtCodRadio.getText());
 			v.setEsVehiculoSustitucion(chckboxVehiculoSusti.isSelected());
-			
+
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -149,18 +153,19 @@ public class D_EditVehiculoController {
 		if (txtMarca.getText().length() == 0 || txtModelo.getText().length() == 0) {
 			errorMessage += "Introduce la marca y el modelo del vehículo";
 		}
-		if(txtAnio.getText().length() > 0){
+		if (txtAnio.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtAnio.getText());
 			} catch (NumberFormatException e) {
 				errorMessage = "Año no válido.\n Introduce únicamente números";
-			}			
+			}
 		}
-		
+
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos", errorMessage);
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
+					errorMessage);
 			return false;
 		}
 	}

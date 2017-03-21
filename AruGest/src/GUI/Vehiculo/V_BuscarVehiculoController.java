@@ -226,7 +226,7 @@ public class V_BuscarVehiculoController {
 	private void editarVehiculo() {
 		Vehiculo v = tableVehiculos.getSelectionModel().getSelectedItem();
 		if (v != null) {
-			boolean okClicked = Inicio.mostrarEditorVehiculo(v);
+			boolean okClicked = Inicio.mostrarEditorVehiculo(v, false);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarVehiculo(v)) {
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Vehículo modificado con éxito", "");

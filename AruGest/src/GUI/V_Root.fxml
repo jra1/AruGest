@@ -15,7 +15,7 @@
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <Accordion fx:id="acor" layoutY="85.0" prefHeight="401.0" prefWidth="260.0" AnchorPane.bottomAnchor="454.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+            <Accordion fx:id="acor" layoutY="85.0" prefHeight="437.0" prefWidth="260.0" AnchorPane.bottomAnchor="418.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
               <panes>
                 <TitledPane fx:id="tPane" animated="false" prefHeight="353.0" prefWidth="260.0" text="Clientes">
                   <content>
@@ -45,7 +45,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                 </TitledPane>
-                <TitledPane animated="false" text="Vehículos">
+                <TitledPane animated="false" prefHeight="209.0" prefWidth="260.0" text="Vehículos">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -57,6 +57,11 @@
                                        </VBox.margin>
                                     </Button>
                                     <Button id="shiny-orange" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button id="shiny-orange" layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onAction="#nuevoVehiculoSustitucion" styleClass="green" text="Añadir vehículo de sustitución">
                                        <VBox.margin>
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
@@ -144,7 +149,7 @@
                         </ImageView>
                      </graphic>
                   </TitledPane>
-                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" text="Documentos">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="223.0" prefWidth="260.0" text="Documentos">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

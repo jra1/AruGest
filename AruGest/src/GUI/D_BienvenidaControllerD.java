@@ -261,7 +261,7 @@ public class D_BienvenidaControllerD extends Thread {
 					while (line != null) {
 						contador++;
 						line = line.trim();
-						updateProgress(contador + 1, 108); // Script 108 lineas
+						updateProgress(contador + 1, 100); // Script 108 lineas
 						if (!line.startsWith("--") && !line.startsWith("#") && !line.startsWith("//")) {
 							statement.append(line);
 							if (line.endsWith(";")) {

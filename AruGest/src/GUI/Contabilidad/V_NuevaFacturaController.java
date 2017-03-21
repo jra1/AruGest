@@ -765,23 +765,36 @@ public class V_NuevaFacturaController {
 	 * @param pDatos
 	 */
 	private void colocarDatos(ClienteParticularEmpresaDireccionVehiculo pDatos) {
-		if (pDatos.getParticular().getNif() != "") {
-			txtDni.setText(pDatos.getParticular().getNif());
-		} else if (pDatos.getEmpresa().getCif() != "") {
-			txtDni.setText(pDatos.getEmpresa().getCif());
+		if (pDatos.getParticular() != null || pDatos.getEmpresa() != null) {
+			if (pDatos.getParticular().getNif() != "") {
+				txtDni.setText(pDatos.getParticular().getNif());
+			} else if (pDatos.getEmpresa().getCif() != "") {
+				txtDni.setText(pDatos.getEmpresa().getCif());
+			} else {
+				txtDni.setText("");
+			}
 		} else {
 			txtDni.setText("");
 		}
-		if (!pDatos.getCliente().getNombre().equalsIgnoreCase("")) {
-			lblNombre.setText(pDatos.getCliente().getNombre());
+
+		if (pDatos.getCliente() != null) {
+			if (!pDatos.getCliente().getNombre().equalsIgnoreCase("")) {
+				lblNombre.setText(pDatos.getCliente().getNombre());
+			} else {
+				lblNombre.setText("Pulse para introducir cliente");
+			}
 		} else {
 			lblNombre.setText("Pulse para introducir cliente");
 		}
 
-		txtMatricula.setText(pDatos.getVehiculo().getMatricula());
-		if (!pDatos.getVehiculo().getMarca().equalsIgnoreCase("")
-				|| !pDatos.getVehiculo().getModelo().equalsIgnoreCase("")) {
-			lblMarcaModelo.setText(pDatos.getVehiculo().getMarcaModelo());
+		if (pDatos.getVehiculo() != null) {
+			txtMatricula.setText(pDatos.getVehiculo().getMatricula());
+			if (!pDatos.getVehiculo().getMarca().equalsIgnoreCase("")
+					|| !pDatos.getVehiculo().getModelo().equalsIgnoreCase("")) {
+				lblMarcaModelo.setText(pDatos.getVehiculo().getMarcaModelo());
+			} else {
+				lblMarcaModelo.setText("Pulse para introducir vehículo");
+			}
 		} else {
 			lblMarcaModelo.setText("Pulse para introducir vehículo");
 		}
