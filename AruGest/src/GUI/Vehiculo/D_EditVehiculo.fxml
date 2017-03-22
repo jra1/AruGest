@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="433.0" prefWidth="323.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.D_EditVehiculoController">
    <children>
-      <Pane layoutX="3.0" layoutY="7.0" prefHeight="420.0" prefWidth="316.0" styleClass="background">
+      <Pane layoutX="3.0" layoutY="7.0" prefHeight="420.0" prefWidth="316.0">
          <children>
             <GridPane layoutX="11.0" layoutY="4.0" prefHeight="369.0" prefWidth="296.0">
               <columnConstraints>

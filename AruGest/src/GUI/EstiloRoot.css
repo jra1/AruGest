@@ -167,6 +167,7 @@
 
 .my-text-field:focused {
     -fx-background-color: rgb(189,190,251);/* #ED9121;rgb(133,197,158);  #0093EF;*/
+   
 }
 
 #concepto{
@@ -227,19 +228,19 @@
 
 /*Alerts */
 .my-dialog{
-    -fx-background-color: rgb(207,205,205);
+    -fx-background-color: rgb(238,238,238);
     -fx-font-family: "Trebuchet MT"; /*"Asimov NarOu Mediana" */
-    -fx-text-fill: rgb(64,128,128);
+    -fx-text-fill: black;/*rgb(64,128,128);*/
 }
 .my-dialog > *.button-bar > *.container{
-    -fx-background-color: rgb(207,205,205);
+    -fx-background-color: rgb(238,238,238);
 }
 .my-dialog > *.label.content{
     -fx-font-size: 16px;
     /*-fx-font-weight: bold;*/
 }
 .my-dialog:header *.header-panel{
-    -fx-background-color: rgb(207,205,205);
+    -fx-background-color: rgb(238,238,238);
     -fx-border-style: solid;
     -fx-border-color: rgb(189,190,251); 
     -fx-border-radius: 10px;

@@ -1028,7 +1028,7 @@ public class V_NuevaFacturaController {
 		}
 		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
 				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
-				materiales, otros, suma, sumaIva, "ESTADO", chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
+				materiales, otros, suma, sumaIva, chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
 				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total);
 		return f;
 	}

@@ -131,7 +131,7 @@ public class Conexion {
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
-							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, ESTADO, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
+							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
 							+ "NOPIEZAS, COBRADO, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
@@ -147,16 +147,15 @@ public class Conexion {
 			st.setFloat(9, f.getManoobra());
 			st.setFloat(10, f.getMateriales());
 			st.setFloat(11, f.getGrua());
-			st.setString(12, f.getEstado());
-			st.setBoolean(13, f.isRdefocultos());
-			st.setFloat(14, f.getPorcentajedefocul());
-			st.setBoolean(15, f.isPermisopruebas());
-			st.setBoolean(16, f.isNopiezas());
-			st.setBoolean(17, f.isCobrado());
-			st.setFloat(18, f.getImporteTotal());
-			st.setFloat(19, f.getSuma());
-			st.setFloat(20, f.getSumaIva());
-			st.setFloat(21, f.getKms());
+			st.setBoolean(12, f.isRdefocultos());
+			st.setFloat(13, f.getPorcentajedefocul());
+			st.setBoolean(14, f.isPermisopruebas());
+			st.setBoolean(15, f.isNopiezas());
+			st.setBoolean(16, f.isCobrado());
+			st.setFloat(17, f.getImporteTotal());
+			st.setFloat(18, f.getSuma());
+			st.setFloat(19, f.getSumaIva());
+			st.setFloat(20, f.getKms());
 
 			// Ejecutamos la sentencia
 			int i = st.executeUpdate();
@@ -223,7 +222,7 @@ public class Conexion {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			sql = "UPDATE FACTURA SET CLIENTEID = ?, VEHICULOID = ?, NUMFACTURA = ?, NUMPRESUPUESTO = ?, NUMORDENREP = ?, NUMRESGUARDO = ?, FECHA = ?, "
-					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, ESTADO = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
+					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
 					+ "NOPIEZAS = ?, COBRADO = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
 					+ idFactura;
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql);
@@ -240,16 +239,15 @@ public class Conexion {
 			st.setFloat(9, f.getManoobra());
 			st.setFloat(10, f.getMateriales());
 			st.setFloat(11, f.getGrua());
-			st.setString(12, f.getEstado());
-			st.setBoolean(13, f.isRdefocultos());
-			st.setFloat(14, f.getPorcentajedefocul());
-			st.setBoolean(15, f.isPermisopruebas());
-			st.setBoolean(16, f.isNopiezas());
-			st.setBoolean(17, f.isCobrado());
-			st.setFloat(18, f.getImporteTotal());
-			st.setFloat(19, f.getSuma());
-			st.setFloat(20, f.getSumaIva());
-			st.setFloat(21, f.getKms());
+			st.setBoolean(12, f.isRdefocultos());
+			st.setFloat(13, f.getPorcentajedefocul());
+			st.setBoolean(14, f.isPermisopruebas());
+			st.setBoolean(15, f.isNopiezas());
+			st.setBoolean(16, f.isCobrado());
+			st.setFloat(17, f.getImporteTotal());
+			st.setFloat(18, f.getSuma());
+			st.setFloat(19, f.getSumaIva());
+			st.setFloat(20, f.getKms());
 
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -1910,9 +1908,9 @@ public class Conexion {
 						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
 						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
-						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
-						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
+						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
+						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2272,9 +2270,9 @@ public class Conexion {
 						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
 						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
-						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
-						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
+						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
+						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2317,9 +2315,9 @@ public class Conexion {
 						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
 						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
-						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
-						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
+						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
+						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2358,9 +2356,9 @@ public class Conexion {
 						rs.getInt("KMS"), rs.getString("NUMFACTURA"), rs.getString("NUMPRESUPUESTO"),
 						rs.getString("NUMORDENREP"), rs.getString("NUMRESGUARDO"), rs.getDate("FECHA"),
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
-						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getString("ESTADO"),
-						rs.getBoolean("RDEFOCULTOS"), rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"),
-						rs.getBoolean("NOPIEZAS"), rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
+						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
+						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
 				v = leerVehiculoPorID(rs.getInt("VEHICULOID"));
 				c = leerClientePorID(rs.getInt("CLIENTEID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);

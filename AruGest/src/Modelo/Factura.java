@@ -32,7 +32,6 @@ public class Factura {
 	private final FloatProperty suma;
 	private final FloatProperty sumaIva;
 	private final FloatProperty importeTotal;
-	private final StringProperty estado;
 	private final FloatProperty porcentajedefocul;
 	private final BooleanProperty rdefocultos;
 	private final BooleanProperty permisopruebas;
@@ -57,7 +56,6 @@ public class Factura {
 		this.suma = new SimpleFloatProperty(0);
 		this.sumaIva = new SimpleFloatProperty(0);
 		this.importeTotal = new SimpleFloatProperty(importeTotal);
-		this.estado = new SimpleStringProperty("");
 		this.porcentajedefocul = new SimpleFloatProperty(0);
 		this.rdefocultos = new SimpleBooleanProperty(false);
 		this.permisopruebas = new SimpleBooleanProperty(false);
@@ -68,8 +66,8 @@ public class Factura {
 
 	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, String numfactura, String numpresupuesto,
 			String numordenrep, String numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
-			float grua, float suma, float sumaIva, String estado, boolean rdefocultos, float porcentajedefocul,
-			boolean permisopruebas, boolean nopiezas, boolean cobrado, float importeTotal) {
+			float grua, float suma, float sumaIva, boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
+			boolean nopiezas, boolean cobrado, float importeTotal) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
@@ -86,7 +84,6 @@ public class Factura {
 		this.suma = new SimpleFloatProperty(suma);
 		this.sumaIva = new SimpleFloatProperty(sumaIva);
 		this.importeTotal = new SimpleFloatProperty(importeTotal);
-		this.estado = new SimpleStringProperty(estado);
 		this.porcentajedefocul = new SimpleFloatProperty(porcentajedefocul);
 		this.rdefocultos = new SimpleBooleanProperty(rdefocultos);
 		this.permisopruebas = new SimpleBooleanProperty(permisopruebas);
@@ -99,7 +96,7 @@ public class Factura {
 			IntegerProperty kms, StringProperty numfactura, StringProperty numpresupuesto, StringProperty numordenrep,
 			StringProperty numresguardo, ObjectProperty<Date> fecha, ObjectProperty<Date> fechaentrega,
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, FloatProperty suma,
-			FloatProperty sumaIva, StringProperty estado, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
+			FloatProperty sumaIva, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
 			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty cobrado,
 			ObjectProperty<Blob> documento, FloatProperty importeTotal) {
 		super();
@@ -119,7 +116,6 @@ public class Factura {
 		this.suma = suma;
 		this.sumaIva = sumaIva;
 		this.importeTotal = importeTotal;
-		this.estado = estado;
 		this.porcentajedefocul = porcentajedefocul;
 		this.rdefocultos = rdefocultos;
 		this.permisopruebas = permisopruebas;
@@ -275,18 +271,6 @@ public class Factura {
 
 	public void setGrua(final float grua) {
 		this.gruaProperty().set(grua);
-	}
-
-	public StringProperty estadoProperty() {
-		return this.estado;
-	}
-
-	public String getEstado() {
-		return this.estadoProperty().get();
-	}
-
-	public void setEstado(final String estado) {
-		this.estadoProperty().set(estado);
 	}
 
 	public FloatProperty porcentajedefoculProperty() {
