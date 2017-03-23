@@ -191,6 +191,18 @@ public class D_SelectorClienteVehiculoController {
 	private boolean isInputValid() {
 		String mensaje = "";
 		// Comprobar entradas de datos son correctas
+		if (!txtDni.getText().isEmpty()) {
+			if (!Utilidades.validaDni(txtDni.getText())) {
+				mensaje = "El NIF/CIF no es válido.";
+			}
+		}
+
+		if (!txtMatricula.getText().isEmpty()) {
+			if (!Utilidades.validaMatricula(txtMatricula.getText())) {
+				mensaje = "La matrícula no es válida.";
+			}
+		}
+
 		if (!txtNumero.getText().isEmpty()) {
 			try {
 				Integer.parseInt(txtNumero.getText());

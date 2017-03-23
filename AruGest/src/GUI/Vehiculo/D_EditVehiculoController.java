@@ -148,16 +148,19 @@ public class D_EditVehiculoController {
 		String errorMessage = "";
 
 		if (txtMatricula.getText().length() == 0) {
-			errorMessage += "Introduce la matrícula del vehículo\n";
+			errorMessage += "Introduce la matrícula del vehículo.\n";
+		}
+		if (!Utilidades.validaMatricula(txtMatricula.getText())) {
+			errorMessage += txtMatricula.getText() + " no es una matrícula válida.\n";
 		}
 		if (txtMarca.getText().length() == 0 || txtModelo.getText().length() == 0) {
-			errorMessage += "Introduce la marca y el modelo del vehículo";
+			errorMessage += "Introduce la marca y el modelo del vehículo.";
 		}
 		if (txtAnio.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtAnio.getText());
 			} catch (NumberFormatException e) {
-				errorMessage = "Año no válido.\n Introduce únicamente números";
+				errorMessage = "Año no válido.\n Introduce únicamente números.";
 			}
 		}
 

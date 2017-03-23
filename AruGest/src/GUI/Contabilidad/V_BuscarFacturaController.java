@@ -175,9 +175,9 @@ public class V_BuscarFacturaController {
 		String numOrden = "";
 		String numResguardo = "";
 		String matricula = txtMatricula.getText();
-		matricula.replaceAll("-", "");
-		matricula.replaceAll(" ", "");
-		matricula.replaceAll("/", "");
+		matricula = matricula.replaceAll("-", "");
+		matricula = matricula.replaceAll(" ", "");
+		matricula = matricula.replaceAll("/", "");
 		if (!txtNumfactura.getText().isEmpty()) {
 			numFactura = txtNumfactura.getText();
 		}

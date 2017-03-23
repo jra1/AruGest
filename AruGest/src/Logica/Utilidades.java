@@ -10,6 +10,8 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Modelo.GestorVentana;
 import javafx.beans.property.SimpleStringProperty;
@@ -500,5 +502,57 @@ public class Utilidades {
 			num = "#ERROR";
 		}
 		return num;
+	}
+
+	public static boolean validaMatricula(String pMat) {
+		pMat = pMat.toUpperCase();
+		pMat = pMat.replaceAll("-", "");
+		pMat = pMat.replaceAll(" ", "");
+		pMat = pMat.replaceAll("/", "");
+		Pattern pat = Pattern.compile("(([a-zA-Z]{1,2})(\\d{4})([a-zA-Z]{0,2}))|((\\d{4})([a-zA-Z]{3}))");
+		Matcher mat = pat.matcher(pMat);
+		if (mat.matches()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean validaDni(String pDni) {
+		String numero = "";
+		String letra = "";
+		String let = "";
+		pDni = pDni.toUpperCase();
+		pDni = pDni.replaceAll("-", "");
+		pDni = pDni.replaceAll(" ", "");
+		pDni = pDni.replaceAll("/", "");
+		Pattern patNif = Pattern.compile("([XYZ]?\\d{5,8}[A-Z])");
+		Matcher mat = patNif.matcher(pDni);
+		if (mat.matches()) {
+			// Es NIF o NIE
+			numero = pDni.substring(0, pDni.length() - 1);
+			numero = numero.replace('X', '0');
+			numero = numero.replace('Y', '1');
+			numero = numero.replace('Z', '2');
+			let = pDni.substring(pDni.length() - 1);
+			letra = "TRWAGMYFPDXBNJZSQVHLCKET";
+			int num = Integer.parseInt(numero);
+			num = num % 23;
+			letra = letra.substring(num, num + 1);
+			if (!letra.equals(let)) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			// Es CIF
+			Pattern patCif = Pattern.compile("(^[a-zA-Z]{1}\\d{7}[a-jA-J0-9]{1}$)");
+			Matcher mat2 = patCif.matcher(pDni);
+			if (mat2.matches()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 }

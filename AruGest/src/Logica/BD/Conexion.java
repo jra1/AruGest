@@ -707,9 +707,9 @@ public class Conexion {
 	public boolean guardarVehiculo(Vehiculo v) {
 		boolean res = true;
 		String matricula = v.getMatricula();
-		matricula.replaceAll("-", "");
-		matricula.replaceAll(" ", "");
-		matricula.replaceAll("/", "");
+		matricula = matricula.replaceAll("-", "");
+		matricula = matricula.replaceAll(" ", "");
+		matricula = matricula.replaceAll("/", "");
 		try {
 			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
 			// Se prepara la sentencia para introducir los datos de la factura

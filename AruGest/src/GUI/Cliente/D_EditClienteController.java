@@ -254,23 +254,26 @@ public class D_EditClienteController {
 		String errorMessage = "";
 
 		if (txtNif.getText().length() == 0) {
-			errorMessage += "Introduce el NIF/CIF del cliente\n";
+			errorMessage += "Introduce el NIF/CIF del cliente.\n";
+		}
+		if (!Utilidades.validaDni(txtNif.getText())) {
+			errorMessage += txtNif.getText() + " no es un NIF/CIF correcto.\n";
 		}
 		if (txtNombre.getText().length() == 0) {
-			errorMessage += "Introduce el nombre del cliente";
+			errorMessage += "Introduce el nombre del cliente.";
 		}
 		if (txtNumero.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtNumero.getText());
 			} catch (NumberFormatException e) {
-				errorMessage = "Número no válido.\n Introduce únicamente números";
+				errorMessage = "Número no válido.\n Introduce únicamente números.";
 			}
 		}
 		if (txtCodPostal.getText().length() > 0) {
 			try {
 				Integer.parseInt(txtCodPostal.getText());
 			} catch (NumberFormatException e) {
-				errorMessage = "Código postal no válido.\n Introduce únicamente números";
+				errorMessage = "Código postal no válido.\n Introduce únicamente números.";
 			}
 		}
 
