@@ -15,7 +15,7 @@
    <left>
       <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <Accordion fx:id="acor" layoutY="85.0" prefHeight="729.0" prefWidth="260.0" AnchorPane.bottomAnchor="126.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+            <Accordion fx:id="acor" layoutY="85.0" prefHeight="692.0" prefWidth="260.0" AnchorPane.bottomAnchor="163.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
               <panes>
                 <TitledPane fx:id="tPane" animated="false" prefHeight="421.0" prefWidth="260.0" text="Clientes">
                   <content>

@@ -210,9 +210,10 @@ public class Hilo extends Thread {
 					return 1;
 				}
 			});
-			new Thread(task).start();
 
+			new Thread(task).start();
 			Integer result = task.get();
+
 			if (result == 1) {
 				alert.setHeaderText("¡Factura generada!");
 			} else if (result == 0) {
