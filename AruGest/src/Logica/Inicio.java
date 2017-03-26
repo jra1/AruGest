@@ -115,10 +115,6 @@ public class Inicio extends Application {
 		// Comprobar si existe la BD
 		existe = compruebaExisteBD();
 
-		// Se crea la conexión con la BD
-		// if (MODO_PRUEBAS) {
-		// DBURL = "jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB";
-		// }
 		CONEXION.crearConexion(DBURL);
 
 		// Si no existe la BD se llama al diálogo de Bienvenida
