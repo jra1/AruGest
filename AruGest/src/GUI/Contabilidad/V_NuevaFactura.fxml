@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.V_NuevaFacturaController">
+   <children>
+      <Label layoutX="18.0" layoutY="40.0" styleClass="titulo" text="Datos factura">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font>
+      </Label>
+      <Pane fx:id="paneDatosFactura" layoutX="16.0" layoutY="65.0" prefHeight="85.0" prefWidth="1081.0" styleClass="background" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="65.0">
+         <children>
+            <GridPane hgap="10.0" layoutX="13.0" layoutY="5.0" prefHeight="74.0" prefWidth="1047.0" styleClass="gridpane" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="174.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="149.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.0" minWidth="10.0" prefWidth="247.66668701171875" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.0" minWidth="10.0" prefWidth="156.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="72.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="200.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <CheckBox fx:id="chckbxFactura" mnemonicParsing="false" styleClass="my-label" text="FACTURA Nº." />
+                  <TextField fx:id="txtNumfactura" prefHeight="23.0" prefWidth="118.0" promptText="Nº Factura" styleClass="my-text-field" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <CheckBox fx:id="chckbxPresupuesto" mnemonicParsing="false" prefHeight="22.0" prefWidth="184.0" styleClass="my-label" text="PRESUPUESTO Nº." GridPane.rowIndex="1" />
+                  <TextField fx:id="txtNumPresupuesto" prefHeight="23.0" prefWidth="118.0" promptText="Nº Presupuesto" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <CheckBox fx:id="chckbxOrdenDeReparacion" mnemonicParsing="false" styleClass="my-label" text="ORDEN DE REPARACIÓN Nº." GridPane.columnIndex="2" />
+                  <TextField fx:id="txtNumOrden" prefHeight="23.0" prefWidth="174.0" promptText="Nº Orden de reparación" styleClass="my-text-field" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <CheckBox fx:id="chckbxResguardoDeposito" mnemonicParsing="false" styleClass="my-label" text="RESGUARDO DE DEPÓSITO Nº." GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtNumResguardo" prefHeight="23.0" prefWidth="174.0" promptText="Nº Resguardo de depósito" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label styleClass="my-label" text="FECHA" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                  <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="Fecha" styleClass="my-text-field" GridPane.columnIndex="5" />
+                  <CheckBox fx:id="chckbxCobrado" mnemonicParsing="false" styleClass="my-label" text="COBRADO" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Label layoutX="20.0" layoutY="10.0" styleClass="titulo" text="Cliente: ">
+         <font>
+            <Font name="Caladea" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="103.0" layoutY="-210.0" minWidth="0.0" prefHeight="187.0" prefWidth="777.0" styleClass="background">
+         <children>
+            <GridPane hgap="10.0" layoutX="14.0" layoutY="14.0" prefHeight="160.0" prefWidth="742.0" styleClass="gridpane" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="323.0" minWidth="10.0" prefWidth="265.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="88.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="247.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="104.0" styleClass="my-label" text="TIPO CLIENTE" />
+                  <ComboBox fx:id="comboTipoCliente" prefHeight="25.0" prefWidth="130.0" styleClass="my-text-field" GridPane.columnIndex="1" />
+                  <Label layoutX="5.0" layoutY="58.0" styleClass="my-label" text="N.I.F/C.I.F." GridPane.rowIndex="1" />
+                  <TextField layoutX="60.0" layoutY="55.0" prefHeight="23.0" prefWidth="150.0" promptText="Ej. 12345678D" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="NOMBRE" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtNombre" layoutX="60.0" layoutY="4.0" prefHeight="23.0" prefWidth="100.0" promptText="Ej. Abelino" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="lblApellidos" layoutX="165.0" layoutY="8.0" styleClass="my-label" text="APELLIDOS" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtApellidos" layoutX="217.0" layoutY="4.0" prefHeight="23.0" prefWidth="122.0" promptText="Ej. Fernández López" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="214.0" layoutY="59.0" styleClass="my-label" text="TELÉFONO" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtTel1" layoutX="267.0" layoutY="55.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. 648795148" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="5.0" layoutY="33.0" styleClass="my-label" text="CALLE" GridPane.columnIndex="2" />
+                  <TextField fx:id="txtCalle" layoutX="60.0" layoutY="30.0" prefHeight="23.0" prefWidth="249.0" promptText="Ej. Artapadura" styleClass="my-text-field" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="313.0" layoutY="33.0" styleClass="my-label" text="NÚMERO" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtNumero" layoutX="360.0" layoutY="30.0" minWidth="0.0" prefHeight="23.0" prefWidth="172.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="394.0" layoutY="33.0" styleClass="my-label" text="PISO" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtPiso" layoutX="421.0" layoutY="30.0" prefHeight="30.0" prefWidth="292.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="453.0" layoutY="33.0" styleClass="my-label" text="LETRA" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtLetra" layoutX="482.0" layoutY="30.0" prefHeight="23.0" prefWidth="34.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="364.0" layoutY="8.0" styleClass="my-label" text="POBLACIÓN" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtPoblacion" layoutX="421.0" layoutY="4.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. Vitoria" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </GridPane>
+         </children>
+      </Pane>
+      <Label layoutX="494.0" layoutY="9.0" styleClass="titulo" text="Vehículo:">
+         <font>
+            <Font name="Caladea" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="471.0" layoutY="-341.0" prefHeight="120.0" prefWidth="618.0" styleClass="background">
+         <children>
+            <GridPane hgap="10.0" layoutX="8.0" layoutY="9.0" prefHeight="92.0" prefWidth="598.0" styleClass="gridpane" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="103.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.0" minWidth="10.0" prefWidth="198.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="82.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="261.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="VEHÍCULO" />
+                  <ComboBox fx:id="comboTipoVehiculo" layoutX="54.0" layoutY="3.0" prefHeight="25.0" prefWidth="135.0" styleClass="my-text-field" GridPane.columnIndex="1" />
+                  <Label layoutX="198.0" layoutY="8.0" styleClass="my-label" text="MATRÍCULA" GridPane.rowIndex="1" />
+                  <TextField layoutX="258.0" layoutY="4.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="5.0" layoutY="60.0" styleClass="my-label" text="KMS" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtKms" layoutX="54.0" layoutY="55.0" prefHeight="23.0" prefWidth="186.0" promptText="Kilómetros" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="5.0" layoutY="33.0" styleClass="my-label" text="MARCA" GridPane.columnIndex="2" />
+                  <TextField fx:id="txtMarca" prefHeight="23.0" prefWidth="92.0" promptText="Marca" styleClass="my-text-field" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="153.0" layoutY="33.0" styleClass="my-label" text="MODELO" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtModelo" layoutX="198.0" layoutY="30.0" prefHeight="30.0" prefWidth="270.0" promptText="Modelo" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="306.0" layoutY="33.0" styleClass="my-label" text="VERSIÓN" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtVersion" layoutX="353.0" layoutY="30.0" prefHeight="23.0" prefWidth="122.0" promptText="Versión" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Label layoutX="15.0" layoutY="155.0" styleClass="titulo" text="Servicios y materiales">
+         <font>
+            <Font name="Caladea" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="13.0" layoutY="179.0" prefHeight="496.0" prefWidth="1124.0" styleClass="background" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="6.0">
+         <children>
+            <Label layoutX="14.0" layoutY="2.0" styleClass="my-label" text="TIPO" />
+            <ComboBox fx:id="comboTipo" layoutX="14.0" layoutY="25.0" prefWidth="150.0" styleClass="my-text-field" />
+            <Label layoutX="226.0" layoutY="2.0" styleClass="my-label" text="CONCEPTO" />
+            <TextField id="concepto" fx:id="txtConcepto" layoutX="226.0" layoutY="25.0" prefHeight="27.0" prefWidth="431.0" promptText="Escribir aquí la descripción..." styleClass="my-text-field">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </TextField>
+            <Label fx:id="lblCantidad" layoutX="669.0" layoutY="2.0" styleClass="my-label" text="CANTIDAD" />
+            <TextField id="cantidad" fx:id="txtCantidad" layoutX="669.0" layoutY="25.0" prefHeight="27.0" prefWidth="54.0" promptText="Uds" styleClass="my-text-field">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Label fx:id="lblValor" layoutX="769.0" layoutY="2.0" styleClass="my-label" text="€ / UD." />
+            <TextField id="valor" fx:id="txtValor" layoutX="768.0" layoutY="25.0" prefHeight="27.0" prefWidth="72.0" promptText="Valor" styleClass="my-text-field">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </TextField>
+            <Button fx:id="btnAdd" layoutX="860.0" layoutY="26.0" mnemonicParsing="false" onAction="#add" prefHeight="27.0" prefWidth="92.0" styleClass="my-button" text="AÑADIR" />
+            <TableView fx:id="tableServicio" editable="true" layoutX="14.0" layoutY="64.0" prefHeight="328.0" prefWidth="375.0" styleClass="tabla">
+              <columns>
+                <TableColumn fx:id="columnaConceptoServ" prefWidth="325.6666564941406" text="SERVICIOS A REALIZAR" />
+                <TableColumn fx:id="columnaHorasServ" prefWidth="47.333343505859375" text="H" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TableView>
+            <Button fx:id="btnQuitarServ" layoutX="61.0" layoutY="398.0" mnemonicParsing="false" onAction="#eliminarServicio" prefHeight="27.0" prefWidth="177.0" styleClass="my-button" text="ELIMINAR SERVICIO" />
+            <TableView fx:id="tableMaterial" editable="true" layoutX="401.0" layoutY="64.0" prefHeight="328.0" prefWidth="449.0" styleClass="tabla">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn fx:id="columnaConceptoMat" minWidth="255.0" prefWidth="282.0" text="MATERIALES" />
+                  <TableColumn fx:id="columnaCantidadMat" prefWidth="70.0" text="CANTIDAD" />
+                  <TableColumn fx:id="columnaPrecioMat" prefWidth="155.0" text="€/ud" />
+               </columns>
+            </TableView>
+            <Button fx:id="btnQuitarMat" layoutX="578.0" layoutY="397.0" mnemonicParsing="false" onAction="#eliminarMaterial" prefHeight="27.0" prefWidth="177.0" styleClass="my-button" text="ELIMINAR MATERIAL" />
+            <GridPane layoutX="858.0" layoutY="63.0" prefHeight="224.0" prefWidth="223.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.66668701171875" minWidth="10.0" prefWidth="122.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.333251953125" minWidth="10.0" prefWidth="101.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label layoutX="879.0" layoutY="87.0" styleClass="titulo" text="Mano de obra:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtManoObra" layoutX="1304.0" layoutY="78.0" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="879.0" layoutY="117.0" styleClass="titulo" text="Materiales:" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtMateriales" layoutX="1304.0" layoutY="112.0" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="879.0" layoutY="147.0" styleClass="titulo" text="Otros / Grúa:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtOtros" layoutX="1304.0" layoutY="142.0" onAction="#actualizarPrecio" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="879.0" layoutY="177.0" styleClass="titulo" text="Subtotal:" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtSubtotal" layoutX="1304.0" layoutY="172.0" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="lblIva" layoutX="879.0" layoutY="207.0" styleClass="titulo" text="I.V.A. 21%" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtIva" layoutX="1304.0" layoutY="202.0" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="879.0" layoutY="237.0" styleClass="titulo" text="TOTAL €: " GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTotal" layoutX="1304.0" layoutY="232.0" prefHeight="23.0" prefWidth="92.0" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+            <Button layoutX="926.0" layoutY="320.0" mnemonicParsing="false" onAction="#llamaGuardarFactura" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GUARDAR" />
+            <Button fx:id="btnGenerarFactura" layoutX="926.0" layoutY="361.0" mnemonicParsing="false" onAction="#generarPDF" prefHeight="31.0" prefWidth="161.0" styleClass="my-button" text="GENERAR FACTURA">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="297.0" layoutY="397.0" mnemonicParsing="false" onAction="#abrirSelectorGolpes" prefHeight="27.0" prefWidth="236.0" styleClass="my-button" text="AÑADIR GOLPE PREDEFINIDO" />
+         </children>
+      </Pane>
+      <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="19.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
+      <TextField id="porcentaje" fx:id="txtPorcentajeDefOcultos" layoutX="242.0" layoutY="609.0" prefHeight="31.0" prefWidth="41.0" styleClass="my-text-field">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <CheckBox fx:id="chckbxPermisoPruebas" layoutX="19.0" layoutY="644.0" mnemonicParsing="false" styleClass="my-label" text="Permiso para realizar pruebas para diagnóstico y reparación" />
+      <CheckBox fx:id="chckbxNoPiezas" layoutX="526.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="No deseo recoger las piezas sustituidas a mi vehículo" />
+      <Label layoutX="530.0" layoutY="645.0" styleClass="my-label" text="Fecha de entrega en caso de aprobación de presupuesto:" />
+      <DatePicker id="fecha" fx:id="txtFechaEntrega" layoutX="913.0" layoutY="634.0" prefHeight="25.0" prefWidth="150.0" promptText="Fecha entrega" styleClass="my-text-field" />
+      <Label disable="true" layoutX="884.0" layoutY="-141.0" styleClass="my-label" text="TELF. 2" />
+      <TextField fx:id="txtMovil" disable="true" layoutX="937.0" layoutY="-147.0" prefHeight="23.0" prefWidth="86.0" promptText="Ej. 945781249" styleClass="my-text-field">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <TextField id="dni" fx:id="txtDni" disable="true" editable="false" layoutX="92.0" layoutY="6.0" prefHeight="31.0" prefWidth="114.0" promptText="Ej. 12345678D" styleClass="my-text-field">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <Label fx:id="lblNombre" layoutX="224.0" layoutY="10.0" onMouseClicked="#abrirSelectorCliente" styleClass="my-label-sub" text="Pulse para introducir cliente">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <TextField id="dni" fx:id="txtMatricula" disable="true" editable="false" layoutX="583.0" layoutY="6.0" prefHeight="23.0" prefWidth="217.0" promptText="Matrícula" styleClass="my-text-field">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextField>
+      <Label fx:id="lblMarcaModelo" layoutX="714.0" layoutY="10.0" onMouseClicked="#abrirSelectorCliente" styleClass="my-label-sub" text="Pulse para introducir vehículo">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Button fx:id="btnActualizarPrecio" layoutX="925.0" layoutY="-59.0" mnemonicParsing="false" onAction="#actualizarPrecio" prefHeight="31.0" prefWidth="179.0" styleClass="my-button" text="ACTUALIZAR PRECIO" />
+   </children>
+</AnchorPane>

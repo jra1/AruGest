@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="433.0" prefWidth="323.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.D_EditVehiculoController">
+   <children>
+      <Pane layoutX="3.0" layoutY="7.0" prefHeight="420.0" prefWidth="316.0">
+         <children>
+            <GridPane layoutX="11.0" layoutY="4.0" prefHeight="369.0" prefWidth="296.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="105.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="191.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label styleClass="my-label" text="Tipo" />
+                  <Label styleClass="my-label" text="Matrícula" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="my-label" text="Marca" GridPane.rowIndex="2" />
+                  <Label styleClass="my-label" text="Modelo" GridPane.rowIndex="3" />
+                  <Label styleClass="my-label" text="Versión" GridPane.rowIndex="4" />
+                  <Label styleClass="my-label" text="Año" GridPane.rowIndex="5" />
+                  <Label styleClass="my-label" text="Nº Bastidor" GridPane.rowIndex="6" />
+                  <Label styleClass="my-label" text="Letras motor" GridPane.rowIndex="7" />
+                  <Label styleClass="my-label" text="Color" GridPane.rowIndex="8" />
+                  <Label styleClass="my-label" text="Código radio" GridPane.rowIndex="9" />
+                  <ComboBox fx:id="comboTipoVehiculo" prefHeight="25.0" prefWidth="124.0" styleClass="my-text-field" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtMatricula" prefHeight="23.0" prefWidth="103.0" promptText="Matrícula" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtMarca" prefHeight="23.0" prefWidth="161.0" promptText="Marca" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtModelo" prefHeight="23.0" prefWidth="161.0" promptText="Modelo" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtVersion" prefHeight="23.0" prefWidth="161.0" promptText="Versión" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtAnio" prefHeight="23.0" prefWidth="103.0" promptText="Año" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtBastidor" prefHeight="23.0" prefWidth="103.0" promptText="Número de bastidor" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtLetrasMotor" prefHeight="23.0" prefWidth="103.0" promptText="Letras de motor" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtColor" prefHeight="23.0" prefWidth="103.0" promptText="Color" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtCodRadio" prefHeight="23.0" prefWidth="103.0" promptText="Código radio" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </TextField>
+                  <CheckBox fx:id="chckboxVehiculoSusti" mnemonicParsing="false" styleClass="my-label" text="Vehículo de sustitución" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+               </children>
+            </GridPane>
+            <Button defaultButton="true" layoutX="14.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="124.0" styleClass="my-button" text="Guardar cambios" />
+            <Button cancelButton="true" layoutX="230.0" layoutY="384.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

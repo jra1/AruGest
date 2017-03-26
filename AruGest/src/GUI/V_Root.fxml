@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="965.0" prefWidth="1680.0" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.V_RootController">
+   <left>
+      <AnchorPane prefHeight="760.0" prefWidth="237.0" BorderPane.alignment="CENTER">
+         <children>
+            <Accordion fx:id="acor" layoutY="85.0" prefHeight="692.0" prefWidth="260.0" AnchorPane.bottomAnchor="163.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+              <panes>
+                <TitledPane fx:id="tPane" animated="false" prefHeight="421.0" prefWidth="260.0" text="Clientes">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarCliente" styleClass="green" text="Buscar cliente">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoCliente" styleClass="green" text="Nuevo cliente">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <graphic>
+                        <ImageView fx:id="imgClientes" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                </TitledPane>
+                <TitledPane animated="false" prefHeight="209.0" prefWidth="260.0" text="Vehículos">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarVehiculo" styleClass="green" text="Buscar vehículo">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button id="shiny-orange" mnemonicParsing="false" onAction="#vehiculosSustitucion" styleClass="green" text="Vehículos de sustitución">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button id="shiny-orange" layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onAction="#nuevoVehiculoSustitucion" styleClass="green" text="Añadir vehículo de sustitución">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button id="shiny-orange" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" onAction="#golpesPredefinidos" styleClass="green" text="Golpes predefinidos" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgVehi" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/vehiculo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                </TitledPane>
+                <TitledPane animated="false" text="Contabilidad">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="1.0" layoutY="1.0" prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarPresupuesto" styleClass="green" text="Buscar presupuesto / factura">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnNuevoPresupuesto" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nuevo presupuesto">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="btnNuevaFactura" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoPresupuesto" styleClass="green" text="Nueva factura" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                     <graphic>
+                        <ImageView fx:id="imgConta" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/conta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Proveedores &amp; Cías">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarCompania" styleClass="green" text="Buscar proveedor / compañía">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#nuevoProve" styleClass="green" text="Nuevo proveedor">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="88.0" mnemonicParsing="false" onAction="#nuevaCia" styleClass="green" text="Nueva compañía" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgCias" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/agency.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </TitledPane>
+                  <TitledPane animated="false" layoutX="10.0" layoutY="85.0" prefHeight="223.0" prefWidth="260.0" text="Documentos">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="509.0" prefWidth="232.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#buscarDocumento" styleClass="green" text="Buscar documento">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgDocu" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/docus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+            <VBox prefHeight="82.0" prefWidth="260.0" spacing="2.0">
+               <children>
+                  <Button fx:id="btnPantalla1" mnemonicParsing="false" onAction="#atras1" prefHeight="25.0" prefWidth="281.0" styleClass="my-button" />
+                  <Button fx:id="btnPantalla2" mnemonicParsing="false" onAction="#atras2" prefHeight="25.0" prefWidth="329.0" styleClass="my-button" />
+                  <Button fx:id="btnPantalla3" mnemonicParsing="false" onAction="#atras3" prefHeight="25.0" prefWidth="346.0" styleClass="my-button" />
+                  <Separator prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="btnMenuInicio" mnemonicParsing="false" onAction="#menuInicio" text="Inicio" />
+          <Menu mnemonicParsing="false" text="Opciones">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mostrarOpciones" text="Cambiar opciones" />
+                  <MenuItem mnemonicParsing="false" onAction="#crearCopiaSeguridad" text="Hacer copia de seguridad" />
+               </items></Menu>
+            <Menu fx:id="btnMenuVerUltimas" mnemonicParsing="false" onAction="#menuVerUltimas" text="Ver últimas facturas">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#ayuda" text="Sobre AruGest Software" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fx:id="sp" prefHeight="680.0" prefWidth="1106.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <Label id="lblInicio" alignment="CENTER" contentDisplay="CENTER" prefHeight="680.0" prefWidth="1106.0" text="AruGest Software" textAlignment="CENTER">
+                     <font>
+                        <Font name="Dekar" size="70.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo_cargando.gif" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

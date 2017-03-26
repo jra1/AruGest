@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="288.0" prefWidth="419.0" styleClass="back" stylesheets="@EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.D_BienvenidaControllerD">
+   <children>
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="281.0" prefWidth="411.0" styleClass="background">
+         <children>
+            <Button fx:id="btnAceptar" defaultButton="true" layoutX="96.0" layoutY="233.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
+            <Button fx:id="btnCancelar" cancelButton="true" layoutX="257.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+            <Label id="tituloAruGest" alignment="CENTER" layoutX="14.0" layoutY="-4.0" prefHeight="75.0" prefWidth="379.0" text="AruGest Software" />
+            <Label fx:id="lblBienvenida" layoutX="14.0" layoutY="67.0" prefHeight="140.0" prefWidth="385.0" styleClass="titulo" text="¡Bienvenid@ a AruGest Software! No se ha detectado ninguna base de datos en este equipo, así que se va a crear una nueva. Recuerde hacer copias de seguridad de ésta regularmente." textAlignment="JUSTIFY" wrapText="true" />
+            <Label fx:id="lblCargando" layoutX="105.0" layoutY="150.0" prefHeight="22.0" prefWidth="204.0" styleClass="titulo" text="Creando base de datos..." visible="false" />
+            <ProgressBar fx:id="pbar" layoutX="14.0" layoutY="106.0" prefHeight="18.0" prefWidth="385.0" visible="false" />
+            <Label fx:id="lblCreaUsuario" layoutX="15.0" layoutY="54.0" prefHeight="62.0" prefWidth="379.0" styleClass="titulo" text="Para empezar a trabajar con AruGest, crea un usuario y contraseña:" visible="false" wrapText="true" />
+            <TextField fx:id="txtUsuario" layoutX="162.0" layoutY="113.0" styleClass="my-text-field" visible="false" />
+            <PasswordField fx:id="txtPass" layoutX="162.0" layoutY="151.0" promptText="*****" styleClass="my-text-field" visible="false" />
+            <Label fx:id="lblUsuario" layoutX="17.0" layoutY="118.0" prefHeight="22.0" prefWidth="85.0" styleClass="my-label" text="Usuario" visible="false" />
+            <Label fx:id="lblPass" layoutX="17.0" layoutY="156.0" prefHeight="22.0" prefWidth="85.0" styleClass="my-label" text="Contraseña" visible="false" />
+            <Label fx:id="lblPass2" layoutX="17.0" layoutY="194.0" prefHeight="22.0" prefWidth="140.0" styleClass="my-label" text="Repetir contraseña" visible="false" />
+            <PasswordField fx:id="txtPass2" layoutX="162.0" layoutY="189.0" prefHeight="31.0" prefWidth="171.0" promptText="*****" styleClass="my-text-field" visible="false" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

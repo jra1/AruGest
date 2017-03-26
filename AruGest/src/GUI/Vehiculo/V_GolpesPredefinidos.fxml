@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="680.0" prefWidth="1106.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Vehiculo.V_GolpesPredefinidosController">
+   <children>
+      <Label layoutX="21.0" layoutY="4.0" styleClass="titulo" text="Golpes predefinidos">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="16.0" layoutY="32.0" prefHeight="634.0" prefWidth="1076.0" styleClass="background" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="31.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" styleClass="my-label" text="Golpes guardados" />
+            <Label layoutX="283.0" layoutY="14.0" styleClass="my-label" text="Elementos del golpe seleccionado" />
+            <TableView fx:id="tableGolpes" layoutX="14.0" layoutY="78.0" prefHeight="248.0" prefWidth="237.0" styleClass="tabla">
+              <columns>
+                <TableColumn fx:id="columnaIDGolpe" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="columnaNombreGolpe" prefWidth="157.0" text="Nombre del golpe" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tableElementos" layoutX="283.0" layoutY="34.0" prefHeight="586.0" prefWidth="494.0" styleClass="tabla">
+              <columns>
+                <TableColumn fx:id="columnaNombreElemento" prefWidth="300.0" text="Nombre elemento" />
+                <TableColumn fx:id="columnaTipoElemento" prefWidth="193.0" text="Tipo elemento" />
+              </columns>
+            </TableView>
+            <Label layoutX="14.0" layoutY="337.0" styleClass="my-label" text="Nombre del golpe:" />
+            <Label layoutX="14.0" layoutY="412.0" styleClass="my-label" text="Nombre del elemento:" />
+            <Label layoutX="14.0" layoutY="475.0" styleClass="my-label" text="Tipo del elemento:" />
+            <TextField fx:id="txtNombreGolpe" disable="true" layoutX="14.0" layoutY="363.0" styleClass="my-text-field" />
+            <TextField fx:id="txtNombreElemento" disable="true" layoutX="14.0" layoutY="438.0" styleClass="my-text-field" />
+            <Button fx:id="btnAddElemento" disable="true" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" onAction="#addElemento" styleClass="my-button" text="Añadir elemento" />
+            <ComboBox fx:id="comboTipoElemento" disable="true" layoutX="14.0" layoutY="504.0" prefWidth="150.0" styleClass="my-text-field" />
+            <Button fx:id="btnGuardarGolpe" disable="true" layoutX="14.0" layoutY="595.0" mnemonicParsing="false" onAction="#guardarGolpe" styleClass="my-button" text="Guardar golpe" />
+            <Button fx:id="btnEditarGolpe" layoutX="85.0" layoutY="40.0" mnemonicParsing="false" onAction="#editarGolpe" styleClass="my-button" text="Editar" />
+            <Button fx:id="btnNuevoGolpe" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#nuevoGolpe" styleClass="my-button" text="Nuevo" />
+            <Button fx:id="btnNuevoGolpe1" layoutX="153.0" layoutY="40.0" mnemonicParsing="false" onAction="#eliminarGolpe" styleClass="my-button" text="Eliminar" />
+            <Button fx:id="btnNuevoGolpe11" layoutX="792.0" layoutY="34.0" mnemonicParsing="false" onAction="#eliminarElemento" styleClass="my-button" text="Eliminar elemento" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
