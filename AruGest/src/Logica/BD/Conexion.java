@@ -778,11 +778,11 @@ public class Conexion {
 			}
 
 			// 2º comprobar si tiene documentos
-			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " + id;
-			rs = st.executeQuery(sql);
-			while (rs.next()) {
-				eliminarDocumentosPorVehiculoID(id);
-			}
+			/*
+			 * sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " +
+			 * id; rs = st.executeQuery(sql); while (rs.next()) {
+			 * eliminarDocumentosPorVehiculoID(id); }
+			 */
 
 			// 3º comprobar si es vehiculo de sustitucion
 			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE VEHICULOID = " + id;

@@ -336,18 +336,17 @@ public class V_RootController {
 					AnchorPane cliente = (AnchorPane) loader.load();
 
 					// Poner la nueva vista en el centro del root
-					// **************************************************************************************************
 					Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
-					// **************************************************************************************************
 					sp.setContent(cliente);
-					// Esta línea es para que se ejecute la pseudoclase del CSS
-					// ya
 					ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
-					// main.getRoot().setCenter(cliente);
 
 					// Poner el controlador de la nueva vista.
 					V_ClienteController controller = loader.getController();
 					controller.setMainAPP(main);
+					controller.setScrollPane(sp);
+					controller.boton1 = btnPantalla1;
+					controller.boton2 = btnPantalla2;
+					controller.boton3 = btnPantalla3;
 					Cliente c = null;
 					if (cped.getParticular() != null) {
 						c = Inicio.CONEXION.buscarClientePorDni(cped.getParticular().getNif(), 1);
@@ -358,6 +357,18 @@ public class V_RootController {
 					}
 					Inicio.CLIENTE_ID = c.getIdcliente();
 					cped.setCliente(c);
+
+					nombre = "Cliente: " + c.getNombre();
+					ap = (AnchorPane) sp.getContent();
+					gv = new GestorVentana(ap, nombre);
+					Utilidades.gestionarPantallas(gv);
+					btnPantalla1.setVisible(Inicio.BOTON1.isVisible());
+					btnPantalla1.setText(Inicio.BOTON1.getNombre());
+					btnPantalla2.setVisible(Inicio.BOTON2.isVisible());
+					btnPantalla2.setText(Inicio.BOTON2.getNombre());
+					btnPantalla3.setVisible(Inicio.BOTON3.isVisible());
+					btnPantalla3.setText(Inicio.BOTON3.getNombre());
+
 					controller.cargaCliente(cped);
 
 				} catch (IOException e) {
