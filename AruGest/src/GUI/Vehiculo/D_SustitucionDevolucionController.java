@@ -95,8 +95,16 @@ public class D_SustitucionDevolucionController {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
 					errorMessage);
 			return false;
-		} else {
-			return true;
 		}
+
+		if (Utilidades.LocalDateADate(txtFecha.getValue()).before(vscv.getFechacoge())) {
+			errorMessage += "La fecha de devolución no puede ser anterior a la fecha de entrega \n";
+			Utilidades.mostrarAlerta(AlertType.WARNING, "Campos inváidos", "Por favor corrige los campos",
+					errorMessage);
+			return false;
+		}
+
+		return true;
+
 	}
 }

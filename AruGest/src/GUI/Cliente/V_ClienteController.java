@@ -332,7 +332,7 @@ public class V_ClienteController {
 	 */
 	@FXML
 	private void eliminarCliente() {
-		String cliente = cped.getCliente().getNombre();
+		// String cliente = cped.getCliente().getNombre();
 		if (cped.getCliente().getIdcliente() > 0) {
 			Optional<ButtonType> result = Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Eliminar cliente",
 					"Se eliminará todo lo asociado a este cliente (facturas, vehículos, documentos... )\n¿Estás seguro que quieres eliminar este cliente?",
@@ -346,19 +346,14 @@ public class V_ClienteController {
 						AnchorPane buscarCliente = (AnchorPane) loader.load();
 						String nombre = "Buscar Cliente";
 						// Poner la nueva vista en el centro del root
-						// main.getRoot().setCenter(buscarCliente);
-
-						// **************************************************************************************************
 						Utilidades.ajustarResolucionAnchorPane(buscarCliente, Inicio.ANCHO_PANTALLA,
 								Inicio.ALTO_PANTALLA);
-						// **************************************************************************************************
 						sp.setContent(buscarCliente);
-						// Esta línea es para que se ejecute la pseudoclase del
-						// CSS ya
 						ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
 						AnchorPane ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 						// Para quitar el botón del gestor de ventanas:
-						Utilidades.quitarBoton(cliente);
+						// Utilidades.quitarBoton(cliente);
+						Utilidades.eliminaBotones();
 						GestorVentana gv = new GestorVentana(ap, nombre);
 						Utilidades.gestionarPantallas(gv);
 						boton1.setVisible(Inicio.BOTON1.isVisible());
@@ -392,8 +387,8 @@ public class V_ClienteController {
 						// controller.setMainAPP(main);
 
 					} catch (IOException e) {
-						e.printStackTrace();
 						Utilidades.mostrarError(e);
+						e.printStackTrace();
 					}
 					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Éxito", "Cliente eliminado",
 							"El cliente y todo sus datos asociados han sido eliminados con éxito de la base de datos.");
@@ -589,7 +584,7 @@ public class V_ClienteController {
 				sp.setContent(nuevaFactura);
 				// Esta línea es para que se ejecute la pseudoclase del CSS ya
 				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
-				nombre = "Presupuesto: " + listaPresupuestos.get(selectedIndex).getCliente().getNombre();
+				nombre = "Presupuesto: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
 				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 				gv = new GestorVentana(ap, nombre);
 				Utilidades.gestionarPantallas(gv);

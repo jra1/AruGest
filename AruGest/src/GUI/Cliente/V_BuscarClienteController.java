@@ -219,8 +219,6 @@ public class V_BuscarClienteController {
 			boton3.setVisible(Inicio.BOTON3.isVisible());
 			boton3.setText(Inicio.BOTON3.getNombre());
 
-			// main.getRoot().setCenter(cliente);
-
 			// Poner el controlador de la nueva vista.
 			V_ClienteController controller = loader.getController();
 			controller.setMainAPP(main);

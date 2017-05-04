@@ -99,13 +99,13 @@
             <Font name="Caladea" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="252.0" layoutY="24.0" prefHeight="242.0" prefWidth="840.0" styleClass="background" AnchorPane.leftAnchor="254.0" AnchorPane.rightAnchor="11.0">
+      <Pane layoutX="256.0" layoutY="26.0" prefHeight="242.0" prefWidth="840.0" styleClass="background" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="17.0">
          <children>
             <TableView fx:id="tablePrestados" editable="true" layoutX="9.0" layoutY="41.0" prefHeight="194.0" prefWidth="817.0" styleClass="tabla">
                <columns>
-                  <TableColumn fx:id="columnaVehiculoPrestados" prefWidth="126.0" text="Vehículo sustitución" />
-                  <TableColumn fx:id="columnaMatriculaPrestados" minWidth="50.0" prefWidth="84.0" text="Matrícula" />
-                  <TableColumn fx:id="columnaClientePrestados" minWidth="0.0" prefWidth="239.0" text="Cliente" />
+                  <TableColumn fx:id="columnaVehiculoPrestados" prefWidth="134.0" text="Vehículo sustitución" />
+                  <TableColumn fx:id="columnaMatriculaPrestados" minWidth="50.0" prefWidth="82.0" text="Matrícula" />
+                  <TableColumn fx:id="columnaClientePrestados" minWidth="0.0" prefWidth="233.0" text="Cliente" />
                   <TableColumn fx:id="columnaFechaEntregaPrestados" minWidth="39.0" prefWidth="99.0" text="Fecha entrega" />
                   <TableColumn fx:id="columnaObservacionesPrestados" minWidth="39.0" prefWidth="268.0" text="Observaciones" />
                </columns>
@@ -116,7 +116,7 @@
             <Button layoutX="11.0" layoutY="6.0" mnemonicParsing="false" onAction="#marcarDevuelto" styleClass="my-button" text="Marcar vehículo como devuelto" />
          </children>
       </Pane>
-      <Label layoutX="252.0" layoutY="4.0" styleClass="titulo" text="Prestados actualmente">
+      <Label layoutX="256.0" layoutY="4.0" styleClass="titulo" text="Prestados actualmente">
          <font>
             <Font name="Caladea" size="15.0" />
          </font>

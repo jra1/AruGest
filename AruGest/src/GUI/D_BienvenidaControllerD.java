@@ -136,13 +136,20 @@ public class D_BienvenidaControllerD extends Thread {
 			pideUserPass();
 		} else {
 			if (!txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty() && !txtPass2.getText().isEmpty()) {
-				if (txtPass.getText().equals(txtPass2.getText())) {
-					Inicio.CONEXION.guardarUserPass(txtUsuario.getText(), txtPass.getText());
-					okClicked = true;
-					dialogStage.close();
+				if (txtPass.getText().length() >= 5) {
+					if (txtPass.getText().equals(txtPass2.getText())) {
+						Inicio.CONEXION.guardarUserPass(txtUsuario.getText(), txtPass.getText());
+						okClicked = true;
+						dialogStage.close();
+					} else {
+						Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "La contraseña no coincide",
+								"Debe introducir dos veces la contraseña para asegurarse que la ha escrito bien");
+					}
 				} else {
-					Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "La contraseña no coincide",
-							"Debe introducir dos veces la contraseña para asegurarse que la ha escrito bien");
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
+							"La contraseña debe contener al menos 5 caracteres",
+							"La contraseña que introduzca debe contener al menos 5 caracteres. Es recomendable utilizar minúsculas, "
+									+ "mayúscula y números.");
 				}
 			} else {
 				Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Debe introducir un usuario y una contraseña",

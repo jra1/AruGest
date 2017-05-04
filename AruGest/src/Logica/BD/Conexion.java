@@ -74,7 +74,7 @@ public class Conexion {
 			// Usuario: sa
 			// Pass: (No hay)
 			Class.forName("org.h2.Driver");
-			con = DriverManager.getConnection(url + ";AUTO_SERVER=TRUE", "sa", "");
+			con = DriverManager.getConnection(url + ";AUTO_SERVER=TRUE;CIPHER=AES", "sa", "1234 1234");
 			/**
 			 * con = DriverManager.getConnection(
 			 * "jdbc:h2:C:/AruGest/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
@@ -132,7 +132,7 @@ public class Conexion {
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
 							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
-							+ "NOPIEZAS, COBRADO, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							+ "NOPIEZAS, COBRADA, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Añadimos los parametros
@@ -223,7 +223,7 @@ public class Conexion {
 			// Se prepara la sentencia para introducir los datos de la factura
 			sql = "UPDATE FACTURA SET CLIENTEID = ?, VEHICULOID = ?, NUMFACTURA = ?, NUMPRESUPUESTO = ?, NUMORDENREP = ?, NUMRESGUARDO = ?, FECHA = ?, "
 					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
-					+ "NOPIEZAS = ?, COBRADO = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
+					+ "NOPIEZAS = ?, COBRADA = ?, IMPORTETOTAL = ?, SUMA = ?, SUMAIVA = ?, KMS = ? WHERE IDFACTURA = "
 					+ idFactura;
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql);
 
@@ -778,11 +778,11 @@ public class Conexion {
 			}
 
 			// 2º comprobar si tiene documentos
-			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " + id;
-			rs = st.executeQuery(sql);
-			while (rs.next()) {
-				eliminarDocumentosPorVehiculoID(id);
-			}
+			/*
+			 * sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " +
+			 * id; rs = st.executeQuery(sql); while (rs.next()) {
+			 * eliminarDocumentosPorVehiculoID(id); }
+			 */
 
 			// 3º comprobar si es vehiculo de sustitucion
 			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE VEHICULOID = " + id;
@@ -1888,16 +1888,16 @@ public class Conexion {
 			if (!estado.equalsIgnoreCase("T")) {
 				if (esPrimero) {
 					if (estado.equalsIgnoreCase("C")) {
-						sql += "WHERE (FACTURA.COBRADO = 'TRUE') ";
+						sql += "WHERE (FACTURA.COBRADA = 'TRUE') ";
 					} else {
-						sql += "WHERE (FACTURA.COBRADO = 'FALSE') ";
+						sql += "WHERE (FACTURA.COBRADA = 'FALSE') ";
 					}
 					esPrimero = false;
 				} else {
 					if (estado.equalsIgnoreCase("C")) {
-						sql += "AND (FACTURA.COBRADO = 'TRUE') ";
+						sql += "AND (FACTURA.COBRADA = 'TRUE') ";
 					} else {
-						sql += "AND (FACTURA.COBRADO = 'FALSE') ";
+						sql += "AND (FACTURA.COBRADA = 'FALSE') ";
 					}
 				}
 			}
@@ -1910,7 +1910,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2272,7 +2272,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2317,7 +2317,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2358,7 +2358,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADO"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
 				v = leerVehiculoPorID(rs.getInt("VEHICULOID"));
 				c = leerClientePorID(rs.getInt("CLIENTEID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);
@@ -3118,7 +3118,7 @@ public class Conexion {
 	public Connection getCon() {
 		try {
 			Class.forName("org.h2.Driver");
-			con = DriverManager.getConnection(Inicio.DBURL + ";AUTO_SERVER=TRUE", "sa", "");
+			con = DriverManager.getConnection(Inicio.DBURL + ";AUTO_SERVER=TRUE;CIPHER=AES", "sa", "1234 1234");
 			// con =
 			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
 			// "sa", "");
