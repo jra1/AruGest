@@ -584,7 +584,7 @@ public class V_ClienteController {
 				sp.setContent(nuevaFactura);
 				// Esta línea es para que se ejecute la pseudoclase del CSS ya
 				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
-				nombre = "Presupuesto: " + listaPresupuestos.get(selectedIndex).getCliente().getNombre();
+				nombre = "Presupuesto: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
 				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
 				gv = new GestorVentana(ap, nombre);
 				Utilidades.gestionarPantallas(gv);

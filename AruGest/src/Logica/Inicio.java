@@ -78,10 +78,8 @@ public class Inicio extends Application {
 	public Scene scene;
 	private BorderPane root;
 	private boolean existe;
-	// private boolean MODO_PRUEBAS = false;
 
 	public void init() throws Exception {
-		// comprobacionesIniciales();
 	}
 
 	/**
@@ -103,8 +101,6 @@ public class Inicio extends Application {
 		spath += "\\" + DBFILENAME;
 		DBPATHNAME = spath.replaceAll("\\\\", "/");
 		DBURL = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
-		// DBURL = "jdbc:h2:tcp://localhost/" + spath.replaceAll("\\\\", "/");
-		// DBURL = "jdbc:h2:tcp://localhost/C:/H2DB/AruGestDB";
 		return esta;
 	}
 

@@ -218,10 +218,7 @@
 	<field name="NOPIEZAS" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="MODIFICABLE" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PDF" class="java.sql.Blob">
+	<field name="COBRADA" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="IMPORTETOTAL" class="java.math.BigDecimal">
