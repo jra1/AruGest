@@ -299,18 +299,8 @@ public class Hilo extends Thread {
 	 */
 	public static boolean hilo_CreaBD(ProgressBar pb) {
 		try {
-			// Mostrar mensaje
-			// Alert alert = new Alert(AlertType.INFORMATION);
-			// alert.setTitle("Creando Base de datos");
-			// alert.setHeaderText("Creando base de datos...");
-			// alert.setContentText("");
-			// DialogPane dialogPane = alert.getDialogPane();
-			// dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
-			// dialogPane.getStyleClass().add("my-dialog");
-			// alert.show();
-
-			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
-				@Override
+		    FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
+			@Override
 				public Integer call() throws Exception {
 					System.out.println("Empieza");
 					BufferedReader br = new BufferedReader(new FileReader("ScriptSQL"));
@@ -383,4 +373,5 @@ public class Hilo extends Thread {
 		return DriverManager.getConnection(pUrl, "sa", "");
 	}
 
+	
 }

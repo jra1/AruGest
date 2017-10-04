@@ -3114,6 +3114,51 @@ public class Conexion {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Obtiene la versión actual de BD
+	 * @return
+	 */
+	public String getVersionDB(){
+	    String sql = "";
+	    String res = "";
+	    try {
+		// Obtener version
+		Statement st = getCon().createStatement();
+		sql = "SELECT valor FROM AUXILIAR WHERE CLAVE = 'VERSION_DB'";
+		ResultSet rs = st.executeQuery(sql);
+		if (rs.next()) {
+			res = rs.getString("VALOR");
+		}else{
+		    res = "";
+		}
+		
+	    } catch (Exception e) {
+	    	Utilidades.mostrarError(e);
+	    }
+	    return res;
+	}
+	
+	/**
+	 * Crea por primera vez el versionado de la BD 
+	 */
+	public void crearDBVersion(){
+	    String sql = "";
+		try {
+			// Se prepara la sentencia para introducir los datos
+			sql = "INSERT INTO AUXILIAR (CLAVE, VALOR) VALUES (?,?)";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			
+			// Añadimos los parametros
+			st.setString(1, "VERSION_DB");
+			st.setString(2, "1");
+						
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+		} catch (Exception e) {
+			Utilidades.mostrarError(e);
+		}
+	}
 
 	public Connection getCon() {
 		try {

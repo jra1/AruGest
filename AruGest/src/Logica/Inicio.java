@@ -70,8 +70,7 @@ public class Inicio extends Application {
 	public static BotonVentana BOTON1 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON2 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON3 = new BotonVentana(0, false, "");
-	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea
-														// necesario cambiar
+	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea necesario cambiar
 
 	// VARIABLES LOCALES DE INICIO
 	private static Stage escenario; // Donde se cargan las escenas (interfaces)
@@ -126,14 +125,25 @@ public class Inicio extends Application {
 
 		// Abre login
 		if (abreLogin()) {
-			// Abre la ventana principal de la aplicación
-			abreVentanaPrincipal();
+		    
+		    /*	Aquí se pondrá lo de leer el xml de la BD
+		     * 	La primera vez, añadir la version en la tabla auxiliar
+		     * 	
+		     * */
+		    if(CONEXION.getVersionDB().equalsIgnoreCase("")){
+			CONEXION.crearDBVersion();
+		    }else{
+			CONEXION.actualizaDB();
+		    }
+			
+		    // Abre la ventana principal de la aplicación
+		    abreVentanaPrincipal();
 
-			// Se obtienen los datos de la pantalla
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-			ALTO_PANTALLA = primaryScreenBounds.getHeight();
-			CAMBIAR_RESOLUCION = true;
+		    // Se obtienen los datos de la pantalla
+		    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		    ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+		    ALTO_PANTALLA = primaryScreenBounds.getHeight();
+		    CAMBIAR_RESOLUCION = true;
 		}
 	}
 
