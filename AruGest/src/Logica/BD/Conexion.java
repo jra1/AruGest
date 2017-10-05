@@ -19,9 +19,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.h2.tools.Server;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -3158,6 +3162,66 @@ public class Conexion {
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
 		}
+	}
+	
+	/**
+	 * Actualiza la BD mediante el fichero database.xml
+	 * @throws Exception 
+	 */
+	public void actualizaDB() throws Exception{
+		//InputStream ips = ClassLoader.getSystemClassLoader().getResourceAsStream("database.xml");
+		InputStream ips = Inicio.class.getResourceAsStream("/recursos/database.xml");
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.parse(ips);
+		Element version = (Element) document.getElementsByTagName("database").item(0);
+
+		int maxItems = version.getElementsByTagName("sql").getLength();
+
+		String sql;
+		String currentVersion = getVersionDB();
+		
+		for (int i = 0; i<maxItems; i++){ 
+			Element versionElement = (Element) version.getElementsByTagName("sql").item(i);
+			String versionNumber = versionElement.getAttribute("version");
+
+			if (Integer.parseInt(currentVersion) >= Integer.parseInt(versionNumber)) {
+				continue;
+			}
+
+			System.out.println("Version: " + versionNumber);
+
+			sql = versionElement.getTextContent();
+			executeTransaction(sql, versionNumber);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param sql
+	 * @param version
+	 * @throws Exception 
+	 */
+	public void executeTransaction(String sql, String version) throws Exception{
+		Connection cnx = getCon();
+		PreparedStatement st;
+		try{
+			cnx.setAutoCommit(false);
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			cnx.commit();
+			
+			//Actualizar version
+			sql = "UPDATE AUXILIAR SET VALOR = '" + version + "' WHERE CLAVE = 'VERSION_DB'";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+		}catch(Exception e){
+			cnx.rollback();
+		}
+		
+		
 	}
 
 	public Connection getCon() {

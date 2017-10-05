@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<database>
 <sql version="1">
 CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int, TIPO varchar(1));
 CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255));
@@ -100,3 +101,11 @@ INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Material de p
 INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Reparar techo', 'Chapa', 5);
 INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Pintar techo', 'Pintura', 5);
 </sql>
+<sql version="2">
+UPDATE direccion SET CALLE = (SELECT CONCAT(CALLE, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM direccion WHERE iddireccion  = 2) WHERE iddireccion = 2;
+
+select * from direccion;
+
+(SELECT CONCAT(CALLE, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM direccion WHERE iddireccion  = 0);
+</sql>
+</database>

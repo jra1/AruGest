@@ -104,7 +104,7 @@ public class Inicio extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
 		escenario = primaryStage;
 
 		// Comprobar si existe la BD
@@ -131,10 +131,10 @@ public class Inicio extends Application {
 		     * 	
 		     * */
 		    if(CONEXION.getVersionDB().equalsIgnoreCase("")){
-			CONEXION.crearDBVersion();
-		    }else{
-			CONEXION.actualizaDB();
+		    	CONEXION.crearDBVersion();
 		    }
+		    
+		    CONEXION.actualizaDB();
 			
 		    // Abre la ventana principal de la aplicación
 		    abreVentanaPrincipal();
