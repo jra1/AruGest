@@ -113,11 +113,9 @@ public class Inicio extends Application {
 		CONEXION.crearConexion(DBURL);
 
 		// Si no existe la BD se llama al diálogo de Bienvenida
-		if (!existe) {
-			if (abreBienvenida() == false) {
-				Platform.exit();
-				System.exit(0);
-			}
+		if (!existe && !abreBienvenida()) {
+			Platform.exit();
+			System.exit(0);
 		}
 
 		// Obtener las opciones
@@ -126,15 +124,16 @@ public class Inicio extends Application {
 		// Abre login
 		if (abreLogin()) {
 		    
-		    /*	Aquí se pondrá lo de leer el xml de la BD
-		     * 	La primera vez, añadir la version en la tabla auxiliar
-		     * 	
-		     * */
 		    if(CONEXION.getVersionDB().equalsIgnoreCase("")){
 		    	CONEXION.crearDBVersion();
 		    }
 		    
 		    CONEXION.actualizaDB();
+		    
+		    // En versión 2 cambiamos la direccion
+		    if(CONEXION.getVersionDB().equalsIgnoreCase("2")){
+		    	CONEXION.actualizaDireccionVersion2();
+		    }
 			
 		    // Abre la ventana principal de la aplicación
 		    abreVentanaPrincipal();
@@ -212,7 +211,7 @@ public class Inicio extends Application {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/D_Bienvenida.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
@@ -253,15 +252,13 @@ public class Inicio extends Application {
 
 		try {
 			// 1.- Crear la escena desde el AnchorPane
-			root = (BorderPane) loader.load();
+			root = loader.load();
 			root.getStylesheets().add(getClass().getResource("/GUI/EstiloRoot.css").toExternalForm());
 
 			scene = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
 				Utilidades.ajustarResolucionEscenario(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
 			}
-			// System.out.println("Anchura: " + primaryScreenBounds.getWidth() +
-			// " ; Altura: " + primaryScreenBounds.getHeight());
 			// 2.- Ponerla y mostrarla
 			escenario.setScene(scene);
 			ResponsiveHandler.addResponsiveToWindow(escenario);
@@ -278,7 +275,7 @@ public class Inicio extends Application {
 			controlador.ocultarBotonesGestor();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 	}
 
@@ -293,7 +290,7 @@ public class Inicio extends Application {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/D_EditVehiculo.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();

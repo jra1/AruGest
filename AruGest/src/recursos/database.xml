@@ -102,10 +102,6 @@ INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Reparar techo
 INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Pintar techo', 'Pintura', 5);
 </sql>
 <sql version="2">
-UPDATE direccion SET CALLE = (SELECT CONCAT(CALLE, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM direccion WHERE iddireccion  = 2) WHERE iddireccion = 2;
-
-select * from direccion;
-
-(SELECT CONCAT(CALLE, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM direccion WHERE iddireccion  = 0);
+ALTER TABLE direccion ALTER COLUMN CALLE RENAME TO DIRECCION
 </sql>
 </database>

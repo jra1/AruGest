@@ -26,7 +26,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class D_BienvenidaControllerD extends Thread {
+public class D_BienvenidaControllerD /*extends Thread */{
 	// Variables de la vista
 	@FXML
 	private Label lblBienvenida;

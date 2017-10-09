@@ -1665,6 +1665,7 @@ public class Conexion {
 			}
 			// Se cierra la conexion
 			getCon().close();
+			rs.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -3202,7 +3203,7 @@ public class Conexion {
 	 * @param version
 	 * @throws Exception 
 	 */
-	public void executeTransaction(String sql, String version) throws Exception{
+	public void executeTransaction(String sql, String version) throws SQLException{
 		Connection cnx = getCon();
 		PreparedStatement st;
 		try{
@@ -3210,27 +3211,68 @@ public class Conexion {
 			st = getCon().prepareStatement(sql);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
-			cnx.commit();
 			
 			//Actualizar version
-			sql = "UPDATE AUXILIAR SET VALOR = '" + version + "' WHERE CLAVE = 'VERSION_DB'";
-			st = getCon().prepareStatement(sql);
+			String newSql = "UPDATE AUXILIAR SET VALOR = '" + version + "' WHERE CLAVE = 'VERSION_DB'";
+			st = getCon().prepareStatement(newSql);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
+			cnx.commit();
 		}catch(Exception e){
 			cnx.rollback();
 		}
-		
-		
+	}
+	
+	/**
+	 * Actualiza la dirección para poner únicamente un campo para calle, número, piso y letra
+	 * @throws SQLException 
+	 */
+	public void actualizaDireccionVersion2() throws SQLException{
+		PreparedStatement st;
+		String sql;
+		ArrayList<Integer> lista = new ArrayList<>();
+		Connection cnx = getCon();
+		try{
+			cnx.setAutoCommit(false);
+			sql = "SELECT IDDIRECCION FROM DIRECCION";
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				lista.add(rs.getInt(1));
+			}
+			for(int id : lista){
+				//Actualizar datos
+				sql = "UPDATE DIRECCION SET DIRECCION = (SELECT CONCAT(DIRECCION, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM DIRECCION WHERE iddireccion  = ?) WHERE iddireccion = ?";
+				st = getCon().prepareStatement(sql);
+				
+				// Añadimos los parametros
+				st.setInt(1, id);
+				st.setInt(2, id);
+							
+				// Ejecutamos la sentencia
+				st.executeUpdate();
+			}
+			
+			// Eliminar las columnas numero, piso, letra
+			sql = "ALTER TABLE DIRECCION DROP COLUMN NUMERO";
+			st.executeUpdate(sql);
+			sql = "ALTER TABLE DIRECCION DROP COLUMN PISO";
+			st.executeUpdate(sql);
+			sql = "ALTER TABLE DIRECCION DROP COLUMN LETRA";
+			st.executeUpdate(sql);
+			cnx.commit();
+		}catch(Exception e){
+			Utilidades.mostrarError(e);
+			cnx.rollback();
+		}
 	}
 
 	public Connection getCon() {
 		try {
 			Class.forName("org.h2.Driver");
 			con = DriverManager.getConnection(Inicio.DBURL + ";AUTO_SERVER=TRUE;CIPHER=AES", "sa", "1234 1234");
-			// con =
-			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
-			// "sa", "");
 			con.setAutoCommit(true);
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
