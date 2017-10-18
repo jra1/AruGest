@@ -466,43 +466,28 @@ public class Conexion {
 		long idGenerado = 0;
 		String sql = "";
 		try {
-			sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
+			sql = "INSERT INTO DIRECCION (DIRECCION, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
 			try {
-				st.setString(1, d.getCalle());
+				st.setString(1, d.getDireccion());
 			} catch (NullPointerException e) {
 				st.setString(1, "");
 			}
 			try {
-				st.setInt(2, d.getNumero());
+				st.setInt(2, d.getCpostal());
 			} catch (NullPointerException e) {
 				st.setInt(2, 0);
 			}
 			try {
-				st.setString(3, d.getPiso());
+				st.setString(3, d.getLocalidad());
 			} catch (NullPointerException e) {
 				st.setString(3, "");
 			}
 			try {
-				st.setString(4, d.getLetra());
+				st.setString(4, d.getProvincia());
 			} catch (NullPointerException e) {
 				st.setString(4, "");
-			}
-			try {
-				st.setInt(5, d.getCpostal());
-			} catch (NullPointerException e) {
-				st.setInt(5, 0);
-			}
-			try {
-				st.setString(6, d.getLocalidad());
-			} catch (NullPointerException e) {
-				st.setString(6, "");
-			}
-			try {
-				st.setString(7, d.getProvincia());
-			} catch (NullPointerException e) {
-				st.setString(7, "");
 			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -585,7 +570,7 @@ public class Conexion {
 			// SI NO ES NULL
 			if (cped.getDireccion() != null
 					&& (cped.getCliente().getDireccionID() != 0 || (cped.getCliente().getDireccionID() == 0
-							&& !cped.getDireccion().getCalle().equalsIgnoreCase("No informado")))) {
+							&& !cped.getDireccion().getDireccion().equalsIgnoreCase("No informado")))) {
 				idGenerado = guardarDireccion(cped.getDireccion());
 			}
 
@@ -862,23 +847,19 @@ public class Conexion {
 			// Si no tiene direccion (iddireccion = 0) Y SE HA INTRODUCIDO UNA
 			// NUEVA, se crea
 			if (cped.getCliente().getDireccionID() != 0) {
-				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
-						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
+				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
 						+ cped.getCliente().getDireccionID();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setString(1, cped.getDireccion().getCalle());
-				st.setInt(2, cped.getDireccion().getNumero());
-				st.setString(3, cped.getDireccion().getPiso());
-				st.setString(4, cped.getDireccion().getLetra());
-				st.setInt(5, cped.getDireccion().getCpostal());
-				st.setString(6, cped.getDireccion().getLocalidad());
-				st.setString(7, cped.getDireccion().getProvincia());
+				st.setString(1, cped.getDireccion().getDireccion());
+				st.setInt(2, cped.getDireccion().getCpostal());
+				st.setString(3, cped.getDireccion().getLocalidad());
+				st.setString(4, cped.getDireccion().getProvincia());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
 				// Si llega aquí: iddireccion = 0
-				if (cped.getDireccion().getCalle() != "" || cped.getDireccion().getLocalidad() != ""
+				if (cped.getDireccion().getDireccion() != "" || cped.getDireccion().getLocalidad() != ""
 						|| cped.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignar su id al cliente
 					idGenerado = guardarDireccion(cped.getDireccion());
@@ -886,7 +867,7 @@ public class Conexion {
 						// guardar
 						// la direccion
 						res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
-						if (res == false) {
+						if (!res) {
 							return res;
 						}
 						cped.getCliente().setDireccionID((int) idGenerado);
@@ -934,7 +915,6 @@ public class Conexion {
 			res = true;
 		} catch (Exception ex) {
 			Utilidades.mostrarError(ex);
-			ex.printStackTrace();
 			res = false;
 		}
 		return res;
@@ -956,23 +936,19 @@ public class Conexion {
 			// Si ya tiene direccion, se actualiza
 			// Si no tiene direccion (iddireccion = 0), se crea
 			if (pcd.getDireccionID() != 0) {
-				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
-						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
+				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
 						+ pcd.getDireccionID();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setString(1, pcd.getDireccion().getCalle());
-				st.setInt(2, pcd.getDireccion().getNumero());
-				st.setString(3, pcd.getDireccion().getPiso());
-				st.setString(4, pcd.getDireccion().getLetra());
-				st.setInt(5, pcd.getDireccion().getCpostal());
-				st.setString(6, pcd.getDireccion().getLocalidad());
-				st.setString(7, pcd.getDireccion().getProvincia());
+				st.setString(1, pcd.getDireccion().getDireccion());
+				st.setInt(2, pcd.getDireccion().getCpostal());
+				st.setString(3, pcd.getDireccion().getLocalidad());
+				st.setString(4, pcd.getDireccion().getProvincia());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
 				// Si llega aquí: iddireccion = 0
-				if (pcd.getDireccion().getCalle() != "" || pcd.getDireccion().getLocalidad() != ""
+				if (pcd.getDireccion().getDireccion() != "" || pcd.getDireccion().getLocalidad() != ""
 						|| pcd.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignarle su iddireccion al cliente
 					idGenerado = guardarDireccion(pcd.getDireccion());
@@ -1594,14 +1570,13 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
-						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("DIRECCION"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 			}
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
 		}
 		return d;
 	}
@@ -2055,8 +2030,7 @@ public class Conexion {
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
-				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
-						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("DIRECCION"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
 					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"),

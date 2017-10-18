@@ -142,7 +142,7 @@ public class Hilo extends Thread {
 						}
 						parameters.put("autor", c.getNombre());
 						if (d.getIddireccion() != 0) {
-							parameters.put("direccion", d.getDireccionCompleta());
+							parameters.put("direccion", d.getDireccion());
 						} else {
 							parameters.put("direccion", "");
 						}

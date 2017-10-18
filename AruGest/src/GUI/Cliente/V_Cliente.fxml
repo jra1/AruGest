@@ -30,8 +30,8 @@
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.33334350585938" minWidth="10.0" prefWidth="23.666656494140625" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.6666564941406" minWidth="10.0" prefWidth="290.3333435058594" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.33334350585938" minWidth="10.0" prefWidth="57.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.6666564941406" minWidth="10.0" prefWidth="274.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="82.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="63.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="53.0" />
@@ -45,8 +45,8 @@
                </rowConstraints>
                <children>
                   <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="Tipo" />
-                  <Label layoutX="559.0" layoutY="8.0" styleClass="my-label" text="Calle" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Población" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                  <Label layoutX="559.0" layoutY="8.0" styleClass="my-label" text="Direccion" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Población" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="3">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -57,27 +57,21 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="559.0" layoutY="62.0" styleClass="my-label" text="Cod. Postal" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <Label layoutX="559.0" layoutY="62.0" styleClass="my-label" text="Cod. Postal" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Label layoutX="5.0" layoutY="35.0" styleClass="my-label" text="Nombre" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtLetra" editable="false" layoutX="774.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="44.0" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="895.0" layoutY="18.0" styleClass="my-label" text="Población" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Label layoutX="895.0" layoutY="18.0" styleClass="my-label" text="Población" GridPane.columnIndex="4" />
                   <TextField fx:id="txtTelf2" editable="false" layoutX="442.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 2" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="559.0" layoutY="35.0" styleClass="my-label" text="Número" GridPane.columnIndex="4" />
                   <Label layoutX="401.0" layoutY="8.0" styleClass="my-label" text="Telf. 1" GridPane.columnIndex="2" />
-                  <TextField fx:id="txtProvincia" editable="false" layoutX="952.0" layoutY="43.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Provincia" styleClass="my-text-field" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                  <TextField fx:id="txtProvincia" editable="false" layoutX="952.0" layoutY="43.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Provincia" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="895.0" layoutY="47.0" styleClass="my-label" text="Provincia" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <Label layoutX="895.0" layoutY="47.0" styleClass="my-label" text="Provincia" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                   <Label fx:id="lblTipoCliente" layoutX="62.0" layoutY="8.0" styleClass="titulo" text="-" GridPane.columnIndex="1" />
                   <TextField fx:id="txtTelf1" editable="false" layoutX="442.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="103.0" promptText="Teléfono 1" styleClass="my-text-field" GridPane.columnIndex="3">
                      <font>
@@ -89,26 +83,19 @@
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCalle" editable="false" layoutX="627.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="31.0" prefWidth="66.0" promptText="Calle" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                  <TextField fx:id="txtDireccion" editable="false" layoutX="627.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="31.0" prefWidth="66.0" promptText="Dirección completa" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <Label fx:id="lblApellidos" layoutX="5.0" layoutY="62.0" styleClass="my-label" text="Apellidos" GridPane.rowIndex="3" />
-                  <Label layoutX="745.0" layoutY="35.0" styleClass="my-label" text="Letra" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Label layoutX="401.0" layoutY="35.0" styleClass="my-label" text="Telf. 2" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label layoutX="674.0" layoutY="35.0" styleClass="my-label" text="Piso" GridPane.columnIndex="6" />
                   <TextField fx:id="txtDni" editable="false" layoutX="261.0" layoutY="4.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="130.0" promptText="DNI o CIF" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtCPostal" editable="false" layoutX="627.0" layoutY="58.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="112.0" promptText="Código postal" styleClass="my-text-field" GridPane.columnIndex="7" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="txtPiso" editable="false" layoutX="701.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field" GridPane.columnIndex="7">
+                  <TextField fx:id="txtCPostal" editable="false" layoutX="627.0" layoutY="58.0" onKeyPressed="#mensajeNoModificar" prefHeight="31.0" prefWidth="176.0" promptText="Código postal" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -119,11 +106,6 @@
                      </font>
                   </TextField>
                   <Label layoutX="198.0" layoutY="8.0" styleClass="my-label" text="N.I.F/C.I.F." GridPane.rowIndex="1" />
-                  <TextField fx:id="txtNumero" editable="false" layoutX="627.0" layoutY="31.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="38.0" styleClass="my-text-field" GridPane.columnIndex="5">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </TextField>
                   <CheckBox id="chckbox-vehi-susti" fx:id="chkboxEsProveedor" disable="true" mnemonicParsing="false" styleClass="my-label" text="ES PROVEEDOR" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>

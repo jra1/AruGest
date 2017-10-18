@@ -7,56 +7,40 @@ import javafx.beans.property.StringProperty;
 
 public class Direccion {
 	private final IntegerProperty iddireccion;
-	private final StringProperty calle;
-	private final IntegerProperty numero;
-	private final StringProperty piso;
-	private final StringProperty letra;
+	private final StringProperty direccion;
 	private final IntegerProperty cpostal;
 	private final StringProperty localidad;
 	private final StringProperty provincia;
 
 	public Direccion() {
-		this.calle = new SimpleStringProperty("");
-		this.numero = new SimpleIntegerProperty(0);
-		this.piso = new SimpleStringProperty("");
-		this.letra = new SimpleStringProperty("");
+		this.direccion = new SimpleStringProperty("");
 		this.localidad = new SimpleStringProperty("");
 		this.iddireccion = new SimpleIntegerProperty(0);
 		this.provincia = new SimpleStringProperty("");
 		this.cpostal = new SimpleIntegerProperty(0);
 	}
 
-	public Direccion(String calle, Integer numero, String piso, String letra, String localidad) {
-		this.calle = new SimpleStringProperty(calle);
-		this.numero = new SimpleIntegerProperty(numero);
-		this.piso = new SimpleStringProperty(piso);
-		this.letra = new SimpleStringProperty(letra);
+	public Direccion(String direccion, String localidad) {
+		this.direccion = new SimpleStringProperty(direccion);
 		this.localidad = new SimpleStringProperty(localidad);
 		this.iddireccion = new SimpleIntegerProperty(0);
 		this.provincia = new SimpleStringProperty("");
 		this.cpostal = new SimpleIntegerProperty(0);
 	}
 
-	public Direccion(Integer iddireccion, String calle, Integer numero, String piso, String letra, Integer cpostal,
+	public Direccion(Integer iddireccion, String direccion, Integer cpostal,
 			String localidad, String provincia) {
 		this.iddireccion = new SimpleIntegerProperty(iddireccion);
-		this.calle = new SimpleStringProperty(calle);
-		this.numero = new SimpleIntegerProperty(numero);
-		this.piso = new SimpleStringProperty(piso);
-		this.letra = new SimpleStringProperty(letra);
+		this.direccion = new SimpleStringProperty(direccion);
 		this.cpostal = new SimpleIntegerProperty(cpostal);
 		this.localidad = new SimpleStringProperty(localidad);
 		this.provincia = new SimpleStringProperty(provincia);
 	}
 
-	public Direccion(IntegerProperty iddireccion, StringProperty calle, IntegerProperty numero, StringProperty piso,
-			StringProperty letra, IntegerProperty cpostal, StringProperty localidad, StringProperty provincia) {
+	public Direccion(IntegerProperty iddireccion, StringProperty direccion, IntegerProperty cpostal, StringProperty localidad, StringProperty provincia) {
 		super();
 		this.iddireccion = iddireccion;
-		this.calle = calle;
-		this.numero = numero;
-		this.piso = piso;
-		this.letra = letra;
+		this.direccion = direccion;
 		this.cpostal = cpostal;
 		this.localidad = localidad;
 		this.provincia = provincia;
@@ -74,68 +58,26 @@ public class Direccion {
 		this.iddireccionProperty().set(iddireccion);
 	}
 
-	public StringProperty calleProperty() {
-		return this.calle;
+	public StringProperty direccionProperty() {
+		return this.direccion;
 	}
 
 	public StringProperty direccionCompletaProperty() {
 		String respuesta = "";
-		if (!this.getCalle().equalsIgnoreCase("")) {
-			respuesta = this.getCalle() + " " + this.getNumero() + " " + this.getPiso() + " " + this.getLetra() + " "
-					+ Integer.toString(this.getCpostal()) + " " + this.getLocalidad() + ", " + this.getProvincia();
+		if (!this.getDireccion().equalsIgnoreCase("")) {
+			respuesta = this.getDireccion() + Integer.toString(this.getCpostal()) + " " + this.getLocalidad() + ", " + this.getProvincia();
 		} else {
 			respuesta = this.getLocalidad() + " - " + this.getProvincia();
 		}
 		return new SimpleStringProperty(respuesta);
 	}
 
-	public String getCalle() {
-		return this.calleProperty().get();
+	public String getDireccion() {
+		return this.direccionProperty().get();
 	}
 
-	public String getDireccionCompleta() {
-		return this.calleProperty().get() + " " + this.numeroProperty().get() + " " + this.pisoProperty().get() + " "
-				+ this.letraProperty().get();
-	}
-
-	public void setCalle(final String calle) {
-		this.calleProperty().set(calle);
-	}
-
-	public IntegerProperty numeroProperty() {
-		return this.numero;
-	}
-
-	public int getNumero() {
-		return this.numeroProperty().get();
-	}
-
-	public void setNumero(final int numero) {
-		this.numeroProperty().set(numero);
-	}
-
-	public StringProperty pisoProperty() {
-		return this.piso;
-	}
-
-	public String getPiso() {
-		return this.pisoProperty().get();
-	}
-
-	public void setPiso(final String piso) {
-		this.pisoProperty().set(piso);
-	}
-
-	public StringProperty letraProperty() {
-		return this.letra;
-	}
-
-	public String getLetra() {
-		return this.letraProperty().get();
-	}
-
-	public void setLetra(final String letra) {
-		this.letraProperty().set(letra);
+	public void setDireccion(final String direccion) {
+		this.direccionProperty().set(direccion);
 	}
 
 	public IntegerProperty cpostalProperty() {

@@ -1,5 +1,6 @@
 package GUI.Cliente;
 
+import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.Direccion;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * Dialog to edit details of a person.
  * 
- * @author Marco Jakob
+ * @author Joseba Ruiz
  */
 public class D_EditClienteController {
 
@@ -39,13 +40,7 @@ public class D_EditClienteController {
 	@FXML
 	private TextField txtTel3;
 	@FXML
-	private TextField txtCalle;
-	@FXML
-	private TextField txtNumero;
-	@FXML
-	private TextField txtPiso;
-	@FXML
-	private TextField txtLetra;
+	private TextField txtDireccion;
 	@FXML
 	private TextField txtCodPostal;
 	@FXML
@@ -57,6 +52,8 @@ public class D_EditClienteController {
 	private ClienteParticularEmpresaDireccion cped = null;
 	private boolean esEmpresa = false;
 	private boolean okClicked = false;
+	private static final String TIPO_PARTICULAR = "Particular";
+	private static final String TIPO_EMPRESA = "Empresa";
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -64,8 +61,8 @@ public class D_EditClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		comboTipo.getItems().addAll("Particular", "Empresa");
-		comboTipo.setValue("Particular");
+		comboTipo.getItems().addAll(TIPO_PARTICULAR, TIPO_EMPRESA);
+		comboTipo.setValue(TIPO_PARTICULAR);
 
 		comboTipo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
@@ -92,14 +89,14 @@ public class D_EditClienteController {
 		if (cped.getParticular() != null) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
-			comboTipo.setValue("Particular");
+			comboTipo.setValue(TIPO_PARTICULAR);
 			txtNif.setText(cped.getParticular().getNif());
 			txtNombre.setText(cped.getParticular().getNombre());
 			txtApellidos.setText(cped.getParticular().getApellidos());
 		} else if (cped.getEmpresa() != null) {
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
-			comboTipo.setValue("Empresa");
+			comboTipo.setValue(TIPO_EMPRESA);
 			txtNif.setText(cped.getEmpresa().getCif());
 			txtNombre.setText(cped.getEmpresa().getNombre());
 		}
@@ -107,11 +104,8 @@ public class D_EditClienteController {
 		txtTel2.setText(cped.getCliente().getTelf2());
 		txtTel3.setText(cped.getCliente().getTelf3());
 		if (cped.getDireccion() != null && cped.getDireccion().getIddireccion() != 0) {
-			txtCalle.setText(cped.getDireccion().getCalle());
-			txtNumero.setText("" + cped.getDireccion().getNumero());
-			txtPiso.setText(cped.getDireccion().getPiso());
-			txtLetra.setText(cped.getDireccion().getLetra());
-			txtCodPostal.setText("" + cped.getDireccion().getCpostal());
+			txtDireccion.setText(cped.getDireccion().getDireccion());
+			txtCodPostal.setText(Integer.toString(cped.getDireccion().getCpostal()));
 			txtLocalidad.setText(cped.getDireccion().getLocalidad());
 			txtProvincia.setText(cped.getDireccion().getProvincia());
 		}
@@ -155,47 +149,23 @@ public class D_EditClienteController {
 				cped.getCliente().setTipo("E");
 			}
 			// Dirección
-			if (!txtCalle.getText().isEmpty()
+			if (!txtDireccion.getText().isEmpty()
 					|| (!txtCodPostal.getText().isEmpty() && Integer.parseInt(txtCodPostal.getText()) != 0)
 					|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
 				if (cped.getDireccion() == null || cped.getDireccion().getIddireccion() == 0) {
-					int numero = 0;
-					if (!txtNumero.getText().isEmpty()) {
-						if (Utilidades.validaNumero(txtNumero.getText()) != -1) {
-							numero = Utilidades.validaNumero(txtNumero.getText());
-						} else {
-							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
-									"El número sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
-							numero = 0;
-						}
-					}
 					int cpostal = 0;
 					if (!txtCodPostal.getText().isEmpty()) {
 						if (Utilidades.validaNumero(txtCodPostal.getText()) != -1) {
 							cpostal = Utilidades.validaNumero(txtCodPostal.getText());
 						} else {
-							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
+							Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ATENCION,
 									"El código postal sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
 							cpostal = 0;
 						}
 					}
-					cped.setDireccion(new Direccion(0, txtCalle.getText(), numero, txtPiso.getText(),
-							txtLetra.getText(), cpostal, txtLocalidad.getText(), txtProvincia.getText()));
+					cped.setDireccion(new Direccion(0, txtDireccion.getText(), cpostal, txtLocalidad.getText(), txtProvincia.getText()));
 				} else {
-					cped.getDireccion().setCalle(txtCalle.getText());
-					if (!txtNumero.getText().isEmpty()) {
-						if (Utilidades.validaNumero(txtNumero.getText()) != -1) {
-							cped.getDireccion().setNumero(Utilidades.validaNumero(txtNumero.getText()));
-						} else {
-							Utilidades.mostrarAlerta(AlertType.WARNING, "Atención",
-									"El número sólo puede contener dígitos", "Se pondrá 0 hasta que lo cambie.");
-							cped.getDireccion().setNumero(0);
-						}
-					} else {
-						cped.getDireccion().setNumero(0);
-					}
-					cped.getDireccion().setPiso(txtPiso.getText());
-					cped.getDireccion().setLetra(txtLetra.getText());
+					cped.getDireccion().setDireccion(txtDireccion.getText());
 					if (!txtCodPostal.getText().isEmpty()) {
 						if (Utilidades.validaNumero(txtCodPostal.getText()) != -1) {
 							cped.getDireccion().setCpostal(Utilidades.validaNumero(txtCodPostal.getText()));
@@ -211,16 +181,12 @@ public class D_EditClienteController {
 					cped.getDireccion().setProvincia(txtProvincia.getText());
 				}
 			} else {
-				// Calle vacía || cpostal vacío || localidad vacía ||
-				// provincia vacía
+				// Calle, cpostal, localidad o provincia vacía
 				if (cped.getDireccion() == null) {
 					cped.setDireccion(new Direccion());
 					cped.getCliente().setDireccionID(0);
 				} else {
-					cped.getDireccion().setCalle("");
-					cped.getDireccion().setNumero(0);
-					cped.getDireccion().setPiso("");
-					cped.getDireccion().setLetra("");
+					cped.getDireccion().setDireccion("");
 					cped.getDireccion().setCpostal(0);
 					cped.getDireccion().setLocalidad("");
 					cped.getDireccion().setProvincia("");
@@ -262,19 +228,8 @@ public class D_EditClienteController {
 		if (txtNombre.getText().length() == 0) {
 			errorMessage += "Introduce el nombre del cliente.";
 		}
-		if (txtNumero.getText().length() > 0) {
-			try {
-				Integer.parseInt(txtNumero.getText());
-			} catch (NumberFormatException e) {
-				errorMessage = "Número no válido.\n Introduce únicamente números.";
-			}
-		}
-		if (txtCodPostal.getText().length() > 0) {
-			try {
-				Integer.parseInt(txtCodPostal.getText());
-			} catch (NumberFormatException e) {
-				errorMessage = "Código postal no válido.\n Introduce únicamente números.";
-			}
+		if (txtCodPostal.getText().length() > 0 && Utilidades.validaNumero(txtCodPostal.getText()) == -1) {
+			errorMessage = "Código postal no válido.\n Introduce únicamente números.";
 		}
 
 		if (errorMessage.length() == 0) {
@@ -287,7 +242,7 @@ public class D_EditClienteController {
 	}
 
 	private void comprobarComboTipo(String newValue) {
-		if (newValue.equalsIgnoreCase("Particular")) {
+		if (newValue.equalsIgnoreCase(TIPO_PARTICULAR)) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
 			chckboxEsProveedor.setVisible(false);
