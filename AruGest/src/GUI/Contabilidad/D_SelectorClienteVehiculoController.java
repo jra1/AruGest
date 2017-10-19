@@ -1,5 +1,6 @@
 package GUI.Contabilidad;
 
+import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.Direccion;
@@ -23,22 +24,14 @@ public class D_SelectorClienteVehiculoController {
 	@FXML
 	private TextField txtApellidos;
 	@FXML
-	private TextField txtCalle;
-	@FXML
-	private TextField txtNumero;
-	@FXML
-	private TextField txtPiso;
-	@FXML
-	private TextField txtLetra;
+	private TextField txtDireccion;
 	@FXML
 	private TextField txtPoblacion;
 	@FXML
 	private TextField txtDni;
 	@FXML
 	private TextField txtTel1;
-	// @FXML
-	// private TextField txtMovil;
-
+	
 	// Datos Vehiculo
 	@FXML
 	private ComboBox<String> comboTipoVehiculo;
@@ -68,8 +61,8 @@ public class D_SelectorClienteVehiculoController {
 	 */
 	@FXML
 	private void initialize() {
-		comboTipoCliente.getItems().addAll("Particular", "Empresa");
-		comboTipoCliente.setValue("Particular");
+		comboTipoCliente.getItems().addAll(StringUtils.TIPO_PARTICULAR, StringUtils.TIPO_EMPRESA);
+		comboTipoCliente.setValue(StringUtils.TIPO_PARTICULAR);
 		comboTipoVehiculo.getItems().addAll("Turismo", "Furgoneta", "Camión", "Autobús", "Autocaravana", "Moto",
 				"Remolque");
 		comboTipoVehiculo.setValue("Turismo");
@@ -120,8 +113,6 @@ public class D_SelectorClienteVehiculoController {
 					cpedv.getParticular().setApellidos(txtApellidos.getText());
 				}
 
-				// cpedv.getEmpresa().setCif("");
-				// cpedv.getEmpresa().setNombre("");
 			} else if (tipoCliente == 2) { // Empresa
 				cpedv.getCliente().setTipo("E");
 				if (cpedv.getEmpresa() == null) {
@@ -133,21 +124,14 @@ public class D_SelectorClienteVehiculoController {
 					cpedv.getEmpresa().setNombre(txtNombre.getText());
 				}
 
-				// cpedv.getParticular().setNif("");
-				// cpedv.getParticular().setNombre("");
-				// cpedv.getParticular().setApellidos("");
 			}
 
-			if (!txtCalle.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
+			if (!txtDireccion.getText().isEmpty() || !txtPoblacion.getText().isEmpty()) {
 				if (cpedv.getDireccion() == null) {
-					Direccion d = new Direccion(txtCalle.getText(), Integer.parseInt(txtNumero.getText()),
-							txtPiso.getText(), txtLetra.getText(), txtPoblacion.getText());
+					Direccion d = new Direccion(txtDireccion.getText(), txtPoblacion.getText());
 					cpedv.setDireccion(d);
 				} else {
-					cpedv.getDireccion().setCalle(txtCalle.getText());
-					cpedv.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
-					cpedv.getDireccion().setPiso(txtPiso.getText());
-					cpedv.getDireccion().setLetra(txtLetra.getText());
+					cpedv.getDireccion().setDireccion(txtDireccion.getText());
 					cpedv.getDireccion().setLocalidad(txtPoblacion.getText());
 				}
 			}
@@ -191,31 +175,16 @@ public class D_SelectorClienteVehiculoController {
 	private boolean isInputValid() {
 		String mensaje = "";
 		// Comprobar entradas de datos son correctas
-		if (!txtDni.getText().isEmpty()) {
-			if (!Utilidades.validaDni(txtDni.getText())) {
-				mensaje = "El NIF/CIF no es válido.";
-			}
+		if (!txtDni.getText().isEmpty() && !Utilidades.validaDni(txtDni.getText())) {
+			mensaje = "El NIF/CIF no es válido.";
 		}
 
-		if (!txtMatricula.getText().isEmpty()) {
-			if (!Utilidades.validaMatricula(txtMatricula.getText())) {
-				mensaje = "La matrícula no es válida.";
-			}
+		if (!txtMatricula.getText().isEmpty() && !Utilidades.validaMatricula(txtMatricula.getText())) {
+			mensaje = "La matrícula no es válida.";
 		}
 
-		if (!txtNumero.getText().isEmpty()) {
-			try {
-				Integer.parseInt(txtNumero.getText());
-			} catch (Exception e) {
-				mensaje = "El número de vivienda no es válido. Introduce sólo números.";
-			}
-		}
-		if (!txtKms.getText().isEmpty()) {
-			try {
-				Integer.parseInt(txtKms.getText());
-			} catch (Exception e) {
-				mensaje = "Los  kilómetros del vehículo no son correctos. Introduce sólo números.";
-			}
+		if (!txtKms.getText().isEmpty() && Utilidades.validaNumero(txtKms.getText()) == -1) {
+			mensaje = "Los  kilómetros del vehículo no son correctos. Introduce sólo números.";
 		}
 		if (mensaje == "") {
 			return true;
@@ -229,16 +198,12 @@ public class D_SelectorClienteVehiculoController {
 		this.cpedv = cpedv;
 		if (cpedv != null) {
 			if (cpedv.getCliente() != null) {
-				// Particular p =
-				// Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
 				if (cpedv.getParticular() != null) {
 					comboTipoCliente.setValue("Particular");
 					txtNombre.setText(cpedv.getParticular().getNombre());
 					txtApellidos.setText(cpedv.getParticular().getApellidos());
 					txtDni.setText(cpedv.getParticular().getNif());
 				} else {
-					// Empresa e =
-					// Inicio.CONEXION.buscarEmpresaPorClienteID(Inicio.CLIENTE_ID);
 					if (cpedv.getEmpresa() != null) {
 						comboTipoCliente.setValue("Empresa");
 						txtNombre.setText(cpedv.getEmpresa().getNombre());
@@ -246,16 +211,10 @@ public class D_SelectorClienteVehiculoController {
 					}
 				}
 				if (cpedv.getCliente().getDireccionID() != 0) {
-					// Direccion d =
-					// Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
-					txtCalle.setText(cpedv.getDireccion().getCalle());
-					txtNumero.setText("" + cpedv.getDireccion().getNumero());
-					txtPiso.setText(cpedv.getDireccion().getPiso());
-					txtLetra.setText(cpedv.getDireccion().getLetra());
+					txtDireccion.setText(cpedv.getDireccion().getDireccion());
 					txtPoblacion.setText(cpedv.getDireccion().getLocalidad());
 				}
 				txtTel1.setText(cpedv.getCliente().getTelf1());
-				// txtMovil.setText(c.getTelf2());
 			}
 			if (cpedv.getVehiculo() != null) {
 				// Cargar datos vehiculo
@@ -264,7 +223,6 @@ public class D_SelectorClienteVehiculoController {
 				txtModelo.setText(cpedv.getVehiculo().getModelo());
 				txtVersion.setText(cpedv.getVehiculo().getVersion());
 				comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(cpedv.getVehiculo().getTipoID()));
-
 			}
 		}
 	}

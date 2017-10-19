@@ -493,13 +493,14 @@ public class Utilidades {
 		pMat = pMat.replaceAll("/", "");
 		Pattern pat = Pattern.compile("(([a-zA-Z]{1,2})(\\d{4})([a-zA-Z]{0,2}))|((\\d{4})([a-zA-Z]{3}))");
 		Matcher mat = pat.matcher(pMat);
-		if (mat.matches()) {
-			return true;
-		} else {
-			return false;
-		}
+		return mat.matches();
 	}
-
+	
+	/**
+	 * Valida que pDni sea un dni correcto (letra incluída)
+	 * @param pDni
+	 * @return
+	 */
 	public static boolean validaDni(String pDni) {
 		String numero = "";
 		String letra = "";
@@ -521,20 +522,25 @@ public class Utilidades {
 			int num = Integer.parseInt(numero);
 			num = num % 23;
 			letra = letra.substring(num, num + 1);
-			if (!letra.equals(let)) {
-				return false;
-			} else {
-				return true;
-			}
+			return letra.equals(let);
 		} else {
 			// Es CIF
 			Pattern patCif = Pattern.compile("(^[a-zA-Z]{1}\\d{7}[a-jA-J0-9]{1}$)");
 			Matcher mat2 = patCif.matcher(pDni);
-			if (mat2.matches()) {
-				return true;
-			} else {
-				return false;
-			}
+			return mat2.matches();
+		}
+	}
+	
+	/**
+	 * Devuelve pCad con la primera letra en mayúscula
+	 * @param pCad
+	 * @return
+	 */
+	public static String upperFirstLetter(String pCad) {
+		if(!"".equalsIgnoreCase(pCad)) {
+			return pCad.substring(0, 1).toUpperCase() + pCad.substring(1, pCad.length());			
+		}else {
+			return pCad;
 		}
 	}
 }

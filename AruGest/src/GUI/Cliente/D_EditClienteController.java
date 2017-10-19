@@ -52,17 +52,15 @@ public class D_EditClienteController {
 	private ClienteParticularEmpresaDireccion cped = null;
 	private boolean esEmpresa = false;
 	private boolean okClicked = false;
-	private static final String TIPO_PARTICULAR = "Particular";
-	private static final String TIPO_EMPRESA = "Empresa";
-
+	
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@FXML
 	private void initialize() {
-		comboTipo.getItems().addAll(TIPO_PARTICULAR, TIPO_EMPRESA);
-		comboTipo.setValue(TIPO_PARTICULAR);
+		comboTipo.getItems().addAll(StringUtils.TIPO_PARTICULAR, StringUtils.TIPO_EMPRESA);
+		comboTipo.setValue(StringUtils.TIPO_PARTICULAR);
 
 		comboTipo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
@@ -89,14 +87,14 @@ public class D_EditClienteController {
 		if (cped.getParticular() != null) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
-			comboTipo.setValue(TIPO_PARTICULAR);
+			comboTipo.setValue(StringUtils.TIPO_PARTICULAR);
 			txtNif.setText(cped.getParticular().getNif());
 			txtNombre.setText(cped.getParticular().getNombre());
 			txtApellidos.setText(cped.getParticular().getApellidos());
 		} else if (cped.getEmpresa() != null) {
 			lblApellidos.setVisible(false);
 			txtApellidos.setVisible(false);
-			comboTipo.setValue(TIPO_EMPRESA);
+			comboTipo.setValue(StringUtils.TIPO_EMPRESA);
 			txtNif.setText(cped.getEmpresa().getCif());
 			txtNombre.setText(cped.getEmpresa().getNombre());
 		}
@@ -242,7 +240,7 @@ public class D_EditClienteController {
 	}
 
 	private void comprobarComboTipo(String newValue) {
-		if (newValue.equalsIgnoreCase(TIPO_PARTICULAR)) {
+		if (newValue.equalsIgnoreCase(StringUtils.TIPO_PARTICULAR)) {
 			lblApellidos.setVisible(true);
 			txtApellidos.setVisible(true);
 			chckboxEsProveedor.setVisible(false);

@@ -45,7 +45,7 @@
                </rowConstraints>
                <children>
                   <Label layoutX="5.0" layoutY="8.0" styleClass="my-label" text="Tipo" />
-                  <Label layoutX="559.0" layoutY="8.0" styleClass="my-label" text="Direccion" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label layoutX="559.0" layoutY="8.0" styleClass="my-label" text="Dirección" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <TextField fx:id="txtPoblacion" editable="false" layoutX="952.0" layoutY="14.0" onKeyPressed="#mensajeNoModificar" prefHeight="23.0" prefWidth="95.0" promptText="Población" styleClass="my-text-field" GridPane.columnIndex="5" GridPane.columnSpan="3">
                      <font>
                         <Font size="10.0" />

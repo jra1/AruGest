@@ -3144,7 +3144,6 @@ public class Conexion {
 	 * @throws Exception 
 	 */
 	public void actualizaDB() throws Exception{
-		//InputStream ips = ClassLoader.getSystemClassLoader().getResourceAsStream("database.xml");
 		InputStream ips = Inicio.class.getResourceAsStream("/recursos/database.xml");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -3163,8 +3162,6 @@ public class Conexion {
 			if (Integer.parseInt(currentVersion) >= Integer.parseInt(versionNumber)) {
 				continue;
 			}
-
-			System.out.println("Version: " + versionNumber);
 
 			sql = versionElement.getTextContent();
 			executeTransaction(sql, versionNumber);
