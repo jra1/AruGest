@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -96,10 +97,7 @@ public class Conexion {
 			server.start();
 
 			int seleccion = JOptionPane.showOptionDialog(null, "Servidor arrancado en: " + server.getStatus(),
-					"Servidor arrancado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, // null
-																												// icono
-																												// por
-																												// defecto.
+					"Servidor arrancado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, // null icono por defecto.
 					new Object[] { "Aceptar", "Parar servidor" }, "Aceptar");
 
 			if (seleccion == 1) {
@@ -3205,19 +3203,16 @@ public class Conexion {
 		Connection cnx = getCon();
 		try{
 			cnx.setAutoCommit(false);
+			Statement st1 = getCon().createStatement();
 			sql = "SELECT IDDIRECCION FROM DIRECCION";
-			st = getCon().prepareStatement(sql);
-			// Ejecutamos la sentencia
-			st.executeUpdate();
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = st1.executeQuery(sql);
 			while (rs.next()) {
 				lista.add(rs.getInt(1));
 			}
 			for(int id : lista){
 				//Actualizar datos
-				sql = "UPDATE DIRECCION SET DIRECCION = (SELECT CONCAT(DIRECCION, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM DIRECCION WHERE iddireccion  = ?) WHERE iddireccion = ?";
+				sql = "UPDATE DIRECCION SET DIRECCION = (SELECT CONCAT(DIRECCION, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM DIRECCION WHERE iddireccion = ?) WHERE iddireccion = ?";
 				st = getCon().prepareStatement(sql);
-				
 				// Añadimos los parametros
 				st.setInt(1, id);
 				st.setInt(2, id);
@@ -3225,19 +3220,34 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			}
-			
 			// Eliminar las columnas numero, piso, letra
 			sql = "ALTER TABLE DIRECCION DROP COLUMN NUMERO";
-			st.executeUpdate(sql);
+			st1.executeUpdate(sql);
 			sql = "ALTER TABLE DIRECCION DROP COLUMN PISO";
-			st.executeUpdate(sql);
+			st1.executeUpdate(sql);
 			sql = "ALTER TABLE DIRECCION DROP COLUMN LETRA";
-			st.executeUpdate(sql);
+			st1.executeUpdate(sql);
 			cnx.commit();
 		}catch(Exception e){
 			Utilidades.mostrarError(e);
 			cnx.rollback();
 		}
+	}
+	
+	public boolean version2done() {
+		boolean res = true;
+		try {
+			Statement st = getCon().createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM direccion");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			if(rsmd.getColumnName(3).equalsIgnoreCase("NUMERO")) {
+				res = false;
+			}
+		} catch (SQLException e) {
+			Utilidades.mostrarError(e);
+		}
+    	
+		return res;
 	}
 
 	public Connection getCon() {

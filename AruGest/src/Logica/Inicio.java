@@ -2,7 +2,6 @@ package Logica;
 
 import java.io.File;
 import java.io.IOException;
-//import java.security.Principal;
 import java.util.ArrayList;
 
 import com.guigarage.responsive.ResponsiveHandler;
@@ -131,7 +130,7 @@ public class Inicio extends Application {
 		    CONEXION.actualizaDB();
 		    
 		    // En versión 2 cambiamos la direccion
-		    if(CONEXION.getVersionDB().equalsIgnoreCase("2")){
+		    if(CONEXION.getVersionDB().equalsIgnoreCase("2") && !CONEXION.version2done()){
 		    	CONEXION.actualizaDireccionVersion2();
 		    }
 			
