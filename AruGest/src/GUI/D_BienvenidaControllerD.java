@@ -26,7 +26,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class D_BienvenidaControllerD extends Thread {
+public class D_BienvenidaControllerD /*extends Thread */{
 	// Variables de la vista
 	@FXML
 	private Label lblBienvenida;
@@ -207,45 +207,6 @@ public class D_BienvenidaControllerD extends Thread {
 		pbar.progressProperty().unbind();
 		pbar.progressProperty().bind(task.progressProperty());
 		new Thread(task).start();
-		// System.out.println("Después del hilo");
-
-		/*
-		 * FutureTask<Integer> task = new FutureTask<Integer>(new
-		 * Callable<Integer>() {
-		 * 
-		 * @Override public Integer call() throws Exception {
-		 * 
-		 * return 1; } }); new Thread(task).start();
-		 * 
-		 * 
-		 * BufferedReader br = null; Connection connection = null; try { //
-		 * String sql = //
-		 * getClass().getResource("/recursos/ScriptSQL.txt").getFile(); // br =
-		 * new BufferedReader(new FileReader(sql)); // System.out.println("SQL:"
-		 * + sql);
-		 * 
-		 * InputStream is =
-		 * Inicio.class.getResourceAsStream("/recursos/ScriptSQL.txt");
-		 * System.out.println("SQL: " + is); br = new BufferedReader(new
-		 * InputStreamReader(is));
-		 * 
-		 * System.out.println(Inicio.DBPATHNAME); connection =
-		 * Inicio.CONEXION.getCon();// openConnection(Inicio.DBURL);
-		 * System.out.println("Se comienza a crear la BD"); line =
-		 * br.readLine(); StringBuilder statement = new StringBuilder();
-		 * System.out.println("Empezando a leer fichero..."); while (line !=
-		 * null) { line = line.trim(); if (!line.startsWith("--") &&
-		 * !line.startsWith("#") && !line.startsWith("//")) {
-		 * statement.append(line); if (line.endsWith(";")) {
-		 * executeLine(connection, statement.toString()); statement = new
-		 * StringBuilder(); } } line = br.readLine(); } if (statement.length() >
-		 * 0) { executeLine(connection, statement.toString()); } } catch
-		 * (Exception e) { e.printStackTrace(); } finally { try { br.close();
-		 * btnAceptar.setDisable(false); } catch (Exception e) { ; } try { if
-		 * (connection != null) connection.close(); } catch (Exception e) { ; }
-		 * }
-		 * 
-		 */
 		System.out.println("Después del hilo");
 
 	}

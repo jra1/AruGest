@@ -8,6 +8,7 @@ import java.util.Date;
 
 import Logica.Hilo;
 import Logica.Inicio;
+import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.Cliente;
 import Modelo.ClienteParticularEmpresaDireccion;
@@ -83,43 +84,6 @@ public class V_NuevaFacturaController {
 
 	@FXML
 	private DatePicker txtFecha;
-
-	// // Datos cliente
-	// @FXML
-	// private TextField txtNombre;
-	// @FXML
-	// private Label lblApellidos;
-	// @FXML
-	// private TextField txtApellidos;
-	// @FXML
-	// private TextField txtCalle;
-	// @FXML
-	// private TextField txtNumero;
-	// @FXML
-	// private TextField txtPiso;
-	// @FXML
-	// private TextField txtLetra;
-	// @FXML
-	// private TextField txtPoblacion;
-	// @FXML
-	// private TextField txtTel1;
-	// // @FXML
-	// // private TextField txtMovil;
-	//
-	// // Datos Vehiculo
-	// @FXML
-	// private ComboBox<String> comboTipoVehiculo;
-	// @FXML
-	// private TextField txtMarca;
-	// @FXML
-	// private TextField txtModelo;
-	// @FXML
-	// private TextField txtVersion;
-	//
-	// @FXML
-	// private TextField txtKms;
-	// @FXML
-	// private ComboBox<String> comboTipoCliente;
 
 	// Servicios y materiales
 	@FXML
@@ -207,8 +171,6 @@ public class V_NuevaFacturaController {
 	private Servicio servicio;
 	private Material material;
 
-	// private int tipoVehiculo = 1;
-
 	private ClienteParticularEmpresaDireccionVehiculo cpedv = new ClienteParticularEmpresaDireccionVehiculo();
 
 	public Inicio getMain() {
@@ -283,7 +245,7 @@ public class V_NuevaFacturaController {
 		chckbxNoPiezas.setSelected(fce.getFactura().isNopiezas());
 		chckbxPermisoPruebas.setSelected(fce.getFactura().isPermisopruebas());
 		chckbxRepararDefOcultos.setSelected(fce.getFactura().isRdefocultos());
-		txtPorcentajeDefOcultos.setText("" + fce.getFactura().getPorcentajedefocul());
+		txtPorcentajeDefOcultos.setText(Float.toString(fce.getFactura().getPorcentajedefocul()));
 		txtFechaEntrega.setValue(Utilidades.DateALocalDate(fce.getFactura().getFechaentrega()));
 
 		actualizarPrecio();
@@ -324,9 +286,6 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void initialize() {
-		// txtNumfactura.setId("toolbar");
-		// paneDatosFactura.getChildren().add(txtNumfactura);
-
 		// Para que el botón de añadir funcione con el Enter
 		btnAdd.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
@@ -345,26 +304,12 @@ public class V_NuevaFacturaController {
 		// de presupuesto o factura
 		txtFecha.setValue(LocalDate.now());
 		txtFechaEntrega.setValue(txtFecha.getValue().plusDays(7));
-		// comboTipoCliente.getItems().addAll("Particular", "Empresa");
-		// comboTipoCliente.setValue("Particular");
-		// comboTipoVehiculo.getItems().addAll("Turismo", "Furgoneta", "Camión",
-		// "Autobús", "Autocaravana", "Moto",
-		// "Remolque");
-		// comboTipoVehiculo.setValue("Turismo");
 		comboTipo.getItems().addAll("Material", "Chapa", "Pintura", "Electrónica / mecánica");
 		comboTipo.setValue("Material");
 
 		// Añadir un listener al combo
 		comboTipo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarCombo(newValue));
-
-		// comboTipoCliente.getSelectionModel().selectedItemProperty()
-		// .addListener((observable, oldValue, newValue) ->
-		// comprobarComboTipoCliente(newValue));
-		//
-		// comboTipoVehiculo.getSelectionModel().selectedItemProperty()
-		// .addListener((observable, oldValue, newValue) ->
-		// comprobarComboTipoVehiculo(newValue));
 
 		// Marcar algunos checkbox que son habituales
 		if (Inicio.OPCION_NUEVA.equalsIgnoreCase("P")) {
@@ -390,13 +335,13 @@ public class V_NuevaFacturaController {
 		// Editar columna Concepto de la tabla Servicios
 		columnaConceptoServ.setCellFactory(TextFieldTableCell.<Servicio> forTableColumn());
 		columnaConceptoServ.setOnEditCommit((CellEditEvent<Servicio, String> t) -> {
-			((Servicio) t.getTableView().getItems().get(t.getTablePosition().getRow())).setServicio(t.getNewValue());
+			(t.getTableView().getItems().get(t.getTablePosition().getRow())).setServicio(t.getNewValue());
 		});
 
 		// Editar columna Horas de la tabla Servicios
 		columnaHorasServ.setCellFactory(TextFieldTableCell.<Servicio> forTableColumn());
 		columnaHorasServ.setOnEditCommit((CellEditEvent<Servicio, String> t) -> {
-			((Servicio) t.getTableView().getItems().get(t.getTablePosition().getRow())).setHoras(t.getNewValue());
+			(t.getTableView().getItems().get(t.getTablePosition().getRow())).setHoras(t.getNewValue());
 			// Se actualizan los valores del precio
 			actualizarPrecio();
 		});
@@ -404,14 +349,14 @@ public class V_NuevaFacturaController {
 		// Editar columna Concepto de la tabla Materiales
 		columnaConceptoMat.setCellFactory(TextFieldTableCell.<Material> forTableColumn());
 		columnaConceptoMat.setOnEditCommit((CellEditEvent<Material, String> t) -> {
-			((Material) t.getTableView().getItems().get(t.getTablePosition().getRow())).setNombre(t.getNewValue());
+			(t.getTableView().getItems().get(t.getTablePosition().getRow())).setNombre(t.getNewValue());
 		});
 
 		// Editar columna Cantidad de la tabla Materiales
 		columnaCantidadMat
 				.setCellFactory(TextFieldTableCell.<Material, Number> forTableColumn(new NumberStringConverter()));
 		columnaCantidadMat.setOnEditCommit((CellEditEvent<Material, Number> t) -> {
-			((Material) t.getTableView().getItems().get(t.getTablePosition().getRow()))
+			(t.getTableView().getItems().get(t.getTablePosition().getRow()))
 					.setCantidad(t.getNewValue().intValue());
 			// Se actualizan los valores del precio
 			actualizarPrecio();
@@ -420,7 +365,7 @@ public class V_NuevaFacturaController {
 		// Editar columna Horas de la tabla Servicios
 		columnaPrecioMat.setCellFactory(TextFieldTableCell.<Material> forTableColumn());
 		columnaPrecioMat.setOnEditCommit((CellEditEvent<Material, String> t) -> {
-			((Material) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPreciounit(t.getNewValue());
+			(t.getTableView().getItems().get(t.getTablePosition().getRow())).setPreciounit(t.getNewValue());
 			// Se actualizan los valores del precio
 			actualizarPrecio();
 		});
@@ -475,7 +420,7 @@ public class V_NuevaFacturaController {
 	private void add() {
 		if (esServicio) {
 			if (txtConcepto.getText().equals("") || txtCantidad.getText().equals("")) {
-				Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención",
+				Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION,
 						"Introduce todos los datos del servicio a añadir",
 						"Indica el concepto y el número de horas del servicio.");
 			} else {
@@ -560,7 +505,7 @@ public class V_NuevaFacturaController {
 		DecimalFormat dt = new DecimalFormat("##.##", simbolos);
 		dt.setMinimumFractionDigits(2);
 
-		if (listaServicios.size() > 0) {
+		if (!listaServicios.isEmpty()) {
 			for (Servicio serv : listaServicios) {
 				if (!serv.getHoras().equalsIgnoreCase("")) {
 					String horasComa = serv.getHoras();
@@ -573,7 +518,7 @@ public class V_NuevaFacturaController {
 			txtManoObra.setText("" + dt.format(0));
 		}
 
-		if (listaMaterial.size() > 0) {
+		if (!listaMaterial.isEmpty()) {
 			for (Material mat : listaMaterial) {
 				if (!mat.getPreciounit().equalsIgnoreCase("")) {
 					String precioUnitPunto = mat.getPreciounit().replace(",", ".");
@@ -646,7 +591,6 @@ public class V_NuevaFacturaController {
 	 * @return idfactura generado
 	 */
 	private int guardarFactura(int origen) {
-		// Hilo.ejecutaHilo("Hilo 1", funcion -> {
 		String error = validarDatos();
 		if (error.equals("")) {
 			if (modificar) {
@@ -659,10 +603,7 @@ public class V_NuevaFacturaController {
 				}
 				return Inicio.FACTURA_ID;
 			} else {
-				// 2º Comprobar si existe ese cliente en la BD (DNI) y
-				// guardarlo
-				// si
-				// no lo está
+				// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo si no lo está
 				Cliente c = null;
 				if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
 					c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
@@ -675,7 +616,7 @@ public class V_NuevaFacturaController {
 					Particular p = null;
 					Empresa e = null;
 					if (cpedv.getDireccion() != null) {
-						if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+						if (!cpedv.getDireccion().getDireccion().equalsIgnoreCase("")
 								|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
 							d = cpedv.getDireccion();
 						}
@@ -698,7 +639,7 @@ public class V_NuevaFacturaController {
 					// Si está el cliente pero no tiene direccion, la guardo
 					if (c.getDireccionID() == 0) {
 						if (cpedv.getDireccion() != null) {
-							if (!cpedv.getDireccion().getCalle().equalsIgnoreCase("")
+							if (!cpedv.getDireccion().getDireccion().equalsIgnoreCase("")
 									|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
 								Direccion d = cpedv.getDireccion();
 								int id = (int) Inicio.CONEXION.guardarDireccion(d);
@@ -709,21 +650,21 @@ public class V_NuevaFacturaController {
 				}
 				Inicio.CLIENTE_ID = c.getIdcliente();
 
-				// 3º Comprobar si existe ese vehiculo en la BD (Matricula)
-				// y
-				// guardarlo si no lo está
+				// 3º Comprobar si existe ese vehiculo en la BD (Matricula) y guardarlo si no lo está
 				Vehiculo v = null;
 				v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
 				if (v == null) {
 					cpedv.getVehiculo().setClienteID(Inicio.CLIENTE_ID);
 					if (Inicio.CONEXION.guardarVehiculo(cpedv.getVehiculo())) {
 						v = Inicio.CONEXION.buscarVehiculoPorMatricula(cpedv.getVehiculo().getMatricula());
+						Inicio.VEHICULO_ID = v.getIdvehiculo();
 					} else {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
 								"Ocurrió un error al guardar el vehículo en la base de datos.");
 					}
+				}else {
+					Inicio.VEHICULO_ID = v.getIdvehiculo();
 				}
-				Inicio.VEHICULO_ID = v.getIdvehiculo();
 
 				// 4º Guardar la factura
 				Factura f = crearFactura();
@@ -753,8 +694,6 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void abrirSelectorCliente() {
 		if (Inicio.abrirSelectorFactura(cpedv)) {
-			// Utilidades.mostrarAlerta(AlertType.INFORMATION, "Info", "",
-			// cpedv.getCliente().getNombre());
 			colocarDatos(cpedv);
 		}
 	}
@@ -816,7 +755,6 @@ public class V_NuevaFacturaController {
 	private void abrirSelectorGolpes() {
 		int idGolpe = Inicio.abrirSelectorGolpes();
 		if (idGolpe != 0) {
-			// Utilidades.mostrarAlerta(AlertType.ERROR, "", "" + idGolpe,"");
 			anadirGolpe(idGolpe);
 		}
 	}
@@ -829,7 +767,7 @@ public class V_NuevaFacturaController {
 	 */
 	private void anadirGolpe(int idGolpe) {
 		ArrayList<ElementosGolpes> listaElementos = Inicio.CONEXION.buscarElementosPorGolpeID(idGolpe);
-		if (listaElementos.size() > 0) {
+		if (!listaElementos.isEmpty()) {
 			for (ElementosGolpes e : listaElementos) {
 				if (e.getTipo().equalsIgnoreCase("Material")) {
 					material = new Material(0, e.getNombreElemento(), "", 0, 0, 0f);
@@ -869,36 +807,6 @@ public class V_NuevaFacturaController {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Error de validación",
 					"Algunos de los datos introducidos son incorrectos", error);
 		}
-		// FacturaDataSource fds = new FacturaDataSource(f, listaServicios,
-		// listaMaterial);
-		/*
-		 * try { // JasperReport reporte = (JasperReport) //
-		 * JRLoader.loadObjectFromFile("reporte1.jasper"); // JasperPrint
-		 * jasperPrint = JasperFillManager.fillReport(reporte, // null,
-		 * Inicio.CONEXION.getCon()); // JRExporter exporter = new
-		 * JRPdfExporter(); //
-		 * exporter.setParameter(JRExporterParameter.JASPER_PRINT, //
-		 * jasperPrint); //
-		 * exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new //
-		 * java.io.File("reportePDF.pdf")); // exporter.exportReport();
-		 * 
-		 * // DataBeanList DataBeanList = new DataBeanList(); //
-		 * ArrayList<DataBean> dataList = DataBeanList.getDataBeanList(); //
-		 * JRBeanCollectionDataSource beanColDataSource = new //
-		 * JRBeanCollectionDataSource(dataList); // String sourceFileName =
-		 * "reporte1.jasper"; // String printFileName = null; Map<String,
-		 * Object> parameters = new HashMap<String, Object>(); // Esta linea es
-		 * aparte del resto JasperReport jr =
-		 * JasperCompileManager.compileReport("reporte1.jrxml");
-		 * 
-		 * // printFileName = //
-		 * JasperFillManager.fillReportToFile(sourceFileName, parameters, //
-		 * beanColDataSource); JasperPrint jpr =
-		 * JasperFillManager.fillReport(jr, parameters,
-		 * Inicio.CONEXION.getCon());
-		 * JasperExportManager.exportReportToPdfFile(jpr, "reportePDF.pdf"); }
-		 * catch (Exception e) { Utilidades.mostrarError(e); }
-		 */
 	}
 
 	/**
@@ -1026,11 +934,17 @@ public class V_NuevaFacturaController {
 		} else {
 			fechaEntrega = null;
 		}
-		Factura f = new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
+		return new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
 				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
 				materiales, otros, suma, sumaIva, chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
 				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total);
-		return f;
+	}
+	
+	@FXML
+	private void upperFirstLetter() {
+		int pos = txtConcepto.getCaretPosition();
+		txtConcepto.setText(Utilidades.upperFirstLetter(txtConcepto.getText()));
+		txtConcepto.positionCaret(pos);
 	}
 
 }

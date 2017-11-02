@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -19,9 +20,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.h2.tools.Server;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import Logica.Inicio;
 import Logica.Utilidades;
@@ -92,10 +97,7 @@ public class Conexion {
 			server.start();
 
 			int seleccion = JOptionPane.showOptionDialog(null, "Servidor arrancado en: " + server.getStatus(),
-					"Servidor arrancado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, // null
-																												// icono
-																												// por
-																												// defecto.
+					"Servidor arrancado", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, // null icono por defecto.
 					new Object[] { "Aceptar", "Parar servidor" }, "Aceptar");
 
 			if (seleccion == 1) {
@@ -462,43 +464,28 @@ public class Conexion {
 		long idGenerado = 0;
 		String sql = "";
 		try {
-			sql = "INSERT INTO DIRECCION (CALLE, NUMERO, PISO, LETRA, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?,?,?,?)";
+			sql = "INSERT INTO DIRECCION (DIRECCION, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
 			try {
-				st.setString(1, d.getCalle());
+				st.setString(1, d.getDireccion());
 			} catch (NullPointerException e) {
 				st.setString(1, "");
 			}
 			try {
-				st.setInt(2, d.getNumero());
+				st.setInt(2, d.getCpostal());
 			} catch (NullPointerException e) {
 				st.setInt(2, 0);
 			}
 			try {
-				st.setString(3, d.getPiso());
+				st.setString(3, d.getLocalidad());
 			} catch (NullPointerException e) {
 				st.setString(3, "");
 			}
 			try {
-				st.setString(4, d.getLetra());
+				st.setString(4, d.getProvincia());
 			} catch (NullPointerException e) {
 				st.setString(4, "");
-			}
-			try {
-				st.setInt(5, d.getCpostal());
-			} catch (NullPointerException e) {
-				st.setInt(5, 0);
-			}
-			try {
-				st.setString(6, d.getLocalidad());
-			} catch (NullPointerException e) {
-				st.setString(6, "");
-			}
-			try {
-				st.setString(7, d.getProvincia());
-			} catch (NullPointerException e) {
-				st.setString(7, "");
 			}
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -581,7 +568,7 @@ public class Conexion {
 			// SI NO ES NULL
 			if (cped.getDireccion() != null
 					&& (cped.getCliente().getDireccionID() != 0 || (cped.getCliente().getDireccionID() == 0
-							&& !cped.getDireccion().getCalle().equalsIgnoreCase("No informado")))) {
+							&& !cped.getDireccion().getDireccion().equalsIgnoreCase("No informado")))) {
 				idGenerado = guardarDireccion(cped.getDireccion());
 			}
 
@@ -858,23 +845,19 @@ public class Conexion {
 			// Si no tiene direccion (iddireccion = 0) Y SE HA INTRODUCIDO UNA
 			// NUEVA, se crea
 			if (cped.getCliente().getDireccionID() != 0) {
-				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
-						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
+				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
 						+ cped.getCliente().getDireccionID();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setString(1, cped.getDireccion().getCalle());
-				st.setInt(2, cped.getDireccion().getNumero());
-				st.setString(3, cped.getDireccion().getPiso());
-				st.setString(4, cped.getDireccion().getLetra());
-				st.setInt(5, cped.getDireccion().getCpostal());
-				st.setString(6, cped.getDireccion().getLocalidad());
-				st.setString(7, cped.getDireccion().getProvincia());
+				st.setString(1, cped.getDireccion().getDireccion());
+				st.setInt(2, cped.getDireccion().getCpostal());
+				st.setString(3, cped.getDireccion().getLocalidad());
+				st.setString(4, cped.getDireccion().getProvincia());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
 				// Si llega aquí: iddireccion = 0
-				if (cped.getDireccion().getCalle() != "" || cped.getDireccion().getLocalidad() != ""
+				if (cped.getDireccion().getDireccion() != "" || cped.getDireccion().getLocalidad() != ""
 						|| cped.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignar su id al cliente
 					idGenerado = guardarDireccion(cped.getDireccion());
@@ -882,7 +865,7 @@ public class Conexion {
 						// guardar
 						// la direccion
 						res = actualizarIDDireccionCliente(cped.getCliente().getIdcliente(), (int) idGenerado);
-						if (res == false) {
+						if (!res) {
 							return res;
 						}
 						cped.getCliente().setDireccionID((int) idGenerado);
@@ -930,7 +913,6 @@ public class Conexion {
 			res = true;
 		} catch (Exception ex) {
 			Utilidades.mostrarError(ex);
-			ex.printStackTrace();
 			res = false;
 		}
 		return res;
@@ -952,23 +934,19 @@ public class Conexion {
 			// Si ya tiene direccion, se actualiza
 			// Si no tiene direccion (iddireccion = 0), se crea
 			if (pcd.getDireccionID() != 0) {
-				sql = "UPDATE DIRECCION SET CALLE = ?, NUMERO = ?, PISO = ?, "
-						+ "LETRA = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
+				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
 						+ pcd.getDireccionID();
 				st = getCon().prepareStatement(sql);
 				// Añadimos los parametros
-				st.setString(1, pcd.getDireccion().getCalle());
-				st.setInt(2, pcd.getDireccion().getNumero());
-				st.setString(3, pcd.getDireccion().getPiso());
-				st.setString(4, pcd.getDireccion().getLetra());
-				st.setInt(5, pcd.getDireccion().getCpostal());
-				st.setString(6, pcd.getDireccion().getLocalidad());
-				st.setString(7, pcd.getDireccion().getProvincia());
+				st.setString(1, pcd.getDireccion().getDireccion());
+				st.setInt(2, pcd.getDireccion().getCpostal());
+				st.setString(3, pcd.getDireccion().getLocalidad());
+				st.setString(4, pcd.getDireccion().getProvincia());
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
 				// Si llega aquí: iddireccion = 0
-				if (pcd.getDireccion().getCalle() != "" || pcd.getDireccion().getLocalidad() != ""
+				if (pcd.getDireccion().getDireccion() != "" || pcd.getDireccion().getLocalidad() != ""
 						|| pcd.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignarle su iddireccion al cliente
 					idGenerado = guardarDireccion(pcd.getDireccion());
@@ -1590,14 +1568,13 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
-						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("DIRECCION"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 			}
 			// Se cierra la conexion
 			getCon().close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Utilidades.mostrarError(ex);
 		}
 		return d;
 	}
@@ -1661,6 +1638,7 @@ public class Conexion {
 			}
 			// Se cierra la conexion
 			getCon().close();
+			rs.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -2050,8 +2028,7 @@ public class Conexion {
 			while (rs.next()) {
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
-				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("CALLE"), rs.getInt("NUMERO"),
-						rs.getString("PISO"), rs.getString("LETRA"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
+				d = new Direccion(rs.getInt("IDDIRECCION"), rs.getString("DIRECCION"), rs.getInt("CPOSTAL"), rs.getString("LOCALIDAD"),
 						rs.getString("PROVINCIA"));
 				if (tipo == 1) {
 					p = new Particular(rs.getInt("IDPARTICULAR"), rs.getInt("IDCLIENTE"),
@@ -3114,14 +3091,169 @@ public class Conexion {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Obtiene la versión actual de BD
+	 * @return
+	 */
+	public String getVersionDB(){
+	    String sql = "";
+	    String res = "";
+	    try {
+		// Obtener version
+		Statement st = getCon().createStatement();
+		sql = "SELECT valor FROM AUXILIAR WHERE CLAVE = 'VERSION_DB'";
+		ResultSet rs = st.executeQuery(sql);
+		if (rs.next()) {
+			res = rs.getString("VALOR");
+		}else{
+		    res = "";
+		}
+		
+	    } catch (Exception e) {
+	    	Utilidades.mostrarError(e);
+	    }
+	    return res;
+	}
+	
+	/**
+	 * Crea por primera vez el versionado de la BD 
+	 */
+	public void crearDBVersion(){
+	    String sql = "";
+		try {
+			// Se prepara la sentencia para introducir los datos
+			sql = "INSERT INTO AUXILIAR (CLAVE, VALOR) VALUES (?,?)";
+			PreparedStatement st = getCon().prepareStatement(sql);
+			
+			// Añadimos los parametros
+			st.setString(1, "VERSION_DB");
+			st.setString(2, "1");
+						
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+		} catch (Exception e) {
+			Utilidades.mostrarError(e);
+		}
+	}
+	
+	/**
+	 * Actualiza la BD mediante el fichero database.xml
+	 * @throws Exception 
+	 */
+	public void actualizaDB() throws Exception{
+		InputStream ips = Inicio.class.getResourceAsStream("/recursos/database.xml");
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.parse(ips);
+		Element version = (Element) document.getElementsByTagName("database").item(0);
+
+		int maxItems = version.getElementsByTagName("sql").getLength();
+
+		String sql;
+		String currentVersion = getVersionDB();
+		
+		for (int i = 0; i<maxItems; i++){ 
+			Element versionElement = (Element) version.getElementsByTagName("sql").item(i);
+			String versionNumber = versionElement.getAttribute("version");
+
+			if (Integer.parseInt(currentVersion) >= Integer.parseInt(versionNumber)) {
+				continue;
+			}
+
+			sql = versionElement.getTextContent();
+			executeTransaction(sql, versionNumber);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param sql
+	 * @param version
+	 * @throws Exception 
+	 */
+	public void executeTransaction(String sql, String version) throws SQLException{
+		Connection cnx = getCon();
+		PreparedStatement st;
+		try{
+			cnx.setAutoCommit(false);
+			st = getCon().prepareStatement(sql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			
+			//Actualizar version
+			String newSql = "UPDATE AUXILIAR SET VALOR = '" + version + "' WHERE CLAVE = 'VERSION_DB'";
+			st = getCon().prepareStatement(newSql);
+			// Ejecutamos la sentencia
+			st.executeUpdate();
+			cnx.commit();
+		}catch(Exception e){
+			cnx.rollback();
+		}
+	}
+	
+	/**
+	 * Actualiza la dirección para poner únicamente un campo para calle, número, piso y letra
+	 * @throws SQLException 
+	 */
+	public void actualizaDireccionVersion2() throws SQLException{
+		PreparedStatement st;
+		String sql;
+		ArrayList<Integer> lista = new ArrayList<>();
+		Connection cnx = getCon();
+		try{
+			cnx.setAutoCommit(false);
+			Statement st1 = getCon().createStatement();
+			sql = "SELECT IDDIRECCION FROM DIRECCION";
+			ResultSet rs = st1.executeQuery(sql);
+			while (rs.next()) {
+				lista.add(rs.getInt(1));
+			}
+			for(int id : lista){
+				//Actualizar datos
+				sql = "UPDATE DIRECCION SET DIRECCION = (SELECT CONCAT(DIRECCION, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM DIRECCION WHERE iddireccion = ?) WHERE iddireccion = ?";
+				st = getCon().prepareStatement(sql);
+				// Añadimos los parametros
+				st.setInt(1, id);
+				st.setInt(2, id);
+							
+				// Ejecutamos la sentencia
+				st.executeUpdate();
+			}
+			// Eliminar las columnas numero, piso, letra
+			sql = "ALTER TABLE DIRECCION DROP COLUMN NUMERO";
+			st1.executeUpdate(sql);
+			sql = "ALTER TABLE DIRECCION DROP COLUMN PISO";
+			st1.executeUpdate(sql);
+			sql = "ALTER TABLE DIRECCION DROP COLUMN LETRA";
+			st1.executeUpdate(sql);
+			cnx.commit();
+		}catch(Exception e){
+			Utilidades.mostrarError(e);
+			cnx.rollback();
+		}
+	}
+	
+	public boolean version2done() {
+		boolean res = true;
+		try {
+			Statement st = getCon().createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM direccion");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			if(rsmd.getColumnName(3).equalsIgnoreCase("NUMERO")) {
+				res = false;
+			}
+		} catch (SQLException e) {
+			Utilidades.mostrarError(e);
+		}
+    	
+		return res;
+	}
 
 	public Connection getCon() {
 		try {
 			Class.forName("org.h2.Driver");
 			con = DriverManager.getConnection(Inicio.DBURL + ";AUTO_SERVER=TRUE;CIPHER=AES", "sa", "1234 1234");
-			// con =
-			// DriverManager.getConnection("jdbc:h2:C:/H2DB/AruGestDB;AUTO_SERVER=TRUE",
-			// "sa", "");
 			con.setAutoCommit(true);
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);

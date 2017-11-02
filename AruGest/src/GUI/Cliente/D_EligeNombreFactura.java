@@ -1,17 +1,16 @@
 package GUI.Cliente;
 
-import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
-import Modelo.Direccion;
-import Modelo.Empresa;
-import Modelo.Particular;
+import Modelo.ProveedorCompania;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -19,39 +18,30 @@ import javafx.stage.Stage;
  * 
  * @author Joseba Ruiz
  */
-public class D_EditClienteController {
+public class D_EligeNombreFactura {
 
 	@FXML
-	private ComboBox<String> comboTipo;
+	private RadioButton radioCliente;
 	@FXML
-	private TextField txtNif;
+	private RadioButton radioCia;
 	@FXML
 	private TextField txtNombre;
 	@FXML
-	private CheckBox chckboxEsProveedor;
+	private Button btnBuscar;
 	@FXML
-	private Label lblApellidos;
+	private TableView<ProveedorCompania> tableCias;
 	@FXML
-	private TextField txtApellidos;
+	private TableColumn<ProveedorCompania, String> columnaNombre;
 	@FXML
-	private TextField txtTel1;
+	private TableColumn<ProveedorCompania, String> columnaCif;
 	@FXML
-	private TextField txtTel2;
+	private TableColumn<ProveedorCompania, String> columnaTlf;
 	@FXML
-	private TextField txtTel3;
-	@FXML
-	private TextField txtDireccion;
-	@FXML
-	private TextField txtCodPostal;
-	@FXML
-	private TextField txtLocalidad;
-	@FXML
-	private TextField txtProvincia;
+	private Pane paneCia;
 
 	private Stage dialogStage;
-	private ClienteParticularEmpresaDireccion cped = null;
-	private boolean esEmpresa = false;
 	private boolean okClicked = false;
+	private ProveedorCompania cped = null;
 	
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -59,11 +49,11 @@ public class D_EditClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		comboTipo.getItems().addAll(StringUtils.TIPO_PARTICULAR, StringUtils.TIPO_EMPRESA);
-		comboTipo.setValue(StringUtils.TIPO_PARTICULAR);
+		radioCliente.setSelected(true);
+		paneCia.setVisible(false);
 
-		comboTipo.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> comprobarComboTipo(newValue));
+		radioCia.selectedProperty()
+				.addListener((observable, oldValue, newValue) -> comprobarRadioCia(newValue));
 	}
 
 	/**
@@ -82,7 +72,7 @@ public class D_EditClienteController {
 	 *            a ser editado
 	 */
 	public void setCliente(ClienteParticularEmpresaDireccion cped) {
-		this.cped = cped;
+		/*this.cped = cped;
 
 		if (cped.getParticular() != null) {
 			lblApellidos.setVisible(true);
@@ -106,7 +96,7 @@ public class D_EditClienteController {
 			txtCodPostal.setText(Integer.toString(cped.getDireccion().getCpostal()));
 			txtLocalidad.setText(cped.getDireccion().getLocalidad());
 			txtProvincia.setText(cped.getDireccion().getProvincia());
-		}
+		}*/
 	}
 
 	/**
@@ -125,7 +115,7 @@ public class D_EditClienteController {
 	private void handleOk() {
 		if (isInputValid()) {
 			// Particular / Empresa
-			if (!esEmpresa) {
+			/*if (!esEmpresa) {
 				Particular p;
 				if (cped.getParticular() != null) {
 					p = new Particular(cped.getParticular().getIdparticular(), cped.getParticular().getClienteID(),
@@ -179,21 +169,7 @@ public class D_EditClienteController {
 					cped.getDireccion().setProvincia(txtProvincia.getText());
 				}
 			} else {
-				// Calle, cpostal, localidad o provincia vacía
-				if (cped.getDireccion() == null) {
-					cped.setDireccion(new Direccion());
-					cped.getCliente().setDireccionID(0);
-				} else {
-					cped.getDireccion().setDireccion("");
-					cped.getDireccion().setCpostal(0);
-					cped.getDireccion().setLocalidad("");
-					cped.getDireccion().setProvincia("");
-				}
-			}
-			cped.getCliente().setNombre(txtNombre.getText() + " " + txtApellidos.getText());
-			cped.getCliente().setTelf1(txtTel1.getText());
-			cped.getCliente().setTelf2(txtTel2.getText());
-			cped.getCliente().setTelf3(txtTel3.getText());
+			}*/
 
 			okClicked = true;
 			dialogStage.close();
@@ -217,19 +193,6 @@ public class D_EditClienteController {
 	private boolean isInputValid() {
 		String errorMessage = "";
 
-		if (txtNif.getText().length() == 0) {
-			errorMessage += "Introduce el NIF/CIF del cliente.\n";
-		}
-		if (!Utilidades.validaDni(txtNif.getText())) {
-			errorMessage += txtNif.getText() + " no es un NIF/CIF correcto.\n";
-		}
-		if (txtNombre.getText().length() == 0) {
-			errorMessage += "Introduce el nombre del cliente.";
-		}
-		if (txtCodPostal.getText().length() > 0 && Utilidades.validaNumero(txtCodPostal.getText()) == -1) {
-			errorMessage = "Código postal no válido.\n Introduce únicamente números.";
-		}
-
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
@@ -239,18 +202,7 @@ public class D_EditClienteController {
 		}
 	}
 
-	private void comprobarComboTipo(String newValue) {
-		if (newValue.equalsIgnoreCase(StringUtils.TIPO_PARTICULAR)) {
-			lblApellidos.setVisible(true);
-			txtApellidos.setVisible(true);
-			chckboxEsProveedor.setVisible(false);
-			esEmpresa = false;
-		} else {
-			lblApellidos.setVisible(false);
-			txtApellidos.setVisible(false);
-			chckboxEsProveedor.setVisible(true);
-			esEmpresa = true;
-		}
-
+	private void comprobarRadioCia(boolean newValue) {
+		paneCia.setVisible(newValue);
 	}
 }

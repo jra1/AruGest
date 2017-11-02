@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="448.0" prefWidth="816.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.D_SelectorClienteVehiculoController">
+<AnchorPane prefHeight="421.0" prefWidth="816.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Contabilidad.D_SelectorClienteVehiculoController">
    <children>
-      <Pane layoutX="6.0" layoutY="4.0" prefHeight="436.0" prefWidth="802.0">
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="419.0" prefWidth="802.0">
          <children>
-            <Button defaultButton="true" layoutX="298.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
-            <Button cancelButton="true" layoutX="459.0" layoutY="395.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
-            <Pane layoutX="10.0" layoutY="37.0" minWidth="0.0" prefHeight="187.0" prefWidth="777.0" styleClass="background">
+            <Button defaultButton="true" layoutX="298.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
+            <Button cancelButton="true" layoutX="459.0" layoutY="376.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+            <Pane layoutX="10.0" layoutY="37.0" minWidth="0.0" prefHeight="173.0" prefWidth="777.0" styleClass="background">
                <children>
-                  <GridPane hgap="10.0" layoutX="14.0" layoutY="14.0" prefHeight="160.0" prefWidth="742.0" styleClass="gridpane" vgap="10.0">
+                  <GridPane hgap="10.0" layoutX="14.0" layoutY="14.0" prefHeight="143.0" prefWidth="742.0" styleClass="gridpane" vgap="10.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="104.0" styleClass="my-label" text="TIPO CLIENTE" />
                         <ComboBox fx:id="comboTipoCliente" prefHeight="25.0" prefWidth="130.0" styleClass="my-text-field" GridPane.columnIndex="1" />
@@ -37,38 +37,20 @@
                               <Font size="10.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="214.0" layoutY="59.0" styleClass="my-label" text="TELÉFONO" GridPane.rowIndex="4" />
-                        <TextField fx:id="txtTel1" layoutX="267.0" layoutY="55.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. 648795148" styleClass="my-text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label layoutX="214.0" layoutY="59.0" styleClass="my-label" text="TELÉFONO" GridPane.columnIndex="2" />
+                        <TextField fx:id="txtTel1" layoutX="267.0" layoutY="55.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. 648795148" styleClass="my-text-field" GridPane.columnIndex="3">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="5.0" layoutY="33.0" styleClass="my-label" text="CALLE" GridPane.columnIndex="2" />
-                        <TextField fx:id="txtCalle" layoutX="60.0" layoutY="30.0" prefHeight="23.0" prefWidth="249.0" promptText="Ej. Artapadura" styleClass="my-text-field" GridPane.columnIndex="3">
+                        <Label layoutX="5.0" layoutY="33.0" styleClass="my-label" text="DIRECCIÓN" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtDireccion" layoutX="60.0" layoutY="30.0" prefHeight="23.0" prefWidth="249.0" promptText="Dirección completa" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="313.0" layoutY="33.0" styleClass="my-label" text="NÚMERO" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtNumero" layoutX="360.0" layoutY="30.0" minWidth="0.0" prefHeight="23.0" prefWidth="172.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="394.0" layoutY="33.0" styleClass="my-label" text="PISO" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtPiso" layoutX="421.0" layoutY="30.0" prefHeight="30.0" prefWidth="292.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="453.0" layoutY="33.0" styleClass="my-label" text="LETRA" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField fx:id="txtLetra" layoutX="482.0" layoutY="30.0" prefHeight="23.0" prefWidth="34.0" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="364.0" layoutY="8.0" styleClass="my-label" text="POBLACIÓN" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <TextField fx:id="txtPoblacion" layoutX="421.0" layoutY="4.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. Vitoria" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                        <Label layoutX="364.0" layoutY="8.0" styleClass="my-label" text="POBLACIÓN" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtPoblacion" layoutX="421.0" layoutY="4.0" prefHeight="23.0" prefWidth="95.0" promptText="Ej. Vitoria" styleClass="my-text-field" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -88,12 +70,11 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
                </children>
             </Pane>
-            <Pane layoutX="10.0" layoutY="262.0" prefHeight="120.0" prefWidth="777.0" styleClass="background">
+            <Pane layoutX="10.0" layoutY="243.0" prefHeight="120.0" prefWidth="777.0" styleClass="background">
                <children>
                   <GridPane hgap="10.0" layoutX="8.0" layoutY="12.0" prefHeight="92.0" prefWidth="742.0" styleClass="gridpane" vgap="10.0">
                      <children>
@@ -149,7 +130,7 @@
                   <Font name="Caladea" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="232.0" styleClass="titulo" text="Vehículo:">
+            <Label layoutX="10.0" layoutY="216.0" styleClass="titulo" text="Vehículo:">
                <font>
                   <Font name="Caladea" size="15.0" />
                </font>

@@ -93,7 +93,6 @@ public class V_BuscarClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		// btnBuscar.defaultButtonProperty().bind(btnBuscar.focusedProperty());
 		btnBuscar.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.F12 || ke.getCode() == KeyCode.ENTER) {
@@ -164,12 +163,12 @@ public class V_BuscarClienteController {
 				} else if (cpe.getEmpresa() != null) {
 					columnaDni.setCellValueFactory(cellData -> cellData.getValue().getEmpresa().cifProperty());
 				}
-				columnaDomicilio.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());
+				columnaDomicilio.setCellValueFactory(cellData -> cellData.getValue().getDireccion().direccionProperty());
 				columnaPoblacion
 						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().localidadProperty());
 				columnaTelf.setCellValueFactory(cellData -> cellData.getValue().getCliente().telf1Property());
 				tableClientes.setItems(listaClientes);
-				if (listaClientes.size() > 0) {
+				if (!listaClientes.isEmpty()) {
 					btnVerCliente.setDisable(false);
 				}
 			}
@@ -203,13 +202,13 @@ public class V_BuscarClienteController {
 			// Cargar la vista de Cliente
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/V_Cliente.fxml"));
-			AnchorPane cliente = (AnchorPane) loader.load();
+			AnchorPane cliente = loader.load();
 
 			// Poner la nueva vista en el centro del root
 			Utilidades.ajustarResolucionAnchorPane(cliente, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
 			sp.setContent(cliente);
 			nombre = "Cliente: " + listaClientes.get(indice).getCliente().getNombre();
-			ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+			ap = (AnchorPane) sp.getContent();
 			gv = new GestorVentana(ap, nombre);
 			Utilidades.gestionarPantallas(gv);
 			boton1.setVisible(Inicio.BOTON1.isVisible());
@@ -229,7 +228,7 @@ public class V_BuscarClienteController {
 			controller.cargaCliente(listaClientes.get(indice));
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 	}
 }

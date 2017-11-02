@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import Logica.Inicio;
+import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.ProveedorCompaniaDireccion;
 import javafx.collections.FXCollections;
@@ -119,20 +120,9 @@ public class V_BuscarProveedorCompaniaController {
 	private ObservableList<ProveedorCompaniaDireccion> listaCias = FXCollections.observableArrayList();
 	private ObservableList<ProveedorCompaniaDireccion> listaProveedores = FXCollections.observableArrayList();
 
-	/*
-	 * private ScrollPane sp; private AnchorPane ap; private GestorVentana gv;
-	 * private String nombre = "";
-	 * 
-	 * public Button boton1; public Button boton2; public Button boton3;
-	 */
-
 	public void setMainAPP(Inicio p) {
 		setMain(p);
 	}
-
-	/*
-	 * public void setScrollPane(ScrollPane root) { this.sp = root; }
-	 */
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -175,7 +165,7 @@ public class V_BuscarProveedorCompaniaController {
 		ArrayList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(true, false, txtNombreCompa.getText(),
 				txtTelfCompa.getText(), "", "");
 		if (lista.isEmpty()) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION, "No encontrado",
 					"No hay compañías con los parámetros de búsqueda introducidos.");
 		} else {
 			for (ProveedorCompaniaDireccion pcd : lista) {
@@ -185,7 +175,7 @@ public class V_BuscarProveedorCompaniaController {
 				columnaTelfCompa.setCellValueFactory(cellData -> cellData.getValue().telf1Property());
 				if (pcd.getDireccion().getIddireccion() == 0) {
 					columnaDireccionCompa
-							.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());
+							.setCellValueFactory(cellData -> cellData.getValue().getDireccion().direccionProperty());
 				} else {
 					columnaDireccionCompa.setCellValueFactory(
 							cellData -> cellData.getValue().getDireccion().direccionCompletaProperty());
@@ -206,7 +196,7 @@ public class V_BuscarProveedorCompaniaController {
 				txtNombreProve.getText(), txtTelfProve.getText(), txtLocalidadProve.getText(),
 				txtProvinciaProve.getText());
 		if (lista.isEmpty()) {
-			Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "No encontrado",
+			Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION, "No encontrado",
 					"No hay proveedores/desguaces con los parámetros de búsqueda introducidos.");
 		} else {
 			for (ProveedorCompaniaDireccion pcd : lista) {
@@ -219,7 +209,7 @@ public class V_BuscarProveedorCompaniaController {
 						.setCellValueFactory(cellData -> cellData.getValue().getDireccion().provinciaProperty());
 				if (pcd.getDireccion().getIddireccion() == 0) {
 					columnaDireccionProve
-							.setCellValueFactory(cellData -> cellData.getValue().getDireccion().calleProperty());
+							.setCellValueFactory(cellData -> cellData.getValue().getDireccion().direccionProperty());
 				} else {
 					columnaDireccionProve.setCellValueFactory(
 							cellData -> cellData.getValue().getDireccion().direccionCompletaProperty());
@@ -240,8 +230,8 @@ public class V_BuscarProveedorCompaniaController {
 			lblCifCia.setText(pcd.getCif());
 			lblTelf1Cia.setText(pcd.getTelf1());
 			lblTelf2Cia.setText(pcd.getTelf2());
-			lblDireccionCia.setText(pcd.getDireccion().getDireccionCompleta());
-			lblCPostalCia.setText("" + pcd.getDireccion().getCpostal());
+			lblDireccionCia.setText(pcd.getDireccion().getDireccion());
+			lblCPostalCia.setText(Integer.toString(pcd.getDireccion().getCpostal()));
 			lblLocalidadCia.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaCia.setText(pcd.getDireccion().getProvincia());
 			panelDetallesCia.setVisible(true);
@@ -254,8 +244,7 @@ public class V_BuscarProveedorCompaniaController {
 					logoCia.setVisible(false);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", "");
+				Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ERROR, "Error al cargar el logo", "");
 			}
 		} else {
 			lblNombreCia.setText("Selecciona una compañía");
@@ -281,8 +270,8 @@ public class V_BuscarProveedorCompaniaController {
 			lblCifProve.setText(pcd.getCif());
 			lblTelf1Prove.setText(pcd.getTelf1());
 			lblTelf2Prove.setText(pcd.getTelf2());
-			lblDireccionProve.setText(pcd.getDireccion().getDireccionCompleta());
-			lblCPostalProve.setText("" + pcd.getDireccion().getCpostal());
+			lblDireccionProve.setText(pcd.getDireccion().getDireccion());
+			lblCPostalProve.setText(Integer.toString(pcd.getDireccion().getCpostal()));
 			lblLocalidadProve.setText(pcd.getDireccion().getLocalidad());
 			lblProvinciaProve.setText(pcd.getDireccion().getProvincia());
 			try {
@@ -295,7 +284,7 @@ public class V_BuscarProveedorCompaniaController {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", e.getMessage());
+				Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ERROR, "Error al cargar el logo", e.getMessage());
 			}
 			panelDetallesProve.setVisible(true);
 		} else {
@@ -321,15 +310,15 @@ public class V_BuscarProveedorCompaniaController {
 			boolean okClicked = Inicio.mostrarEditorCia(pcd, 0);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarCia(pcd)) {
-					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, "Atención", "Compañía modificada con éxito", "");
+					Utilidades.mostrarAlerta(AlertType.CONFIRMATION, StringUtils.ATENCION, "Compañía modificada con éxito", "");
 					mostrarDetallesCia(pcd);
 				} else {
-					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar la compañía",
+					Utilidades.mostrarAlerta(AlertType.ERROR, StringUtils.ERROR, "Error al modificar la compañía",
 							"Ocurrió un error al modificar la compañía en la base de datos.");
 				}
 			}
 		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ninguna compañía seleccionada",
+			Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ATENCION, "Ninguna compañía seleccionada",
 					"Selecciona la compañía que quieras editar.");
 		}
 	}
@@ -350,16 +339,16 @@ public class V_BuscarProveedorCompaniaController {
 			boolean okClicked = Inicio.mostrarEditorCia(pcd, tipo);
 			if (okClicked) {
 				if (Inicio.CONEXION.editarCia(pcd)) {
-					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Compañía modificada con éxito", "");
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION, "Compañía modificada con éxito", "");
 					mostrarDetallesProve(pcd);
 				} else {
-					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al modificar la compañía",
+					Utilidades.mostrarAlerta(AlertType.ERROR, StringUtils.ERROR, "Error al modificar la compañía",
 							"Ocurrió un error al modificar la compañía en la base de datos.");
 				}
 
 			}
 		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún proveedor/desguace seleccionado",
+			Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ATENCION, "Ningún proveedor/desguace seleccionado",
 					"Selecciona el proveedor/desguace que quieras editar.");
 		}
 	}
@@ -382,7 +371,7 @@ public class V_BuscarProveedorCompaniaController {
 					"¿Está seguro que quiere eliminar " + pcd.getNombre() + "?", "");
 			if (result.get() == ButtonType.OK) {
 				if (Inicio.CONEXION.eliminarCia(pcd.getIdprovecompa(), pcd.getDireccion().getIddireccion())) {
-					Utilidades.mostrarAlerta(AlertType.INFORMATION, "Atención", "Compañía eliminada", "");
+					Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION, "Compañía eliminada", "");
 					if (tipo == 0) {
 						tableCompania.getItems().remove(selectedIndex);
 						tableCompania.getSelectionModel().clearSelection();
@@ -398,7 +387,7 @@ public class V_BuscarProveedorCompaniaController {
 				}
 			}
 		} else {
-			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ninguna compañía seleccionada",
+			Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ATENCION, "Ninguna compañía seleccionada",
 					"Selecciona la compañía que quieras eliminar.");
 		}
 	}

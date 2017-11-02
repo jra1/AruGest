@@ -19,6 +19,7 @@ import Modelo.Empresa;
 import Modelo.Factura;
 import Modelo.Particular;
 import Modelo.Vehiculo;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
@@ -88,10 +89,15 @@ public class Hilo extends Thread {
 				@Override
 				public Integer call() throws Exception {
 					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
-						alert.setAlertType(AlertType.WARNING);
-						alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
-						alert.setContentText(
-								"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	alert.setAlertType(AlertType.WARNING);
+						    	alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
+						    	alert.setContentText(
+						    			"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
+						    }
+						});
 						return 0;
 					}
 
@@ -142,7 +148,7 @@ public class Hilo extends Thread {
 						}
 						parameters.put("autor", c.getNombre());
 						if (d.getIddireccion() != 0) {
-							parameters.put("direccion", d.getDireccionCompleta());
+							parameters.put("direccion", d.getDireccion());
 						} else {
 							parameters.put("direccion", "");
 						}
@@ -299,18 +305,8 @@ public class Hilo extends Thread {
 	 */
 	public static boolean hilo_CreaBD(ProgressBar pb) {
 		try {
-			// Mostrar mensaje
-			// Alert alert = new Alert(AlertType.INFORMATION);
-			// alert.setTitle("Creando Base de datos");
-			// alert.setHeaderText("Creando base de datos...");
-			// alert.setContentText("");
-			// DialogPane dialogPane = alert.getDialogPane();
-			// dialogPane.getStylesheets().add(Inicio.class.getResource("../GUI/EstiloRoot.css").toExternalForm());
-			// dialogPane.getStyleClass().add("my-dialog");
-			// alert.show();
-
-			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
-				@Override
+		    FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
+			@Override
 				public Integer call() throws Exception {
 					System.out.println("Empieza");
 					BufferedReader br = new BufferedReader(new FileReader("ScriptSQL"));
@@ -383,4 +379,5 @@ public class Hilo extends Thread {
 		return DriverManager.getConnection(pUrl, "sa", "");
 	}
 
+	
 }

@@ -56,13 +56,7 @@ public class V_ClienteController {
 	@FXML
 	private TextField txtTelf3;
 	@FXML
-	private TextField txtCalle;
-	@FXML
-	private TextField txtNumero;
-	@FXML
-	private TextField txtPiso;
-	@FXML
-	private TextField txtLetra;
+	private TextField txtDireccion;
 	@FXML
 	private TextField txtCPostal;
 	@FXML
@@ -81,8 +75,6 @@ public class V_ClienteController {
 	private TableColumn<Vehiculo, String> columnaMarca;
 	@FXML
 	private TableColumn<Vehiculo, String> columnaMatricula;
-	// @FXML
-	// private Label lblSI;
 
 	@FXML
 	private Label lblTipoVehiculo;
@@ -237,7 +229,6 @@ public class V_ClienteController {
 	 */
 	@FXML
 	private void initialize() {
-		// btnGuardar.setVisible(true);
 		tableVehiculo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mostrarDetallesVehiculo(newValue));
 
@@ -569,6 +560,10 @@ public class V_ClienteController {
 	private void hacerFactura() {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
+			/*boolean okClicked = Inicio.mostrarD_EligeNombreFactura();
+			if (okClicked) {
+				
+			}*/
 			try {
 				Inicio.VEHICULO_ID = tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo();
 				// Cargar la vista de nueva factura
@@ -679,11 +674,8 @@ public class V_ClienteController {
 			txtApellidos.setVisible(false);
 		}
 		if (cped.getCliente().getDireccionID() != 0) {
-			txtCalle.setText(cped.getDireccion().getCalle());
-			txtNumero.setText("" + cped.getDireccion().getNumero());
-			txtPiso.setText(cped.getDireccion().getPiso());
-			txtLetra.setText(cped.getDireccion().getLetra());
-			txtCPostal.setText("" + cped.getDireccion().getCpostal());
+			txtDireccion.setText(cped.getDireccion().getDireccion());
+			txtCPostal.setText(Integer.toString(cped.getDireccion().getCpostal()));
 			txtPoblacion.setText(cped.getDireccion().getLocalidad());
 			txtProvincia.setText(cped.getDireccion().getProvincia());
 		}
@@ -700,13 +692,6 @@ public class V_ClienteController {
 		columnaMarca.setCellValueFactory(cellData -> cellData.getValue().marcaModeloProperty());
 		columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().matriculaProperty());
 		tableVehiculo.setItems(listaVehiculos);
-		// if (tableVehiculo.getItems().isEmpty()) {
-		// tableVehiculo.setVisible(false);
-		// lblSI.setVisible(true);
-		// } else {
-		// tableVehiculo.setVisible(true);
-		// lblSI.setVisible(false);
-		// }
 	}
 
 	/**
@@ -721,20 +706,9 @@ public class V_ClienteController {
 		columnaMatriculaPresupuesto
 				.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 		columnaFechaPresupuesto.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
-		// columnaSubtotalPresupuesto.setCellValueFactory(cellData ->
-		// cellData.getValue().getFactura().);
 		columnaImportePresupuesto
 				.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
 		tablePresupuestos.setItems(listaPresupuestos);
-		// if (tablePresupuestos.getItems().isEmpty()) {
-		// tablePresupuestos.setVisible(false);
-		// btnEliminarPresupuesto.setVisible(false);
-		// lblSIP.setVisible(true);
-		// } else {
-		// tablePresupuestos.setVisible(true);
-		// btnEliminarPresupuesto.setVisible(true);
-		// lblSIP.setVisible(false);
-		// }
 	}
 
 	/**

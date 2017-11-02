@@ -8,6 +8,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 import Logica.Inicio;
+import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.Direccion;
 import Modelo.ProveedorCompaniaDireccion;
@@ -38,13 +39,7 @@ public class D_EditCiaController {
 	@FXML
 	private TextField txtTel2;
 	@FXML
-	private TextField txtCalle;
-	@FXML
-	private TextField txtNumero;
-	@FXML
-	private TextField txtPiso;
-	@FXML
-	private TextField txtLetra;
+	private TextField txtDireccion;
 	@FXML
 	private TextField txtCodPostal;
 	@FXML
@@ -91,11 +86,8 @@ public class D_EditCiaController {
 		txtTel1.setText(pcd.getTelf1());
 		txtTel2.setText(pcd.getTelf2());
 		if (pcd.getDireccion() != null && pcd.getDireccion().getIddireccion() != 0) {
-			txtCalle.setText(pcd.getDireccion().getCalle());
-			txtNumero.setText("" + pcd.getDireccion().getNumero());
-			txtPiso.setText(pcd.getDireccion().getPiso());
-			txtLetra.setText(pcd.getDireccion().getLetra());
-			txtCodPostal.setText("" + pcd.getDireccion().getCpostal());
+			txtDireccion.setText(pcd.getDireccion().getDireccion());
+			txtCodPostal.setText(Integer.toString(pcd.getDireccion().getCpostal()));
 			txtLocalidad.setText(pcd.getDireccion().getLocalidad());
 			txtProvincia.setText(pcd.getDireccion().getProvincia());
 		}
@@ -110,8 +102,7 @@ public class D_EditCiaController {
 				InputStream is = pcd.getLogo().getBinaryStream();
 				logo.setImage(new Image(is));
 			} catch (SQLException e) {
-				e.printStackTrace();
-				Utilidades.mostrarAlerta(AlertType.WARNING, "Error", "Error al cargar el logo", "");
+				Utilidades.mostrarAlerta(AlertType.WARNING, StringUtils.ERROR, "Error al cargar el logo", "");
 			}
 		}
 	}
@@ -131,21 +122,17 @@ public class D_EditCiaController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			if (!txtCalle.getText().isEmpty()
+			if (!txtDireccion.getText().isEmpty()
 					|| (!txtCodPostal.getText().isEmpty() && Integer.parseInt(txtCodPostal.getText()) != 0)
 					|| !txtLocalidad.getText().isEmpty() || !txtProvincia.getText().isEmpty()) {
 				if (pcd.getDireccion() != null || pcd.getDireccion().getIddireccion() != 0) {
-					pcd.getDireccion().setCalle(txtCalle.getText());
-					pcd.getDireccion().setNumero(Utilidades.validaNumero(txtNumero.getText()));
-					pcd.getDireccion().setPiso(txtPiso.getText());
-					pcd.getDireccion().setLetra(txtLetra.getText());
+					pcd.getDireccion().setDireccion(txtDireccion.getText());
 					pcd.getDireccion().setCpostal(Utilidades.validaNumero(txtCodPostal.getText()));
 					pcd.getDireccion().setLocalidad(txtLocalidad.getText());
 					pcd.getDireccion().setProvincia(txtProvincia.getText());
 
 				} else {
-					pcd.setDireccion(new Direccion(0, txtCalle.getText(), Utilidades.validaNumero(txtNumero.getText()),
-							txtPiso.getText(), txtLetra.getText(), Utilidades.validaNumero(txtCodPostal.getText()),
+					pcd.setDireccion(new Direccion(0, txtDireccion.getText(), Utilidades.validaNumero(txtCodPostal.getText()),
 							txtLocalidad.getText(), txtProvincia.getText()));
 				}
 			} else {
@@ -153,43 +140,6 @@ public class D_EditCiaController {
 				pcd.setDireccion(new Direccion());
 				pcd.setDireccionID(0);
 			}
-
-			// if (pcd.getDireccion() != null ||
-			// pcd.getDireccion().getIddireccion() != 0) {
-			// if (!txtCalle.getText().isEmpty()
-			// || (!txtCodPostal.getText().isEmpty() &&
-			// Integer.parseInt(txtCodPostal.getText()) != 0)
-			// || !txtLocalidad.getText().isEmpty() ||
-			// !txtProvincia.getText().isEmpty()) {
-			// pcd.getDireccion().setCalle(txtCalle.getText());
-			// pcd.getDireccion().setNumero(Integer.parseInt(txtNumero.getText()));
-			// pcd.getDireccion().setPiso(txtPiso.getText());
-			// pcd.getDireccion().setLetra(txtLetra.getText());
-			// pcd.getDireccion().setCpostal(Integer.parseInt(txtCodPostal.getText()));
-			// pcd.getDireccion().setLocalidad(txtLocalidad.getText());
-			// pcd.getDireccion().setProvincia(txtProvincia.getText());
-			// } else {
-			// // Calle, localidad, etc vacío
-			// pcd.setDireccion(new Direccion());
-			// pcd.setDireccionID(0);
-			// }
-			// } else {
-			// if (!txtCalle.getText().isEmpty() ||
-			// !txtCodPostal.getText().isEmpty()
-			// || !txtLocalidad.getText().isEmpty() ||
-			// !txtProvincia.getText().isEmpty()) {
-			// Direccion d = new Direccion(0, txtCalle.getText(),
-			// Integer.parseInt(txtNumero.getText()),
-			// txtPiso.getText(), txtLetra.getText(),
-			// Integer.parseInt(txtCodPostal.getText()),
-			// txtLocalidad.getText(), txtProvincia.getText());
-			// pcd.setDireccion(d);
-			// } else {
-			// // Calle, localidad, etc vacío
-			// pcd.setDireccion(new Direccion());
-			// pcd.setDireccionID(0);
-			// }
-			// }
 
 			pcd.setNombre(txtNombre.getText());
 			pcd.setCif(txtCif.getText());
@@ -221,7 +171,7 @@ public class D_EditCiaController {
 					// stmt.setBinaryStream(4, fis, (int) image.length());
 					// stmt.setBinar(4, fis);
 				} catch (Exception e) {
-					Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el logo en el objeto",
+					Utilidades.mostrarAlerta(AlertType.ERROR, StringUtils.ERROR, "Error al guardar el logo en el objeto",
 							e.getMessage());
 				}
 			}
@@ -253,19 +203,8 @@ public class D_EditCiaController {
 		if (txtNombre.getText().length() == 0) {
 			errorMessage += "Introduce el nombre del proveedor/compañía";
 		}
-		if (txtNumero.getText().length() > 0) {
-			try {
-				Integer.parseInt(txtNumero.getText());
-			} catch (NumberFormatException e) {
-				errorMessage = "Número no válido.\n Introduce únicamente números";
-			}
-		}
-		if (txtCodPostal.getText().length() > 0) {
-			try {
-				Integer.parseInt(txtCodPostal.getText());
-			} catch (NumberFormatException e) {
-				errorMessage = "Código postal no válido.\n Introduce únicamente números";
-			}
+		if (txtCodPostal.getText().length() > 0 && Utilidades.validaNumero(txtCodPostal.getText()) == -1) {
+			errorMessage = "Código postal no válido.\n Introduce únicamente números";
 		}
 
 		if (errorMessage.length() == 0) {
@@ -300,7 +239,7 @@ public class D_EditCiaController {
 				Image image = new Image("file:" + imgFile.getAbsolutePath());
 				logo.setImage(image);
 			} catch (Exception e) {
-				e.printStackTrace();
+				Utilidades.mostrarError(e);
 			}
 		}
 	}

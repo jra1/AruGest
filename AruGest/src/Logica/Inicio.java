@@ -2,7 +2,6 @@ package Logica;
 
 import java.io.File;
 import java.io.IOException;
-//import java.security.Principal;
 import java.util.ArrayList;
 
 import com.guigarage.responsive.ResponsiveHandler;
@@ -15,6 +14,7 @@ import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_AgregaDocumentoController;
 import GUI.Cliente.D_EditClienteController;
+import GUI.Cliente.D_EligeNombreFactura;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.Contabilidad.D_SelectorGolpesController;
 import GUI.Contabilidad.D_UltimasFacturasController;
@@ -70,8 +70,7 @@ public class Inicio extends Application {
 	public static BotonVentana BOTON1 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON2 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON3 = new BotonVentana(0, false, "");
-	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea
-														// necesario cambiar
+	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea necesario cambiar
 
 	// VARIABLES LOCALES DE INICIO
 	private static Stage escenario; // Donde se cargan las escenas (interfaces)
@@ -105,7 +104,7 @@ public class Inicio extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
 		escenario = primaryStage;
 
 		// Comprobar si existe la BD
@@ -114,11 +113,9 @@ public class Inicio extends Application {
 		CONEXION.crearConexion(DBURL);
 
 		// Si no existe la BD se llama al diálogo de Bienvenida
-		if (!existe) {
-			if (abreBienvenida() == false) {
-				Platform.exit();
-				System.exit(0);
-			}
+		if (!existe && !abreBienvenida()) {
+			Platform.exit();
+			System.exit(0);
 		}
 
 		// Obtener las opciones
@@ -126,14 +123,26 @@ public class Inicio extends Application {
 
 		// Abre login
 		if (abreLogin()) {
-			// Abre la ventana principal de la aplicación
-			abreVentanaPrincipal();
+		    
+		    if(CONEXION.getVersionDB().equalsIgnoreCase("")){
+		    	CONEXION.crearDBVersion();
+		    }
+		    
+		    CONEXION.actualizaDB();
+		    
+		    // En versión 2 cambiamos la direccion
+		    if(CONEXION.getVersionDB().equalsIgnoreCase("2") && !CONEXION.version2done()){
+		    	CONEXION.actualizaDireccionVersion2();
+		    }
+			
+		    // Abre la ventana principal de la aplicación
+		    abreVentanaPrincipal();
 
-			// Se obtienen los datos de la pantalla
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-			ANCHO_PANTALLA = primaryScreenBounds.getWidth();
-			ALTO_PANTALLA = primaryScreenBounds.getHeight();
-			CAMBIAR_RESOLUCION = true;
+		    // Se obtienen los datos de la pantalla
+		    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		    ANCHO_PANTALLA = primaryScreenBounds.getWidth();
+		    ALTO_PANTALLA = primaryScreenBounds.getHeight();
+		    CAMBIAR_RESOLUCION = true;
 		}
 	}
 
@@ -202,7 +211,7 @@ public class Inicio extends Application {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/D_Bienvenida.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
@@ -243,15 +252,13 @@ public class Inicio extends Application {
 
 		try {
 			// 1.- Crear la escena desde el AnchorPane
-			root = (BorderPane) loader.load();
+			root = loader.load();
 			root.getStylesheets().add(getClass().getResource("/GUI/EstiloRoot.css").toExternalForm());
 
 			scene = new Scene(root, ANCHO_PANTALLA, ALTO_PANTALLA);
 			if (CAMBIAR_RESOLUCION) {
 				Utilidades.ajustarResolucionEscenario(escenario, ANCHO_PANTALLA, ALTO_PANTALLA);
 			}
-			// System.out.println("Anchura: " + primaryScreenBounds.getWidth() +
-			// " ; Altura: " + primaryScreenBounds.getHeight());
 			// 2.- Ponerla y mostrarla
 			escenario.setScene(scene);
 			ResponsiveHandler.addResponsiveToWindow(escenario);
@@ -268,7 +275,7 @@ public class Inicio extends Application {
 			controlador.ocultarBotonesGestor();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			Utilidades.mostrarError(e);
 		}
 	}
 
@@ -283,7 +290,7 @@ public class Inicio extends Application {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Inicio.class.getResource("/GUI/Vehiculo/D_EditVehiculo.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
@@ -307,6 +314,41 @@ public class Inicio extends Application {
 			dialogStage.showAndWait();
 
 			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Muestra el selector del nombre al que se va a hacer la factura
+	 * @return
+	 */
+	public static boolean mostrarD_EligeNombreFactura() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/D_EligeNombreFactura.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("¿A nombre de quién se hará la factura?");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_EligeNombreFactura controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
