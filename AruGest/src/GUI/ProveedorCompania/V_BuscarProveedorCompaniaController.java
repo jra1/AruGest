@@ -1,6 +1,5 @@
 package GUI.ProveedorCompania;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import Logica.Inicio;
@@ -162,7 +161,7 @@ public class V_BuscarProveedorCompaniaController {
 	private void buscarCompania() {
 		listaCias.clear();
 		tableCompania.getItems().clear();
-		ArrayList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(true, false, txtNombreCompa.getText(),
+		ObservableList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(true, false, txtNombreCompa.getText(),
 				txtTelfCompa.getText(), "", "");
 		if (lista.isEmpty()) {
 			Utilidades.mostrarAlerta(AlertType.INFORMATION, StringUtils.ATENCION, "No encontrado",
@@ -192,7 +191,7 @@ public class V_BuscarProveedorCompaniaController {
 	private void buscarProve() {
 		listaProveedores.clear();
 		tableProveedor.getItems().clear();
-		ArrayList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(false, esDesguace.isSelected(),
+		ObservableList<ProveedorCompaniaDireccion> lista = Inicio.CONEXION.buscarCias(false, esDesguace.isSelected(),
 				txtNombreProve.getText(), txtTelfProve.getText(), txtLocalidadProve.getText(),
 				txtProvinciaProve.getText());
 		if (lista.isEmpty()) {

@@ -2056,13 +2056,13 @@ public class Conexion {
 	 * @param telf
 	 * @return ArrayList con los resultados obtenidos
 	 */
-	public ArrayList<ProveedorCompaniaDireccion> buscarCias(boolean esCia, boolean esDesguace, String nombre,
+	public ObservableList<ProveedorCompaniaDireccion> buscarCias(boolean esCia, boolean esDesguace, String nombre,
 			String telf, String poblacion, String provincia) {
 		String sql = "";
 		ProveedorCompaniaDireccion pcd = new ProveedorCompaniaDireccion(esCia);
 		ProveedorCompania pc;
 		Direccion d;
-		ArrayList<ProveedorCompaniaDireccion> lista = new ArrayList<ProveedorCompaniaDireccion>();
+		ObservableList<ProveedorCompaniaDireccion> lista = FXCollections.observableArrayList();
 		try {
 			// Se prepara la sentencia
 			Statement st = getCon().createStatement();

@@ -1,8 +1,11 @@
 package GUI.Cliente;
 
+import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccion;
-import Modelo.ProveedorCompania;
+import Modelo.ProveedorCompaniaDireccion;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -29,19 +32,19 @@ public class D_EligeNombreFactura {
 	@FXML
 	private Button btnBuscar;
 	@FXML
-	private TableView<ProveedorCompania> tableCias;
+	private TableView<ProveedorCompaniaDireccion> tableCias;
 	@FXML
-	private TableColumn<ProveedorCompania, String> columnaNombre;
+	private TableColumn<ProveedorCompaniaDireccion, String> columnaNombre;
 	@FXML
-	private TableColumn<ProveedorCompania, String> columnaCif;
+	private TableColumn<ProveedorCompaniaDireccion, String> columnaCif;
 	@FXML
-	private TableColumn<ProveedorCompania, String> columnaTlf;
+	private TableColumn<ProveedorCompaniaDireccion, String> columnaTlf;
 	@FXML
 	private Pane paneCia;
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
-	private ProveedorCompania cped = null;
+	private ObservableList<ProveedorCompaniaDireccion> listaCias = FXCollections.observableArrayList();
 	
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -54,6 +57,8 @@ public class D_EligeNombreFactura {
 
 		radioCia.selectedProperty()
 				.addListener((observable, oldValue, newValue) -> comprobarRadioCia(newValue));
+		
+		txtNombre.textProperty().addListener((observable, oldValue, newValue) -> buscaCia(newValue));
 	}
 
 	/**
@@ -108,6 +113,16 @@ public class D_EligeNombreFactura {
 		return okClicked;
 	}
 
+	/**
+	 * Función que busca la cía escrita el textField
+	 */
+	private void buscaCia(String nombre) {
+		listaCias = Inicio.CONEXION.buscarCias(true, false, nombre,"", "", "");
+		columnaNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+		columnaCif.setCellValueFactory(cellData -> cellData.getValue().cifProperty());
+		columnaTlf.setCellValueFactory(cellData -> cellData.getValue().telf1Property());
+		tableCias.setItems(listaCias);
+	}
 	/**
 	 * Called when the user clicks ok.
 	 */
