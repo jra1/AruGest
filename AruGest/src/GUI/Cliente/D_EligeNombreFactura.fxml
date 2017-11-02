@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="388.0" prefWidth="438.0" styleClass="back" stylesheets="@../EstiloRoot.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cliente.D_EligeNombreFactura">
+   <children>
+      <Pane layoutX="6.0" layoutY="4.0" prefHeight="380.0" prefWidth="423.0" styleClass="background">
+         <children>
+            <Button defaultButton="true" layoutX="95.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="33.0" prefWidth="100.0" styleClass="my-button" text="Aceptar" />
+            <Button cancelButton="true" layoutX="256.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cancelar" />
+            <Label layoutX="14.0" layoutY="14.0" styleClass="my-label" text="Hacer factura a nombre de:" />
+            <RadioButton fx:id="radioCliente" layoutX="25.0" layoutY="47.0" mnemonicParsing="false" styleClass="my-label" text="Cliente">
+               <toggleGroup>
+                  <ToggleGroup fx:id="group" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioCia" layoutX="25.0" layoutY="79.0" mnemonicParsing="false" styleClass="my-label" text="Compañía de seguros" toggleGroup="$group" />
+            <Pane fx:id="paneCia" layoutX="7.0" layoutY="111.0" prefHeight="218.0" prefWidth="409.0" styleClass="background">
+               <children>
+                  <Label layoutX="8.0" layoutY="17.0" styleClass="my-label" text="Nombre cía:" />
+                  <TextField fx:id="txtNombre" layoutX="93.0" layoutY="12.0" prefHeight="31.0" prefWidth="230.0" styleClass="my-text-field" />
+                  <TableView fx:id="tableCias" layoutX="7.0" layoutY="53.0" prefHeight="156.0" prefWidth="385.0">
+                    <columns>
+                      <TableColumn fx:id="columnaNombre" prefWidth="184.0" text="Nombre" />
+                      <TableColumn fx:id="columnaCif" prefWidth="98.0" text="CIF" />
+                        <TableColumn fx:id="columnaTlf" prefWidth="101.0" text="Teléfono" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="btnBuscar" layoutX="310.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="my-button" text="Buscar" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

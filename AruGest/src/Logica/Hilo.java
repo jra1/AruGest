@@ -19,6 +19,7 @@ import Modelo.Empresa;
 import Modelo.Factura;
 import Modelo.Particular;
 import Modelo.Vehiculo;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
@@ -88,10 +89,15 @@ public class Hilo extends Thread {
 				@Override
 				public Integer call() throws Exception {
 					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
-						alert.setAlertType(AlertType.WARNING);
-						alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
-						alert.setContentText(
-								"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
+						Platform.runLater(new Runnable() {
+						    @Override
+						    public void run() {
+						    	alert.setAlertType(AlertType.WARNING);
+						    	alert.setHeaderText("Debe introducir una carpeta donde guardar las facturas");
+						    	alert.setContentText(
+						    			"Vaya a 'Opciones' y seleccione la ruta donde se van a guardar las facturas generadas.");
+						    }
+						});
 						return 0;
 					}
 

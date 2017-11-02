@@ -662,6 +662,8 @@ public class V_NuevaFacturaController {
 						Utilidades.mostrarAlerta(AlertType.ERROR, "Error", "Error al guardar el vehículo",
 								"Ocurrió un error al guardar el vehículo en la base de datos.");
 					}
+				}else {
+					Inicio.VEHICULO_ID = v.getIdvehiculo();
 				}
 
 				// 4º Guardar la factura

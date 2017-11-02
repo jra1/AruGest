@@ -75,8 +75,6 @@ public class V_ClienteController {
 	private TableColumn<Vehiculo, String> columnaMarca;
 	@FXML
 	private TableColumn<Vehiculo, String> columnaMatricula;
-	// @FXML
-	// private Label lblSI;
 
 	@FXML
 	private Label lblTipoVehiculo;
@@ -562,7 +560,13 @@ public class V_ClienteController {
 	private void hacerFactura() {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			try {
+			boolean okClicked = Inicio.mostrarD_EligeNombreFactura();
+			if (okClicked) {
+				
+			}
+			
+			
+			/*try {
 				Inicio.VEHICULO_ID = tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo();
 				// Cargar la vista de nueva factura
 				FXMLLoader loader = new FXMLLoader();
@@ -598,6 +602,7 @@ public class V_ClienteController {
 				e.printStackTrace();
 				Utilidades.mostrarError(e);
 			}
+			*/
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
 					"Selecciona el vehículo al que quieras hacer una factura.");

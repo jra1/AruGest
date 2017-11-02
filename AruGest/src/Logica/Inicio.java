@@ -14,6 +14,7 @@ import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_AgregaDocumentoController;
 import GUI.Cliente.D_EditClienteController;
+import GUI.Cliente.D_EligeNombreFactura;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.Contabilidad.D_SelectorGolpesController;
 import GUI.Contabilidad.D_UltimasFacturasController;
@@ -313,6 +314,41 @@ public class Inicio extends Application {
 			dialogStage.showAndWait();
 
 			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Muestra el selector del nombre al que se va a hacer la factura
+	 * @return
+	 */
+	public static boolean mostrarD_EligeNombreFactura() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Inicio.class.getResource("/GUI/Cliente/D_EligeNombreFactura.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("¿A nombre de quién se hará la factura?");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(escenario);
+			dialogStage.setResizable(false);
+			Scene scene = new Scene(page);
+			scene.getStylesheets().add("GUI/EstiloRoot.css");
+			dialogStage.setScene(scene);
+
+			// Set the person into the controller.
+			D_EligeNombreFactura controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
