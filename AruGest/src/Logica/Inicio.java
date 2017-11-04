@@ -49,6 +49,7 @@ public class Inicio extends Application {
 	private final static String DBFILENAME = "AruGestDB";
 	public static String DBPATHNAME = "AruGestDB";
 	public static String DBURL;
+	public static String FILE_SEPARATOR = System.getProperty("file.separator");
 	public static Conexion CONEXION = new Conexion();
 	public static String OPCION_NUEVA = ""; // Nueva Factura o Nuevo Presupuesto
 	public static int CLIENTE_ID;
@@ -85,22 +86,37 @@ public class Inicio extends Application {
 	 * Se comprueba si existe la BD y si no existe se crea
 	 */
 	public boolean compruebaExisteBD() {
-		// Se obtiene la ruta de AruGest que es:
-		// C:/AruGest/AruGestDB.h2.db
+		boolean existe = false;
+		// Se obtiene la ruta de AruGest
 		File f = new File(".");
 		String ruta = f.getAbsolutePath();
 		f.delete();
-		int index = ruta.lastIndexOf(':');
-		ruta = ruta.replace(ruta.substring(index + 1), "");
-
-		String spath = ruta + "\\AruGest";
-		// Se comprueba si existe la base de datos
-		// Esto devuelve true o false si existe ese archivo en esa ruta
-		boolean esta = new File(spath, DBFILENAME + ".h2.db").exists();
-		spath += "\\" + DBFILENAME;
-		DBPATHNAME = spath.replaceAll("\\\\", "/");
-		DBURL = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
-		return esta;
+		int index;
+		String spath;
+		// Se detecta en qué OS se está ejecutando
+	    String OS = System.getProperty("os.name");
+	    if(OS.indexOf("win") >= 0) { // Es Windows
+	    	// C:/AruGest/AruGestDB.h2.db
+	    	index = ruta.lastIndexOf(':');
+	    	ruta = ruta.replace(ruta.substring(index + 1), "");
+	    	spath = ruta + "\\AruGest";
+	    	// Se comprueba si existe la base de datos
+	    	// Esto devuelve true o false si existe ese archivo en esa ruta
+	    	existe = new File(spath, DBFILENAME + ".h2.db").exists();
+	    	spath += "\\" + DBFILENAME;
+	    	DBPATHNAME = spath.replaceAll("\\\\", "/");
+	    	DBURL = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+	    	
+	    } else { // Es linux u otro
+	    	// /etc/AruGest/AruGestDB.h2.db
+	    	spath = "." + FILE_SEPARATOR + "etc" + FILE_SEPARATOR + "AruGest";
+	    	existe = new File(spath, DBFILENAME + ".h2.db").exists();
+	    	spath += FILE_SEPARATOR + DBFILENAME;
+	    	// jdbc:h2:file:/etc/AruGest/AruGestDB
+	    	DBURL = "jdbc:h2:file:" + spath;//.replaceAll("\\\\", "/");
+	    }
+		
+		return existe;
 	}
 
 	@Override
