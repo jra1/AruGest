@@ -84,7 +84,7 @@ public class Conexion {
 			 * con = DriverManager.getConnection(
 			 * "jdbc:h2:C:/AruGest/AruGestDB;AUTO_SERVER=TRUE", "sa", "");
 			 */
-			getCon().setAutoCommit(true);
+			//getCon().setAutoCommit(true);
 		} catch (Exception e) {
 			Utilidades.mostrarError(e);
 		}
