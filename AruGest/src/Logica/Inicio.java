@@ -95,7 +95,7 @@ public class Inicio extends Application {
 		String spath;
 		// Se detecta en qué OS se está ejecutando
 	    String OS = System.getProperty("os.name");
-	    if(OS.indexOf("win") >= 0) { // Es Windows
+	    if(OS.toLowerCase().indexOf("win") >= 0) { // Es Windows
 	    	// C:/AruGest/AruGestDB.h2.db
 	    	index = ruta.lastIndexOf(':');
 	    	ruta = ruta.replace(ruta.substring(index + 1), "");

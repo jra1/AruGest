@@ -79,7 +79,7 @@ public class Conexion {
 			// Usuario: sa
 			// Pass: (No hay)
 			Class.forName("org.h2.Driver");
-			con = DriverManager.getConnection(url + ";AUTO_SERVER=TRUE;CIPHER=AES", "sa", "1234 1234");
+			con = DriverManager.getConnection(url + ";AUTO_SERVER=TRUE;CIPHER=AES;MV_STORE=FALSE", "sa", "1234 1234");
 			/**
 			 * con = DriverManager.getConnection(
 			 * "jdbc:h2:C:/AruGest/AruGestDB;AUTO_SERVER=TRUE", "sa", "");

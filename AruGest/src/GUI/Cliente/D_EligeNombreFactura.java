@@ -207,7 +207,11 @@ public class D_EligeNombreFactura {
 	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
-
+		
+		if(radioCia.isSelected() && tableCias.getSelectionModel().getSelectedIndex() < 0) {
+			errorMessage = "Si quiere hacer la factura / presupuesto a nombre de una compañía, debe seleccionar una.";
+		}
+		
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
