@@ -1397,6 +1397,33 @@ public class Conexion {
 		}
 		return c;
 	}
+	
+	/**
+	 * Busca un cliente en la BD por su ID
+	 * 
+	 * @param id
+	 * 
+	 * @return el cliente encontrado o null si no existe ese ID
+	 */
+	public ProveedorCompania leerCiaPorID(int id) {
+		String sql = "";
+		ProveedorCompania pc = null;
+		try {
+			// Se prepara la sentencia para buscar los datos del cliente
+			Statement st = getCon().createStatement();
+			sql = "SELECT * FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.IDPROVECOMPA = " + id;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				pc = new ProveedorCompania(rs.getInt("IDPROVECOMPA"), rs.getString("CIF"), rs.getString("NOMBRE"),
+						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"), rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
+			}
+			// Se cierra la conexion
+			getCon().close();
+		} catch (Exception e) {
+			Utilidades.mostrarError(e);
+		}
+		return pc;
+	}
 
 	/**
 	 * Busca un vehiculo en la BD por su ID
@@ -3106,6 +3133,7 @@ public class Conexion {
 		ResultSet rs = st.executeQuery(sql);
 		if (rs.next()) {
 			res = rs.getString("VALOR");
+			Inicio.DBVERSION = res;
 		}else{
 		    res = "";
 		}
@@ -3164,6 +3192,8 @@ public class Conexion {
 			sql = versionElement.getTextContent();
 			executeTransaction(sql, versionNumber);
 		}
+		
+		Inicio.DBVERSION = getVersionDB();
 	}
 	
 	/**

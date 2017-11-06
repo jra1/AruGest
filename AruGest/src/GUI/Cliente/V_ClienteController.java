@@ -560,47 +560,50 @@ public class V_ClienteController {
 	private void hacerFactura() {
 		int selectedIndex = tableVehiculo.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			boolean okClicked = Inicio.mostrarD_EligeNombreFactura();
-			if (okClicked) {
-				
+			int idCia = Inicio.mostrarD_EligeNombreFactura(); // -1 -> A nombre del cliente
+			if(idCia != -10) { // -10 = error
+				try {
+					Inicio.VEHICULO_ID = tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo();
+					// Cargar la vista de nueva factura
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
+					Inicio.setOpcionNueva("A"); // Marca presupuesto y factura
+					AnchorPane nuevaFactura = (AnchorPane) loader.load();
+					
+					// Poner la nueva vista en el centro del root
+					Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
+					sp.setContent(nuevaFactura);
+					// Esta línea es para que se ejecute la pseudoclase del CSS ya
+					ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
+					nombre = "Presupuesto: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
+					ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
+					gv = new GestorVentana(ap, nombre);
+					Utilidades.gestionarPantallas(gv);
+					boton1.setVisible(Inicio.BOTON1.isVisible());
+					boton1.setText(Inicio.BOTON1.getNombre());
+					boton2.setVisible(Inicio.BOTON2.isVisible());
+					boton2.setText(Inicio.BOTON2.getNombre());
+					boton3.setVisible(Inicio.BOTON3.isVisible());
+					boton3.setText(Inicio.BOTON3.getNombre());
+					
+					// Poner el controlador de la nueva vista.
+					V_NuevaFacturaController controller = loader.getController();
+					controller.setMainAPP(main);
+					if (idCia == -1) {
+						controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
+								tableVehiculo.getSelectionModel().getSelectedItem(), null);
+						
+					} else {
+						controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
+								tableVehiculo.getSelectionModel().getSelectedItem(), Inicio.CONEXION.leerCiaPorID(idCia));						
+					}				
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					Utilidades.mostrarError(e);
+				}
 			}
 			
-			/*try {
-				Inicio.VEHICULO_ID = tableVehiculo.getSelectionModel().getSelectedItem().getIdvehiculo();
-				// Cargar la vista de nueva factura
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
-				Inicio.setOpcionNueva("A"); // Marca presupuesto y factura
-				AnchorPane nuevaFactura = (AnchorPane) loader.load();
-
-				// Poner la nueva vista en el centro del root
-				// **************************************************************************************************
-				Utilidades.ajustarResolucionAnchorPane(nuevaFactura, Inicio.ANCHO_PANTALLA, Inicio.ALTO_PANTALLA);
-				// **************************************************************************************************
-				sp.setContent(nuevaFactura);
-				// Esta línea es para que se ejecute la pseudoclase del CSS ya
-				ResponsiveHandler.addResponsiveToWindow(main.getScene().getWindow());
-				nombre = "Presupuesto: " + listaVehiculos.get(selectedIndex).getMarcaModelo();
-				ap = (AnchorPane) sp.getContent();// main.getRoot().getCenter();
-				gv = new GestorVentana(ap, nombre);
-				Utilidades.gestionarPantallas(gv);
-				boton1.setVisible(Inicio.BOTON1.isVisible());
-				boton1.setText(Inicio.BOTON1.getNombre());
-				boton2.setVisible(Inicio.BOTON2.isVisible());
-				boton2.setText(Inicio.BOTON2.getNombre());
-				boton3.setVisible(Inicio.BOTON3.isVisible());
-				boton3.setText(Inicio.BOTON3.getNombre());
-
-				// Poner el controlador de la nueva vista.
-				V_NuevaFacturaController controller = loader.getController();
-				controller.setMainAPP(main);
-				controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
-						tableVehiculo.getSelectionModel().getSelectedItem());
-
-			} catch (IOException e) {
-				e.printStackTrace();
-				Utilidades.mostrarError(e);
-			}*/
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Ningún vehículo seleccionado",
 					"Selecciona el vehículo al que quieras hacer una factura.");

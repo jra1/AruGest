@@ -14,7 +14,7 @@ import GUI.D_OpcionesController;
 import GUI.V_RootController;
 import GUI.Cliente.D_AgregaDocumentoController;
 import GUI.Cliente.D_EditClienteController;
-import GUI.Cliente.D_EligeNombreFactura;
+import GUI.Cliente.D_EligeNombreFacturaController;
 import GUI.Contabilidad.D_SelectorClienteVehiculoController;
 import GUI.Contabilidad.D_SelectorGolpesController;
 import GUI.Contabilidad.D_UltimasFacturasController;
@@ -72,6 +72,7 @@ public class Inicio extends Application {
 	public static BotonVentana BOTON2 = new BotonVentana(0, false, "");
 	public static BotonVentana BOTON3 = new BotonVentana(0, false, "");
 	public static boolean CAMBIAR_RESOLUCION = false; // True cuando sea necesario cambiar
+	public static String DBVERSION = "";
 
 	// VARIABLES LOCALES DE INICIO
 	private static Stage escenario; // Donde se cargan las escenas (interfaces)
@@ -99,13 +100,13 @@ public class Inicio extends Application {
 	    	// C:/AruGest/AruGestDB.h2.db
 	    	index = ruta.lastIndexOf(':');
 	    	ruta = ruta.replace(ruta.substring(index + 1), "");
-	    	spath = ruta + "\\AruGest";
+	    	spath = ruta + FILE_SEPARATOR + "AruGest";
 	    	// Se comprueba si existe la base de datos
 	    	// Esto devuelve true o false si existe ese archivo en esa ruta
 	    	existe = new File(spath, DBFILENAME + ".h2.db").exists();
-	    	spath += "\\" + DBFILENAME;
-	    	DBPATHNAME = spath.replaceAll("\\\\", "/");
-	    	DBURL = "jdbc:h2:file:" + spath.replaceAll("\\\\", "/");
+	    	spath += FILE_SEPARATOR + DBFILENAME;
+	    	DBPATHNAME = spath;
+	    	DBURL = "jdbc:h2:file:" + DBPATHNAME;
 	    	
 	    } else { // Es linux u otro
 	    	// /etc/AruGest/AruGestDB.h2.db
@@ -340,7 +341,7 @@ public class Inicio extends Application {
 	 * Muestra el selector del nombre al que se va a hacer la factura
 	 * @return
 	 */
-	public static boolean mostrarD_EligeNombreFactura() {
+	public static int mostrarD_EligeNombreFactura() {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -358,16 +359,16 @@ public class Inicio extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
-			D_EligeNombreFactura controller = loader.getController();
+			D_EligeNombreFacturaController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-
-			return true;
+			
+			return controller.returnIdCia();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return -10;
 		}
 	}
 

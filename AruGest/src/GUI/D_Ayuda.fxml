@@ -10,10 +10,11 @@
    <children>
       <Pane layoutX="6.0" layoutY="4.0" prefHeight="225.0" prefWidth="432.0">
          <children>
-            <Button cancelButton="true" layoutX="173.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
+            <Button cancelButton="true" layoutX="173.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleOk" prefHeight="17.0" prefWidth="73.0" styleClass="my-button" text="Cerrar" />
             <Label alignment="CENTER" layoutX="7.0" layoutY="9.0" prefHeight="22.0" prefWidth="406.0" styleClass="titulo" text="AruGest Software" />
-            <Separator layoutX="6.0" layoutY="45.0" prefHeight="0.0" prefWidth="406.0" />
-            <Label alignment="CENTER" layoutX="14.0" layoutY="53.0" prefHeight="119.0" prefWidth="406.0" styleClass="my-label-detalles" text="AruGest Software es un proyecto creado por Joseba Ruiz Arana como trabajo de fin de grado en Ingeniría Informática de Gestión y Sistemas de Información en la Universidad del País Vasco. Si tiene algún problema con la aplicación puede ponerse en contacto en el email: jruiz061@iksale.ehu.es" textAlignment="JUSTIFY" wrapText="true" />
+            <Separator layoutX="6.0" layoutY="60.0" prefHeight="0.0" prefWidth="406.0" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="65.0" prefHeight="119.0" prefWidth="406.0" styleClass="my-label-detalles" text="AruGest Software es un proyecto creado por Joseba Ruiz Arana como trabajo de fin de grado en Ingeniría Informática de Gestión y Sistemas de Información en la Universidad del País Vasco. Si tiene algún problema con la aplicación puede ponerse en contacto en el email: josebaruizarana@gmail.com" textAlignment="JUSTIFY" wrapText="true" />
+            <Label fx:id="lblVersion" alignment="CENTER" layoutX="189.0" layoutY="36.0" text="Versión" textAlignment="CENTER" />
          </children>
       </Pane>
    </children>

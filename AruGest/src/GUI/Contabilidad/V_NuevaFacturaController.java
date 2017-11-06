@@ -20,6 +20,7 @@ import Modelo.Factura;
 import Modelo.FacturaClienteVehiculo;
 import Modelo.Material;
 import Modelo.Particular;
+import Modelo.ProveedorCompania;
 import Modelo.Servicio;
 import Modelo.Vehiculo;
 import javafx.collections.FXCollections;
@@ -259,8 +260,8 @@ public class V_NuevaFacturaController {
 	 * @param v:
 	 *            vehiculo a cargar los datos
 	 */
-	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v) {
-		cpedv.setCliente(c);
+	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v, ProveedorCompania pc) {
+		cpedv.setCliente(c);			
 		cpedv.setVehiculo(v);
 		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
 		if (p != null) {
@@ -277,7 +278,7 @@ public class V_NuevaFacturaController {
 		}
 
 		// Cargar datos
-		colocarDatos(cpedv);
+		colocarDatos(cpedv, pc);
 	}
 
 	/**
@@ -694,7 +695,7 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void abrirSelectorCliente() {
 		if (Inicio.abrirSelectorFactura(cpedv)) {
-			colocarDatos(cpedv);
+			colocarDatos(cpedv, null);
 		}
 	}
 
@@ -703,27 +704,32 @@ public class V_NuevaFacturaController {
 	 * 
 	 * @param pDatos
 	 */
-	private void colocarDatos(ClienteParticularEmpresaDireccionVehiculo pDatos) {
-		if (pDatos.getParticular() != null || pDatos.getEmpresa() != null) {
-			if (pDatos.getParticular().getNif() != "") {
-				txtDni.setText(pDatos.getParticular().getNif());
-			} else if (pDatos.getEmpresa().getCif() != "") {
-				txtDni.setText(pDatos.getEmpresa().getCif());
+	private void colocarDatos(ClienteParticularEmpresaDireccionVehiculo pDatos, ProveedorCompania pc) {
+		if(pc == null) {
+			if (pDatos.getParticular() != null || pDatos.getEmpresa() != null) {
+				if (pDatos.getParticular().getNif() != "") {
+					txtDni.setText(pDatos.getParticular().getNif());
+				} else if (pDatos.getEmpresa().getCif() != "") {
+					txtDni.setText(pDatos.getEmpresa().getCif());
+				} else {
+					txtDni.setText("");
+				}
 			} else {
 				txtDni.setText("");
 			}
-		} else {
-			txtDni.setText("");
-		}
-
-		if (pDatos.getCliente() != null) {
-			if (!pDatos.getCliente().getNombre().equalsIgnoreCase("")) {
-				lblNombre.setText(pDatos.getCliente().getNombre());
+			
+			if (pDatos.getCliente() != null) {
+				if (!pDatos.getCliente().getNombre().equalsIgnoreCase("")) {
+					lblNombre.setText(pDatos.getCliente().getNombre());
+				} else {
+					lblNombre.setText("Pulse para introducir cliente");
+				}
 			} else {
 				lblNombre.setText("Pulse para introducir cliente");
-			}
-		} else {
-			lblNombre.setText("Pulse para introducir cliente");
+			}			
+		}else {
+			txtDni.setText(pc.getCif());
+			lblNombre.setText(pc.getNombre());
 		}
 
 		if (pDatos.getVehiculo() != null) {

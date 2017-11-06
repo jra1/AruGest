@@ -1,10 +1,15 @@
 package GUI;
 
+import Logica.Inicio;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class D_AyudaController {
 
+	@FXML
+	private Label lblVersion;
+	
 	// Resto de variables
 	private Stage dialogStage;
 
@@ -14,7 +19,7 @@ public class D_AyudaController {
 	 */
 	@FXML
 	private void initialize() {
-
+		lblVersion.setText("Versión " + Inicio.DBVERSION);
 	}
 
 	/**
