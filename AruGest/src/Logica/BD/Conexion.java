@@ -54,8 +54,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 
 /**
- * Esta clase se utilizará para todas las funciones que tengan que hacer accesos
- * a la base de datos, así como para crear y cerrar las conexiones.
+ * Esta clase se utilizarï¿½ para todas las funciones que tengan que hacer accesos
+ * a la base de datos, asï¿½ como para crear y cerrar las conexiones.
  * 
  * @author Joseba
  *
@@ -120,7 +120,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la base de datos la factura que se le pasa como parámetro
+	 * Guarda en la base de datos la factura que se le pasa como parï¿½metro
 	 * 
 	 * @param factura
 	 *
@@ -129,7 +129,7 @@ public class Conexion {
 	public int guardarFactura(Factura f, ObservableList<Servicio> servicios, ObservableList<Material> materiales) {
 		int id = 0;
 		try {
-			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
+			// Para guardar factura -> 1ï¿½ Factura 2ï¿½ Servicios 3ï¿½ Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
@@ -137,7 +137,7 @@ public class Conexion {
 							+ "NOPIEZAS, COBRADA, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, f.getClienteID());
 			st.setInt(2, f.getVehiculoID());
 			st.setString(3, f.getNumfactura());
@@ -192,9 +192,9 @@ public class Conexion {
 			}
 
 			if (i > 0) {
-				// Actualizar próximo número de presupuesto y factura
+				// Actualizar prï¿½ximo nï¿½mero de presupuesto y factura
 				actualizarNumPresuFactura();
-				// Actualizar los valores de próximos presupuestos/facturas
+				// Actualizar los valores de prï¿½ximos presupuestos/facturas
 				Inicio.CONEXION.getPrecioHoraIva();
 			}
 
@@ -202,8 +202,8 @@ public class Conexion {
 			getCon().close();
 
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar factura",
-					"Ocurrió un error al guardar la factura en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al guardar factura",
+					"Ocurriï¿½ un error al guardar la factura en la base de datos");
 			e.printStackTrace();
 			id = 0;
 		}
@@ -211,7 +211,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Modifica en la base de datos la factura que se le pasa como parámetro
+	 * Modifica en la base de datos la factura que se le pasa como parï¿½metro
 	 * 
 	 * @param factura
 	 *
@@ -221,7 +221,7 @@ public class Conexion {
 			ObservableList<Material> materiales) {
 		String sql = "";
 		try {
-			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
+			// Para guardar factura -> 1ï¿½ Factura 2ï¿½ Servicios 3ï¿½ Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			sql = "UPDATE FACTURA SET CLIENTEID = ?, VEHICULOID = ?, NUMFACTURA = ?, NUMPRESUPUESTO = ?, NUMORDENREP = ?, NUMRESGUARDO = ?, FECHA = ?, "
 					+ "FECHAENTREGA = ?, MANOOBRA = ?, MATERIALES = ?, GRUA = ?, RDEFOCULTOS = ?, PORCENTAJEDEFOCUL = ?, PERMISOPRUEBAS = ?, "
@@ -229,7 +229,7 @@ public class Conexion {
 					+ idFactura;
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql);
 
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, f.getClienteID());
 			st.setInt(2, f.getVehiculoID());
 			st.setString(3, f.getNumfactura());
@@ -285,31 +285,31 @@ public class Conexion {
 				st.executeUpdate();
 			}
 
-			// Actualizar próximo número de presupuesto y factura
+			// Actualizar prï¿½ximo nï¿½mero de presupuesto y factura
 			actualizarNumPresuFactura();
-			// Actualizar los valores de próximos presupuestos/facturas
+			// Actualizar los valores de prï¿½ximos presupuestos/facturas
 			Inicio.CONEXION.getPrecioHoraIva();
 
 			// Se cierra la conexion
 			getCon().close();
 
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar factura",
-					"Ocurrió un error al guardar la factura en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al guardar factura",
+					"Ocurriï¿½ un error al guardar la factura en la base de datos");
 			e.printStackTrace();
 		}
 		return idFactura;
 	}
 
 	/**
-	 * Se actualiza en la BD el nº siguiente de presupuesto/factura
+	 * Se actualiza en la BD el nï¿½ siguiente de presupuesto/factura
 	 */
 	public void actualizarNumPresuFactura() {
 		String sql = "";
 		PreparedStatement st;
 		ResultSet rs;
 		try {
-			// Actualizar nº presupuesto
+			// Actualizar nï¿½ presupuesto
 			sql = "SELECT MAX(NUMPRESUPUESTO) FROM FACTURA";
 			st = getCon().prepareStatement(sql);
 			rs = st.executeQuery();
@@ -323,7 +323,7 @@ public class Conexion {
 				st.executeUpdate();
 			}
 
-			// Actualizar nº factura
+			// Actualizar nï¿½ factura
 			sql = "SELECT MAX(NUMFACTURA) FROM FACTURA";
 			st = getCon().prepareStatement(sql);
 			rs = st.executeQuery();
@@ -338,9 +338,9 @@ public class Conexion {
 			}
 
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención",
-					"Error al actualizar el número de presupuesto/factura",
-					"Ocurrió un error al actualizar el número de presupuesto/factura en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n",
+					"Error al actualizar el nï¿½mero de presupuesto/factura",
+					"Ocurriï¿½ un error al actualizar el nï¿½mero de presupuesto/factura en la base de datos");
 			e.printStackTrace();
 		}
 	}
@@ -360,34 +360,34 @@ public class Conexion {
 		String sql = "";
 		PreparedStatement st;
 		try {
-			// Actualizar nº presupuesto
+			// Actualizar nï¿½ presupuesto
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'PRECIOHORA'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setFloat(1, precioHora);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Actualizar nº presupuesto
+			// Actualizar nï¿½ presupuesto
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'IVA'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setFloat(1, iva);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Actualizar nº presupuesto
+			// Actualizar nï¿½ presupuesto
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'PRESUPUESTO'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, numPresupuesto);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Actualizar nº presupuesto
+			// Actualizar nï¿½ presupuesto
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'FACTURA'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, numFactura);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -395,21 +395,21 @@ public class Conexion {
 			// Actualizar ruta
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'RUTAFACTURAS'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, rutaFacturas);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar las opciones",
-					"Ocurrió un error al actualizar las opciones en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al guardar las opciones",
+					"Ocurriï¿½ un error al actualizar las opciones en la base de datos");
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	/**
-	 * Guarda en la BD el autologin como el parámetro que se pasa
+	 * Guarda en la BD el autologin como el parï¿½metro que se pasa
 	 */
 	public boolean setAutologin(boolean login) {
 		String sql = "";
@@ -418,14 +418,14 @@ public class Conexion {
 			// Actualizar autologin
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'AUTOLOGIN'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setBoolean(1, login);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al recordar",
-					"Puede que la preferencia de recordar o no el usuario y contraseña no se haya guardado correctamente");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al recordar",
+					"Puede que la preferencia de recordar o no el usuario y contraseï¿½a no se haya guardado correctamente");
 			return false;
 		}
 	}
@@ -440,23 +440,23 @@ public class Conexion {
 			// Actualizar autologin
 			sql = "UPDATE AUXILIAR SET VALOR = ? WHERE CLAVE = 'RUTABACKUP'";
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, ruta);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar la ruta",
-					"Ocurrió un problema al guardar la ruta para las copias de seguridad en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al guardar la ruta",
+					"Ocurriï¿½ un problema al guardar la ruta para las copias de seguridad en la base de datos");
 			return false;
 		}
 	}
 
 	/**
-	 * Guarda la direccion pasada como parámetro en la BD
+	 * Guarda la direccion pasada como parï¿½metro en la BD
 	 * 
 	 * @param d
-	 * @return id generado en la BD o CERO si ocurrió algún error
+	 * @return id generado en la BD o CERO si ocurriï¿½ algï¿½n error
 	 */
 	public long guardarDireccion(Direccion d) {
 		PreparedStatement st;
@@ -466,7 +466,7 @@ public class Conexion {
 		try {
 			sql = "INSERT INTO DIRECCION (DIRECCION, CPOSTAL, LOCALIDAD, PROVINCIA) VALUES (?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			try {
 				st.setString(1, d.getDireccion());
 			} catch (NullPointerException e) {
@@ -504,7 +504,7 @@ public class Conexion {
 	 * 
 	 * @param idcliente
 	 * @param iddireccion
-	 * @return true si fue bien, false si hubo algún error
+	 * @return true si fue bien, false si hubo algï¿½n error
 	 */
 	public boolean actualizarIDDireccionCliente(int idcliente, int iddireccion) {
 		String sql = "";
@@ -513,7 +513,7 @@ public class Conexion {
 		try {
 			sql = "UPDATE CLIENTE SET DIRECCIONID = ? WHERE IDCLIENTE = " + idcliente;
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, (int) iddireccion);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -538,7 +538,7 @@ public class Conexion {
 		try {
 			sql = "UPDATE PROVEEDORCOMPANIA SET DIRECCIONID = ? WHERE IDPROVECOMPA = " + idproveedor;
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, (int) iddireccion);
 			// Ejecutamos la sentencia
 			st.executeUpdate();
@@ -550,15 +550,15 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la base de datos el cliente que se le pasa como parámetro
+	 * Guarda en la base de datos el cliente que se le pasa como parï¿½metro
 	 * 
 	 * @param Direccion,
-	 *            Cliente, Particular o Empresa (El que no sea, será null) a
+	 *            Cliente, Particular o Empresa (El que no sea, serï¿½ null) a
 	 *            guardar en la BD
 	 */
 	public boolean guardarCliente(ClienteParticularEmpresaDireccion cped) {
 		boolean res = true;
-		// 1º Guardar Direccion
+		// 1ï¿½ Guardar Direccion
 		try {
 			PreparedStatement st;
 			ResultSet rs;
@@ -572,10 +572,10 @@ public class Conexion {
 				idGenerado = guardarDireccion(cped.getDireccion());
 			}
 
-			// 2º Guardar Cliente
+			// 2ï¿½ Guardar Cliente
 			sql = "INSERT INTO CLIENTE (NOMBRE, TELF1, TELF2, TELF3, DIRECCIONID, TIPO) VALUES (?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, cped.getCliente().getNombre());
 			st.setString(2, cped.getCliente().getTelf1());
 			st.setString(3, cped.getCliente().getTelf2());
@@ -591,13 +591,13 @@ public class Conexion {
 			rs = st.getGeneratedKeys();
 			if (rs.next()) {
 				idGenerado = rs.getLong(1);
-				// 3º Guardar Particular / Empresa
+				// 3ï¿½ Guardar Particular / Empresa
 				if (cped.getParticular() != null && !cped.getParticular().getNif().equalsIgnoreCase("")
 						&& !cped.getParticular().getNombre().equalsIgnoreCase("")) {
 					// Guardar Particular
 					sql = "INSERT INTO PARTICULAR (CLIENTEID, NOMBRE, APELLIDOS, NIF) VALUES (?,?,?,?)";
 					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-					// Añadimos los parametros
+					// Aï¿½adimos los parametros
 					st.setInt(1, (int) idGenerado);
 					st.setString(2, cped.getParticular().getNombre());
 					st.setString(3, cped.getParticular().getApellidos());
@@ -610,7 +610,7 @@ public class Conexion {
 					sql = "INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)";
 					st.close();
 					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-					// Añadimos los parametros
+					// Aï¿½adimos los parametros
 					st.setInt(1, (int) idGenerado);
 					st.setString(2, cped.getEmpresa().getNombre());
 					st.setString(3, cped.getEmpresa().getCif());
@@ -636,7 +636,7 @@ public class Conexion {
 	 */
 	public boolean guardarCia(ProveedorCompaniaDireccion pcd) {
 		boolean res = true;
-		// 1º Guardar Direccion
+		// 1ï¿½ Guardar Direccion
 		try {
 			PreparedStatement st;
 			long idGenerado = 0;
@@ -647,10 +647,10 @@ public class Conexion {
 				idGenerado = guardarDireccion(pcd.getDireccion());
 			}
 
-			// 2º Guardar cía/proveedor
+			// 2ï¿½ Guardar cï¿½a/proveedor
 			sql = "INSERT INTO PROVEEDORCOMPANIA (CIF, NOMBRE, DIRECCIONID, TELF1, TELF2, LOGO, ESDESGUACE, ESCOMPANIA) VALUES (?,?,?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, pcd.getCif());
 			st.setString(2, pcd.getNombre());
 			if (idGenerado != 0) {
@@ -684,10 +684,10 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la base de datos el vehículo que se le pasa como parámetro
+	 * Guarda en la base de datos el vehï¿½culo que se le pasa como parï¿½metro
 	 * 
 	 * @param vehiculo
-	 *            a guardar en la BD, el ID del cliente dueño y el tipo de
+	 *            a guardar en la BD, el ID del cliente dueï¿½o y el tipo de
 	 *            vehiculo que es
 	 * @return true si se guardo correctamente, false si no
 	 */
@@ -698,13 +698,13 @@ public class Conexion {
 		matricula = matricula.replaceAll(" ", "");
 		matricula = matricula.replaceAll("/", "");
 		try {
-			// Para guardar factura -> 1º Factura 2º Servicios 3º Materiales
+			// Para guardar factura -> 1ï¿½ Factura 2ï¿½ Servicios 3ï¿½ Materiales
 			// Se prepara la sentencia para introducir los datos de la factura
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO VEHICULO (CLIENTEID, MARCA, MODELO, VERSION, MATRICULA, ANIO, BASTIDOR, LETRASMOTOR, COLOR, CODRADIO, TIPOID, ESVEHICULOSUSTITUCION) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, v.getClienteID());
 			st.setString(2, v.getMarca());
 			st.setString(3, v.getModelo());
@@ -730,17 +730,17 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina de la base de datos el vehículo cuyo id se le pasa como parámetro
+	 * Elimina de la base de datos el vehï¿½culo cuyo id se le pasa como parï¿½metro
 	 * 
 	 * @param id
 	 *            del vehiculo a eliminar
-	 * @return true si se eliminó correctamente, false si no
+	 * @return true si se eliminï¿½ correctamente, false si no
 	 */
 	public boolean eliminarVehiculo(int id) {
 		/*
-		 * 1º comprobar si tiene facturas: - si: coger id factura, eliminar
-		 * servicios, eliminar materiales, eliminar factura. 2º comprobar si
-		 * tiene documentos - si: eliminar documento 3º comprobar si es vehiculo
+		 * 1ï¿½ comprobar si tiene facturas: - si: coger id factura, eliminar
+		 * servicios, eliminar materiales, eliminar factura. 2ï¿½ comprobar si
+		 * tiene documentos - si: eliminar documento 3ï¿½ comprobar si es vehiculo
 		 * sustitucion - si: eliminar vehiculo sustitucion
 		 */
 		String sql = "";
@@ -764,21 +764,21 @@ public class Conexion {
 				pt.executeUpdate();
 			}
 
-			// 2º comprobar si tiene documentos
+			// 2ï¿½ comprobar si tiene documentos
 			/*
 			 * sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE VEHICULOID = " +
 			 * id; rs = st.executeQuery(sql); while (rs.next()) {
 			 * eliminarDocumentosPorVehiculoID(id); }
 			 */
 
-			// 3º comprobar si es vehiculo de sustitucion
+			// 3ï¿½ comprobar si es vehiculo de sustitucion
 			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE VEHICULOID = " + id;
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				eliminarVehiculoSustiPorVehiculoID(id);
 			}
 
-			// 4º eliminar vehiculo
+			// 4ï¿½ eliminar vehiculo
 			sql = "DELETE FROM VEHICULO WHERE IDVEHICULO = " + id;
 			pt = getCon().prepareStatement(sql);
 			pt.executeUpdate();
@@ -792,7 +792,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Edita en la BD el vehículo pasado como parámetro
+	 * Edita en la BD el vehï¿½culo pasado como parï¿½metro
 	 * 
 	 * @param v
 	 * @return true si fue bien, false si no
@@ -829,7 +829,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Edita en la BD el cliente pasado como parámetro
+	 * Edita en la BD el cliente pasado como parï¿½metro
 	 * 
 	 * @param cped
 	 * @return true si fue bien, false si no
@@ -840,7 +840,7 @@ public class Conexion {
 		long idGenerado;
 		try {
 			PreparedStatement st;
-			// 1º Direccion
+			// 1ï¿½ Direccion
 			// Si ya tiene direccion, se actualiza
 			// Si no tiene direccion (iddireccion = 0) Y SE HA INTRODUCIDO UNA
 			// NUEVA, se crea
@@ -848,7 +848,7 @@ public class Conexion {
 				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + "WHERE IDDIRECCION = "
 						+ cped.getCliente().getDireccionID();
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setString(1, cped.getDireccion().getDireccion());
 				st.setInt(2, cped.getDireccion().getCpostal());
 				st.setString(3, cped.getDireccion().getLocalidad());
@@ -856,7 +856,7 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
-				// Si llega aquí: iddireccion = 0
+				// Si llega aquï¿½: iddireccion = 0
 				if (cped.getDireccion().getDireccion() != "" || cped.getDireccion().getLocalidad() != ""
 						|| cped.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignar su id al cliente
@@ -869,28 +869,28 @@ public class Conexion {
 							return res;
 						}
 						cped.getCliente().setDireccionID((int) idGenerado);
-						// Acabar aquí la funcion si res = false
+						// Acabar aquï¿½ la funcion si res = false
 					}
 				}
 			}
-			// 2º Cliente
+			// 2ï¿½ Cliente
 			sql = "UPDATE CLIENTE SET NOMBRE = ?, TELF1 = ?, TELF2 = ?, " + "TELF3 = ? " + "WHERE IDCLIENTE = "
 					+ cped.getCliente().getIdcliente();
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, cped.getCliente().getNombre());
 			st.setString(2, cped.getCliente().getTelf1());
 			st.setString(3, cped.getCliente().getTelf2());
 			st.setString(4, cped.getCliente().getTelf3());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
-			// 3º Particular / Empresa
+			// 3ï¿½ Particular / Empresa
 			if (cped.getParticular() != null) {
 				// Guardar Particular
 				sql = "UPDATE PARTICULAR SET NOMBRE = ?, APELLIDOS = ?, NIF = ? " + "WHERE IDPARTICULAR = "
 						+ cped.getParticular().getIdparticular();
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setString(1, cped.getParticular().getNombre());
 				st.setString(2, cped.getParticular().getApellidos());
 				st.setString(3, cped.getParticular().getNif());
@@ -900,7 +900,7 @@ public class Conexion {
 						+ cped.getEmpresa().getIdempresa();
 				st.close();
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setString(1, cped.getEmpresa().getNombre());
 				st.setString(2, cped.getEmpresa().getCif());
 				st.setBoolean(3, cped.getEmpresa().isEsProveedor());
@@ -919,7 +919,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Edita en la BD la cia/proveedor pasado como parámetro
+	 * Edita en la BD la cia/proveedor pasado como parï¿½metro
 	 * 
 	 * @param pcd
 	 * @return
@@ -930,14 +930,14 @@ public class Conexion {
 		long idGenerado;
 		try {
 			PreparedStatement st;
-			// 1º Direccion
+			// 1ï¿½ Direccion
 			// Si ya tiene direccion, se actualiza
 			// Si no tiene direccion (iddireccion = 0), se crea
 			if (pcd.getDireccionID() != 0) {
 				sql = "UPDATE DIRECCION SET DIRECCION = ?, CPOSTAL = ?, LOCALIDAD = ?, PROVINCIA = ? " + " WHERE IDDIRECCION = "
 						+ pcd.getDireccionID();
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setString(1, pcd.getDireccion().getDireccion());
 				st.setInt(2, pcd.getDireccion().getCpostal());
 				st.setString(3, pcd.getDireccion().getLocalidad());
@@ -945,7 +945,7 @@ public class Conexion {
 				// Ejecutamos la sentencia
 				st.executeUpdate();
 			} else {
-				// Si llega aquí: iddireccion = 0
+				// Si llega aquï¿½: iddireccion = 0
 				if (pcd.getDireccion().getDireccion() != "" || pcd.getDireccion().getLocalidad() != ""
 						|| pcd.getDireccion().getProvincia() != "") {
 					// Guardar direccion y asignarle su iddireccion al cliente
@@ -954,15 +954,15 @@ public class Conexion {
 						// guardar
 						// la direccion
 						res = actualizarIDDireccionProveedor(pcd.getIdprovecompa(), (int) idGenerado);
-						// Acabar aquí la funcion si res = false
+						// Acabar aquï¿½ la funcion si res = false
 					}
 				}
 			}
-			// 2º Cia
+			// 2ï¿½ Cia
 			sql = "UPDATE PROVEEDORCOMPANIA SET CIF = ?, NOMBRE = ?, TELF1 = ?, TELF2 = ?, LOGO = ?, ESDESGUACE = ?, ESCOMPANIA = ? WHERE IDPROVECOMPA = "
 					+ pcd.getIdprovecompa();
 			st = getCon().prepareStatement(sql);
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, pcd.getCif());
 			st.setString(2, pcd.getNombre());
 			st.setString(3, pcd.getTelf1());
@@ -988,7 +988,7 @@ public class Conexion {
 		boolean res = true;
 		PreparedStatement pt;
 		try {
-			// Eliminar cía
+			// Eliminar cï¿½a
 			sql = "DELETE FROM PROVEEDORCOMPANIA WHERE PROVEEDORCOMPANIA.IDPROVECOMPA = " + idCia;
 			pt = getCon().prepareStatement(sql);
 			pt.executeUpdate();
@@ -1005,7 +1005,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina el cliente pasado como parámetro de la BD con todo lo que tenga
+	 * Elimina el cliente pasado como parï¿½metro de la BD con todo lo que tenga
 	 * asociado (Facturas, vehiculos de sustitucion, documentos...)
 	 * 
 	 * @param cped
@@ -1013,9 +1013,9 @@ public class Conexion {
 	 */
 	public boolean eliminarCliente(ClienteParticularEmpresaDireccion cped) {
 		/*
-		 * Orden para eliminar un cliente: 1º Facturas asociadas 2º
-		 * VehiculosSustitucion asociados 3º Documentos asociados 4º Vehiculos
-		 * asociados 5º Particular / Empresa asociada 6º Cliente 7º Direccion
+		 * Orden para eliminar un cliente: 1ï¿½ Facturas asociadas 2ï¿½
+		 * VehiculosSustitucion asociados 3ï¿½ Documentos asociados 4ï¿½ Vehiculos
+		 * asociados 5ï¿½ Particular / Empresa asociada 6ï¿½ Cliente 7ï¿½ Direccion
 		 * asociada
 		 */
 		String sql = "";
@@ -1024,7 +1024,7 @@ public class Conexion {
 		int id = cped.getCliente().getIdcliente();
 		int iddireccion = cped.getCliente().getDireccionID();
 		try {
-			// 1º Facturas
+			// 1ï¿½ Facturas
 			Statement st = getCon().createStatement();
 			sql = "SELECT IDFACTURA FROM FACTURA WHERE CLIENTEID = " + id;
 
@@ -1039,34 +1039,34 @@ public class Conexion {
 				pt = getCon().prepareStatement(sql);
 				pt.executeUpdate();
 
-				// Actualizar próximo número de presupuesto y factura
+				// Actualizar prï¿½ximo nï¿½mero de presupuesto y factura
 				actualizarNumPresuFactura();
-				// Actualizar los valores de próximos presupuestos/facturas
+				// Actualizar los valores de prï¿½ximos presupuestos/facturas
 				Inicio.CONEXION.getPrecioHoraIva();
 			}
 
-			// 2º VehiculosSustitucion
+			// 2ï¿½ VehiculosSustitucion
 			sql = "SELECT IDVEHICULOSUSTI FROM VEHICULOSUSTITUCION WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
 			if (rs.next()) {
 				eliminarVehiculoSustiPorClienteID(id);
 			}
 
-			// 3º Documentos
+			// 3ï¿½ Documentos
 			sql = "SELECT IDDOCUMENTO FROM DOCUMENTO WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				eliminarDocumentosPorClienteID(id);
 			}
 
-			// 4º Vehiculos
+			// 4ï¿½ Vehiculos
 			sql = "SELECT IDVEHICULO FROM VEHICULO WHERE CLIENTEID = " + id;
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
 				eliminarVehiculo(rs.getInt("IDVEHICULO"));
 			}
 
-			// 5º Particular / Empresa
+			// 5ï¿½ Particular / Empresa
 			if (cped.getParticular() != null) {
 				sql = "SELECT IDPARTICULAR FROM PARTICULAR WHERE CLIENTEID = " + id;
 				rs = st.executeQuery(sql);
@@ -1082,12 +1082,12 @@ public class Conexion {
 				}
 			}
 
-			// 6º Cliente
+			// 6ï¿½ Cliente
 			sql = "DELETE FROM CLIENTE WHERE IDCLIENTE = " + id;
 			pt = getCon().prepareStatement(sql);
 			pt.executeUpdate();
 
-			// 7º Direccion
+			// 7ï¿½ Direccion
 			if (iddireccion > 0) {
 				eliminarDireccionPorID(iddireccion);
 			}
@@ -1101,7 +1101,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina de la BD la factura cuyo ID se pasa como parámetro
+	 * Elimina de la BD la factura cuyo ID se pasa como parï¿½metro
 	 * 
 	 * @param idFactura
 	 * @return
@@ -1111,7 +1111,7 @@ public class Conexion {
 		boolean res = true;
 		PreparedStatement pt;
 		try {
-			// 1º Eliminar servicios y materiales y después la factura
+			// 1ï¿½ Eliminar servicios y materiales y despuï¿½s la factura
 			eliminarServiciosPorFacturaID(idFactura);
 			eliminarMaterialesPorFacturaID(idFactura);
 
@@ -1119,9 +1119,9 @@ public class Conexion {
 			pt = getCon().prepareStatement(sql);
 			pt.executeUpdate();
 
-			// Actualizar próximo número de presupuesto y factura
+			// Actualizar prï¿½ximo nï¿½mero de presupuesto y factura
 			actualizarNumPresuFactura();
-			// Actualizar los valores de próximos presupuestos/facturas
+			// Actualizar los valores de prï¿½ximos presupuestos/facturas
 			Inicio.CONEXION.getPrecioHoraIva();
 
 			res = true;
@@ -1292,7 +1292,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina la dirección con id direccionID
+	 * Elimina la direcciï¿½n con id direccionID
 	 * 
 	 * @param direccionID
 	 * @return true si ha ido bien, false si no
@@ -1522,7 +1522,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca un Particular en la BD con el clienteID que se pasa como parámetro
+	 * Busca un Particular en la BD con el clienteID que se pasa como parï¿½metro
 	 * 
 	 * @param clienteID
 	 * @return el Particular encontrado o null si no existe
@@ -1550,7 +1550,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca una Empresa en la BD con el clienteID que se pasa como parámetro
+	 * Busca una Empresa en la BD con el clienteID que se pasa como parï¿½metro
 	 * 
 	 * @param clienteID
 	 * @return la Empresa encontrada o null si no existe
@@ -1640,11 +1640,11 @@ public class Conexion {
 	}
 
 	/**
-	 * Carga y devuelve el logo de la cía / proveedor cuyo id se le pasa como
-	 * parámetro
+	 * Carga y devuelve el logo de la cï¿½a / proveedor cuyo id se le pasa como
+	 * parï¿½metro
 	 * 
 	 * @param id
-	 *            de la cía o proveedor
+	 *            de la cï¿½a o proveedor
 	 * @return logo o null
 	 */
 	public Image cargarLogo(int id) {
@@ -1736,7 +1736,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca las factura que coincidan con los parámetros introducidos
+	 * Busca las factura que coincidan con los parï¿½metros introducidos
 	 * 
 	 * @param numFactura
 	 * @param numPresu
@@ -1933,7 +1933,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca los clientes que coincidan con los parámetros introducidos
+	 * Busca los clientes que coincidan con los parï¿½metros introducidos
 	 * 
 	 * @param tipo
 	 * @param nombre
@@ -2077,7 +2077,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD las compañías que coincidan con los parámetros
+	 * Busca en la BD las compaï¿½ï¿½as que coincidan con los parï¿½metros
 	 * 
 	 * @param nombre
 	 * @param telf
@@ -2138,7 +2138,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca un vehículo en la BD que coincida con los parámetros pasados
+	 * Busca un vehï¿½culo en la BD que coincida con los parï¿½metros pasados
 	 * 
 	 * @param tipo
 	 * @param matricula
@@ -2216,11 +2216,11 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD los vehículos de un cliente
+	 * Busca en la BD los vehï¿½culos de un cliente
 	 * 
 	 * @param ID
 	 *            del cliente
-	 * @return ObservableList<Vehiculo> con los vehículos
+	 * @return ObservableList<Vehiculo> con los vehï¿½culos
 	 */
 	public ObservableList<Vehiculo> buscarVehiculosPorClienteID(int clienteID) {
 		String sql = "";
@@ -2339,7 +2339,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca las últimas facturas añadidas a la BD
+	 * Busca las ï¿½ltimas facturas aï¿½adidas a la BD
 	 * 
 	 * @return
 	 */
@@ -2377,7 +2377,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
+	 * Busca en la BD los vehiculos de sustitucion que estï¿½n actualmente
 	 * disponibles
 	 * 
 	 * @return
@@ -2409,7 +2409,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD los vehiculos de sustitucion que estén actualmente
+	 * Busca en la BD los vehiculos de sustitucion que estï¿½n actualmente
 	 * prestados
 	 * 
 	 * @return
@@ -2439,7 +2439,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD el histórico de los vehiculos de sustitucion
+	 * Busca en la BD el histï¿½rico de los vehiculos de sustitucion
 	 * 
 	 * @return
 	 */
@@ -2470,12 +2470,12 @@ public class Conexion {
 
 	/**
 	 * Actualiza / crea el registro en la BD del vehiculo de sustitucion. Pone
-	 * la fecha de devolución ó crea un nuevo registro
+	 * la fecha de devoluciï¿½n ï¿½ crea un nuevo registro
 	 * 
 	 * @param tipo:
 	 *            D = Devuelto ; E = Entregado
 	 * @param vscv
-	 *            datos del vehículo de sustitución
+	 *            datos del vehï¿½culo de sustituciï¿½n
 	 * @return true si fue bien, false si no
 	 */
 	public boolean actualizarVehiculoSustitucion(String tipo, VehiculoSustitucionClienteVehiculo vscv) {
@@ -2487,7 +2487,7 @@ public class Conexion {
 				sql = "UPDATE VEHICULOSUSTITUCION SET FECHADEVUELVE = ?, OBSERVACIONES = ? WHERE IDVEHICULOSUSTI = "
 						+ vscv.getIdvehiculosusti();
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getFechadevuelve().getTime()));
 				st.setString(2, vscv.getObservaciones());
 				// Ejecutamos la sentencia
@@ -2497,7 +2497,7 @@ public class Conexion {
 				// datos
 				sql = "INSERT INTO VEHICULOSUSTITUCION (FECHACOGE, FECHADEVUELVE, CLIENTEID, VEHICULOID, OBSERVACIONES) VALUES (?,?,?,?,?)";
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setDate(1, new java.sql.Date(vscv.getFechacoge().getTime()));
 				st.setDate(2, null);
 				st.setInt(3, Inicio.CLIENTE_ID);
@@ -2581,7 +2581,7 @@ public class Conexion {
 
 	/**
 	 * Busca en la BD los elementos que contenga el golpe predefinido cuyo id se
-	 * pasa como parámetro
+	 * pasa como parï¿½metro
 	 * 
 	 * @param idgolpe
 	 * @return ArrayList<ElementosGolpe> con los elementos encontrados
@@ -2612,7 +2612,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la BD el golpe con los elementos que se pasan por parámetro
+	 * Guarda en la BD el golpe con los elementos que se pasan por parï¿½metro
 	 * 
 	 * @param g
 	 * @return true si fue ok, false si no
@@ -2625,7 +2625,7 @@ public class Conexion {
 			sql = "INSERT INTO GOLPES (NOMBREGOLPE) VALUES (?)";
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, g.getNombreGolpe());
 
 			// Ejecutamos la sentencia
@@ -2653,7 +2653,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Edita en la BD el golpe con los elementos que se pasan por parámetro
+	 * Edita en la BD el golpe con los elementos que se pasan por parï¿½metro
 	 * 
 	 * @param g
 	 * @return true si fue ok, false si no
@@ -2669,7 +2669,7 @@ public class Conexion {
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Borrar los elementos de ese golpe y añadir los nuevos que se le
+			// Borrar los elementos de ese golpe y aï¿½adir los nuevos que se le
 			// pasan
 			sql = "DELETE FROM ELEMENTOSGOLPES WHERE ELEMENTOSGOLPES.GOLPEID = " + idgolpe;
 			st = getCon().prepareStatement(sql);
@@ -2697,7 +2697,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina de la BD el golpe cuyo id se pasa como parámetro
+	 * Elimina de la BD el golpe cuyo id se pasa como parï¿½metro
 	 * 
 	 * @param idgolpe
 	 * @return true si fue ok, false si no
@@ -2729,7 +2729,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina de la BD el elemento cuyo id se pasa como parámetro
+	 * Elimina de la BD el elemento cuyo id se pasa como parï¿½metro
 	 * 
 	 * @param nombreelemento
 	 * @return true si fue ok, false si no
@@ -2756,7 +2756,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la BD el documento que se pasa por parámetro
+	 * Guarda en la BD el documento que se pasa por parï¿½metro
 	 * 
 	 * @param documento
 	 *            a guardar
@@ -2770,7 +2770,7 @@ public class Conexion {
 			sql = "INSERT INTO DOCUMENTO (CLIENTEID, TITULO, DOCUMENTO, EXTENSION) VALUES (?,?,?,?)";
 			java.sql.PreparedStatement st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setInt(1, d.getClienteID());
 			st.setString(2, d.getTitulo());
 			st.setBlob(3, (Blob) d.getDocumento());
@@ -2791,7 +2791,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca en la BD el documento cuyo id se pasa como parámetro
+	 * Busca en la BD el documento cuyo id se pasa como parï¿½metro
 	 * 
 	 * @param id
 	 *            del documento a buscar
@@ -2865,7 +2865,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Elimina de la BD el documento cuyo id se pasa como parámetro
+	 * Elimina de la BD el documento cuyo id se pasa como parï¿½metro
 	 * 
 	 * @param id
 	 *            del documento a eliminar
@@ -2891,7 +2891,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Edita en la BD el título del documento cuyo id se pasa como parámetro
+	 * Edita en la BD el tï¿½tulo del documento cuyo id se pasa como parï¿½metro
 	 * 
 	 * @param id
 	 *            del documento y nuevo titulo a ponerle
@@ -2918,7 +2918,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Busca los documentos que coincidan con los parámetros introducidos
+	 * Busca los documentos que coincidan con los parï¿½metros introducidos
 	 * 
 	 * @param nombre
 	 *            documento
@@ -3081,7 +3081,7 @@ public class Conexion {
 	}
 
 	/**
-	 * Guarda en la BD el usuario y la contraseña
+	 * Guarda en la BD el usuario y la contraseï¿½a
 	 * 
 	 * @param user
 	 * @param pass
@@ -3096,7 +3096,7 @@ public class Conexion {
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 
-			// Añadir sal, encriptar pass y actualizarlo en la BD
+			// Aï¿½adir sal, encriptar pass y actualizarlo en la BD
 			Random r = new SecureRandom();
 			byte[] sal = new byte[20];
 			r.nextBytes(sal);
@@ -3113,14 +3113,14 @@ public class Conexion {
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 		} catch (Exception e) {
-			Utilidades.mostrarAlerta(AlertType.ERROR, "Atención", "Error al guardar usuario y contraseña",
-					"Ocurrió un error al guardar el usuario y contraseña en la base de datos");
+			Utilidades.mostrarAlerta(AlertType.ERROR, "Atenciï¿½n", "Error al guardar usuario y contraseï¿½a",
+					"Ocurriï¿½ un error al guardar el usuario y contraseï¿½a en la base de datos");
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Obtiene la versión actual de BD
+	 * Obtiene la versiï¿½n actual de BD
 	 * @return
 	 */
 	public String getVersionDB(){
@@ -3154,7 +3154,7 @@ public class Conexion {
 			sql = "INSERT INTO AUXILIAR (CLAVE, VALOR) VALUES (?,?)";
 			PreparedStatement st = getCon().prepareStatement(sql);
 			
-			// Añadimos los parametros
+			// Aï¿½adimos los parametros
 			st.setString(1, "VERSION_DB");
 			st.setString(2, "1");
 						
@@ -3223,7 +3223,7 @@ public class Conexion {
 	}
 	
 	/**
-	 * Actualiza la dirección para poner únicamente un campo para calle, número, piso y letra
+	 * Actualiza la direcciï¿½n para poner ï¿½nicamente un campo para calle, nï¿½mero, piso y letra
 	 * @throws SQLException 
 	 */
 	public void actualizaDireccionVersion2() throws SQLException{
@@ -3243,7 +3243,7 @@ public class Conexion {
 				//Actualizar datos
 				sql = "UPDATE DIRECCION SET DIRECCION = (SELECT CONCAT(DIRECCION, ' ', NUMERO, ' ', PISO, ' ', LETRA) FROM DIRECCION WHERE iddireccion = ?) WHERE iddireccion = ?";
 				st = getCon().prepareStatement(sql);
-				// Añadimos los parametros
+				// Aï¿½adimos los parametros
 				st.setInt(1, id);
 				st.setInt(2, id);
 							

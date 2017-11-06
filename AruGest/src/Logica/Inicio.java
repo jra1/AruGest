@@ -96,6 +96,7 @@ public class Inicio extends Application {
 		String spath;
 		// Se detecta en qué OS se está ejecutando
 	    String OS = System.getProperty("os.name");
+
 	    if(OS.toLowerCase().indexOf("win") >= 0) { // Es Windows
 	    	// C:/AruGest/AruGestDB.h2.db
 	    	index = ruta.lastIndexOf(':');
@@ -107,7 +108,6 @@ public class Inicio extends Application {
 	    	spath += FILE_SEPARATOR + DBFILENAME;
 	    	DBPATHNAME = spath;
 	    	DBURL = "jdbc:h2:file:" + DBPATHNAME;
-	    	
 	    } else { // Es linux u otro
 	    	// /etc/AruGest/AruGestDB.h2.db
 	    	spath = "." + FILE_SEPARATOR + "etc" + FILE_SEPARATOR + "AruGest";
