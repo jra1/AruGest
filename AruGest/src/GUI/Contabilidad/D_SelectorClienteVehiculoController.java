@@ -1,11 +1,13 @@
 package GUI.Contabilidad;
 
+import Logica.Inicio;
 import Logica.StringUtils;
 import Logica.Utilidades;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.Direccion;
 import Modelo.Empresa;
 import Modelo.Particular;
+import Modelo.ProveedorCompania;
 import Modelo.Vehiculo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -194,28 +196,40 @@ public class D_SelectorClienteVehiculoController {
 		}
 	}
 
-	public void setClienteVehiculo(ClienteParticularEmpresaDireccionVehiculo cpedv) {
+	public void setClienteVehiculo(ClienteParticularEmpresaDireccionVehiculo cpedv, ProveedorCompania pc) {
 		this.cpedv = cpedv;
 		if (cpedv != null) {
-			if (cpedv.getCliente() != null) {
-				if (cpedv.getParticular() != null) {
-					comboTipoCliente.setValue("Particular");
-					txtNombre.setText(cpedv.getParticular().getNombre());
-					txtApellidos.setText(cpedv.getParticular().getApellidos());
-					txtDni.setText(cpedv.getParticular().getNif());
-				} else {
-					if (cpedv.getEmpresa() != null) {
-						comboTipoCliente.setValue("Empresa");
-						txtNombre.setText(cpedv.getEmpresa().getNombre());
-						txtDni.setText(cpedv.getEmpresa().getCif());
+			if(pc != null) {
+				comboTipoCliente.setValue("Empresa");
+				txtNombre.setText(pc.getNombre());
+				txtDni.setText(pc.getCif());
+				if (pc.getDireccionID() != 0) {
+					Direccion d = Inicio.CONEXION.leerDireccionPorID(pc.getDireccionID());
+					txtDireccion.setText(d.getDireccion());
+					txtPoblacion.setText(d.getLocalidad());
+				}
+				txtTel1.setText(pc.getTelf1());
+			} else {
+				if (cpedv.getCliente() != null) {
+					if (cpedv.getParticular() != null) {
+						comboTipoCliente.setValue("Particular");
+						txtNombre.setText(cpedv.getParticular().getNombre());
+						txtApellidos.setText(cpedv.getParticular().getApellidos());
+						txtDni.setText(cpedv.getParticular().getNif());
+					} else {
+						if (cpedv.getEmpresa() != null) {
+							comboTipoCliente.setValue("Empresa");
+							txtNombre.setText(cpedv.getEmpresa().getNombre());
+							txtDni.setText(cpedv.getEmpresa().getCif());
+						}
 					}
+					if (cpedv.getCliente().getDireccionID() != 0) {
+						txtDireccion.setText(cpedv.getDireccion().getDireccion());
+						txtPoblacion.setText(cpedv.getDireccion().getLocalidad());
+					}
+					txtTel1.setText(cpedv.getCliente().getTelf1());
 				}
-				if (cpedv.getCliente().getDireccionID() != 0) {
-					txtDireccion.setText(cpedv.getDireccion().getDireccion());
-					txtPoblacion.setText(cpedv.getDireccion().getLocalidad());
-				}
-				txtTel1.setText(cpedv.getCliente().getTelf1());
-			}
+			}			
 			if (cpedv.getVehiculo() != null) {
 				// Cargar datos vehiculo
 				txtMatricula.setText(cpedv.getVehiculo().getMatricula());

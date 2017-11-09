@@ -596,7 +596,7 @@ public class V_ClienteController {
 					} else {
 						controller.cargarDatosClienteVehiculo(Inicio.CONEXION.leerClientePorID(Inicio.CLIENTE_ID),
 								tableVehiculo.getSelectionModel().getSelectedItem(), Inicio.CONEXION.leerCiaPorID(idCia));						
-					}				
+					}
 					
 				} catch (IOException e) {
 					e.printStackTrace();

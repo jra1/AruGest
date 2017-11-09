@@ -28,6 +28,7 @@ import Modelo.ClienteParticularEmpresaDireccion;
 import Modelo.ClienteParticularEmpresaDireccionVehiculo;
 import Modelo.Documento;
 import Modelo.GestorVentana;
+import Modelo.ProveedorCompania;
 import Modelo.ProveedorCompaniaDireccion;
 import Modelo.Vehiculo;
 import Modelo.VehiculoSustitucionClienteVehiculo;
@@ -692,7 +693,7 @@ public class Inicio extends Application {
 	 * 
 	 * @return
 	 */
-	public static boolean abrirSelectorFactura(ClienteParticularEmpresaDireccionVehiculo cpedv) {
+	public static boolean abrirSelectorFactura(ClienteParticularEmpresaDireccionVehiculo cpedv, ProveedorCompania pc) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -713,7 +714,7 @@ public class Inicio extends Application {
 			D_SelectorClienteVehiculoController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			// if(v != null){
-			controller.setClienteVehiculo(cpedv);
+			controller.setClienteVehiculo(cpedv, pc);
 			// }
 
 			// Show the dialog and wait until the user closes it

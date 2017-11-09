@@ -19,6 +19,7 @@ public class Factura {
 	private final IntegerProperty idfactura;
 	private final IntegerProperty clienteID;
 	private final IntegerProperty vehiculoID;
+	private final IntegerProperty ciaID;
 	private final IntegerProperty kms;
 	private final StringProperty numfactura;
 	private final StringProperty numpresupuesto;
@@ -43,6 +44,7 @@ public class Factura {
 		this.idfactura = new SimpleIntegerProperty(0);
 		this.clienteID = new SimpleIntegerProperty(0);
 		this.vehiculoID = new SimpleIntegerProperty(0);
+		this.ciaID = new SimpleIntegerProperty(0);
 		this.kms = new SimpleIntegerProperty(0);
 		this.numfactura = new SimpleStringProperty("0");
 		this.numpresupuesto = new SimpleStringProperty("0");
@@ -67,10 +69,11 @@ public class Factura {
 	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, String numfactura, String numpresupuesto,
 			String numordenrep, String numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
 			float grua, float suma, float sumaIva, boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
-			boolean nopiezas, boolean cobrado, float importeTotal) {
+			boolean nopiezas, boolean cobrado, float importeTotal, int ciaID) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
+		this.ciaID = new SimpleIntegerProperty(ciaID);
 		this.kms = new SimpleIntegerProperty(kms);
 		this.numfactura = new SimpleStringProperty(numfactura);
 		this.numpresupuesto = new SimpleStringProperty(numpresupuesto);
@@ -98,11 +101,12 @@ public class Factura {
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, FloatProperty suma,
 			FloatProperty sumaIva, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
 			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty cobrado,
-			ObjectProperty<Blob> documento, FloatProperty importeTotal) {
+			ObjectProperty<Blob> documento, FloatProperty importeTotal, IntegerProperty ciaID) {
 		super();
 		this.idfactura = idfactura;
 		this.clienteID = clienteID;
 		this.vehiculoID = vehiculoID;
+		this.ciaID = ciaID;
 		this.kms = kms;
 		this.numfactura = numfactura;
 		this.numpresupuesto = numpresupuesto;
@@ -158,6 +162,18 @@ public class Factura {
 
 	public void setVehiculoID(final int vehiculoID) {
 		this.vehiculoIDProperty().set(vehiculoID);
+	}
+
+	public IntegerProperty ciaIDProperty() {
+		return ciaID;
+	}
+	
+	public int getCiaID() {
+		return this.ciaIDProperty().get();
+	}
+
+	public void setCiaID(final int ciaID) {
+		this.ciaIDProperty().set(ciaID);
 	}
 
 	public StringProperty numfacturaProperty() {

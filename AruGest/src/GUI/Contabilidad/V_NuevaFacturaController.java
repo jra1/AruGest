@@ -173,6 +173,7 @@ public class V_NuevaFacturaController {
 	private Material material;
 
 	private ClienteParticularEmpresaDireccionVehiculo cpedv = new ClienteParticularEmpresaDireccionVehiculo();
+	private ProveedorCompania cia = null;
 
 	public Inicio getMain() {
 		return main;
@@ -193,6 +194,7 @@ public class V_NuevaFacturaController {
 		Inicio.CLIENTE_ID = fce.getCliente().getIdcliente();
 		Inicio.VEHICULO_ID = fce.getVehiculo().getIdvehiculo();
 		Inicio.FACTURA_ID = fce.getFactura().getIdfactura();
+		cia = Inicio.CONEXION.leerCiaPorID(fce.getFactura().getCiaID());
 		modificar = true;
 		// Cargar datos factura
 		if (!fce.getFactura().getNumfactura().equalsIgnoreCase("0")
@@ -226,7 +228,7 @@ public class V_NuevaFacturaController {
 		txtFecha.setValue(Utilidades.DateALocalDate(fce.getFactura().getFecha()));
 
 		// Cargar datos cliente y vehiculo
-		cargarDatosClienteVehiculo(fce.getCliente(), fce.getVehiculo());
+		cargarDatosClienteVehiculo(fce.getCliente(), fce.getVehiculo(), cia);
 
 		// Cargar servicios
 		listaServicios = Inicio.CONEXION.buscarServiciosPorFacturaID(Inicio.FACTURA_ID);
@@ -261,7 +263,8 @@ public class V_NuevaFacturaController {
 	 *            vehiculo a cargar los datos
 	 */
 	public void cargarDatosClienteVehiculo(Cliente c, Vehiculo v, ProveedorCompania pc) {
-		cpedv.setCliente(c);			
+		cia = pc;
+		cpedv.setCliente(c);		
 		cpedv.setVehiculo(v);
 		Particular p = Inicio.CONEXION.buscarParticularPorClienteID(Inicio.CLIENTE_ID);
 		if (p != null) {
@@ -694,8 +697,8 @@ public class V_NuevaFacturaController {
 	 */
 	@FXML
 	private void abrirSelectorCliente() {
-		if (Inicio.abrirSelectorFactura(cpedv)) {
-			colocarDatos(cpedv, null);
+		if (Inicio.abrirSelectorFactura(cpedv, cia)) {
+			colocarDatos(cpedv, cia);
 		}
 	}
 
@@ -940,10 +943,16 @@ public class V_NuevaFacturaController {
 		} else {
 			fechaEntrega = null;
 		}
+		
+		int idCia = 0;
+		if(cia != null) {
+			idCia = cia.getIdprovecompa();
+		}
+		
 		return new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
 				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
 				materiales, otros, suma, sumaIva, chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
-				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total);
+				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total, idCia);
 	}
 	
 	@FXML

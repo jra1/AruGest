@@ -1915,7 +1915,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"), rs.getInt("COMPANIAID"));
 				c = new Cliente(rs.getInt("IDCLIENTE"), rs.getString("NOMBRE"), rs.getString("TELF1"),
 						rs.getString("TELF2"), rs.getString("TELF3"), rs.getInt("DIRECCIONID"), rs.getString("TIPO"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
@@ -2276,7 +2276,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"), rs.getInt("COMPANIAID"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2321,7 +2321,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"), rs.getInt("COMPANIAID"));
 				v = new Vehiculo(rs.getInt("IDVEHICULO"), rs.getInt("CLIENTEID"), rs.getString("MARCA"),
 						rs.getString("MODELO"), rs.getString("VERSION"), rs.getString("MATRICULA"), rs.getInt("ANIO"),
 						rs.getString("BASTIDOR"), rs.getString("LETRASMOTOR"), rs.getString("COLOR"),
@@ -2362,7 +2362,7 @@ public class Conexion {
 						rs.getDate("FECHAENTREGA"), rs.getFloat("MANOOBRA"), rs.getFloat("MATERIALES"),
 						rs.getFloat("GRUA"), rs.getFloat("SUMA"), rs.getFloat("SUMAIVA"), rs.getBoolean("RDEFOCULTOS"),
 						rs.getFloat("PORCENTAJEDEFOCUL"), rs.getBoolean("PERMISOPRUEBAS"), rs.getBoolean("NOPIEZAS"),
-						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"));
+						rs.getBoolean("COBRADA"), rs.getFloat("IMPORTETOTAL"), rs.getInt("COMPANIAID"));
 				v = leerVehiculoPorID(rs.getInt("VEHICULOID"));
 				c = leerClientePorID(rs.getInt("CLIENTEID"));
 				fcv = new FacturaClienteVehiculo(f, c, v);
