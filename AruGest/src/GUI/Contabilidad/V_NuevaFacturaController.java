@@ -307,7 +307,7 @@ public class V_NuevaFacturaController {
 		// Inicializar los valores de los combos, la fecha y marcar el checkbox
 		// de presupuesto o factura
 		txtFecha.setValue(LocalDate.now());
-		txtFechaEntrega.setValue(txtFecha.getValue().plusDays(7));
+		//txtFechaEntrega.setValue(txtFecha.getValue().plusDays(7));
 		comboTipo.getItems().addAll("Material", "Chapa", "Pintura", "Electrónica / mecánica");
 		comboTipo.setValue("Material");
 

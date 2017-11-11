@@ -10,6 +10,7 @@ import Logica.Inicio;
 import Logica.Utilidades;
 import Modelo.FacturaClienteVehiculo;
 import Modelo.GestorVentana;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,12 +23,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 /**
  * Clase controlador de la ventana BuscarFactura, que se utiliza para buscar en
@@ -201,7 +204,18 @@ public class V_BuscarFacturaController {
 		} else {
 			for (FacturaClienteVehiculo fce : lista) {
 				listaFacturas.add(fce);
-				columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
+				//columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
+				
+				columnaNombre.setCellValueFactory(new Callback<CellDataFeatures<FacturaClienteVehiculo, String>, ObservableValue<String>>() {
+				     public ObservableValue<String> call(CellDataFeatures<FacturaClienteVehiculo, String> p) {
+				         if(fce.getFactura().getCiaID() != 0) {
+				        	 return Inicio.CONEXION.leerCiaPorID(fce.getFactura().getCiaID()).nombreProperty();				        	 				        	 
+				         }else {
+				        	 return p.getValue().getCliente().nombreProperty();				        	 
+				         }
+				     }
+				  });
+
 				columnaVehiculo
 						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
@@ -221,7 +235,7 @@ public class V_BuscarFacturaController {
 		int selectedIndex = tableFacturas.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			try {
-				// Cargar la vista de nueva factura
+				// Cargar la vista de nueva fa	ctura
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(Inicio.class.getResource("/GUI/Contabilidad/V_NuevaFactura.fxml"));
 				AnchorPane nuevaFactura = (AnchorPane) loader.load();

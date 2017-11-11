@@ -134,9 +134,9 @@ public class Conexion {
 			java.sql.PreparedStatement st = getCon().prepareStatement(
 					"INSERT INTO FACTURA (CLIENTEID, VEHICULOID, NUMFACTURA, NUMPRESUPUESTO, NUMORDENREP, NUMRESGUARDO, FECHA, "
 							+ "FECHAENTREGA, MANOOBRA, MATERIALES, GRUA, RDEFOCULTOS, PORCENTAJEDEFOCUL, PERMISOPRUEBAS, "
-							+ "NOPIEZAS, COBRADA, IMPORTETOTAL, SUMA, SUMAIVA, KMS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							+ "NOPIEZAS, COBRADA, IMPORTETOTAL, SUMA, SUMAIVA, KMS, COMPANIAID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
-
+			
 			// Añadimos los parametros
 			st.setInt(1, f.getClienteID());
 			st.setInt(2, f.getVehiculoID());
@@ -158,6 +158,7 @@ public class Conexion {
 			st.setFloat(18, f.getSuma());
 			st.setFloat(19, f.getSumaIva());
 			st.setFloat(20, f.getKms());
+			st.setInt(21, f.getCiaID());
 
 			// Ejecutamos la sentencia
 			int i = st.executeUpdate();
