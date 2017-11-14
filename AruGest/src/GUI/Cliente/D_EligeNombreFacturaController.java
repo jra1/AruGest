@@ -54,10 +54,11 @@ public class D_EligeNombreFacturaController {
 		radioCliente.setSelected(true);
 		paneCia.setVisible(false);
 
-		radioCia.selectedProperty()
-				.addListener((observable, oldValue, newValue) -> comprobarRadioCia(newValue));
+		radioCia.selectedProperty().addListener((observable, oldValue, newValue) -> comprobarRadioCia(newValue));
 		
 		txtNombre.textProperty().addListener((observable, oldValue, newValue) -> buscaCia(newValue));
+		buscaCia("");
+		
 	}
 
 	/**
@@ -136,5 +137,14 @@ public class D_EligeNombreFacturaController {
 
 	private void comprobarRadioCia(boolean newValue) {
 		paneCia.setVisible(newValue);
+	}
+	
+	/**
+	 * Limpia el cuadro de búsqueda de una compañía
+	 */
+	@FXML
+	private void limpiar() {
+		txtNombre.clear();
+		txtNombre.requestFocus();
 	}
 }

@@ -31,7 +31,7 @@
                         <TableColumn fx:id="columnaTlf" prefWidth="101.0" text="Teléfono" />
                     </columns>
                   </TableView>
-                  <Button fx:id="btnBuscar" layoutX="310.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="my-button" text="Buscar" />
+                  <Button fx:id="btnBuscar" layoutX="310.0" layoutY="15.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="25.0" prefWidth="75.0" styleClass="my-button" text="Limpiar" />
                </children>
             </Pane>
          </children>

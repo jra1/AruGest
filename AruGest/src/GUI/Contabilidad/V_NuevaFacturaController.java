@@ -415,6 +415,7 @@ public class V_NuevaFacturaController {
 			txtCantidad.setPromptText("Horas");
 			esServicio = true;
 		}
+		txtConcepto.requestFocus();
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class D_AyudaController {
 	 */
 	@FXML
 	private void initialize() {
-		lblVersion.setText("Versión " + Inicio.DBVERSION);
+		lblVersion.setText("Versión de base de datos: " + Inicio.DBVERSION);
 	}
 
 	/**

@@ -204,20 +204,19 @@ public class V_BuscarFacturaController {
 		} else {
 			for (FacturaClienteVehiculo fce : lista) {
 				listaFacturas.add(fce);
-				//columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
 				
+			  //columnaNombre.setCellValueFactory(cellData -> cellData.getValue().getCliente().nombreProperty());
 				columnaNombre.setCellValueFactory(new Callback<CellDataFeatures<FacturaClienteVehiculo, String>, ObservableValue<String>>() {
 				     public ObservableValue<String> call(CellDataFeatures<FacturaClienteVehiculo, String> p) {
-				         if(fce.getFactura().getCiaID() != 0) {
-				        	 return Inicio.CONEXION.leerCiaPorID(fce.getFactura().getCiaID()).nombreProperty();				        	 				        	 
+				         if(p.getValue().getFactura().getCiaID() != 0) {
+				        	 return Inicio.CONEXION.leerCiaPorID(p.getValue().getFactura().getCiaID()).nombreProperty();				        	 				        	 
 				         }else {
 				        	 return p.getValue().getCliente().nombreProperty();				        	 
 				         }
 				     }
 				  });
 
-				columnaVehiculo
-						.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
+				columnaVehiculo.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().marcaModeloProperty());
 				columnaMatricula.setCellValueFactory(cellData -> cellData.getValue().getVehiculo().matriculaProperty());
 				columnaFecha.setCellValueFactory(cellData -> cellData.getValue().getFactura().fechaPropertyFormat());
 				columnaImporte.setCellValueFactory(cellData -> cellData.getValue().getFactura().importeTotalProperty());
