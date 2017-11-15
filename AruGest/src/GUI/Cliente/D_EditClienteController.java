@@ -253,4 +253,31 @@ public class D_EditClienteController {
 		}
 
 	}
+	
+	@FXML
+	private void upperFirstLetterNombre() {
+		upperFirstLetter(txtNombre);
+	}
+	@FXML
+	private void upperFirstLetterApellidos() {
+		upperFirstLetter(txtApellidos);
+	}
+	@FXML
+	private void upperFirstLetterDireccion() {
+		upperFirstLetter(txtDireccion);
+	}
+	@FXML
+	private void upperFirstLetterLocalidad() {
+		upperFirstLetter(txtLocalidad);
+	}
+	@FXML
+	private void upperFirstLetterProvincia() {
+		upperFirstLetter(txtProvincia);
+	}
+	
+	private void upperFirstLetter(TextField tf) {
+		int pos = tf.getCaretPosition();
+		tf.setText(Utilidades.upperFirstLetter(tf.getText()));
+		tf.positionCaret(pos);
+	}
 }

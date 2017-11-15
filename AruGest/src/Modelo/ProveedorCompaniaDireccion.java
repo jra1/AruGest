@@ -10,7 +10,7 @@ public class ProveedorCompaniaDireccion extends ProveedorCompania {
 
 	public ProveedorCompaniaDireccion(ProveedorCompania pc, Direccion d) {
 		super(pc.getIdprovecompa(), pc.getCif(), pc.getNombre(), pc.getDireccionID(), pc.getTelf1(), pc.getTelf2(),
-				pc.getLogo(), pc.isEsdesguace(), pc.isEscompania());
+				pc.getLogo(), pc.isEsdesguace(), pc.isEscompania(), pc.getPersonaContacto());
 		setDireccion(d);
 	}
 

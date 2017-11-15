@@ -42,13 +42,13 @@
                      </font>
                   </TextField>
                   <Label styleClass="my-label" text="NOMBRE" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtNombre" layoutX="87.0" layoutY="68.0" prefHeight="23.0" prefWidth="161.0" promptText="Nombre" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="txtNombre" layoutX="87.0" layoutY="68.0" prefHeight="23.0" prefWidth="161.0" promptText="Nombre" onKeyReleased="#upperFirstLetterNombre" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <Label fx:id="lblApellidos" layoutX="14.0" layoutY="103.0" styleClass="my-label" text="APELLIDOS" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtApellidos" layoutX="87.0" layoutY="98.0" prefHeight="23.0" prefWidth="161.0" promptText="Apellidos" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField fx:id="txtApellidos" layoutX="87.0" layoutY="98.0" prefHeight="23.0" prefWidth="161.0" promptText="Apellidos" onKeyReleased="#upperFirstLetterApellidos" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -73,7 +73,7 @@
                      </font>
                   </TextField>
                   <Label layoutX="14.0" layoutY="223.0" styleClass="my-label" text="DIRECCIÓN" GridPane.rowIndex="7" />
-                  <TextField fx:id="txtDireccion" layoutX="87.0" layoutY="218.0" prefHeight="23.0" prefWidth="175.0" promptText="Dirección" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <TextField fx:id="txtDireccion" layoutX="87.0" layoutY="218.0" prefHeight="23.0" prefWidth="175.0" promptText="Dirección" onKeyReleased="#upperFirstLetterDireccion" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -85,13 +85,13 @@
                      </font>
                   </TextField>
                   <Label layoutX="15.0" layoutY="313.0" styleClass="my-label" text="LOCALIDAD" GridPane.rowIndex="9" />
-                  <TextField fx:id="txtLocalidad" layoutX="88.0" layoutY="308.0" prefHeight="23.0" prefWidth="103.0" promptText="Localidad" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <TextField fx:id="txtLocalidad" layoutX="88.0" layoutY="308.0" prefHeight="23.0" prefWidth="103.0" promptText="Localidad" onKeyReleased="#upperFirstLetterLocalidad" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </TextField>
                   <Label layoutX="15.0" layoutY="343.0" styleClass="my-label" text="PROVINCIA" GridPane.rowIndex="10" />
-                  <TextField fx:id="txtProvincia" layoutX="88.0" layoutY="338.0" prefHeight="23.0" prefWidth="103.0" promptText="Provincia" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                  <TextField fx:id="txtProvincia" layoutX="88.0" layoutY="338.0" prefHeight="23.0" prefWidth="103.0" promptText="Provincia" onKeyReleased="#upperFirstLetterProvincia" styleClass="my-text-field-fijo" GridPane.columnIndex="1" GridPane.rowIndex="10">
                      <font>
                         <Font size="10.0" />
                      </font>

@@ -21,6 +21,7 @@ public class ProveedorCompania {
 	private final ObjectProperty<Blob> logo;
 	private final BooleanProperty esdesguace;
 	private final BooleanProperty escompania;
+	private final StringProperty personaContacto;
 
 	public ProveedorCompania(boolean esCia) {
 		this.idprovecompa = new SimpleIntegerProperty(0);
@@ -32,10 +33,11 @@ public class ProveedorCompania {
 		this.logo = new SimpleObjectProperty<Blob>(null);
 		this.esdesguace = new SimpleBooleanProperty(false);
 		this.escompania = new SimpleBooleanProperty(esCia);
+		this.personaContacto = new SimpleStringProperty("");
 	}
 
 	public ProveedorCompania(Integer idprovecompa, String cif, String nombre, Integer direccionID, String telf1,
-			String telf2, Blob logo, Boolean esdesguace, Boolean escompania) {
+			String telf2, Blob logo, Boolean esdesguace, Boolean escompania, String personaContacto) {
 		this.idprovecompa = new SimpleIntegerProperty(idprovecompa);
 		this.cif = new SimpleStringProperty(cif);
 		this.nombre = new SimpleStringProperty(nombre);
@@ -45,11 +47,12 @@ public class ProveedorCompania {
 		this.logo = new SimpleObjectProperty<Blob>(logo);
 		this.esdesguace = new SimpleBooleanProperty(esdesguace);
 		this.escompania = new SimpleBooleanProperty(escompania);
+		this.personaContacto = new SimpleStringProperty(personaContacto);
 	}
 
 	public ProveedorCompania(IntegerProperty idprovecompa, StringProperty cif, StringProperty nombre,
 			IntegerProperty direccionID, StringProperty telf1, StringProperty telf2, ObjectProperty<Blob> logo,
-			BooleanProperty esdesguace, BooleanProperty escompania) {
+			BooleanProperty esdesguace, BooleanProperty escompania, StringProperty personaContacto) {
 		super();
 		this.idprovecompa = idprovecompa;
 		this.cif = cif;
@@ -60,6 +63,7 @@ public class ProveedorCompania {
 		this.logo = logo;
 		this.esdesguace = esdesguace;
 		this.escompania = escompania;
+		this.personaContacto = personaContacto;
 	}
 
 	public IntegerProperty idprovecompaProperty() {
@@ -169,5 +173,20 @@ public class ProveedorCompania {
 	public void setEscompania(final boolean escompania) {
 		this.escompaniaProperty().set(escompania);
 	}
+
+	public StringProperty personaContactoProperty() {
+		return this.personaContacto;
+	}
+	
+
+	public String getPersonaContacto() {
+		return this.personaContactoProperty().get();
+	}
+	
+
+	public void setPersonaContacto(final String personaContacto) {
+		this.personaContactoProperty().set(personaContacto);
+	}
+	
 
 }

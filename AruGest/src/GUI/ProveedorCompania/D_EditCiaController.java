@@ -39,6 +39,8 @@ public class D_EditCiaController {
 	@FXML
 	private TextField txtTel2;
 	@FXML
+	private TextField txtPersona;
+	@FXML
 	private TextField txtDireccion;
 	@FXML
 	private TextField txtCodPostal;
@@ -85,6 +87,7 @@ public class D_EditCiaController {
 		txtNombre.setText(pcd.getNombre());
 		txtTel1.setText(pcd.getTelf1());
 		txtTel2.setText(pcd.getTelf2());
+		txtPersona.setText(pcd.getPersonaContacto());
 		if (pcd.getDireccion() != null && pcd.getDireccion().getIddireccion() != 0) {
 			txtDireccion.setText(pcd.getDireccion().getDireccion());
 			txtCodPostal.setText(Integer.toString(pcd.getDireccion().getCpostal()));
@@ -145,6 +148,7 @@ public class D_EditCiaController {
 			pcd.setCif(txtCif.getText());
 			pcd.setTelf1(txtTel1.getText());
 			pcd.setTelf2(txtTel2.getText());
+			pcd.setPersonaContacto(txtPersona.getText());
 			pcd.setEsdesguace(chckboxEsDesguace.isSelected());
 			pcd.setEscompania(esCia);
 			if (imgFile != null) {

@@ -649,7 +649,7 @@ public class Conexion {
 			}
 
 			// 2º Guardar cía/proveedor
-			sql = "INSERT INTO PROVEEDORCOMPANIA (CIF, NOMBRE, DIRECCIONID, TELF1, TELF2, LOGO, ESDESGUACE, ESCOMPANIA) VALUES (?,?,?,?,?,?,?,?)";
+			sql = "INSERT INTO PROVEEDORCOMPANIA (CIF, NOMBRE, DIRECCIONID, TELF1, TELF2, LOGO, ESDESGUACE, ESCOMPANIA,PERSONA_DE_CONTACTO) VALUES (?,?,?,?,?,?,?,?,?)";
 			st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			// Añadimos los parametros
 			st.setString(1, pcd.getCif());
@@ -672,6 +672,7 @@ public class Conexion {
 
 			st.setBoolean(7, pcd.isEsdesguace());
 			st.setBoolean(8, pcd.isEscompania());
+			st.setString(9, pcd.getPersonaContacto());
 			// Ejecutamos la sentencia
 			st.executeUpdate();
 			res = true;
@@ -1416,7 +1417,7 @@ public class Conexion {
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				pc = new ProveedorCompania(rs.getInt("IDPROVECOMPA"), rs.getString("CIF"), rs.getString("NOMBRE"),
-						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"), rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
+						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"), rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"), rs.getString("PERSONA_DE_CONTACTO"));
 			}
 			// Se cierra la conexion
 			getCon().close();
@@ -2125,7 +2126,7 @@ public class Conexion {
 				// b.setBytes(1, new byte[is.read()]);
 				pc = new ProveedorCompania(rs.getInt("IDPROVECOMPA"), rs.getString("CIF"), rs.getString("NOMBRE"),
 						rs.getInt("DIRECCIONID"), rs.getString("TELF1"), rs.getString("TELF2"), rs.getBlob("LOGO"),
-						rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"));
+						rs.getBoolean("ESDESGUACE"), rs.getBoolean("ESCOMPANIA"), rs.getString("PERSONA_DE_CONTACTO"));
 				d = leerDireccionPorID(rs.getInt("DIRECCIONID"));
 				pcd = new ProveedorCompaniaDireccion(pc, d);
 				lista.add(pcd);
