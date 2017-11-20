@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFactura" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="20" uuid="4ab07a61-207e-48e4-9d39-b021c707e9f3">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<style name="table">
 		<pen lineWidth="0.6"/>
 		<box>
@@ -164,6 +164,7 @@
 	<parameter name="cboxpermiso" class="java.lang.String"/>
 	<parameter name="cboxpiezas" class="java.lang.String"/>
 	<parameter name="porcentaje" class="java.lang.String"/>
+	<parameter name="mostrarTlf" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[select * from factura where idfactura = $P{idfactura}]]>
 	</queryString>
@@ -307,7 +308,7 @@ ruizarana@hotmail.com - 01013 VITORIA]]></text>
 			</textField>
 			<textField>
 				<reportElement x="151" y="159" width="205" height="14" uuid="e80812a8-1fc9-4cae-8d48-5d3b53421ec4"/>
-				<textFieldExpression><![CDATA["Teléfono: " + $P{telefono}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{mostrarTlf}.equals(true) ? "Teléfono: " + $P{telefono} : "" )]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="116" width="199" height="15" uuid="24b25a8b-9e8d-44d5-9aab-e25a3190e4d3"/>
@@ -692,7 +693,7 @@ ruizarana@hotmail.com - 01013 VITORIA]]></text>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="294" y="129" width="136" height="20" uuid="1a342839-f8d5-4903-8687-cd3671b5f5f9"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{fechaentrega}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{fechaentrega}.equals(null) ? "" : $P{fechaentrega} )]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="416" y="230" width="135" height="15" uuid="6b267dc6-a4d1-416b-8454-0bdd7b9c48ac"/>

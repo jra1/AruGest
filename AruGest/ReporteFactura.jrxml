@@ -164,6 +164,7 @@
 	<parameter name="cboxpermiso" class="java.lang.String"/>
 	<parameter name="cboxpiezas" class="java.lang.String"/>
 	<parameter name="porcentaje" class="java.lang.String"/>
+	<parameter name="mostrarTlf" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[select * from factura where idfactura = $P{idfactura}]]>
 	</queryString>
@@ -307,7 +308,7 @@ ruizarana@hotmail.com - 01013 VITORIA]]></text>
 			</textField>
 			<textField>
 				<reportElement x="151" y="159" width="205" height="14" uuid="e80812a8-1fc9-4cae-8d48-5d3b53421ec4"/>
-				<textFieldExpression><![CDATA["Teléfono: " + $P{telefono}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{mostrarTlf}.equals(true) ? "True " + $P{telefono} : "False " )]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="356" y="116" width="199" height="15" uuid="24b25a8b-9e8d-44d5-9aab-e25a3190e4d3"/>

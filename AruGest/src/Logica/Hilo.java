@@ -189,6 +189,7 @@ public class Hilo extends Thread {
 							parameters.put("cboxpiezas", "recursos/images/selecNO.png");
 						}
 						parameters.put("porcentaje", f.getPorcentajedefocul());
+						parameters.put("mostrarTlf", true);
 
 						String nombreFactura = "";
 						if (!f.getNumfactura().equalsIgnoreCase("0")) {
