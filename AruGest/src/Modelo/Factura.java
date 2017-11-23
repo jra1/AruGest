@@ -38,6 +38,7 @@ public class Factura {
 	private final BooleanProperty permisopruebas;
 	private final BooleanProperty nopiezas;
 	private final BooleanProperty cobrado;
+	private final BooleanProperty mostrarTlf;
 	private final ObjectProperty<Blob> documento;
 
 	public Factura(Date fecha, Float importeTotal) {
@@ -63,13 +64,14 @@ public class Factura {
 		this.permisopruebas = new SimpleBooleanProperty(false);
 		this.nopiezas = new SimpleBooleanProperty(false);
 		this.cobrado = new SimpleBooleanProperty(false);
+		this.mostrarTlf = new SimpleBooleanProperty(true);
 		this.documento = new SimpleObjectProperty<Blob>(null);
 	}
 
 	public Factura(int idfactura, int clienteID, int vehiculoID, int kms, String numfactura, String numpresupuesto,
 			String numordenrep, String numresguardo, Date fecha, Date fechaentrega, float manoobra, float materiales,
 			float grua, float suma, float sumaIva, boolean rdefocultos, float porcentajedefocul, boolean permisopruebas,
-			boolean nopiezas, boolean cobrado, float importeTotal, int ciaID) {
+			boolean nopiezas, boolean cobrado, float importeTotal, int ciaID, boolean mostrarTlf) {
 		this.idfactura = new SimpleIntegerProperty(idfactura);
 		this.clienteID = new SimpleIntegerProperty(clienteID);
 		this.vehiculoID = new SimpleIntegerProperty(vehiculoID);
@@ -92,6 +94,7 @@ public class Factura {
 		this.permisopruebas = new SimpleBooleanProperty(permisopruebas);
 		this.nopiezas = new SimpleBooleanProperty(nopiezas);
 		this.cobrado = new SimpleBooleanProperty(cobrado);
+		this.mostrarTlf = new SimpleBooleanProperty(mostrarTlf);
 		this.documento = null;
 	}
 
@@ -101,7 +104,7 @@ public class Factura {
 			FloatProperty manoobra, FloatProperty materiales, FloatProperty grua, FloatProperty suma,
 			FloatProperty sumaIva, FloatProperty porcentajedefocul, BooleanProperty rdefocultos,
 			BooleanProperty permisopruebas, BooleanProperty nopiezas, BooleanProperty cobrado,
-			ObjectProperty<Blob> documento, FloatProperty importeTotal, IntegerProperty ciaID) {
+			ObjectProperty<Blob> documento, FloatProperty importeTotal, IntegerProperty ciaID, BooleanProperty mostrarTlf) {
 		super();
 		this.idfactura = idfactura;
 		this.clienteID = clienteID;
@@ -125,6 +128,7 @@ public class Factura {
 		this.permisopruebas = permisopruebas;
 		this.nopiezas = nopiezas;
 		this.cobrado = cobrado;
+		this.mostrarTlf = mostrarTlf;
 		this.documento = documento;
 	}
 
@@ -418,5 +422,20 @@ public class Factura {
 	public void setSumaIva(final float sumaIva) {
 		this.sumaIvaProperty().set(sumaIva);
 	}
+
+	public BooleanProperty mostrarTlfProperty() {
+		return this.mostrarTlf;
+	}
+	
+
+	public boolean isMostrarTlf() {
+		return this.mostrarTlfProperty().get();
+	}
+	
+
+	public void setMostrarTlf(final boolean mostrarTlf) {
+		this.mostrarTlfProperty().set(mostrarTlf);
+	}
+	
 
 }

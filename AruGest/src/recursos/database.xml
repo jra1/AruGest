@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
-<sql version="1">
+<sql version="0001">
 CREATE TABLE cliente (idcliente int primary key auto_increment, nombre varchar(255), telf1 varchar(255), telf2 varchar(255), telf3 varchar(255), direccionID int, TIPO varchar(1));
 CREATE TABLE particular (idparticular int primary key auto_increment, clienteID int, nombre varchar(255), apellidos varchar(255), nif varchar(255));
 CREATE TABLE empresa (idempresa int primary key auto_increment, clienteID int, nombre varchar(255), cif varchar(255), esProveedor boolean);
@@ -101,14 +101,17 @@ INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Material de p
 INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Reparar techo', 'Chapa', 5);
 INSERT INTO ELEMENTOSGOLPES (NOMBREELEMENTO,TIPO,GOLPEID) VALUES ('Pintar techo', 'Pintura', 5);
 </sql>
-<sql version="2">
+<sql version="0002">
 ALTER TABLE direccion ALTER COLUMN CALLE RENAME TO DIRECCION
 </sql>
-<sql version="3">
+<sql version="0003">
 ALTER TABLE factura ADD COLUMN COMPANIAID int;
 ALTER TABLE factura ADD FOREIGN KEY (COMPANIAID) REFERENCES PROVEEDORCOMPANIA(IDPROVECOMPA);
 </sql>
-<sql version="4">
+<sql version="0004">
 ALTER TABLE PROVEEDORCOMPANIA ADD COLUMN PERSONA_DE_CONTACTO VARCHAR(255);
+</sql>
+<sql version="0005">
+ALTER TABLE factura ADD COLUMN MOSTRARTLF boolean;
 </sql>
 </database>

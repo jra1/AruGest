@@ -23,13 +23,13 @@
       </Label>
       <Pane fx:id="paneDatosFactura" layoutX="16.0" layoutY="65.0" prefHeight="85.0" prefWidth="1081.0" styleClass="background" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="65.0">
          <children>
-            <GridPane hgap="10.0" layoutX="13.0" layoutY="5.0" prefHeight="74.0" prefWidth="1047.0" styleClass="gridpane" vgap="5.0">
+            <GridPane hgap="10.0" layoutX="13.0" layoutY="5.0" prefHeight="74.0" prefWidth="1078.0" styleClass="gridpane" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="174.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="149.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.0" minWidth="10.0" prefWidth="247.66668701171875" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.0" minWidth="10.0" prefWidth="156.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="72.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.0" minWidth="10.0" prefWidth="227.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.0" minWidth="10.0" prefWidth="159.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="106.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="200.0" />
               </columnConstraints>
               <rowConstraints>
@@ -63,7 +63,8 @@
                   </TextField>
                   <Label styleClass="my-label" text="FECHA" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
                   <DatePicker fx:id="txtFecha" prefHeight="31.0" prefWidth="186.0" promptText="Fecha" styleClass="my-text-field" GridPane.columnIndex="5" />
-                  <CheckBox fx:id="chckbxCobrado" mnemonicParsing="false" styleClass="my-label" text="COBRADO" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="chckbxCobrado" mnemonicParsing="false" styleClass="my-label" text="COBRADO" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="chckbxMostrarTlf" mnemonicParsing="false" styleClass="my-label" text="MOSTRAR TELÉFONOS" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
@@ -347,7 +348,7 @@
          </children>
       </Pane>
       <CheckBox fx:id="chckbxRepararDefOcultos" layoutX="19.0" layoutY="615.0" mnemonicParsing="false" styleClass="my-label" text="Reparar defectos ocultos hasta un                % más de lo presupuestado" />
-      <TextField id="porcentaje" fx:id="txtPorcentajeDefOcultos" layoutX="242.0" layoutY="609.0" prefHeight="31.0" prefWidth="41.0" styleClass="my-text-field">
+      <TextField id="porcentaje" fx:id="txtPorcentajeDefOcultos" layoutX="263.0" layoutY="609.0" prefHeight="31.0" prefWidth="41.0" styleClass="my-text-field">
          <font>
             <Font size="10.0" />
          </font>

@@ -159,6 +159,7 @@ public class Hilo extends Thread {
 							parameters.put("dni", e.getCif());
 						}
 						parameters.put("telefono", c.getTelf1() + " " + c.getTelf2());
+						parameters.put("mostrarTlf", f.isMostrarTlf());
 						parameters.put("tipovehiculo", Utilidades.tipoIDtoString(v.getTipoID()));
 						parameters.put("marcamodelo", v.getMarcaModelo());
 						parameters.put("matricula", v.getMatricula());
@@ -189,7 +190,6 @@ public class Hilo extends Thread {
 							parameters.put("cboxpiezas", "recursos/images/selecNO.png");
 						}
 						parameters.put("porcentaje", f.getPorcentajedefocul());
-						parameters.put("mostrarTlf", true);
 
 						String nombreFactura = "";
 						if (!f.getNumfactura().equalsIgnoreCase("0")) {

@@ -141,6 +141,8 @@ public class V_NuevaFacturaController {
 	@FXML
 	private CheckBox chckbxCobrado;
 	@FXML
+	private CheckBox chckbxMostrarTlf;
+	@FXML
 	private Button btnGenerarFactura;
 
 	@FXML
@@ -245,6 +247,7 @@ public class V_NuevaFacturaController {
 
 		// Recoger piezas, modificable, fechaentrega...
 		chckbxCobrado.setSelected(fce.getFactura().isCobrado());
+		chckbxMostrarTlf.setSelected(fce.getFactura().isMostrarTlf());
 		chckbxNoPiezas.setSelected(fce.getFactura().isNopiezas());
 		chckbxPermisoPruebas.setSelected(fce.getFactura().isPermisopruebas());
 		chckbxRepararDefOcultos.setSelected(fce.getFactura().isRdefocultos());
@@ -335,6 +338,7 @@ public class V_NuevaFacturaController {
 		chckbxPermisoPruebas.setSelected(true);
 		chckbxNoPiezas.setSelected(true);
 		chckbxCobrado.setSelected(false);
+		chckbxMostrarTlf.setSelected(true);
 
 		// Editar columna Concepto de la tabla Servicios
 		columnaConceptoServ.setCellFactory(TextFieldTableCell.<Servicio> forTableColumn());
@@ -953,7 +957,7 @@ public class V_NuevaFacturaController {
 		return new Factura(1, Inicio.CLIENTE_ID, Inicio.VEHICULO_ID, cpedv.getKms(), numFactura, numPresupuesto,
 				numOrden, numResguardo, Utilidades.LocalDateADate(txtFecha.getValue()), fechaEntrega, manoObra,
 				materiales, otros, suma, sumaIva, chckbxRepararDefOcultos.isSelected(), porcentajeOcultos,
-				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total, idCia);
+				chckbxPermisoPruebas.isSelected(), chckbxNoPiezas.isSelected(), chckbxCobrado.isSelected(), total, idCia, chckbxMostrarTlf.isSelected());
 	}
 	
 	@FXML
