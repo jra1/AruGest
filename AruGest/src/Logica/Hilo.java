@@ -103,7 +103,18 @@ public class Hilo extends Thread {
 
 					// Leer los parámetros desde la factura
 					Cliente c = Inicio.CONEXION.leerClientePorID(f.getClienteID());
-					Direccion d = Inicio.CONEXION.leerDireccionPorID(c.getDireccionID());
+					int iddireccion = 0;
+					String autor = "";
+					String nif = "";
+					if(f.getCiaID() != 0) {
+						iddireccion = Inicio.CONEXION.leerCiaPorID(f.getCiaID()).getDireccionID();	
+						autor = Inicio.CONEXION.leerCiaPorID(f.getCiaID()).getNombre();
+					}else {													
+						iddireccion = c.getDireccionID();
+						autor = c.getNombre();							
+					}
+					Direccion d = Inicio.CONEXION.leerDireccionPorID(iddireccion);							
+					
 					Vehiculo v = Inicio.CONEXION.leerVehiculoPorID(f.getVehiculoID());
 					Particular p = null;
 					Empresa e = null;
@@ -146,7 +157,9 @@ public class Hilo extends Thread {
 							parameters.put("cboxresguardo", "recursos/images/selecNO.png");
 							parameters.put("numresguardo", "");
 						}
-						parameters.put("autor", c.getNombre());
+						
+						parameters.put("autor", autor);							
+											
 						if (d.getIddireccion() != 0) {
 							parameters.put("direccion", d.getDireccion());
 						} else {
