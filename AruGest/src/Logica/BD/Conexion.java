@@ -645,7 +645,9 @@ public class Conexion {
 			String sql = "";
 			// Se prepara la sentencia para introducir los datos de la direccion
 			// SI NO ES NULL
-			if (pcd.getDireccion() != null && pcd.getDireccionID() != 0) {
+			if (pcd.getDireccion() != null && 
+					(pcd.getDireccionID() != 0 || 
+					(pcd.getDireccionID() == 0 && !pcd.getDireccion().getDireccion().equalsIgnoreCase("No informado")))) {
 				idGenerado = guardarDireccion(pcd.getDireccion());
 			}
 
