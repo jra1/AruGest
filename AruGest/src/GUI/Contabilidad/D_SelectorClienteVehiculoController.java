@@ -146,11 +146,11 @@ public class D_SelectorClienteVehiculoController {
 			}
 			if (cpedv.getVehiculo() == null) {
 				Vehiculo v = new Vehiculo(1, cpedv.getCliente().getIdcliente(), txtMarca.getText(), txtModelo.getText(),
-						txtVersion.getText(), txtMatricula.getText(), tipoVehiculo);
+						txtVersion.getText(), txtMatricula.getText().trim(), tipoVehiculo);
 				cpedv.setVehiculo(v);
 			} else {
 				cpedv.getVehiculo().setTipoID(tipoVehiculo);
-				cpedv.getVehiculo().setMatricula(txtMatricula.getText());
+				cpedv.getVehiculo().setMatricula(txtMatricula.getText().trim());
 				cpedv.getVehiculo().setMarca(txtMarca.getText());
 				cpedv.getVehiculo().setModelo(txtModelo.getText());
 				cpedv.getVehiculo().setVersion(txtVersion.getText());
@@ -223,7 +223,8 @@ public class D_SelectorClienteVehiculoController {
 							txtDni.setText(cpedv.getEmpresa().getCif());
 						}
 					}
-					if (cpedv.getCliente().getDireccionID() != 0) {
+					if (cpedv.getCliente().getDireccionID() != 0 || 
+							(cpedv.getDireccion() != null && !"".equalsIgnoreCase(cpedv.getDireccion().getDireccion()))) {
 						txtDireccion.setText(cpedv.getDireccion().getDireccion());
 						txtPoblacion.setText(cpedv.getDireccion().getLocalidad());
 					}
@@ -236,6 +237,7 @@ public class D_SelectorClienteVehiculoController {
 				txtMarca.setText(cpedv.getVehiculo().getMarca());
 				txtModelo.setText(cpedv.getVehiculo().getModelo());
 				txtVersion.setText(cpedv.getVehiculo().getVersion());
+				txtKms.setText(String.valueOf(cpedv.getKms()));
 				comboTipoVehiculo.setValue(Utilidades.tipoIDtoString(cpedv.getVehiculo().getTipoID()));
 			}
 		}

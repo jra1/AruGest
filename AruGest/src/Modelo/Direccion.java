@@ -64,7 +64,7 @@ public class Direccion {
 
 	public StringProperty direccionCompletaProperty() {
 		String respuesta = "";
-		if (!this.getDireccion().equalsIgnoreCase("")) {
+		if (!"".equalsIgnoreCase(this.getDireccion())) {
 			respuesta = this.getDireccion() + Integer.toString(this.getCpostal()) + " " + this.getLocalidad() + ", " + this.getProvincia();
 		} else {
 			respuesta = this.getLocalidad() + " - " + this.getProvincia();

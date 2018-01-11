@@ -112,7 +112,7 @@ public class D_OpcionesBackupController {
 		if (txtRuta.getText().isEmpty()) {
 			mensaje = "La ruta para guardar las copias de seguridad no puede estar vacía.";
 		}
-		if (mensaje.equalsIgnoreCase("")) {
+		if ("".equalsIgnoreCase(mensaje)) {
 			return true;
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Datos incorrectos", mensaje);

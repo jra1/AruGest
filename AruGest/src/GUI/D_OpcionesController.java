@@ -137,7 +137,7 @@ public class D_OpcionesController {
 		if (txtRutaFacturas.getText().isEmpty()) {
 			mensaje = "La ruta donde se guardarán las facturas generadas no puede estar vacía.";
 		}
-		if (mensaje.equalsIgnoreCase("")) {
+		if ("".equalsIgnoreCase(mensaje)) {
 			return true;
 		} else {
 			Utilidades.mostrarAlerta(AlertType.WARNING, "Atención", "Datos incorrectos", mensaje);

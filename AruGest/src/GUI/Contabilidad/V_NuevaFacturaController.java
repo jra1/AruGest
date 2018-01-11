@@ -200,28 +200,28 @@ public class V_NuevaFacturaController {
 		modificar = true;
 		// Cargar datos factura
 		if (!fce.getFactura().getNumfactura().equalsIgnoreCase("0")
-				&& !fce.getFactura().getNumfactura().equalsIgnoreCase("")) {
+				&& !"".equalsIgnoreCase(fce.getFactura().getNumfactura())) {
 			chckbxFactura.setSelected(true);
 			txtNumfactura.setText("" + fce.getFactura().getNumfactura());
 		} else {
 			chckbxFactura.setSelected(false);
 		}
 		if (!fce.getFactura().getNumpresupuesto().equalsIgnoreCase("0")
-				&& !fce.getFactura().getNumpresupuesto().equalsIgnoreCase("")) {
+				&& !"".equalsIgnoreCase(fce.getFactura().getNumpresupuesto())) {
 			chckbxPresupuesto.setSelected(true);
 			txtNumPresupuesto.setText("" + fce.getFactura().getNumpresupuesto());
 		} else {
 			chckbxPresupuesto.setSelected(false);
 		}
 		if (!fce.getFactura().getNumordenrep().equalsIgnoreCase("0")
-				&& !fce.getFactura().getNumordenrep().equalsIgnoreCase("")) {
+				&& !"".equalsIgnoreCase(fce.getFactura().getNumordenrep())) {
 			chckbxOrdenDeReparacion.setSelected(true);
 			txtNumOrden.setText("" + fce.getFactura().getNumordenrep());
 		} else {
 			chckbxOrdenDeReparacion.setSelected(false);
 		}
 		if (!fce.getFactura().getNumresguardo().equalsIgnoreCase("0")
-				&& !fce.getFactura().getNumresguardo().equalsIgnoreCase("")) {
+				&& !"".equalsIgnoreCase(fce.getFactura().getNumresguardo())) {
 			chckbxResguardoDeposito.setSelected(true);
 			txtNumResguardo.setText("" + fce.getFactura().getNumresguardo());
 		} else {
@@ -516,7 +516,7 @@ public class V_NuevaFacturaController {
 
 		if (!listaServicios.isEmpty()) {
 			for (Servicio serv : listaServicios) {
-				if (!serv.getHoras().equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(serv.getHoras())) {
 					String horasComa = serv.getHoras();
 					String horasPunto = horasComa.replace(",", ".");
 					valorServicio += Float.parseFloat(horasPunto) * Inicio.PRECIO_HORA;
@@ -529,7 +529,7 @@ public class V_NuevaFacturaController {
 
 		if (!listaMaterial.isEmpty()) {
 			for (Material mat : listaMaterial) {
-				if (!mat.getPreciounit().equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(mat.getPreciounit())) {
 					String precioUnitPunto = mat.getPreciounit().replace(",", ".");
 					float precioTotal = Float.parseFloat(precioUnitPunto) * mat.getCantidad();
 					valorMaterial += precioTotal;
@@ -614,9 +614,9 @@ public class V_NuevaFacturaController {
 			} else {
 				// 2º Comprobar si existe ese cliente en la BD (DNI) y guardarlo si no lo está
 				Cliente c = null;
-				if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
+				if (cpedv.getParticular() != null && !"".equalsIgnoreCase(cpedv.getParticular().getNif())) {
 					c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
-				} else if (!cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
+				} else if (cpedv.getEmpresa() != null && !"".equalsIgnoreCase(cpedv.getEmpresa().getCif())) {
 					c = Inicio.CONEXION.buscarClientePorDni(cpedv.getEmpresa().getCif(), 2);
 				}
 				if (c == null) {
@@ -625,31 +625,31 @@ public class V_NuevaFacturaController {
 					Particular p = null;
 					Empresa e = null;
 					if (cpedv.getDireccion() != null) {
-						if (!cpedv.getDireccion().getDireccion().equalsIgnoreCase("")
-								|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+						if (!"".equalsIgnoreCase(cpedv.getDireccion().getDireccion())
+								|| !"".equalsIgnoreCase(cpedv.getDireccion().getLocalidad())) {
 							d = cpedv.getDireccion();
 						}
 					}
-					if (!cpedv.getParticular().getNombre().equalsIgnoreCase("")
-							|| !cpedv.getParticular().getNif().equalsIgnoreCase("")) {
+					if (cpedv.getParticular() != null && (!"".equalsIgnoreCase(cpedv.getParticular().getNombre())
+							|| !"".equalsIgnoreCase(cpedv.getParticular().getNif()))) {
 						p = cpedv.getParticular();
-					} else if (!cpedv.getEmpresa().getNombre().equalsIgnoreCase("")
-							|| !cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
+					} else if (cpedv.getEmpresa() != null && (!"".equalsIgnoreCase(cpedv.getEmpresa().getNombre())
+							|| !"".equalsIgnoreCase(cpedv.getEmpresa().getCif()))) {
 						e = cpedv.getEmpresa();
 					}
 					ClienteParticularEmpresaDireccion cped = new ClienteParticularEmpresaDireccion(c, p, e, d);
 					Inicio.CONEXION.guardarCliente(cped);
-					if (!cpedv.getParticular().getNif().equalsIgnoreCase("")) {
+					if (cpedv.getParticular() != null && !"".equalsIgnoreCase(cpedv.getParticular().getNif())) {
 						c = Inicio.CONEXION.buscarClientePorDni(cpedv.getParticular().getNif(), 1);
-					} else if (!cpedv.getEmpresa().getCif().equalsIgnoreCase("")) {
+					} else if (cpedv.getEmpresa() != null && !"".equalsIgnoreCase(cpedv.getEmpresa().getCif())) {
 						c = Inicio.CONEXION.buscarClientePorDni(cpedv.getEmpresa().getCif(), 2);
 					}
 				} else {
 					// Si está el cliente pero no tiene direccion, la guardo
 					if (c.getDireccionID() == 0) {
 						if (cpedv.getDireccion() != null) {
-							if (!cpedv.getDireccion().getDireccion().equalsIgnoreCase("")
-									|| !cpedv.getDireccion().getLocalidad().equalsIgnoreCase("")) {
+							if (!"".equalsIgnoreCase(cpedv.getDireccion().getDireccion())
+									|| !"".equalsIgnoreCase(cpedv.getDireccion().getLocalidad())) {
 								Direccion d = cpedv.getDireccion();
 								int id = (int) Inicio.CONEXION.guardarDireccion(d);
 								Inicio.CONEXION.actualizarIDDireccionCliente(c.getIdcliente(), id);
@@ -714,20 +714,30 @@ public class V_NuevaFacturaController {
 	 */
 	private void colocarDatos(ClienteParticularEmpresaDireccionVehiculo pDatos, ProveedorCompania pc) {
 		if(pc == null) {
-			if (pDatos.getParticular() != null || pDatos.getEmpresa() != null) {
-				if (pDatos.getParticular().getNif() != "") {
-					txtDni.setText(pDatos.getParticular().getNif());
-				} else if (pDatos.getEmpresa().getCif() != "") {
-					txtDni.setText(pDatos.getEmpresa().getCif());
-				} else {
-					txtDni.setText("");
-				}
+//			if (pDatos.getParticular() != null || pDatos.getEmpresa() != null) {
+//				if (pDatos.getParticular().getNif() != "") {
+//					txtDni.setText(pDatos.getParticular().getNif());
+//				} else if (pDatos.getEmpresa().getCif() != "") {
+//					txtDni.setText(pDatos.getEmpresa().getCif());
+//				} else {
+//					txtDni.setText("");
+//				}
+//			} 
+//			
+//			else {
+//				txtDni.setText("");
+//			}
+			
+			if (pDatos.getParticular() != null && !"".equalsIgnoreCase(pDatos.getParticular().getNif())) { //|| pDatos.getEmpresa() != null) {
+				txtDni.setText(pDatos.getParticular().getNif());				 
+			} else if (pDatos.getEmpresa() != null && !"".equalsIgnoreCase(pDatos.getEmpresa().getCif())) {
+				txtDni.setText(pDatos.getEmpresa().getCif());
 			} else {
 				txtDni.setText("");
 			}
 			
 			if (pDatos.getCliente() != null) {
-				if (!pDatos.getCliente().getNombre().equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(pDatos.getCliente().getNombre())) {
 					lblNombre.setText(pDatos.getCliente().getNombre());
 				} else {
 					lblNombre.setText("Pulse para introducir cliente");
@@ -742,8 +752,8 @@ public class V_NuevaFacturaController {
 
 		if (pDatos.getVehiculo() != null) {
 			txtMatricula.setText(pDatos.getVehiculo().getMatricula());
-			if (!pDatos.getVehiculo().getMarca().equalsIgnoreCase("")
-					|| !pDatos.getVehiculo().getModelo().equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(pDatos.getVehiculo().getMarca())
+					|| !"".equalsIgnoreCase(pDatos.getVehiculo().getModelo())) {
 				lblMarcaModelo.setText(pDatos.getVehiculo().getMarcaModelo());
 			} else {
 				lblMarcaModelo.setText("Pulse para introducir vehículo");
@@ -807,7 +817,7 @@ public class V_NuevaFacturaController {
 	@FXML
 	private void generarPDF() {
 		String error = validarDatos();
-		if (error.equalsIgnoreCase("")) {
+		if ("".equalsIgnoreCase(error)) {
 			int idf = 0;
 			if (modificar) {
 				idf = Inicio.FACTURA_ID;
@@ -832,14 +842,14 @@ public class V_NuevaFacturaController {
 	private String validarDatos() {
 		String mensaje = "";
 		// Comprobar datos cliente
-		if (cpedv.getCliente().getNombre().equalsIgnoreCase("") || txtDni.getText().isEmpty()
-				|| cpedv.getCliente().getTelf1().equalsIgnoreCase("")) {
+		if ("".equalsIgnoreCase(cpedv.getCliente().getNombre()) || txtDni.getText().isEmpty()
+				|| "".equalsIgnoreCase(cpedv.getCliente().getTelf1())) {
 			mensaje = "Debes indicar por lo menos el nombre, DNI y un teléfono del cliente.";
 		}
 		// Datos del vehiculo
-		if (cpedv.getVehiculo().getMatricula().equalsIgnoreCase("")
-				|| cpedv.getVehiculo().getMarca().equalsIgnoreCase("")
-				|| cpedv.getVehiculo().getModelo().equalsIgnoreCase("")) {
+		if ("".equalsIgnoreCase(cpedv.getVehiculo().getMatricula())
+				|| "".equalsIgnoreCase(cpedv.getVehiculo().getMarca())
+				|| "".equalsIgnoreCase(cpedv.getVehiculo().getModelo())) {
 			mensaje = "Debes indicar la marca, modelo y matrícula del vehículo.";
 		}
 		// Comprobar datos factura

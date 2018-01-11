@@ -142,7 +142,7 @@ public class Inicio extends Application {
 		// Abre login
 		if (abreLogin()) {
 		    
-		    if(CONEXION.getVersionDB().equalsIgnoreCase("")){
+		    if("".equalsIgnoreCase(CONEXION.getVersionDB())){
 		    	CONEXION.crearDBVersion();
 		    }
 		    

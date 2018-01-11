@@ -88,7 +88,7 @@ public class Hilo extends Thread {
 			FutureTask<Integer> task = new FutureTask<Integer>(new Callable<Integer>() {
 				@Override
 				public Integer call() throws Exception {
-					if (Inicio.RUTA_FACTURAS.equalsIgnoreCase("")) {
+					if ("".equalsIgnoreCase(Inicio.RUTA_FACTURAS)) {
 						Platform.runLater(new Runnable() {
 						    @Override
 						    public void run() {
@@ -127,14 +127,14 @@ public class Hilo extends Thread {
 					try {
 						Map<String, Object> parameters = new HashMap<String, Object>();
 						parameters.put("idfactura", f.getIdfactura());
-						if (!f.getNumfactura().equalsIgnoreCase("") && !f.getNumfactura().equalsIgnoreCase("0")) {
+						if (!"".equalsIgnoreCase(f.getNumfactura()) && !f.getNumfactura().equalsIgnoreCase("0")) {
 							parameters.put("cboxfactura", "recursos/images/selec.png");
 							parameters.put("numfactura", f.getNumfactura());
 						} else {
 							parameters.put("cboxfactura", "recursos/images/selecNO.png");
 							parameters.put("numfactura", "");
 						}
-						if (!f.getNumpresupuesto().equalsIgnoreCase("")
+						if (!"".equalsIgnoreCase(f.getNumpresupuesto())
 								&& !f.getNumpresupuesto().equalsIgnoreCase("0")) {
 							parameters.put("cboxpresupuesto", "recursos/images/selec.png");
 							parameters.put("numpresupuesto", f.getNumpresupuesto());
@@ -142,7 +142,7 @@ public class Hilo extends Thread {
 							parameters.put("cboxpresupuesto", "recursos/images/selecNO.png");
 							parameters.put("numpresupuesto", "");
 						}
-						if (!f.getNumordenrep().equalsIgnoreCase("") && !f.getNumordenrep().equalsIgnoreCase("0")) {
+						if (!"".equalsIgnoreCase(f.getNumordenrep()) && !f.getNumordenrep().equalsIgnoreCase("0")) {
 							parameters.put("cboxorden", "recursos/images/selec.png");
 							parameters.put("numorden", f.getNumordenrep());
 						} else {
@@ -150,7 +150,7 @@ public class Hilo extends Thread {
 							parameters.put("numorden", "");
 						}
 
-						if (!f.getNumresguardo().equalsIgnoreCase("") && !f.getNumresguardo().equalsIgnoreCase("0")) {
+						if (!"".equalsIgnoreCase(f.getNumresguardo()) && !f.getNumresguardo().equalsIgnoreCase("0")) {
 							parameters.put("cboxresguardo", "recursos/images/selec.png");
 							parameters.put("numresguardo", f.getNumresguardo());
 						} else {

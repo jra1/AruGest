@@ -145,7 +145,11 @@ public class Conexion {
 			st.setString(5, f.getNumordenrep());
 			st.setString(6, f.getNumresguardo());
 			st.setDate(7, new java.sql.Date(f.getFecha().getTime()));
-			st.setDate(8, new java.sql.Date(f.getFechaentrega().getTime()));
+			if(f.getFechaentrega() != null) {
+				st.setDate(8, new java.sql.Date(f.getFechaentrega().getTime()));				
+			}else {
+				st.setDate(8, null);
+			}
 			st.setFloat(9, f.getManoobra());
 			st.setFloat(10, f.getMateriales());
 			st.setFloat(11, f.getGrua());
@@ -158,7 +162,11 @@ public class Conexion {
 			st.setFloat(18, f.getSuma());
 			st.setFloat(19, f.getSumaIva());
 			st.setFloat(20, f.getKms());
-			st.setInt(21, f.getCiaID());
+			if(f.getCiaID() == 0) {
+				st.setObject(21, null);
+			}else {
+				st.setInt(21, f.getCiaID());
+			}
 			st.setBoolean(22, f.isMostrarTlf());
 
 			// Ejecutamos la sentencia
@@ -316,7 +324,7 @@ public class Conexion {
 			st = getCon().prepareStatement(sql);
 			rs = st.executeQuery();
 			while (rs.next()) {
-				if (!rs.getString("MAX(NUMPRESUPUESTO)").equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(rs.getString("MAX(NUMPRESUPUESTO)"))) {
 					sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMPRESUPUESTO) FROM FACTURA) + 1) WHERE CLAVE = 'PRESUPUESTO'";
 				} else {
 					sql = "UPDATE AUXILIAR SET VALOR = '" + Inicio.NUM_PRESUPUESTO + "' WHERE CLAVE = 'PRESUPUESTO'";
@@ -330,7 +338,7 @@ public class Conexion {
 			st = getCon().prepareStatement(sql);
 			rs = st.executeQuery();
 			while (rs.next()) {
-				if (!rs.getString("MAX(NUMFACTURA)").equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(rs.getString("MAX(NUMFACTURA)"))) {
 					sql = "UPDATE AUXILIAR SET VALOR = ((SELECT MAX(NUMFACTURA) FROM FACTURA) + 1) WHERE CLAVE = 'FACTURA'";
 				} else {
 					sql = "UPDATE AUXILIAR SET VALOR = '" + Inicio.NUM_FACTURA + "' WHERE CLAVE = 'FACTURA'";
@@ -594,8 +602,8 @@ public class Conexion {
 			if (rs.next()) {
 				idGenerado = rs.getLong(1);
 				// 3º Guardar Particular / Empresa
-				if (cped.getParticular() != null && !cped.getParticular().getNif().equalsIgnoreCase("")
-						&& !cped.getParticular().getNombre().equalsIgnoreCase("")) {
+				if (cped.getParticular() != null && !"".equalsIgnoreCase(cped.getParticular().getNif())
+						&& !"".equalsIgnoreCase(cped.getParticular().getNombre())) {
 					// Guardar Particular
 					sql = "INSERT INTO PARTICULAR (CLIENTEID, NOMBRE, APELLIDOS, NIF) VALUES (?,?,?,?)";
 					st = getCon().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -606,8 +614,8 @@ public class Conexion {
 					st.setString(4, cped.getParticular().getNif());
 					// Ejecutamos la sentencia
 					st.executeUpdate();
-				} else if (cped.getEmpresa() != null && !cped.getEmpresa().getCif().equalsIgnoreCase("")
-						&& !cped.getEmpresa().getNombre().equalsIgnoreCase("")) {
+				} else if (cped.getEmpresa() != null && !"".equalsIgnoreCase(cped.getEmpresa().getCif())
+						&& !"".equalsIgnoreCase(cped.getEmpresa().getNombre())) {
 					// Guardar Empresa
 					sql = "INSERT INTO EMPRESA (CLIENTEID, NOMBRE, CIF, ESPROVEEDOR) VALUES (?,?,?,?)";
 					st.close();
@@ -1508,7 +1516,10 @@ public class Conexion {
 		try {
 			// Se prepara la sentencia para buscar los datos del cliente
 			Statement st = getCon().createStatement();
-			sql = "SELECT * FROM VEHICULO  WHERE UPPER(MATRICULA) = UPPER('" + matricula + "')";// WHERE
+			matricula = matricula.replaceAll("-", "");
+			matricula = matricula.replaceAll(" ", "");
+			matricula = matricula.replaceAll("/", "");
+			sql = "SELECT * FROM VEHICULO WHERE UPPER(MATRICULA) = UPPER('" + matricula + "')";// WHERE
 																								// UPPER(COLUMNNAME)
 																								// like
 																								// UPPER('%valuetocompare%')
@@ -1811,7 +1822,7 @@ public class Conexion {
 			if (!esPrimero) {
 				sql += ") ";
 			}
-			if (!numFactura.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(numFactura)) {
 				if (esPrimero) {
 					sql += "WHERE FACTURA.NUMFACTURA = '" + Utilidades.formateaNumFactura(numFactura) + "' ";
 					esPrimero = false;
@@ -1819,7 +1830,7 @@ public class Conexion {
 					sql += "AND FACTURA.NUMFACTURA = '" + Utilidades.formateaNumFactura(numFactura) + "' ";
 				}
 			}
-			if (!numPresu.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(numPresu)) {
 				if (esPrimero) {
 					sql += "WHERE FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
 					esPrimero = false;
@@ -1827,7 +1838,7 @@ public class Conexion {
 					sql += "AND FACTURA.NUMPRESUPUESTO = '" + Utilidades.formateaNumFactura(numPresu) + "' ";
 				}
 			}
-			if (!numOrden.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(numOrden)) {
 				if (esPrimero) {
 					sql += "WHERE FACTURA.NUMORDENREP = '" + Utilidades.formateaNumFactura(numOrden) + "' ";
 					esPrimero = false;
@@ -1835,7 +1846,7 @@ public class Conexion {
 					sql += "AND FACTURA.NUMORDENREP = '" + Utilidades.formateaNumFactura(numOrden) + "' ";
 				}
 			}
-			if (!numResgu.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(numResgu)) {
 				if (esPrimero) {
 					sql += "WHERE (FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "') ";
 					esPrimero = false;
@@ -1843,7 +1854,7 @@ public class Conexion {
 					sql += "AND (FACTURA.NUMRESGUARDO = '" + Utilidades.formateaNumFactura(numResgu) + "') ";
 				}
 			}
-			if (!nombre.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombre)) {
 				if (esPrimero) {
 					sql += "WHERE (UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%')) ";
 					esPrimero = false;
@@ -1851,7 +1862,7 @@ public class Conexion {
 					sql += "AND (UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%')) ";
 				}
 			}
-			if (!modelo.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(modelo)) {
 				if (esPrimero) {
 					sql += "WHERE (UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%')) ";
 					esPrimero = false;
@@ -1859,7 +1870,7 @@ public class Conexion {
 					sql += "AND (UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%')) ";
 				}
 			}
-			if (!matricula.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(matricula)) {
 				if (esPrimero) {
 					sql += "WHERE (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 					esPrimero = false;
@@ -1867,7 +1878,7 @@ public class Conexion {
 					sql += "AND (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 				}
 			}
-			if (!fijo.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(fijo)) {
 				if (esPrimero) {
 					sql += "WHERE (CLIENTE.TELF1 = '" + fijo + "') ";
 					esPrimero = false;
@@ -1875,7 +1886,7 @@ public class Conexion {
 					sql += "AND (CLIENTE.TELF1 = '" + fijo + "') ";
 				}
 			}
-			if (!movil.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(movil)) {
 				if (esPrimero) {
 					sql += "WHERE (CLIENTE.TELF2 = '" + movil + "') ";
 					esPrimero = false;
@@ -1883,7 +1894,7 @@ public class Conexion {
 					sql += "AND (CLIENTE.TELF2 = '" + movil + "') ";
 				}
 			}
-			if (!matricula.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(matricula)) {
 				if (esPrimero) {
 					sql += "WHERE (UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%')) ";
 					esPrimero = false;
@@ -1967,7 +1978,7 @@ public class Conexion {
 			Statement st = getCon().createStatement();
 			if (tipo == 1) {
 				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN PARTICULAR ON CLIENTE.IDCLIENTE = PARTICULAR.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
-				if (!dni.equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(dni)) {
 					if (esPrimero) {
 						sql += "WHERE UPPER(PARTICULAR.NIF) LIKE UPPER('%" + dni + "%') ";
 						esPrimero = false;
@@ -1978,7 +1989,7 @@ public class Conexion {
 
 			} else if (tipo == 2) {
 				sql = "SELECT DISTINCT * FROM CLIENTE INNER JOIN EMPRESA ON CLIENTE.IDCLIENTE = EMPRESA.CLIENTEID LEFT JOIN DIRECCION ON CLIENTE.DIRECCIONID = DIRECCION.IDDIRECCION ";
-				if (!dni.equalsIgnoreCase("")) {
+				if (!"".equalsIgnoreCase(dni)) {
 					if (esPrimero) {
 						sql += "WHERE UPPER(EMPRESA.CIF) LIKE UPPER('%" + dni + "%') ";
 						esPrimero = false;
@@ -1988,7 +1999,7 @@ public class Conexion {
 				}
 			}
 
-			if (!nombre.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombre)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 					esPrimero = false;
@@ -1998,7 +2009,7 @@ public class Conexion {
 			}
 
 			// ESTAS CAMBIAN UN POCO
-			if (!modelo.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(modelo)) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%"
 							+ modelo + "%'))";
@@ -2009,7 +2020,7 @@ public class Conexion {
 							+ modelo + "%'))";
 				}
 			}
-			if (!matricula.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(matricula)) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.IDCLIENTE IN (SELECT CLIENTEID FROM VEHICULO WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%"
 							+ matricula + "%'))";
@@ -2022,7 +2033,7 @@ public class Conexion {
 				}
 			}
 
-			if (!fijo.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(fijo)) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.TELF1 = '" + fijo + "' ";
 					esPrimero = false;
@@ -2030,7 +2041,7 @@ public class Conexion {
 					sql += "AND CLIENTE.TELF1 = '" + fijo + "' ";
 				}
 			}
-			if (!movil.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(movil)) {
 				if (esPrimero) {
 					sql += "WHERE CLIENTE.TELF2 = '" + movil + "' ";
 					esPrimero = false;
@@ -2039,7 +2050,7 @@ public class Conexion {
 				}
 			}
 
-			if (!domicilio.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(domicilio)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(DIRECCION.CALLE) LIKE UPPER('%" + domicilio + "%') ";
 					esPrimero = false;
@@ -2047,7 +2058,7 @@ public class Conexion {
 					sql += "AND UPPER(DIRECCION.CALLE) LIKE UPPER('%" + domicilio + "%') ";
 				}
 			}
-			if (!poblacion.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(poblacion)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(DIRECCION.LOCALIDAD) LIKE UPPER('%" + poblacion + "%') ";
 					esPrimero = false;
@@ -2106,11 +2117,11 @@ public class Conexion {
 			} else {
 				sql += " WHERE PROVEEDORCOMPANIA.ESCOMPANIA = FALSE AND PROVEEDORCOMPANIA.ESDESGUACE = FALSE ";
 			}
-			if (!nombre.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombre)) {
 				sql += " AND UPPER(PROVEEDORCOMPANIA.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 			}
 
-			if (!telf.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(telf)) {
 				sql += " AND UPPER(PROVEEDORCOMPANIA.TELF1) LIKE UPPER('%" + telf + "%') ";
 			}
 
@@ -2168,7 +2179,7 @@ public class Conexion {
 				sql += "AND VEHICULO.TIPOID = " + tipo;
 			}
 
-			if (!matricula.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(matricula)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(VEHICULO.MATRICULA) LIKE UPPER('%" + matricula + "%') ";
 					esPrimero = false;
@@ -2177,7 +2188,7 @@ public class Conexion {
 				}
 			}
 
-			if (!marca.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(marca)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(VEHICULO.MARCA) LIKE UPPER('%" + marca + "%') ";
 					esPrimero = false;
@@ -2186,7 +2197,7 @@ public class Conexion {
 				}
 			}
 
-			if (!modelo.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(modelo)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(VEHICULO.MODELO) LIKE UPPER('%" + modelo + "%') ";
 					esPrimero = false;
@@ -2195,7 +2206,7 @@ public class Conexion {
 				}
 			}
 
-			if (!nombre.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombre)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombre + "%') ";
 					esPrimero = false;
@@ -2948,7 +2959,7 @@ public class Conexion {
 			// Se prepara la sentencia
 			st = getCon().createStatement();
 			sql = "SELECT DISTINCT * FROM DOCUMENTO INNER JOIN CLIENTE ON DOCUMENTO.CLIENTEID = CLIENTE.IDCLIENTE ";
-			if (!nombreDocumento.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombreDocumento)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(DOCUMENTO.TITULO) LIKE UPPER('%" + nombreDocumento + "%') ";
 					esPrimero = false;
@@ -2957,7 +2968,7 @@ public class Conexion {
 				}
 			}
 
-			if (!nombreCliente.equalsIgnoreCase("")) {
+			if (!"".equalsIgnoreCase(nombreCliente)) {
 				if (esPrimero) {
 					sql += "WHERE UPPER(CLIENTE.NOMBRE) LIKE UPPER('%" + nombreCliente + "%') ";
 					esPrimero = false;
